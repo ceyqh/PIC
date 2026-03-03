@@ -1,0 +1,35 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    
+                    xmlns:vm="clr-namespace:PIC.ViewModel"
+                    xmlns:view="clr-namespace:PIC.View">
+
+    <DataTemplate DataType="{x:Type vm:HomeVM}">
+        <view:Home />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:PrestecsVM}">
+        <view:Prestecs />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:DispositiusVM}">
+        <view:Dispositius />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:CategoriesVM}">
+        <view:Categories />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:UsuarisVM}">
+        <view:Usuaris />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:CursosVM}">
+        <view:Cursos />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:DepartamentsVM}">
+        <view:Departaments />
+    </DataTemplate>
+
+</ResourceDictionary>
