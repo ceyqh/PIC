@@ -143,6 +143,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\DataGrid.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Image.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -224,6 +228,25 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\icona_prova.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icona_prestecs.png" />
+    <Resource Include="Images\icona_usuaris.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icona_dispositius.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icona_categories.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icona_home.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icona_cursos.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\icona_departaments.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

@@ -14,7 +14,10 @@
     
     <Grid>
         <Grid>
-            <DataGrid ItemsSource="{Binding Usuaris}" x:Name="dgPrestec" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" 
+            <DataGrid Style="{StaticResource DarkDataGridStyle}"
+            ColumnHeaderStyle="{StaticResource DarkDataGridColumnHeaderStyle}"
+            RowStyle="{StaticResource DarkDataGridRowStyle}"
+            CellStyle="{StaticResource DarkDataGridCellStyle}" ItemsSource="{Binding Usuaris}" x:Name="dgPrestec" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" 
                  AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserAddRows="False" >
                 <DataGrid.Columns>
                     <DataGridTextColumn Header="Id" IsReadOnly="True" Binding="{Binding Id}" Width="30"/>

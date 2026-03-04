@@ -1,0 +1,123 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- ESTIL DATAGRID -->
+    <Style x:Key="DarkDataGridStyle"
+       TargetType="DataGrid">
+
+        <Setter Property="Background"
+            Value="#212529" />
+        <Setter Property="Foreground"
+            Value="#DBDBDB" />
+        <Setter Property="BorderThickness"
+            Value="0" />
+        <Setter Property="GridLinesVisibility"
+            Value="None" />
+        <Setter Property="RowBackground"
+            Value="#272B2F" />
+        <Setter Property="AlternatingRowBackground"
+            Value="#2C3136" />
+        <Setter Property="HorizontalGridLinesBrush"
+            Value="#3E434A" />
+        <Setter Property="VerticalGridLinesBrush"
+            Value="#3E434A" />
+        <Setter Property="HeadersVisibility"
+            Value="Column" />
+        <Setter Property="SelectionMode"
+            Value="Single" />
+        <Setter Property="SelectionUnit"
+            Value="FullRow" />
+        <Setter Property="RowHeight"
+            Value="45" />
+        <Setter Property="FontFamily"
+            Value="/Fonts/#Rubik" />
+        <Setter Property="FontSize"
+            Value="16" />
+
+    </Style>
+
+    <!-- ESTIL CAPÇALERA COLUMNES -->
+    <Style x:Key="DarkDataGridColumnHeaderStyle"
+       TargetType="DataGridColumnHeader">
+
+        <Setter Property="Background"
+            Value="#272B2F" />
+        <Setter Property="Foreground"
+            Value="#DBDBDB" />
+        <Setter Property="FontWeight"
+            Value="SemiBold" />
+        <Setter Property="Height"
+            Value="45" />
+        <Setter Property="BorderThickness"
+            Value="0" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridColumnHeader">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter
+                        VerticalAlignment="Center"
+                        HorizontalAlignment="Left"
+                        Margin="15,0,0,0"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+    <!-- ESTIL FILES -->
+    <Style x:Key="DarkDataGridRowStyle"
+       TargetType="DataGridRow">
+
+        <Setter Property="Background"
+            Value="#272B2F" />
+        <Setter Property="Foreground"
+            Value="#DBDBDB" />
+        <Setter Property="BorderThickness"
+            Value="0" />
+
+        <Style.Triggers>
+
+            <!-- Hover -->
+            <Trigger Property="IsMouseOver"
+                 Value="True">
+                <Setter Property="Background"
+                    Value="#3E434A"/>
+            </Trigger>
+
+            <!-- Selecció -->
+            <Trigger Property="IsSelected"
+                 Value="True">
+                <Setter Property="Background"
+                    Value="#212529"/>
+                <Setter Property="Foreground"
+                    Value="#FFFFFF"/>
+            </Trigger>
+
+        </Style.Triggers>
+
+    </Style>
+
+    <!-- ESTIL CEL·LES -->
+    <Style x:Key="DarkDataGridCellStyle"
+       TargetType="DataGridCell">
+
+        <Setter Property="BorderThickness"
+            Value="0" />
+        <Setter Property="Padding"
+            Value="15,0,0,0" />
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="DataGridCell">
+                    <Border Background="{TemplateBinding Background}">
+                        <ContentPresenter VerticalAlignment="Center"/>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+
+    </Style>
+
+</ResourceDictionary>

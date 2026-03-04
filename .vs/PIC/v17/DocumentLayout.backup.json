@@ -1,18 +1,34 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PROJECTE FNAL\\PIC VERSIONS\\PIC 2\\",
+  "WorkspaceRootPath": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\projecte fnal\\pic versions\\pic 2\\pic\\view\\categories.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\categories.xaml.cs||{8B382828-6202-11D1-8870-0000F87579D2}|"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\projecte fnal\\pic versions\\pic 2\\pic\\view\\categories.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\styles\\image.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\image.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\styles\\button.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\button.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\styles\\page.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\page.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\styles\\datagrid.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\datagrid.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\categories.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\categories.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\projecte fnal\\pic versions\\pic 2\\pic\\viewmodel\\categoriesvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\categoriesvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\styles\\text.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\text.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -22,7 +38,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 2,
+          "SelectedChildIndex": 7,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,40 +46,86 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "CategoriesVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PROJECTE FNAL\\PIC VERSIONS\\PIC 2\\PIC\\ViewModel\\CategoriesVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\CategoriesVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PROJECTE FNAL\\PIC VERSIONS\\PIC 2\\PIC\\ViewModel\\CategoriesVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\CategoriesVM.cs",
-              "ViewState": "AgIAAAYAAAAAAAAAAAAAACcAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T17:55:36.553Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Categories.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PROJECTE FNAL\\PIC VERSIONS\\PIC 2\\PIC\\View\\Categories.xaml.cs",
-              "RelativeDocumentMoniker": "PIC\\View\\Categories.xaml.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PROJECTE FNAL\\PIC VERSIONS\\PIC 2\\PIC\\View\\Categories.xaml.cs",
-              "RelativeToolTip": "PIC\\View\\Categories.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-03-03T17:55:20.059Z",
+              "DocumentIndex": 4,
+              "Title": "DataGrid.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\DataGrid.xaml",
+              "RelativeDocumentMoniker": "PIC\\Styles\\DataGrid.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\DataGrid.xaml",
+              "RelativeToolTip": "PIC\\Styles\\DataGrid.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-04T15:41:50.903Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
+              "Title": "Image.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Image.xaml",
+              "RelativeDocumentMoniker": "PIC\\Styles\\Image.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Image.xaml",
+              "RelativeToolTip": "PIC\\Styles\\Image.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-04T15:41:48.72Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
               "Title": "Categories.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PROJECTE FNAL\\PIC VERSIONS\\PIC 2\\PIC\\View\\Categories.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Categories.xaml",
               "RelativeDocumentMoniker": "PIC\\View\\Categories.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PROJECTE FNAL\\PIC VERSIONS\\PIC 2\\PIC\\View\\Categories.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Categories.xaml",
               "RelativeToolTip": "PIC\\View\\Categories.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-03-03T17:53:44.324Z",
+              "WhenOpened": "2026-03-04T15:41:38.102Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "Text.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Text.xaml",
+              "RelativeDocumentMoniker": "PIC\\Styles\\Text.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Text.xaml",
+              "RelativeToolTip": "PIC\\Styles\\Text.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-04T15:09:17.426Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Page.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Page.xaml",
+              "RelativeDocumentMoniker": "PIC\\Styles\\Page.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Page.xaml",
+              "RelativeToolTip": "PIC\\Styles\\Page.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-04T15:08:57.999Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "Button.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Button.xaml",
+              "RelativeDocumentMoniker": "PIC\\Styles\\Button.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Button.xaml",
+              "RelativeToolTip": "PIC\\Styles\\Button.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-04T14:46:09.591Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "MainWindow.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\MainWindow.xaml",
+              "RelativeDocumentMoniker": "PIC\\MainWindow.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\MainWindow.xaml",
+              "RelativeToolTip": "PIC\\MainWindow.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-03T18:44:01.202Z",
               "EditorCaption": ""
             }
           ]

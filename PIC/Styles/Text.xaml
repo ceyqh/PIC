@@ -5,15 +5,15 @@
        TargetType="TextBlock">
 
         <Setter Property="FontFamily"
-            Value="/Fonts/#Rubik" />
+            Value="Arial" />
         <Setter Property="VerticalAlignment"
             Value="Center" />
         <Setter Property="HorizontalAlignment"
             Value="Left" />
         <Setter Property="Foreground"
-            Value="#DBDBDB" />
+            Value="Black" />
         <Setter Property="FontSize"
-            Value="18" />
+            Value="14" />
         <Setter Property="Margin"
             Value="70,0,0,0" />
 

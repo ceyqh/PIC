@@ -9,7 +9,7 @@ TargetType="RadioButton">
         <Setter Property="VerticalAlignment"
      Value="Center" />
         <Setter Property="Margin"
-     Value="0,5,0,0" />
+     Value="0,0,0,0" />
 
         <Setter Property="Template">
             <Setter.Value>
@@ -18,14 +18,15 @@ TargetType="RadioButton">
                     <Border x:Name="border"
                  Height="50"
                  Width="228"
-                 BorderThickness="0">
+                 BorderThickness="0, 0.5, 0, 0"
+                 BorderBrush="Black">
 
                         <Border.Background>
                             <SolidColorBrush x:Name="BorderBackground"
-                                  Color="#272B2F" />
+                                  Color="White" />
                         </Border.Background>
 
-                        <Grid>
+                         <Grid>
 
                             <Border x:Name="Indicator"
                          Height="35"
@@ -60,8 +61,8 @@ TargetType="RadioButton">
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                          Storyboard.TargetProperty="Color"
-                                         From="#272B2F"
-                                         To="#3E434A"
+                                         From="White"
+                                         To="#aae6ff"
                                          Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
@@ -75,8 +76,8 @@ TargetType="RadioButton">
                                 <Storyboard>
                                     <ColorAnimation Storyboard.TargetName="BorderBackground"
                                          Storyboard.TargetProperty="Color"
-                                         From="#3E434A"
-                                         To="#272B2F"
+                                         From="#aae6ff"
+                                         To="White"
                                          Duration="0:0:0.3" />
                                 </Storyboard>
                             </BeginStoryboard>
@@ -88,7 +89,7 @@ TargetType="RadioButton">
 
                             <Setter Property="Background"
                          TargetName="border"
-                         Value="#212529" />
+                         Value="#1fb9f9" />
 
                             <Setter Property="Visibility"
                          TargetName="Indicator"
