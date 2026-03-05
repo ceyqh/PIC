@@ -14,17 +14,71 @@
     
     <Grid>
         <Grid>
-            <DataGrid Style="{StaticResource DarkDataGridStyle}"
-            ColumnHeaderStyle="{StaticResource DarkDataGridColumnHeaderStyle}"
-            RowStyle="{StaticResource DarkDataGridRowStyle}"
-            CellStyle="{StaticResource DarkDataGridCellStyle}" ItemsSource="{Binding Usuaris}" x:Name="dgPrestec" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" 
-                 AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserAddRows="False" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" IsReadOnly="True" Binding="{Binding Id}" Width="30"/>
-                    <DataGridTextColumn Header="Nom" IsReadOnly="True" Binding="{Binding Nom}" Width="100"/>
-                    <DataGridTextColumn Header="Cognom" IsReadOnly="True" Binding="{Binding Cognom}" Width="100"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <!--// Base Grid //-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="228" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--// Navigation Panel //-->
+            <Grid HorizontalAlignment="Left" Width="228">
+                <Border Background="White"
+                        BorderThickness="1, 0, 0, 0"/>
+
+                <StackPanel Height="400" Width="228">
+                    
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="50"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <Border Background="White" BorderBrush="Black" BorderThickness="1, 0, 0, 0"/>
+                
+                <!-- APARTAT DELS BOTONS -->
+                <Grid Grid.Row="0">
+                    <Border Background="White" BorderBrush="Black" BorderThickness="1, 0, 0, 0"/>
+                    <TextBlock></TextBlock>
+                </Grid>
+
+                <!-- APARTAT DEL RESULTATS -->
+                <Grid Grid.Row="1">
+                    <ListView x:Name="llistaTasques"
+                              Grid.Row="1"
+                              ItemsSource="{Binding Usuaris}"
+                              Style="{StaticResource UsersListView}"
+                              ItemContainerStyle="{StaticResource UsersListViewItem}">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid Margin="2">
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock FontSize="15" Grid.Column="0"
+                           Text="{Binding Id}" Margin="0,0,10,0"/>
+
+                                    <TextBlock FontSize="15" Grid.Column="1"
+                           Text="{Binding Nom}" Margin="0,0,10,0"/>
+
+                                    <TextBlock FontSize="15" Grid.Column="2"
+                           Text="{Binding Cognom}" Margin="0,0,10,0"/>
+
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+
+                    </ListView>
+                </Grid>                
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

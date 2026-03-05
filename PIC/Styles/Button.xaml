@@ -16,10 +16,9 @@ TargetType="RadioButton">
                 <ControlTemplate TargetType="RadioButton">
 
                     <Border x:Name="border"
-                 Height="50"
-                 Width="228"
-                 BorderThickness="0, 0.5, 0, 0"
-                 BorderBrush="Black">
+                         Height="50"
+                         Width="228"
+                         BorderBrush="Black">
 
                         <Border.Background>
                             <SolidColorBrush x:Name="BorderBackground"

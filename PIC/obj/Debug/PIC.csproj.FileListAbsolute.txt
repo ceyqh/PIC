@@ -217,3 +217,4 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.csproj.Up2Date
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.pdb
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\DataGrid.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\ListView.baml

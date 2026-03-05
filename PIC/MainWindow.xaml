@@ -22,7 +22,7 @@
 
     <Grid>
         <!--// Window Border //-->
-        <Border Background="#212529"/>
+        <Border Background="White"/>
         <Grid>
             <!--// Base Grid //-->
             <Grid.ColumnDefinitions>
@@ -99,7 +99,7 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <Border Background="White" BorderBrush="Black" BorderThickness="0.5, 0, 0, 0"/>
+                <Border Background="White" BorderBrush="Black" BorderThickness="1, 0, 0, 0"/>
                 <ContentControl x:Name="Page" Content="{Binding CurrentView}"/>
             </Grid>
 
