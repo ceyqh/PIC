@@ -5,6 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PIC.View"
              xmlns:vm="clr-namespace:PIC.ViewModel"
+             xmlns:Menu="clr-namespace:PIC.Utilities"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
@@ -16,17 +17,49 @@
         <Grid>
             <!--// Base Grid //-->
             <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="228" />
+                <ColumnDefinition Width="200" />
                 <ColumnDefinition/>
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" Width="228">
+            <Grid HorizontalAlignment="Left" Width="200">
                 <Border Background="White"
                         BorderThickness="1, 0, 0, 0"/>
 
-                <StackPanel Height="400" Width="228">
-                    
+                <StackPanel Height="400" Width="199" Margin="1, 0, 0, 0">
+
+                    <!-- TOTS -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}" IsChecked="True">
+                        <Grid>
+                            <TextBlock Text="Tots" Style="{StaticResource Text_Style}"/>
+                            <Image Source="pack://application:,,,/Images/icona_usuaris_tots.png" Style="{StaticResource Image_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER ID -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}">
+                        <Grid>
+                            <Image Source="pack://application:,,,/Images/icona_id.png" Style="{StaticResource Image_Style}" />
+                            <TextBlock Text="Per ID" Style="{StaticResource Text_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER ID CURS -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}">
+                        <Grid>
+                            <Image Source="pack://application:,,,/Images/icona_cursos.png" Style="{StaticResource Image_Style}" />
+                            <TextBlock Text="Per curs" Style="{StaticResource Text_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER DEPARTAMENT -->
+                    <Menu:Btn Style="{StaticResource BtnStyle}">
+                        <Grid>
+                            <Image Source="pack://application:,,,/Images/icona_departaments.png" Style="{StaticResource Image_Style}" />
+                            <TextBlock Text="Per departament" Style="{StaticResource Text_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
                 </StackPanel>
 
             </Grid>
@@ -40,10 +73,44 @@
 
                 <Border Background="White" BorderBrush="Black" BorderThickness="1, 0, 0, 0"/>
                 
-                <!-- APARTAT DELS BOTONS -->
+                <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
                 <Grid Grid.Row="0">
-                    <Border Background="White" BorderBrush="Black" BorderThickness="1, 0, 0, 0"/>
-                    <TextBlock></TextBlock>
+                    <Border BorderBrush="Black" BorderThickness="1, 0, 0, 0"/>
+                    <Grid>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="*"/>
+                            <RowDefinition Height="*"/>
+                        </Grid.RowDefinitions>
+
+                        <!-- APARTAT DELS BOTONS -->
+                        <Grid Grid.Row="0">
+                            <Border BorderBrush="Black" BorderThickness="0, 0, 0, 1"/>
+                            
+                        </Grid>
+
+                        <!-- APARTAT DE LES SECCIONS DELS RESULTATS -->
+                        <Grid Grid.Row="1">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="5, 0, 0, 0" VerticalAlignment="Center">
+                                    <TextBlock FontSize="14" FontWeight="Bold">ID</TextBlock>
+                                </Grid>
+
+                                <Grid Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock FontSize="14" FontWeight="Bold">Nom</TextBlock>
+                                </Grid>
+
+                                <Grid Grid.Column="2" VerticalAlignment="Center">
+                                    <TextBlock FontSize="14" FontWeight="Bold">Cognom</TextBlock>
+                                </Grid>
+                            </Grid>                            
+                        </Grid>
+                    </Grid>
                 </Grid>
 
                 <!-- APARTAT DEL RESULTATS -->
@@ -63,19 +130,15 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="15" Grid.Column="0"
-                           Text="{Binding Id}" Margin="0,0,10,0"/>
+                                    <TextBlock FontSize="14" Grid.Column="0" Text="{Binding Id}" Margin="0,0,10,0"/>
 
-                                    <TextBlock FontSize="15" Grid.Column="1"
-                           Text="{Binding Nom}" Margin="0,0,10,0"/>
+                                    <TextBlock FontSize="14" Grid.Column="1" Text="{Binding Nom}" Margin="0,0,10,0"/>
 
-                                    <TextBlock FontSize="15" Grid.Column="2"
-                           Text="{Binding Cognom}" Margin="0,0,10,0"/>
+                                    <TextBlock FontSize="14" Grid.Column="2" Text="{Binding Cognom}" Margin="0,0,10,0"/>
 
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
-
                     </ListView>
                 </Grid>                
             </Grid>
