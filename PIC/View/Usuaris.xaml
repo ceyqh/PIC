@@ -27,7 +27,7 @@
                         BorderThickness="1, 0, 0, 0"/>
 
                 <StackPanel Height="400" Width="199" Margin="1, 0, 0, 0">
-
+                    
                     <!-- TOTS -->
                     <Menu:Btn Style="{StaticResource BtnStyle}" IsChecked="True">
                         <Grid>

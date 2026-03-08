@@ -3,15 +3,23 @@
   "WorkspaceRootPath": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\",
   "Documents": [
     {
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\home.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\home.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
       "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\styles\\listview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\listview.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\usuaris.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\view\\usuaris.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\usuaris.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\dispositius.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\dispositius.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\mainwindow.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
@@ -22,7 +30,7 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 1,
+          "SelectedChildIndex": 2,
           "Children": [
             {
               "$type": "Bookmark",
@@ -30,7 +38,31 @@
             },
             {
               "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "Dispositius.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Dispositius.xaml",
+              "RelativeDocumentMoniker": "PIC\\View\\Dispositius.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Dispositius.xaml",
+              "RelativeToolTip": "PIC\\View\\Dispositius.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-08T00:42:00.13Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
               "DocumentIndex": 0,
+              "Title": "Home.xaml",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Home.xaml",
+              "RelativeDocumentMoniker": "PIC\\View\\Home.xaml",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Home.xaml",
+              "RelativeToolTip": "PIC\\View\\Home.xaml",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2026-03-08T00:12:47.735Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
               "Title": "ListView.xaml",
               "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\ListView.xaml",
               "RelativeDocumentMoniker": "PIC\\Styles\\ListView.xaml",
@@ -42,7 +74,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
+              "DocumentIndex": 2,
               "Title": "Usuaris.xaml",
               "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Usuaris.xaml",
               "RelativeDocumentMoniker": "PIC\\View\\Usuaris.xaml",
@@ -54,7 +86,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 4,
               "Title": "MainWindow.xaml",
               "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\MainWindow.xaml",
               "RelativeDocumentMoniker": "PIC\\MainWindow.xaml",
