@@ -31,66 +31,57 @@
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" Width="200">
-                <Border Background="White"/>
+            <Grid HorizontalAlignment="Left" Width="200" Background="#131316">
 
                 <StackPanel Height="400" Width="200">
 
                     <!--// HOME //-->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding HomeCommand}" IsChecked="True">
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding HomeCommand}" IsChecked="True">
                         <Grid>
-                            <Image Source="Images/icona_home_dark.png" Style="{StaticResource Image_Style}" />
-
-                            <TextBlock Text="Home" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="HOME" Style="{StaticResource Text_Main_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!--// PRESTECS //-->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding PrestecsCommand}">
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding PrestecsCommand}">
                         <Grid>
-                            <Image Source="Images/icona_prestecs_dark.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Préstecs" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="PRÉSTECS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
 
                     <!--// DISPOSITIUS //-->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding DispositiusCommand}">
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding DispositiusCommand}">
                         <Grid>
-                            <Image Source="/Images/icona_dispositius_dark.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Dispositius" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="DISPOSITIUS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!--// CATEGORIES //-->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding CategoriesCommand}">
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding CategoriesCommand}">
                         <Grid>
-                            <Image Source="/Images/icona_categories_dark.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Categories" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="CATEGORIES" Style="{StaticResource Text_Main_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!--// USUARIS //-->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding UsuarisCommand}">
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding UsuarisCommand}">
                         <Grid>
-                            <Image Source="Images/icona_usuaris_dark.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Usuaris" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="USUARIS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!--// CURSOS //-->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding CursosCommand}">
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding CursosCommand}">
                         <Grid>
-                            <Image Source="Images/icona_cursos_dark.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Cursos" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="CURSOS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!--// DEPARTAMENTS //-->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" Command="{Binding DepartamentsCommand}">
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding DepartamentsCommand}">
                         <Grid>
-                            <Image Source="Images/icona_departaments_dark.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Departaments" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="DEPARTAMENTS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
@@ -99,7 +90,6 @@
             </Grid>
 
             <Grid Grid.Column="1">
-                <Border Background="White" BorderBrush="Black" BorderThickness="1, 0, 0, 0"/>
                 <ContentControl x:Name="Page" Content="{Binding CurrentView}"/>
             </Grid>
 

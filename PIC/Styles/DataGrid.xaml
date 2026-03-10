@@ -15,7 +15,7 @@
         <Setter Property="HeadersVisibility" Value="Column"/>
         <Setter Property="RowHeight" Value="45"/>
         <Setter Property="AutoGenerateColumns" Value="False"/>
-        <Setter Property="FontFamily" Value="Arial"/>
+        <!--<Setter Property="FontFamily" Value="Arial"/> -->
         <Setter Property="FontSize" Value="15"/>
 
     </Style>

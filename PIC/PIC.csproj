@@ -215,8 +215,8 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
-    <Resource Include="Fonts\Rubik-Medium.ttf" />
-    <Resource Include="Fonts\Rubik-Regular.ttf" />
+    <Resource Include="Fonts\Fraktion-Regular.ttf" />
+    <Resource Include="Fonts\The-Magic-Castle.ttf" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -229,41 +229,6 @@
   <ItemGroup>
     <Resource Include="Images\shutdown_def.png" />
     <Resource Include="Images\shutdown_mo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_prova.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_prestecs.png" />
-    <Resource Include="Images\icona_usuaris.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_dispositius.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_categories.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_home.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_cursos.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_departaments.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_categories_dark.png" />
-    <Resource Include="Images\icona_cursos_dark.png" />
-    <Resource Include="Images\icona_departaments_dark.png" />
-    <Resource Include="Images\icona_dispositius_dark.png" />
-    <Resource Include="Images\icona_home_dark.png" />
-    <Resource Include="Images\icona_id.png" />
-    <Resource Include="Images\icona_prestecs_dark.png" />
-    <Resource Include="Images\icona_usuaris_dark.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\icona_usuaris_tots.png" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo.png" />

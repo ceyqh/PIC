@@ -22,41 +22,35 @@
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" Width="200">
-                <Border Background="White"
-                        BorderThickness="1, 0, 0, 0"/>
+            <Grid HorizontalAlignment="Left" Width="200" Background="#e8e9e9">
 
-                <StackPanel Height="400" Width="199" Margin="1, 0, 0, 0">
+                <StackPanel Height="400" Width="199">
                     
                     <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource BtnStyle}" IsChecked="True">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" IsChecked="True">
                         <Grid>
-                            <TextBlock Text="Tots" Style="{StaticResource Text_Style}"/>
-                            <Image Source="pack://application:,,,/Images/icona_usuaris_tots.png" Style="{StaticResource Image_Style}" />
+                            <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource BtnStyle}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
                         <Grid>
-                            <Image Source="pack://application:,,,/Images/icona_id.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Per ID" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID CURS -->
-                    <Menu:Btn Style="{StaticResource BtnStyle}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
                         <Grid>
-                            <Image Source="pack://application:,,,/Images/icona_cursos.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Per curs" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="PER CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource BtnStyle}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
                         <Grid>
-                            <Image Source="pack://application:,,,/Images/icona_departaments.png" Style="{StaticResource Image_Style}" />
-                            <TextBlock Text="Per departament" Style="{StaticResource Text_Style}" />
+                            <TextBlock Text="PER DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
