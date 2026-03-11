@@ -10,7 +10,7 @@
         mc:Ignorable="d"
         Title="PIC"
         Height="600"
-        Width="1000"
+        Width="1400"
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"

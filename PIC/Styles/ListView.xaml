@@ -6,36 +6,34 @@
        TargetType="ListView">
 
         <Setter Property="Background" Value="White"/>
-        <Setter Property="BorderBrush" Value="Black"/>
-        <Setter Property="BorderThickness" Value="1,1,0,0"/>
+        <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
 
     </Style>
-
 
     <!-- ITEMS DEL LISTVIEW -->
     <Style x:Key="UsersListViewItem"
        TargetType="ListViewItem">
 
         <Setter Property="Background" Value="White"/>
-        <Setter Property="Foreground" Value="Black"/>
+        <Setter Property="Foreground" Value="#131316"/>
 
         <!-- ALTURA DELS ITEMS -->
-        <Setter Property="Height" Value="50"/>
-        
+        <Setter Property="Height" Value="40"/>
+
+
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Margin" Value="0"/>
-        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
 
         <Setter Property="Template">
             <Setter.Value>
                 <ControlTemplate TargetType="ListViewItem">
 
-                    <Border x:Name="border"
+                    <Grid x:Name="border"
                         Background="{TemplateBinding Background}"
-                        BorderBrush="Black"
-                        BorderThickness="0,0,0,1"
                         SnapsToDevicePixels="True">
 
                         <ContentPresenter
@@ -43,7 +41,7 @@
                         HorizontalAlignment="Stretch"
                         VerticalAlignment="Center"/>
 
-                    </Border>
+                    </Grid>
 
                     <ControlTemplate.Triggers>
 

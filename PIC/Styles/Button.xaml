@@ -11,7 +11,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
 
-                    <Grid x:Name="GridArea" Height="40" Width="228">
+                    <Grid x:Name="GridArea" Height="40" Width="230">
 
                         <Grid.Background>
                             <SolidColorBrush x:Name="GridBackground"
@@ -52,7 +52,7 @@
             <Setter.Value>
                 <ControlTemplate TargetType="RadioButton">
 
-                    <Grid x:Name="GridArea" Height="40" Width="228">
+                    <Grid x:Name="GridArea" Height="40" Width="230">
 
                         <Grid.Background>
                             <SolidColorBrush x:Name="GridBackground"
@@ -83,27 +83,17 @@
 
     </Style>
 
-    <ImageBrush x:Key="close_app_def"
-     ImageSource="/Images/shutdown_def.png"
-     Stretch="None" />
+    <ImageBrush x:Key="close_app_def" ImageSource="/Images/shutdown_def.png" Stretch="None" />
 
-    <ImageBrush x:Key="close_app_mo"
-     ImageSource="/Images/shutdown_mo.png"
-     Stretch="None" />
+    <ImageBrush x:Key="close_app_mo" ImageSource="/Images/shutdown_mo.png" Stretch="None" />
 
-    <Style x:Key="ExitApp"
-    TargetType="{x:Type Button}">
+    <Style x:Key="ExitApp" TargetType="{x:Type Button}">
 
-        <Setter Property="Height"
-     Value="40" />
-        <Setter Property="Width"
-     Value="40" />
-        <Setter Property="HorizontalAlignment"
-     Value="Right" />
-        <Setter Property="VerticalAlignment"
-     Value="Top" />
-        <Setter Property="Margin"
-     Value="0,15,15,0" />
+        <Setter Property="Height" Value="40" />
+        <Setter Property="Width" Value="40" />
+        <Setter Property="HorizontalAlignment" Value="Right" />
+        <Setter Property="VerticalAlignment" Value="Top" />
+        <Setter Property="Margin" Value="0,15,15,0" />
 
         <Setter Property="Template">
 
@@ -111,29 +101,21 @@
 
                 <ControlTemplate TargetType="{x:Type Button}">
 
-                    <Border x:Name="GridArea"
-                 BorderThickness="0"
-                 Background="{StaticResource close_app_def}">
+                    <Border x:Name="GridArea" BorderThickness="0" Background="{StaticResource close_app_def}">
 
                     </Border>
 
                     <ControlTemplate.Triggers>
 
-                        <Trigger Property="IsMouseOver"
-                      Value="True">
+                        <Trigger Property="IsMouseOver" Value="True">
 
-                            <Setter Property="Background"
-                         TargetName="GridArea"
-                         Value="{StaticResource close_app_mo}" />
+                            <Setter Property="Background" TargetName="GridArea" Value="{StaticResource close_app_mo}" />
 
                         </Trigger>
 
-                        <Trigger Property="IsPressed"
-                      Value="True">
+                        <Trigger Property="IsPressed" Value="True">
 
-                            <Setter Property="Background"
-                         TargetName="GridArea"
-                         Value="{StaticResource close_app_mo}" />
+                            <Setter Property="Background" TargetName="GridArea" Value="{StaticResource close_app_mo}" />
 
                         </Trigger>
 

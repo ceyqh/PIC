@@ -62,4 +62,20 @@
 
     </Style>
 
+    <Style x:Key="Fraktion_Dark_Font" TargetType="TextBlock">
+        
+        <Setter Property="FontFamily" 
+                Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="Foreground"
+                Value="#131316"/>
+    </Style>
+
+    <Style x:Key="Fraktion_Light_Font" TargetType="TextBlock">
+
+        <Setter Property="FontFamily" 
+            Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="Foreground"
+            Value="#e8e9e9"/>
+    </Style>
+
 </ResourceDictionary>

@@ -5,8 +5,9 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PIC.View"
              xmlns:vm="clr-namespace:PIC.ViewModel"
+             xmlns:Menu="clr-namespace:PIC.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="450" d:DesignWidth="1400">
 
     <UserControl.DataContext>
         <vm:PrestecsVM/>
@@ -14,19 +15,187 @@
 
     <Grid>
         <Grid>
-            <DataGrid ItemsSource="{Binding Prestecs}" x:Name="dgPrestec" VerticalAlignment="Top" HorizontalAlignment="Left" Width="Auto" 
-            AutoGenerateColumns="False" CanUserResizeColumns="True" CanUserAddRows="False" >
-                <DataGrid.Columns>
-                    <DataGridTextColumn Header="Id" IsReadOnly="True" Binding="{Binding Id}" Width="30"/>
-                    <DataGridTextColumn Header="NomUsuari" IsReadOnly="True" Binding="{Binding NomUsuari}" Width="100"/>
-                    <DataGridTextColumn Header="IdUsuari" IsReadOnly="True" Binding="{Binding IdUsuari}" Width="100"/>
-                    <DataGridTextColumn Header="NomDispositiu" IsReadOnly="True" Binding="{Binding NomDispositiu}" Width="Auto"/>
-                    <DataGridTextColumn Header="IdDispositiu" IsReadOnly="True" Binding="{Binding IdDispositiu}" Width="Auto"/>
-                    <DataGridTextColumn Header="DataEntrega" IsReadOnly="True" Binding="{Binding DataEntrega}" Width="Auto"/>
-                    <DataGridTextColumn Header="DataRetorn" IsReadOnly="True" Binding="{Binding DataRetorn}" Width="Auto"/>
-                    <DataGridTextColumn Header="Retornat" IsReadOnly="True" Binding="{Binding Retornat}" Width="Auto"/>
-                </DataGrid.Columns>
-            </DataGrid>
+            <!--// Base Grid //-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--// Navigation Panel //-->
+            <Grid HorizontalAlignment="Left" Width="200" Background="#e8e9e9">
+
+                <StackPanel Height="400" Width="200">
+
+                    <!-- TOTS -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" IsChecked="True">
+                        <Grid>
+                            <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER ID -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER DISPOSITIU -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="PER DISPOSITIU" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER CATEGORIA -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="PER CATEGORIA" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER ID CURS -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="PER CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER DEPARTAMENT -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="PER DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- PER DATA D'ENTREGA -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="PER DATA D'ENTREGA" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- RETORNATS -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="RETORNATS" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!-- NO RETORNATS -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                        <Grid>
+                            <TextBlock Text="NO RETORNATS" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="40"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+
+                <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
+                <Grid Grid.Row="0" Background="#a5a6af">
+
+                </Grid>
+
+                <!-- APARTAT DEL RESULTATS -->
+                <Grid Grid.Row="1" Background="White">
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="1" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM_USUARI</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="2" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID_USUARI</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="3" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM_DISPOSITIU</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="4" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID_DISPOSITIU</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="5" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">DATA_ENTREGA</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="6" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">DATA_RETORN</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="7" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">RETORNAT</TextBlock>
+                        </Grid>
+                    </Grid>
+
+                </Grid>
+
+                <Grid Grid.Row="2">
+                    <ListView x:Name="llistaTasques"
+                          ItemsSource="{Binding Prestecs}"
+                          Style="{StaticResource UsersListView}"
+                          ItemContainerStyle="{StaticResource UsersListViewItem}">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate>
+                                <Grid>
+                                    <Grid.ColumnDefinitions>
+                                        <ColumnDefinition Width="125"/>
+                                        <ColumnDefinition Width="125"/>
+                                        <ColumnDefinition Width="125"/>
+                                        <ColumnDefinition Width="125"/>
+                                        <ColumnDefinition Width="125"/>
+                                        <ColumnDefinition Width="125"/>
+                                        <ColumnDefinition Width="125"/>
+                                        <ColumnDefinition Width="*"/>
+                                    </Grid.ColumnDefinitions>
+
+                                    <TextBlock FontSize="12" Grid.Column="0" Text="{Binding Id}" Margin="10,0,0,0"/>
+
+                                    <TextBlock FontSize="12" Grid.Column="1" Text="{Binding NomUsuari}"/>
+
+                                    <TextBlock FontSize="12" Grid.Column="2" Text="{Binding IdUsuari}"/>
+
+                                    <TextBlock FontSize="12" Grid.Column="3" Text="{Binding NomDispositiu}"/>
+                                    
+                                    <TextBlock FontSize="12" Grid.Column="4" Text="{Binding IdDispositiu}"/>
+                                    
+                                    <TextBlock FontSize="12" Grid.Column="5" Text="{Binding DataEntrega}"/>
+                                    
+                                    <TextBlock FontSize="12" Grid.Column="6" Text="{Binding DataRetorn}"/>
+                                    
+                                    <TextBlock FontSize="12" Grid.Column="7" Text="{Binding Retornat}"/>
+                                </Grid>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

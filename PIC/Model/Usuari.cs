@@ -11,5 +11,6 @@ namespace PIC.Model
         public long Id { get; set; }
         public string Nom { get; set; }
         public string Cognom { get; set; }
+        public string Grup { get; set; }
     }
 }
