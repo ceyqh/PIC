@@ -40,20 +40,6 @@
                         </Grid>
                     </Menu:Btn>
 
-                    <!-- PER ID CURS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
-                        <Grid>
-                            <TextBlock Text="PER CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
-                        <Grid>
-                            <TextBlock Text="PER DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
-                        </Grid>
-                    </Menu:Btn>
-
                 </StackPanel>
 
             </Grid>

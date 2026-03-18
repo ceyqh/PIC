@@ -27,28 +27,28 @@
                 <StackPanel Height="400" Width="200">
                     
                     <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" IsChecked="True">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="Tots_Click" IsChecked="True">
                         <Grid>
                             <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerId_Click">
                         <Grid>
                             <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID CURS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerCurs_Click">
                         <Grid>
                             <TextBlock Text="PER CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerDepartament_Click">
                         <Grid>
                             <TextBlock Text="PER DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
@@ -68,7 +68,36 @@
 
                 <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
                 <Grid Grid.Row="0" Background="#a5a6af">
-                    
+                    <StackPanel Orientation="Horizontal" 
+                                VerticalAlignment="Center" 
+                                Margin="10">
+                        
+                        <TextBlock Name="usuarisTitol" 
+                                   FontSize="16" 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   Margin="0, 0, 10, 0">USUARIS: TOTS</TextBlock>
+
+                        <TextBox Name="inputArea"
+                                 VerticalAlignment="Center"
+                                 Width="200" 
+                                 Text="{Binding ParametreCerca, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,10,0"/>
+
+                        <Button Name="inputText"
+                                Content="Buscar"
+                                Width="100"
+                                Click="Buscar_Click"/>
+
+                        <Button Name="editarUsuari"
+                                Content="Editar"
+                                Margin="50, 0, 10, 0"
+                                Click="EditarUsuari_Click"/>
+
+                        <Button Name="esborrarUsuari"
+                                Content="Esborrar"
+                                Click="EsborrarUsuari_Click"/>
+
+                    </StackPanel>
                 </Grid>
 
                 <!-- APARTAT DEL RESULTATS -->
@@ -79,10 +108,16 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">
+                                <Span x:Name="labelId">
+                                    <Run>ID</Run>
+                                </Span>
+                            </TextBlock>
                         </Grid>
 
                         <Grid Grid.Column="1" VerticalAlignment="Center">
@@ -90,18 +125,34 @@
                         </Grid>
 
                         <Grid Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">COGNOM</TextBlock>
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">
+                                <Span x:Name="labelCognom">
+                                    <Run>COGNOM</Run>
+                                </Span>
+                            </TextBlock>
                         </Grid>
 
                         <Grid Grid.Column="3" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">TIPUS</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="4" VerticalAlignment="Center">
                             <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">GRUP</TextBlock>
+                        </Grid>
+
+                        <Grid Grid.Column="5" VerticalAlignment="Center">
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">
+                                <Span x:Name="labelIdGrup">
+                                    <Run>ID_GRUP</Run>
+                                </Span>
+                            </TextBlock>
                         </Grid>
                     </Grid>
 
                 </Grid>
 
                 <Grid Grid.Row="2">
-                    <ListView x:Name="llistaTasques"
+                    <ListView x:Name="llistaUsuaris"
                               ItemsSource="{Binding Usuaris}"
                               Style="{StaticResource UsersListView}"
                               ItemContainerStyle="{StaticResource UsersListViewItem}">
@@ -110,25 +161,137 @@
                             <DataTemplate>
                                 <Grid>
                                     <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="250"/>
-                                        <ColumnDefinition Width="250"/>
-                                        <ColumnDefinition Width="250"/>
+                                        <ColumnDefinition Width="166.67"/>
+                                        <ColumnDefinition Width="166.67"/>
+                                        <ColumnDefinition Width="166.67"/>
+                                        <ColumnDefinition Width="166.67"/>
+                                        <ColumnDefinition Width="166.67"/>
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="12" Grid.Column="0" Text="{Binding Id}" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="0"  
+                                               FontSize="12"                                              
+                                               Text="{Binding Id}" 
+                                               Margin="10,0,0,0"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="1" Text="{Binding Nom}"/>
+                                    <TextBlock Grid.Column="1" 
+                                               FontSize="12"  
+                                               Text="{Binding Nom}"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="2" Text="{Binding Cognom}"/>
-                                    
-                                    <TextBlock FontSize="12" Grid.Column="3" Text="{Binding Grup}"/>
+                                    <TextBlock Grid.Column="2" 
+                                               FontSize="12"  
+                                               Text="{Binding Cognom}"/>
+
+                                    <TextBlock Grid.Column="3" 
+                                               FontSize="12"  
+                                               Text="{Binding Tipus}"/>
+
+                                    <TextBlock Grid.Column="4" 
+                                               FontSize="12" 
+                                               Text="{Binding Grup}"/>
+
+                                    <TextBlock Grid.Column="5" 
+                                               FontSize="12"  
+                                               Text="{Binding IdGrup}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
                 </Grid>
             </Grid>
+        </Grid>
+
+        <Grid x:Name="OverlayEditar"
+              Visibility="Collapsed"
+              Background="#80000000">
+
+            <!-- POPUP -->
+            <Border Width="300"
+                    Background="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- TÍTOL -->
+                    <Grid Background="#131316" 
+                          VerticalAlignment="Center">
+                        
+                        <TextBlock Text="EDITAR USUARI" 
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   FontSize="16" 
+                                   Margin="20, 10, 20, 10"/>
+                    </Grid>
+
+                    <!-- NOM -->
+                    <StackPanel Grid.Row="1" Margin="20, 10, 20, 0">
+                        <TextBlock Text="NOM: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox Name="textNom" 
+                                 Margin="0,0,0,20"  
+                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>    
+                    </StackPanel>
+
+                    <!-- COGNOM -->
+                    <StackPanel Grid.Row="2" 
+                                Margin="20, 0, 20, 0">
+
+                        <TextBlock Text="COGNOM: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox Name="textCognom" 
+                                 Margin="0,0,0,20"                                 
+                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                    </StackPanel>
+
+                    <!-- GRUP -->
+                    <StackPanel Grid.Row="3" 
+                                Margin="20, 0, 20, 0">
+
+                        <TextBlock Text="GRUP: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <ComboBox Name="cbGrups">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Nom}" FontSize="12" Style="{StaticResource Fraktion_Dark_Font}"></TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- BOTONS -->
+                    <StackPanel Grid.Row="4" 
+                                Margin="20"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+
+                        <Button Content="Guardar" 
+                                Width="80" 
+                                Margin="0,0,10,0"
+                                Click="Guardar_Click"/>
+
+                        <Button Content="Cancel·lar" 
+                                Width="80" 
+                                Click="TancarOverlay_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
         </Grid>
     </Grid>
 </UserControl>
