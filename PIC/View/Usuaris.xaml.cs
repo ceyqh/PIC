@@ -102,7 +102,7 @@ namespace PIC.View
         }
 
         // EDITAR USUARI
-        private async void EditarUsuari_Click(object sender, RoutedEventArgs e)
+        private async void EditarUsuariMenu_Click(object sender, RoutedEventArgs e)
         {
             textNom.Text = "";
             textCognom.Text = "";
@@ -126,7 +126,7 @@ namespace PIC.View
                     await cursosVM.LoadCursosAsync();
                     cbGrups.ItemsSource = cursosVM.Cursos;
 
-                    cbGrups.SelectedItem = cursosVM.Cursos.FirstOrDefault(c => c.Id == usuariSeleccionat.IdGrup);
+                    cbGrups.SelectedValue = usuariSeleccionat.IdGrup;
                 }
 
                 else if (usuariSeleccionat.Tipus == "Professor")
@@ -135,7 +135,7 @@ namespace PIC.View
                     await departamentsVM.LoadDepartamentsAsync();
                     cbGrups.ItemsSource = departamentsVM.Departaments;
 
-                    cbGrups.SelectedItem = departamentsVM.Departaments.FirstOrDefault(c => c.Id == usuariSeleccionat.IdGrup);
+                    cbGrups.SelectedValue = usuariSeleccionat.IdGrup;
 
                 }
 
@@ -147,7 +147,7 @@ namespace PIC.View
         }
 
         // ESBORRAR USUARI
-        private void EsborrarUsuari_Click(object sender, RoutedEventArgs e)
+        private void EsborrarUsuariMenu_Click(object sender, RoutedEventArgs e)
         {
 
         }
@@ -155,25 +155,126 @@ namespace PIC.View
         private void TancarOverlay_Click(object sender, RoutedEventArgs e)
         {
             OverlayEditar.Visibility = Visibility.Collapsed;
+            OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
+            OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
         }
 
+        // GUARDAR CANVIS USUARI
         private async void Guardar_Click(object sender, RoutedEventArgs e)
         {
             usuariSeleccionat.Nom = textNom.Text.Trim();
             usuariSeleccionat.Cognom = textCognom.Text.Trim();
+            usuariSeleccionat.IdGrup = (long)cbGrups.SelectedValue;
 
-            // Actualitzar l'usuari via la ViewModel
             try
             {
-                await((UsuarisVM)DataContext).ActualitzarUsuariAsync(usuariSeleccionat);
+                var vm = (UsuarisVM)DataContext;
+
+                if (usuariSeleccionat.Tipus == "Alumne")
+                {
+                    Alumne alumneDades = new Alumne
+                    {
+                        IdUsuari = (int)usuariSeleccionat.Id,
+                        IdCurs = (int)usuariSeleccionat.IdGrup
+                    };
+
+                    await vm.ActualitzarAlumneAsync(alumneDades);
+                }
+
+                if (usuariSeleccionat.Tipus == "Professor")
+                {
+                    Professor professorDades = new Professor
+                    {
+                        IdUsuari = (int)usuariSeleccionat.Id,
+                        IdDepartament = (int)usuariSeleccionat.IdGrup
+                    };
+
+                    await vm.ActualitzarProfessorAsync(professorDades);
+                }
+
+                await vm.ActualitzarUsuariAsync(usuariSeleccionat);
+
                 OverlayEditar.Visibility = Visibility.Collapsed;
+                MessageBox.Show("Usuari i curs actualitzats correctament.");
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error actualitzant l'usuari: {ex.Message}");
+                MessageBox.Show($"Error en el procés de guardat: {ex.Message}");
             }
+        }
 
-            OverlayEditar.Visibility = Visibility.Collapsed;
+        private async void AfegirAlumneMenu_Click(object sender, RoutedEventArgs e)
+        {
+            aa_textNom.Text = "";
+            aa_textCognom.Text = "";
+
+            OverlayAfegirAlumne.Visibility = Visibility.Visible;
+
+            cbCursos.ItemsSource = null;
+            await cursosVM.LoadCursosAsync();
+            cbCursos.ItemsSource = cursosVM.Cursos;
+
+            if (cbCursos.ItemsSource != null)
+            {
+                cbCursos.SelectedIndex = 0;
+            }
+        }
+
+        private async void AfegirProfessorMenu_Click(object sender, RoutedEventArgs e)
+        {
+            ap_textNom.Text = "";
+            ap_textCognom.Text = "";
+
+            OverlayAfegirProfessor.Visibility = Visibility.Visible;
+
+            cbDepartaments.ItemsSource = null;
+            await departamentsVM.LoadDepartamentsAsync();
+            cbDepartaments.ItemsSource = departamentsVM.Departaments;
+
+            if (cbDepartaments.ItemsSource != null)
+            {
+                cbDepartaments.SelectedIndex = 0;
+            }
+        }
+
+        private async void AfegirAlumne_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                NouUsuari nouUsuari = new NouUsuari
+                {
+                    Nom = aa_textNom.Text,
+                    Cognom = aa_textCognom.Text
+
+                };
+
+                var vm = (UsuarisVM)DataContext;
+                Usuari usuariCreat = await vm.AfegirUsuariAsync(nouUsuari);
+
+                //MessageBox.Show(usuariCreat.Id + " " + cbCursos.SelectedValue);
+
+                if (usuariCreat != null)
+                {
+                    Alumne nouAlumne = new Alumne
+                    {
+                        IdUsuari = usuariCreat.Id,
+                        IdCurs = (long)cbCursos.SelectedValue
+                    };
+
+                    await vm.AfegirAlumneAsync(nouAlumne);
+                }
+
+                OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
+        }
+
+        private void AfegirProfessor_Click(object sender, RoutedEventArgs e)
+        {
+
         }
     }
 }

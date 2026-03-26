@@ -38,7 +38,7 @@
                 </Grid>
                 
                 <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000">
-                    <TextBlock FontSize="16" Style="{StaticResource Fraktion_Dark_Font}" TextWrapping="Wrap" TextAlignment="Center">Benvingut/da a PIC, el gestor de préstecs de material de l'Institut Rafael Campalans.</TextBlock>
+                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}" TextWrapping="Wrap" TextAlignment="Center">Benvingut/da a PIC, el gestor de préstecs de material de l'Institut Rafael Campalans.</TextBlock>
                 </Grid>
             </Grid>
         </Grid>

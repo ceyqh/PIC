@@ -84,16 +84,21 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="APIClient\AlumnesApiClient.cs" />
     <Compile Include="APIClient\CategoriesApiClient.cs" />
     <Compile Include="APIClient\CursosApiClient.cs" />
     <Compile Include="APIClient\DepartamentsApiClient.cs" />
     <Compile Include="APIClient\DispositiusApiClient.cs" />
     <Compile Include="APIClient\PrestecsApiClient.cs" />
+    <Compile Include="APIClient\ProfessorsApiClient.cs" />
     <Compile Include="APIClient\UsuarisApiClient.cs" />
+    <Compile Include="Model\Alumne.cs" />
     <Compile Include="Model\Categoria.cs" />
     <Compile Include="Model\Curs.cs" />
     <Compile Include="Model\Departament.cs" />
     <Compile Include="Model\Dispositiu.cs" />
+    <Compile Include="Model\NouUsuari.cs" />
+    <Compile Include="Model\Professor.cs" />
     <Compile Include="Model\Usuari.cs" />
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />

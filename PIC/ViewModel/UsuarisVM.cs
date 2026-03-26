@@ -47,10 +47,16 @@ namespace PIC.ViewModel
         }
 
         // CONSTRUCTOR
-        private readonly UsuarisApiClient _apiClient;
+        private readonly UsuarisApiClient _usuarisApiClient;
+        private readonly AlumnesApiClient _alumnesApiClient;
+        private readonly ProfessorsApiClient _professorsApiClient;
+
         public UsuarisVM()
         {
-            _apiClient = new UsuarisApiClient();
+            _usuarisApiClient = new UsuarisApiClient();
+            _alumnesApiClient = new AlumnesApiClient();
+            _professorsApiClient = new ProfessorsApiClient();
+
             Usuaris = new ObservableCollection<Usuari>();
             TipusCercaActual = TipusCerca.Tots;
         }
@@ -60,7 +66,7 @@ namespace PIC.ViewModel
         {
             try
             {
-                var llista = await _apiClient.GetAllUsuarisAsync();
+                var llista = await _usuarisApiClient.GetAllUsuarisAsync();
                 Usuaris.Clear();
 
                 foreach (var u in llista)
@@ -76,20 +82,32 @@ namespace PIC.ViewModel
         }
 
         // AFEGIR USUARI
-        public async Task AfegirUsuariAsync(Usuari nouUsuari)
+        public async Task<Usuari> AfegirUsuariAsync(NouUsuari usuariAAfegir)
         {
             try
             {
-                var usuariCreat = await _apiClient.PostUsuariAsync(nouUsuari);
-                if (usuariCreat != null)
+                NouUsuari result = await _usuarisApiClient.PostUsuariAsync(usuariAAfegir);
+
+                if (result != null)
                 {
-                    Usuaris.Add(usuariCreat);
+                    var usuari = new Usuari
+                    {
+                        Id = result.Id,
+                        Nom = result.Nom,
+                        Cognom = result.Cognom
+                    };
+
+                    await LoadUsuarisAsync();
+
+                    return usuari;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear l'usuari: {ex.Message}");
+                MessageBox.Show($"Error usuari: {ex.Message}");
             }
+
+            return null;
         }
 
         // ACTUALITZAR USUARI
@@ -97,12 +115,10 @@ namespace PIC.ViewModel
         {
             try
             {
-                int result = await _apiClient.UpdateUsuariAsync(usuariAModificar);
+                int result = await _usuarisApiClient.UpdateUsuariAsync(usuariAModificar);
                 if (result > 0)
                 {
-                    MessageBox.Show("Usuari actualitzat correctament!");
-                    
-                    // refrescar la llista
+                    //MessageBox.Show("Usuari actualitzat correctament!");
                     await LoadUsuarisAsync();
                 }
                 else
@@ -124,21 +140,74 @@ namespace PIC.ViewModel
             switch (TipusCercaActual)
             {
                 case TipusCerca.PerId:
-                    var usuari = await _apiClient.GetUsuariPerIdAsync(int.Parse(ParametreCerca));
+                    var usuari = await _usuarisApiClient.GetUsuariPerIdAsync(int.Parse(ParametreCerca));
                     Usuaris.Add(usuari);
                     break;
 
                 case TipusCerca.PerCurs:
-                    var curs = await _apiClient.GetUsuarisPerIdCursAsync(int.Parse(ParametreCerca));
+                    var curs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(int.Parse(ParametreCerca));
                     foreach (var u in curs)
                         Usuaris.Add(u);
                     break;
 
                 case TipusCerca.PerDepartament:
-                    var dep = await _apiClient.GetUsuarisPerIdDepartamentAsync(int.Parse(ParametreCerca));
+                    var dep = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(int.Parse(ParametreCerca));
                     foreach (var u in dep)
                         Usuaris.Add(u);
                     break;
+            }
+        }
+
+        // AFEGIR ALUMNE
+        public async Task AfegirAlumneAsync(Alumne alumneAAfegir)
+        {
+            try
+            {
+                Alumne result = await _alumnesApiClient.PostAlumneAsync(alumneAAfegir);
+                if (result != null)
+                {
+                    await LoadUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error Alumne: {ex.Message}");
+            }
+        }
+
+        // ACTUALITZAR ALUMNE
+        public async Task ActualitzarAlumneAsync(Alumne alumneAModificar)
+        {
+            try
+            {
+                int result = await _alumnesApiClient.UpdateAlumneAsync(alumneAModificar);
+                if (result <= 0)
+                {
+                    //MessageBox.Show("No s'ha pogut actualitzar l'alumne.");
+                    await LoadUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error Alumne: {ex.Message}");
+            }
+        }
+
+        // ACTUALITZAR PROFESSOR
+        public async Task ActualitzarProfessorAsync(Professor professorAModificar)
+        {
+            try
+            {
+                int result = await _professorsApiClient.UpdateProfessorAsync(professorAModificar);
+                if (result <= 0)
+                {
+                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
+                    await LoadUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error Alumne: {ex.Message}");
             }
         }
 

@@ -71,31 +71,48 @@
                     <StackPanel Orientation="Horizontal" 
                                 VerticalAlignment="Center" 
                                 Margin="10">
-                        
+
+                        <!-- TÍTOL -->
                         <TextBlock Name="usuarisTitol" 
-                                   FontSize="16" 
+                                   FontSize="12" 
                                    Style="{StaticResource Fraktion_Dark_Font}" 
                                    Margin="0, 0, 10, 0">USUARIS: TOTS</TextBlock>
 
+                        <!-- INPUT -->
                         <TextBox Name="inputArea"
                                  VerticalAlignment="Center"
                                  Width="200" 
                                  Text="{Binding ParametreCerca, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,10,0"/>
 
+                        <!-- BUSCAR -->
                         <Button Name="inputText"
                                 Content="Buscar"
                                 Width="100"
                                 Click="Buscar_Click"/>
 
+                        <!-- BOTO AFEGIR -->
+                        <Button Name="afegirAlumne"
+                                Content="Afegir alumne"
+                                Margin="50, 0, 10, 0"
+                                Click="AfegirAlumneMenu_Click"/>
+
+                        <!-- BOTO AFEGIR -->
+                        <Button Name="afegirProfessor"
+                                Content="Afegir professor "
+                                Margin="0, 0, 10, 0"
+                                Click="AfegirProfessorMenu_Click"/>
+
+                        <!-- BOTO EDITAR -->
                         <Button Name="editarUsuari"
                                 Content="Editar"
-                                Margin="50, 0, 10, 0"
-                                Click="EditarUsuari_Click"/>
+                                Margin="0, 0, 10, 0"
+                                Click="EditarUsuariMenu_Click"/>
 
+                        <!-- BOTO ESBORRAR -->
                         <Button Name="esborrarUsuari"
-                                Content="Esborrar"
-                                Click="EsborrarUsuari_Click"/>
+                                Content="Esborrar"  
+                                Click="EsborrarUsuariMenu_Click"/>
 
                     </StackPanel>
                 </Grid>
@@ -201,6 +218,7 @@
             </Grid>
         </Grid>
 
+        <!-- MENU EDITAR -->
         <Grid x:Name="OverlayEditar"
               Visibility="Collapsed"
               Background="#80000000">
@@ -266,7 +284,8 @@
                                    FontSize="12" 
                                    Margin="0,0,0,10"/>
 
-                        <ComboBox Name="cbGrups">
+                        <ComboBox Name="cbGrups"
+                                  SelectedValuePath="Id">
                             <ComboBox.ItemTemplate>
                                 <DataTemplate>
                                     <TextBlock Text="{Binding Path=Nom}" FontSize="12" Style="{StaticResource Fraktion_Dark_Font}"></TextBlock>
@@ -285,6 +304,204 @@
                                 Width="80" 
                                 Margin="0,0,10,0"
                                 Click="Guardar_Click"/>
+
+                        <Button Content="Cancel·lar" 
+                                Width="80" 
+                                Click="TancarOverlay_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- MENU AFEGIR ALUMNE -->
+        <Grid x:Name="OverlayAfegirAlumne"
+              Visibility="Collapsed"
+              Background="#80000000">
+
+            <!-- POPUP -->
+            <Border Width="300"
+                    Background="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- TÍTOL -->
+                    <Grid Background="#131316" 
+                          VerticalAlignment="Center">
+
+                        <TextBlock Text="AFEGIR ALUMNE" 
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   FontSize="16" 
+                                   Margin="20, 10, 20, 10"/>
+                    </Grid>
+
+                    <!-- NOM -->
+                    <StackPanel Grid.Row="1" 
+                                Margin="20, 10, 20, 0">
+                        <TextBlock Text="NOM: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox Name="aa_textNom" 
+                                 Margin="0,0,0,20"  
+                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                    </StackPanel>
+
+                    <!-- COGNOM -->
+                    <StackPanel Grid.Row="2" 
+                        Margin="20, 0, 20, 0">
+
+                        <TextBlock Text="COGNOM: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox Name="aa_textCognom" 
+                                 Margin="0,0,0,20"                                 
+                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                    </StackPanel>
+
+                    <!-- GRUP -->
+                    <StackPanel Grid.Row="3" 
+                        Margin="20, 0, 20, 0">
+
+                        <TextBlock Text="CURS: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <ComboBox Name="cbCursos"
+                                  SelectedValuePath="Id">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Nom}" 
+                                               FontSize="12" 
+                                               Style="{StaticResource Fraktion_Dark_Font}">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- BOTONS -->
+                    <StackPanel Grid.Row="4" 
+                                Margin="20"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+
+                        <Button Content="Guardar" 
+                                Width="80" 
+                                Margin="0,0,10,0"
+                                Click="AfegirAlumne_Click"/>
+
+                        <Button Content="Cancel·lar" 
+                                Width="80" 
+                                Click="TancarOverlay_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Border>
+        </Grid>
+
+        <!-- MENU AFEGIR ALUMNE -->
+        <Grid x:Name="OverlayAfegirProfessor"
+              Visibility="Collapsed"
+              Background="#80000000">
+
+            <!-- POPUP -->
+            <Border Width="300"
+                    Background="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- TÍTOL -->
+                    <Grid Background="#131316" 
+                          VerticalAlignment="Center">
+
+                        <TextBlock Text="AFEGIR PROFESSOR" 
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   FontSize="16" 
+                                   Margin="20, 10, 20, 10"/>
+                    </Grid>
+
+                    <!-- NOM -->
+                    <StackPanel Grid.Row="1" 
+                                Margin="20, 10, 20, 0">
+                        <TextBlock Text="NOM: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox Name="ap_textNom" 
+                                 Margin="0,0,0,20"  
+                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                    </StackPanel>
+
+                    <!-- COGNOM -->
+                    <StackPanel Grid.Row="2" 
+                                Margin="20, 0, 20, 0">
+
+                        <TextBlock Text="COGNOM: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox Name="ap_textCognom" 
+                                 Margin="0,0,0,20"                                 
+                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                    </StackPanel>
+
+                    <!-- GRUP -->
+                    <StackPanel Grid.Row="3" 
+                                Margin="20, 0, 20, 0">
+
+                        <TextBlock Text="DEPARTAMENT: " 
+                                    Style="{StaticResource Fraktion_Dark_Font}" 
+                                    FontSize="12" 
+                                    Margin="0,0,0,10"/>
+
+                        <ComboBox Name="cbDepartaments"
+                                  SelectedValuePath="Id">
+                            <ComboBox.ItemTemplate>
+                                <DataTemplate>
+                                    <TextBlock Text="{Binding Path=Nom}" 
+                                       FontSize="12" 
+                                       Style="{StaticResource Fraktion_Dark_Font}">
+                                    </TextBlock>
+                                </DataTemplate>
+                            </ComboBox.ItemTemplate>
+                        </ComboBox>
+                    </StackPanel>
+
+                    <!-- BOTONS -->
+                    <StackPanel Grid.Row="4" 
+                                Margin="20"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+
+                        <Button Content="Guardar" 
+                                Width="80" 
+                                Margin="0,0,10,0"
+                                Click="AfegirProfessor_Click"/>
 
                         <Button Content="Cancel·lar" 
                                 Width="80" 

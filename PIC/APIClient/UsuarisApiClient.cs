@@ -152,7 +152,7 @@ namespace PIC.APIClient
         }
 
         // AFEGIR USUARI
-        public async Task<Usuari> PostUsuariAsync(Usuari newUser)
+        public async Task<NouUsuari> PostUsuariAsync(NouUsuari nouUsuari)
         {
             using (var client = new HttpClient())
             {
@@ -161,12 +161,12 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Enviem una petició POST amb JSON directament
-                HttpResponseMessage response = await client.PostAsJsonAsync("usuaris", newUser);
+                HttpResponseMessage response = await client.PostAsJsonAsync("usuaris", nouUsuari);
 
                 if (response.IsSuccessStatusCode)
                 {
                     // Retornem l'usuari creat amb l'ID assignat pel servidor
-                    var createdUser = await response.Content.ReadAsAsync<Usuari>();
+                    var createdUser = await response.Content.ReadAsAsync<NouUsuari>();
                     response.Dispose();
                     return createdUser;
                 }
@@ -178,7 +178,7 @@ namespace PIC.APIClient
         }
 
         // ACTUALITZAR USUARI
-        public async Task<int> UpdateUsuariAsync(Usuari user)
+        public async Task<int> UpdateUsuariAsync(Usuari usuari)
         {
             using (var client = new HttpClient())
             {
@@ -187,7 +187,7 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Enviem una petició PUT a /usuaris/{id} amb l'usuari
-                HttpResponseMessage response = await client.PutAsJsonAsync($"usuaris/{user.Id}", user);
+                HttpResponseMessage response = await client.PutAsJsonAsync($"usuaris/{usuari.Id}", usuari);
 
                 if (response.IsSuccessStatusCode)
                 {
