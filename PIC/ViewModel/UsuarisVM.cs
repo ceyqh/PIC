@@ -77,7 +77,7 @@ namespace PIC.ViewModel
 
             catch (Exception ex)
             {
-                MessageBox.Show($"Error al crear l'usuari: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
@@ -104,7 +104,7 @@ namespace PIC.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error usuari: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
 
             return null;
@@ -171,7 +171,7 @@ namespace PIC.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error Alumne: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
@@ -189,7 +189,24 @@ namespace PIC.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error Alumne: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        // AFEGIR PROFESSOR
+        public async Task AfegirProfessorAsync(Professor professorAAfegir)
+        {
+            try
+            {
+                Professor result = await _professorsApiClient.PostProfessorAsync(professorAAfegir);
+                if (result != null)
+                {
+                    await LoadUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
@@ -207,7 +224,7 @@ namespace PIC.ViewModel
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error Alumne: {ex.Message}");
+                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 

@@ -154,13 +154,22 @@
                         </Grid>
 
                         <Grid Grid.Column="4" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">GRUP</TextBlock>
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">CURS / DEPARTAMENT</TextBlock>
                         </Grid>
 
                         <Grid Grid.Column="5" VerticalAlignment="Center">
                             <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">
-                                <Span x:Name="labelIdGrup">
-                                    <Run>ID_GRUP</Run>
+                                <Span>
+                                    <Run>ID</Run>
+                                </Span>
+                                <Span x:Name="labelIdCurs">
+                                    <Run>CURS</Run>
+                                </Span>
+                                <Span>
+                                    <Run>/</Run>
+                                </Span>
+                                <Span x:Name="labelIdDepartament">
+                                    <Run>DEPARTAMENT</Run>
                                 </Span>
                             </TextBlock>
                         </Grid>
@@ -187,28 +196,34 @@
                                     </Grid.ColumnDefinitions>
 
                                     <TextBlock Grid.Column="0"  
-                                               FontSize="12"                                              
+                                               FontSize="12"      
+                                               Style="{StaticResource Fraktion_Dark_Font}"
                                                Text="{Binding Id}" 
                                                Margin="10,0,0,0"/>
 
                                     <TextBlock Grid.Column="1" 
                                                FontSize="12"  
+                                               Style="{StaticResource Fraktion_Dark_Font}"
                                                Text="{Binding Nom}"/>
 
                                     <TextBlock Grid.Column="2" 
                                                FontSize="12"  
+                                               Style="{StaticResource Fraktion_Dark_Font}"
                                                Text="{Binding Cognom}"/>
 
                                     <TextBlock Grid.Column="3" 
                                                FontSize="12"  
+                                               Style="{StaticResource Fraktion_Dark_Font}"
                                                Text="{Binding Tipus}"/>
 
                                     <TextBlock Grid.Column="4" 
                                                FontSize="12" 
+                                               Style="{StaticResource Fraktion_Dark_Font}"
                                                Text="{Binding Grup}"/>
 
                                     <TextBlock Grid.Column="5" 
                                                FontSize="12"  
+                                               Style="{StaticResource Fraktion_Dark_Font}"
                                                Text="{Binding IdGrup}"/>
                                 </Grid>
                             </DataTemplate>

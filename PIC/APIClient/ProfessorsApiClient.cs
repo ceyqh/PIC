@@ -19,6 +19,32 @@ namespace PIC.APIClient
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
         }
 
+        // AFEGIR PROFESSOR
+        public async Task<Professor> PostProfessorAsync(Professor nouProfessor)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Enviem una petició POST amb JSON directament
+                HttpResponseMessage response = await client.PostAsJsonAsync("professors", nouProfessor);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Retornem l'usuari creat amb l'ID assignat pel servidor
+                    var createdProfessor = await response.Content.ReadAsAsync<Professor>();
+                    response.Dispose();
+                    return createdProfessor;
+                }
+                else
+                {
+                    throw new Exception($"Error al crear usuari: {response.StatusCode}");
+                }
+            }
+        }
+
         // ACTUALITZAR PROFESSOR
         public async Task<int> UpdateProfessorAsync(Professor professor)
         {

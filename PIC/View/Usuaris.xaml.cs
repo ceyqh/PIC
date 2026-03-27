@@ -46,7 +46,8 @@ namespace PIC.View
             vm.TipusCercaActual = TipusCerca.Tots;
             await vm.LoadUsuarisAsync();
 
-            labelIdGrup.Background = transp;
+            labelIdCurs.Background = transp;
+            labelIdDepartament.Background = transp;
             labelId.Background = transp;
         }
 
@@ -61,7 +62,8 @@ namespace PIC.View
             vm.ClearUsuaris();
             ((UsuarisVM)DataContext).TipusCercaActual = TipusCerca.PerId;
 
-            labelIdGrup.Background = transp;
+            labelIdCurs.Background = transp;
+            labelIdDepartament.Background = transp;
             labelId.Background = colorit;
         }
 
@@ -76,7 +78,8 @@ namespace PIC.View
             vm.ClearUsuaris();
             ((UsuarisVM)DataContext).TipusCercaActual = TipusCerca.PerCurs;
 
-            labelIdGrup.Background = colorit;
+            labelIdCurs.Background = colorit;
+            labelIdDepartament.Background = transp;
             labelId.Background = transp;
         }
 
@@ -91,7 +94,8 @@ namespace PIC.View
             vm.ClearUsuaris();
             ((UsuarisVM)DataContext).TipusCercaActual = TipusCerca.PerDepartament;
 
-            labelIdGrup.Background = colorit;
+            labelIdCurs.Background = transp;
+            labelIdDepartament.Background = colorit;
             labelId.Background = transp;
         }
 
@@ -272,9 +276,39 @@ namespace PIC.View
             }
         }
 
-        private void AfegirProfessor_Click(object sender, RoutedEventArgs e)
+        private async void AfegirProfessor_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                NouUsuari nouUsuari = new NouUsuari
+                {
+                    Nom = ap_textNom.Text,
+                    Cognom = ap_textCognom.Text
 
+                };
+
+                var vm = (UsuarisVM)DataContext;
+                Usuari usuariCreat = await vm.AfegirUsuariAsync(nouUsuari);
+
+                //MessageBox.Show(usuariCreat.Id + " " + cbCursos.SelectedValue);
+
+                if (usuariCreat != null)
+                {
+                    Professor nouProfessor = new Professor
+                    {
+                        IdUsuari = usuariCreat.Id,
+                        IdDepartament = (long)cbDepartaments.SelectedValue
+                    };
+
+                    await vm.AfegirProfessorAsync(nouProfessor);
+                }
+
+                OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
     }
 }
