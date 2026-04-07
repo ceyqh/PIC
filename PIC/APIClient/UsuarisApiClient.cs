@@ -202,5 +202,31 @@ namespace PIC.APIClient
                 }
             }
         }
+
+        // ESBORRAR USUARI
+        public async Task<int> DeleteUsuariAsync(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Enviem una petició DELETE a /usuaris/{id}
+                HttpResponseMessage response = await client.DeleteAsync($"usuaris/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Si el teu backend retorna algun valor (ex: 1)
+                    var result = await response.Content.ReadAsAsync<int>();
+                    response.Dispose();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception($"Error al esborrar l'aumne: {response.StatusCode}");
+                }
+            }
+        }
     }
 }

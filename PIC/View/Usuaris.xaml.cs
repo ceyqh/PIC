@@ -151,9 +151,32 @@ namespace PIC.View
         }
 
         // ESBORRAR USUARI
-        private void EsborrarUsuariMenu_Click(object sender, RoutedEventArgs e)
+        private async void EsborrarUsuariMenu_Click(object sender, RoutedEventArgs e)
         {
+            try
+            {
+                usuariSeleccionat = llistaUsuaris.SelectedItem as Usuari;
+                int usuariId = (int)usuariSeleccionat.Id;
+                var vm = (UsuarisVM)DataContext;
 
+                if (usuariSeleccionat.Tipus.ToLower() == "alumne")
+                {
+                    await vm.EsborrarAlumneAsync(usuariId);
+                    await vm.EsborrarUsuariAsync(usuariId);
+                }
+
+                if (usuariSeleccionat.Tipus.ToLower() == "professor")
+                {
+                    await vm.EsborrarProfessorAsync(usuariId);
+                    await vm.EsborrarUsuariAsync(usuariId);
+                }
+
+                OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.ToString());
+            }
         }
 
         private void TancarOverlay_Click(object sender, RoutedEventArgs e)

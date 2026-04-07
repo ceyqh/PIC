@@ -123,13 +123,26 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="12" Grid.Column="0" Text="{Binding Id}" Margin="10,0,0,0"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="0" 
+                                               Text="{Binding Id}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"
+                                               Margin="10,0,0,0"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="1" Text="{Binding Nom}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="1" 
+                                               Text="{Binding Nom}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="2" Text="{Binding IdCategoria}"/>
+                                    <TextBlock FontSize="12"
+                                               Grid.Column="2" 
+                                               Text="{Binding IdCategoria}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="3" Text="{Binding Disponible}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="3" 
+                                               Text="{Binding Disponible}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

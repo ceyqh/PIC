@@ -104,9 +104,16 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="12" Grid.Column="0" Text="{Binding Id}" Margin="10,0,0,0"/>
+                                    <TextBlock Grid.Column="0" 
+                                               FontSize="12"
+                                               Text="{Binding Id}" 
+                                               Style="{StaticResource Fraktion_Dark_Font}"
+                                               Margin="10,0,0,0"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="1" Text="{Binding Nom}"/>
+                                    <TextBlock Grid.Column="1" 
+                                               FontSize="12"                                                
+                                               Text="{Binding Nom}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

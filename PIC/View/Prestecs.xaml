@@ -175,21 +175,46 @@
                                         <ColumnDefinition Width="*"/>
                                     </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="12" Grid.Column="0" Text="{Binding Id}" Margin="10,0,0,0"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="0" 
+                                               Text="{Binding Id}" 
+                                               Style="{StaticResource Fraktion_Dark_Font}"
+                                               Margin="10,0,0,0"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="1" Text="{Binding NomUsuari}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="1" 
+                                               Text="{Binding NomUsuari}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="2" Text="{Binding IdUsuari}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="2" 
+                                               Text="{Binding IdUsuari}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
 
-                                    <TextBlock FontSize="12" Grid.Column="3" Text="{Binding NomDispositiu}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="3" 
+                                               Text="{Binding NomDispositiu}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
                                     
-                                    <TextBlock FontSize="12" Grid.Column="4" Text="{Binding IdDispositiu}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="4"
+                                               Text="{Binding IdDispositiu}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
                                     
-                                    <TextBlock FontSize="12" Grid.Column="5" Text="{Binding DataEntrega}"/>
+                                    <TextBlock FontSize="12"
+                                               Grid.Column="5" 
+                                               Text="{Binding DataEntrega}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
                                     
-                                    <TextBlock FontSize="12" Grid.Column="6" Text="{Binding DataRetorn}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="6" 
+                                               Text="{Binding DataRetorn}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
                                     
-                                    <TextBlock FontSize="12" Grid.Column="7" Text="{Binding Retornat}"/>
+                                    <TextBlock FontSize="12" 
+                                               Grid.Column="7" 
+                                               Text="{Binding Retornat}"
+                                               Style="{StaticResource Fraktion_Dark_Font}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

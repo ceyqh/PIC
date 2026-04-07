@@ -228,6 +228,60 @@ namespace PIC.ViewModel
             }
         }
 
+        // ESBORRAR USUARI
+        public async Task EsborrarUsuariAsync(int id)
+        {
+            try
+            {
+                int result = await _usuarisApiClient.DeleteUsuariAsync(id);
+                if (result <= 0)
+                {
+                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
+                    await LoadUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        // ESBORRAR ALUMNE
+        public async Task EsborrarAlumneAsync(int id)
+        {
+            try
+            {
+                int result = await _alumnesApiClient.DeleteAlumneAsync(id);
+                if (result <= 0)
+                {
+                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
+                    await LoadUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        // ESBORRAR PROFESSOR
+        public async Task EsborrarProfessorAsync(int id)
+        {
+            try
+            {
+                int result = await _professorsApiClient.DeleteProfessorAsync(id);
+                if (result <= 0)
+                {
+                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
+                    await LoadUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
         // BUIDAR LIST VIEW
         public void ClearUsuaris()
         {

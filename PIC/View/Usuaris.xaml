@@ -260,7 +260,7 @@
                         
                         <TextBlock Text="EDITAR USUARI" 
                                    Style="{StaticResource Fraktion_Light_Font}" 
-                                   FontSize="16" 
+                                   FontSize="12" 
                                    Margin="20, 10, 20, 10"/>
                     </Grid>
 
@@ -355,7 +355,7 @@
 
                         <TextBlock Text="AFEGIR ALUMNE" 
                                    Style="{StaticResource Fraktion_Light_Font}" 
-                                   FontSize="16" 
+                                   FontSize="12" 
                                    Margin="20, 10, 20, 10"/>
                     </Grid>
 
@@ -454,7 +454,7 @@
 
                         <TextBlock Text="AFEGIR PROFESSOR" 
                                    Style="{StaticResource Fraktion_Light_Font}" 
-                                   FontSize="16" 
+                                   FontSize="12" 
                                    Margin="20, 10, 20, 10"/>
                     </Grid>
 

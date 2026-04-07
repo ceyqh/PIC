@@ -7,6 +7,7 @@ using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 
 namespace PIC.APIClient
 {
@@ -66,6 +67,31 @@ namespace PIC.APIClient
                     // Això t'ajudarà a depurar si torna a fallar
                     string errorContent = await response.Content.ReadAsStringAsync();
                     throw new Exception($"Error API ({response.StatusCode}): {errorContent}");
+                }
+            }
+        }
+
+        // ESBORRAR PROFESSOR
+        public async Task<int> DeleteProfessorAsync(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.DeleteAsync($"professors/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Si el teu backend retorna algun valor (ex: 1)
+                    var result = await response.Content.ReadAsAsync<int>();
+                    response.Dispose();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception($"Error al esborrar el professor: {response.StatusCode}");
                 }
             }
         }
