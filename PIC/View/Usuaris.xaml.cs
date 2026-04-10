@@ -10,29 +10,30 @@ using System.Windows.Media;
 
 namespace PIC.View
 {
-    /// <summary>
-    /// Lógica de interacción para Usuaris.xaml
-    /// </summary>
     public partial class Usuaris : UserControl
     {
-        Brush colorit = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1fb9f9"));
-        Brush transp = new SolidColorBrush(Colors.Transparent);
-
+        private Usuari usuariSeleccionat = new Usuari();
+        
         private CursosVM cursosVM = new CursosVM();
         private DepartamentsVM departamentsVM = new DepartamentsVM();
-
-        private Usuari usuariSeleccionat = new Usuari();
+        
+        // blau
+        Brush colorAplicat = (SolidColorBrush)(new BrushConverter().ConvertFrom("#1fb9f9"));
+        Brush colorTransparent = new SolidColorBrush(Colors.Transparent);
 
         public Usuaris()
         {
             InitializeComponent();
             inputArea.Visibility = Visibility.Hidden;
-            inputText.Visibility = Visibility.Hidden;
+            inputBoto.Visibility = Visibility.Hidden;
 
-            Loaded += async (s, e) =>
-            {
-                await ((UsuarisVM)DataContext).LoadUsuarisAsync();
-            };
+            CarregarUsuaris();
+        }
+
+        public async void CarregarUsuaris()
+        {
+            var vm = (UsuarisVM)DataContext;
+            await vm.MostrarUsuarisAsync();
         }
 
         // MOSTRAR TOTS
@@ -40,15 +41,14 @@ namespace PIC.View
         {
             usuarisTitol.Text = "USUARIS: TOTS";
             inputArea.Visibility = Visibility.Hidden;
-            inputText.Visibility = Visibility.Hidden;
+            inputBoto.Visibility = Visibility.Hidden;
 
             var vm = (UsuarisVM)DataContext;
-            vm.TipusCercaActual = TipusCerca.Tots;
-            await vm.LoadUsuarisAsync();
+            await vm.MostrarUsuarisAsync();
 
-            labelIdCurs.Background = transp;
-            labelIdDepartament.Background = transp;
-            labelId.Background = transp;
+            labelIdCurs.Background = colorTransparent;
+            labelIdDepartament.Background = colorTransparent;
+            labelId.Background = colorTransparent;
         }
 
         // CERCAR PER ID
@@ -56,15 +56,15 @@ namespace PIC.View
         {
             usuarisTitol.Text = "USUARIS: PER ID";
             inputArea.Visibility = Visibility.Visible;
-            inputText.Visibility = Visibility.Visible;
+            inputBoto.Visibility = Visibility.Visible;
 
             var vm = (UsuarisVM)DataContext;
             vm.ClearUsuaris();
-            ((UsuarisVM)DataContext).TipusCercaActual = TipusCerca.PerId;
+            ((UsuarisVM)DataContext).TipusCercaActual = UsuarisTipusCerca.PerId;
 
-            labelIdCurs.Background = transp;
-            labelIdDepartament.Background = transp;
-            labelId.Background = colorit;
+            labelIdCurs.Background = colorTransparent;
+            labelIdDepartament.Background = colorTransparent;
+            labelId.Background = colorAplicat;
         }
 
         // CERCAR PER CURS
@@ -72,15 +72,15 @@ namespace PIC.View
         {
             usuarisTitol.Text = "USUARIS: PER CURS (ID)";
             inputArea.Visibility = Visibility.Visible;
-            inputText.Visibility = Visibility.Visible;
+            inputBoto.Visibility = Visibility.Visible;
 
             var vm = (UsuarisVM)DataContext;
             vm.ClearUsuaris();
-            ((UsuarisVM)DataContext).TipusCercaActual = TipusCerca.PerCurs;
+            ((UsuarisVM)DataContext).TipusCercaActual = UsuarisTipusCerca.PerCurs;
 
-            labelIdCurs.Background = colorit;
-            labelIdDepartament.Background = transp;
-            labelId.Background = transp;
+            labelIdCurs.Background = colorAplicat;
+            labelIdDepartament.Background = colorTransparent;
+            labelId.Background = colorTransparent;
         }
 
         // CERCAR PER DEPARTAMENT
@@ -88,21 +88,21 @@ namespace PIC.View
         {
             usuarisTitol.Text = "USUARIS: PER DEPARTAMENT (ID)";
             inputArea.Visibility = Visibility.Visible;
-            inputText.Visibility = Visibility.Visible;
+            inputBoto.Visibility = Visibility.Visible;
 
             var vm = (UsuarisVM)DataContext;
             vm.ClearUsuaris();
-            ((UsuarisVM)DataContext).TipusCercaActual = TipusCerca.PerDepartament;
+            ((UsuarisVM)DataContext).TipusCercaActual = UsuarisTipusCerca.PerDepartament;
 
-            labelIdCurs.Background = transp;
-            labelIdDepartament.Background = colorit;
-            labelId.Background = transp;
+            labelIdCurs.Background = colorTransparent;
+            labelIdDepartament.Background = colorAplicat;
+            labelId.Background = colorTransparent;
         }
 
         // FER LA CERCA
         private async void Buscar_Click(object sender, RoutedEventArgs e)
         {
-            await ((UsuarisVM)DataContext).BuscarAsync();
+            await ((UsuarisVM)DataContext).CercaUsuarisAsync();
         }
 
         // EDITAR USUARI
@@ -114,20 +114,14 @@ namespace PIC.View
             usuariSeleccionat = llistaUsuaris.SelectedItem as Usuari;
 
             //SI NO HI HA CAP USUARI SEL·LECCIONAT
-            if (usuariSeleccionat == null)
-            {
-                MessageBox.Show("Escull un usuari");
-            }
-
-            //SI HI HA UN USUARI SEL·LECCIONAT
-            else
+            if (usuariSeleccionat != null)
             {
                 OverlayEditar.Visibility = Visibility.Visible;
 
                 if (usuariSeleccionat.Tipus == "Alumne")
                 {
                     cbGrups.ItemsSource = null;
-                    await cursosVM.LoadCursosAsync();
+                    await cursosVM.MostrarCursosAsync();
                     cbGrups.ItemsSource = cursosVM.Cursos;
 
                     cbGrups.SelectedValue = usuariSeleccionat.IdGrup;
@@ -145,8 +139,13 @@ namespace PIC.View
 
                 textNom.Text = usuariSeleccionat.Nom;
                 textCognom.Text = usuariSeleccionat.Cognom;
+            }
 
-                // ACTUALITZAR USUARI AQUI
+            //SI HI HA UN USUARI SEL·LECCIONAT
+            else
+            {
+                missatgeError.Text = "Has de sel·leccionar un usuari.";
+                OverlayError.Visibility = Visibility.Visible;
             }
         }
 
@@ -156,22 +155,29 @@ namespace PIC.View
             try
             {
                 usuariSeleccionat = llistaUsuaris.SelectedItem as Usuari;
-                int usuariId = (int)usuariSeleccionat.Id;
-                var vm = (UsuarisVM)DataContext;
 
-                if (usuariSeleccionat.Tipus.ToLower() == "alumne")
+                if (usuariSeleccionat != null)
                 {
-                    await vm.EsborrarAlumneAsync(usuariId);
-                    await vm.EsborrarUsuariAsync(usuariId);
-                }
+                    int usuariId = (int)usuariSeleccionat.Id;
+                    var vm = (UsuarisVM)DataContext;
 
-                if (usuariSeleccionat.Tipus.ToLower() == "professor")
+                    if (usuariSeleccionat.Tipus.ToLower() == "alumne")
+                    {
+                        await vm.EsborrarAlumneAsync(usuariId);
+                        await vm.EsborrarUsuariAsync(usuariId);
+                    }
+
+                    if (usuariSeleccionat.Tipus.ToLower() == "professor")
+                    {
+                        await vm.EsborrarProfessorAsync(usuariId);
+                        await vm.EsborrarUsuariAsync(usuariId);
+                    }
+                }
+                else
                 {
-                    await vm.EsborrarProfessorAsync(usuariId);
-                    await vm.EsborrarUsuariAsync(usuariId);
+                    missatgeError.Text = "Has de sel·leccionar un usuari.";
+                    OverlayError.Visibility = Visibility.Visible;
                 }
-
-                OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
             }
             catch (Exception ex)
             {
@@ -179,11 +185,13 @@ namespace PIC.View
             }
         }
 
+        // TANCAR MENÚS
         private void TancarOverlay_Click(object sender, RoutedEventArgs e)
         {
             OverlayEditar.Visibility = Visibility.Collapsed;
             OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
             OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
+            OverlayError.Visibility = Visibility.Collapsed;
         }
 
         // GUARDAR CANVIS USUARI
@@ -230,6 +238,7 @@ namespace PIC.View
             }
         }
 
+        // OBRIR MENU AFEGIR ALUMNE
         private async void AfegirAlumneMenu_Click(object sender, RoutedEventArgs e)
         {
             aa_textNom.Text = "";
@@ -238,7 +247,7 @@ namespace PIC.View
             OverlayAfegirAlumne.Visibility = Visibility.Visible;
 
             cbCursos.ItemsSource = null;
-            await cursosVM.LoadCursosAsync();
+            await cursosVM.MostrarCursosAsync();
             cbCursos.ItemsSource = cursosVM.Cursos;
 
             if (cbCursos.ItemsSource != null)
@@ -247,6 +256,7 @@ namespace PIC.View
             }
         }
 
+        // OBRIR MENU AFEGIR PROFESSOR
         private async void AfegirProfessorMenu_Click(object sender, RoutedEventArgs e)
         {
             ap_textNom.Text = "";
@@ -264,6 +274,7 @@ namespace PIC.View
             }
         }
 
+        // GUARDAR EL NOU ALUMNE
         private async void AfegirAlumne_Click(object sender, RoutedEventArgs e)
         {
             try
@@ -299,6 +310,7 @@ namespace PIC.View
             }
         }
 
+        // GUARDAR EL NOU PROFESSOR
         private async void AfegirProfessor_Click(object sender, RoutedEventArgs e)
         {
             try

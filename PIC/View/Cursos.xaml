@@ -27,14 +27,14 @@
                 <StackPanel Height="400" Width="200">
 
                     <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" IsChecked="True">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="Tots_Click" IsChecked="True">
                         <Grid>
                             <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerId_Click">
                         <Grid>
                             <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
@@ -48,62 +48,283 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
-                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
-                <Grid Grid.Row="0" Background="#a5a6af">
+                <Grid Grid.Row="0" 
+                      Background="#a5a6af">
 
-                </Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
 
-                <!-- APARTAT DEL RESULTATS -->
-                <Grid Grid.Row="1" Background="White">
-                    <Grid>
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Center" 
+                                Margin="10">
+
+                        <!-- TÍTOL -->
+                        <TextBlock Name="usuarisTitol" 
+                                   FontSize="12" 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   Margin="0, 0, 10, 0">CURSOS: TOTS</TextBlock>
+
+                        <!-- INPUT -->
+                        <TextBox Name="inputArea"
+                                 VerticalAlignment="Center"
+                                 Width="200" 
+                                 Text="{Binding ParametreCerca, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,10,0"/>
+
+                        <!-- BUSCAR -->
+                        <Button Name="inputBoto"
+                                Content="BUSCAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
+                                Click="Buscar_Click"/>
+
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
+                        <Grid Grid.Column="0">
+
+                            <!-- BOTO AFEGIR PROFESSOR -->
+                            <Button Name="afegirCurs"
+                                    Content="AFEGIR CURS"
+                                    Style="{StaticResource Accions_Button}"
+                                    Click="AfegirCursMenu_Click"/>
                         </Grid>
 
-                        <Grid Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
+                        <Grid Grid.Column="1">
+
+                            <!-- BOTO EDITAR -->
+                            <Button Name="editarCurs"
+                                    Content="EDITAR CURS"
+                                    Style="{StaticResource Accions_Button}"/>
+
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+
+                            <!-- BOTO ESBORRAR -->
+                            <Button Name="esborrarCurs"
+                                    Content="ESBORRAR CURS"  
+                                    Style="{StaticResource Accions_Button}"
+                                    Click="EsborrarCursMenu_Click"/>
                         </Grid>
                     </Grid>
 
                 </Grid>
 
-                <Grid Grid.Row="2">
-                    <ListView x:Name="llistaTasques"
-                      ItemsSource="{Binding Cursos}"
-                      Style="{StaticResource UsersListView}"
-                      ItemContainerStyle="{StaticResource UsersListViewItem}">
+                <!-- APARTAT DEL RESULTATS -->
+                <Grid Grid.Row="1" 
+                      Background="White">
+                    
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                        <!-- CURSOS -->
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                                    <TextBlock FontSize="12" 
-                                               Grid.Column="0" 
-                                               Text="{Binding Id}" 
-                                               Style="{StaticResource Fraktion_Dark_Font}"
-                                               Margin="10,0,0,0"/>
+                            <!-- HEADER CURSOS -->
+                            <Grid Grid.Row="0"
+                                  Background="#e8e9e9">
+                                
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="12" 
-                                               Grid.Column="1" 
-                                               Text="{Binding Nom}"
-                                               Style="{StaticResource Fraktion_Dark_Font}"/>
+                                <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
                                 </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+
+                                <Grid Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
+                                </Grid>
+                            </Grid>
+
+                            <!-- LLISTAT CURSOS -->
+                            <Grid Grid.Row="2">
+                                <ListView x:Name="llistaCursos"
+                                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                          ItemsSource="{Binding Cursos}"
+                                          SelectedItem="{Binding CursSeleccionat, Mode=TwoWay}"
+                                          Style="{StaticResource ListViewStyle}"
+                                          ItemContainerStyle="{StaticResource ListViewStyleItem}">
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="0" 
+                                                           Text="{Binding Id}" 
+                                                           Style="{StaticResource Fraktion_Dark_Font}"
+                                                           Margin="10,0,0,0"/>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="1" 
+                                                           Text="{Binding Nom}"
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Grid>
+
+                        <!-- USUARIS -->
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- HEADER CURSOS -->
+                            <Grid Grid.Row="0"
+                                  Background="#c5c6cd">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
+                                </Grid>
+
+                                <Grid Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
+                                </Grid>
+                                
+                                <Grid Grid.Column="2" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">COGNOM</TextBlock>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="1"
+                                  Background="#e8e9e9">
+
+                                <ListView x:Name="llistaAlumnes"
+                                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                          ItemsSource="{Binding Usuaris}"
+                                          Style="{StaticResource ListViewStyle}"
+                                          ItemContainerStyle="{StaticResource ListViewStyleItem}"
+                                          Background="#e8e9e9">
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="0" 
+                                                           Text="{Binding Id}" 
+                                                           Style="{StaticResource Fraktion_Dark_Font}"
+                                                           Margin="10,0,0,0"/>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="1" 
+                                                           Text="{Binding Nom}"
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                                
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="2" 
+                                                           Text="{Binding Cognom}"
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Grid>
+                    </Grid>
+                </Grid>
+            </Grid>
+        </Grid>
+
+        <!-- MENU AFEGIR CURS -->
+        <Grid x:Name="OverlayAfegirCurs"
+              Visibility="Collapsed"
+              Background="#80000000">
+
+            <!-- POPUP -->
+            <Grid Width="300"
+                    Background="White"
+                    HorizontalAlignment="Center"
+                    VerticalAlignment="Center">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- TÍTOL -->
+                    <Grid Background="#131316" 
+                          VerticalAlignment="Center">
+
+                        <TextBlock Text="AFEGIR: CURS" 
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   FontSize="12" 
+                                   Margin="20, 10, 20, 10"/>
+                    </Grid>
+
+                    <!-- NOM -->
+                    <StackPanel Grid.Row="1" 
+                                Margin="20, 10, 20, 0">
+                        <TextBlock Text="NOM: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <TextBox Name="aa_textNom" 
+                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                    </StackPanel>
+
+                    <!-- BOTONS -->
+                    <StackPanel Grid.Row="2"
+                                Margin="20"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+
+                        <Button Content="GUARDAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
+                                Margin="0,0,10,0"
+                                Click="AfegirCurs_Click"/>
+
+                        <Button Content="CANCEL·LAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
+                                Click="TancarOverlay_Click"/>
+                    </StackPanel>
                 </Grid>
             </Grid>
         </Grid>

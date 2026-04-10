@@ -38,7 +38,7 @@
                     <!--// HOME //-->
                     <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding HomeCommand}" IsChecked="True">
                         <Grid>
-                            <TextBlock Text="HOME" Style="{StaticResource Text_Main_Menu_Button_Style}"/>
+                            <TextBlock Text="INICI" Style="{StaticResource Text_Main_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 

@@ -19,6 +19,7 @@ namespace PIC.APIClient
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
         }
 
+        // TOTS ELS CURSOS
         public async Task<List<Curs>> GetAllCursosAsync()
         {
             List<Curs> curs = new List<Curs>();
@@ -43,6 +44,92 @@ namespace PIC.APIClient
                 }
             }
             return curs;
+        }
+
+        // CURS PER ID
+        public async Task<Curs> GetCursPerIdAsync(int Id)
+        {
+            Curs curs = new Curs();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Enviem una petició GET al endpoint /cursos/{Id}
+                HttpResponseMessage response = await client.GetAsync($"cursos/{Id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    //Reposta 204 quan no ha trobat dades
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        curs = null;
+                    }
+                    else
+                    {
+                        //Obtenim el resultat i el carreguem al Objecte Curs
+                        curs = await response.Content.ReadAsAsync<Curs>();
+                        response.Dispose();
+                    }
+                }
+                else
+                {
+                    //TODO: que fer si ha anat malament? retornar null? 
+                }
+            }
+            return curs;
+        }
+
+        // AFEGIR CURS
+        public async Task<Curs> PostCursAsync(Curs nouCurs)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Enviem una petició POST amb JSON directament
+                HttpResponseMessage response = await client.PostAsJsonAsync("cursos", nouCurs);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Retornem el curs creat amb l'ID assignat pel servidor
+                    var createdCurs = await response.Content.ReadAsAsync<Curs>();
+                    response.Dispose();
+                    return createdCurs;
+                }
+                else
+                {
+                    throw new Exception($"Error al crear el curs: {response.StatusCode}");
+                }
+            }
+        }
+
+        // ESBORRAR CURS
+        public async Task<int> DeleteCursAsync(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.DeleteAsync($"cursos/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    // Si el teu backend retorna algun valor (ex: 1)
+                    var result = await response.Content.ReadAsAsync<int>();
+                    response.Dispose();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception($"Error al esborrar el curs: {response.StatusCode}");
+                }
+            }
         }
     }
 }

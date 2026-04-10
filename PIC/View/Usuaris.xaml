@@ -68,7 +68,14 @@
 
                 <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
                 <Grid Grid.Row="0" Background="#a5a6af">
-                    <StackPanel Orientation="Horizontal" 
+
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
+                    
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal" 
                                 VerticalAlignment="Center" 
                                 Margin="10">
 
@@ -86,39 +93,65 @@
                                  Margin="0,0,10,0"/>
 
                         <!-- BUSCAR -->
-                        <Button Name="inputText"
-                                Content="Buscar"
-                                Width="100"
+                        <Button Name="inputBoto"
+                                Content="BUSCAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
                                 Click="Buscar_Click"/>
 
-                        <!-- BOTO AFEGIR -->
-                        <Button Name="afegirAlumne"
-                                Content="Afegir alumne"
-                                Margin="50, 0, 10, 0"
-                                Click="AfegirAlumneMenu_Click"/>
-
-                        <!-- BOTO AFEGIR -->
-                        <Button Name="afegirProfessor"
-                                Content="Afegir professor "
-                                Margin="0, 0, 10, 0"
-                                Click="AfegirProfessorMenu_Click"/>
-
-                        <!-- BOTO EDITAR -->
-                        <Button Name="editarUsuari"
-                                Content="Editar"
-                                Margin="0, 0, 10, 0"
-                                Click="EditarUsuariMenu_Click"/>
-
-                        <!-- BOTO ESBORRAR -->
-                        <Button Name="esborrarUsuari"
-                                Content="Esborrar"  
-                                Click="EsborrarUsuariMenu_Click"/>
-
                     </StackPanel>
+
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <Grid Grid.Column="0">
+                            
+                            <!-- BOTO AFEGIR ALUMNE -->
+                            <Button Name="afegirAlumne"
+                                    Content="AFEGIR ALUMNE"
+                                    Style="{StaticResource Accions_Button}"
+                                    Click="AfegirAlumneMenu_Click"/>
+                        </Grid>
+
+                        <Grid Grid.Column="1">
+                            
+                            <!-- BOTO AFEGIR PROFESSOR -->
+                            <Button Name="afegirProfessor"
+                                    Content="AFEGIR PROFESSOR"
+                                    Style="{StaticResource Accions_Button}"
+                                    Click="AfegirProfessorMenu_Click"/>
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+                            
+                            <!-- BOTO EDITAR -->
+                            <Button Name="editarUsuari"
+                                    Content="EDITAR USUARI"
+                                    Style="{StaticResource Accions_Button}"
+                                    Click="EditarUsuariMenu_Click"/>
+                            
+                        </Grid>
+
+                        <Grid Grid.Column="3">
+
+                            <!-- BOTO ESBORRAR -->
+                            <Button Name="esborrarUsuari"
+                                    Content="ESBORRAR USUARI"  
+                                    Style="{StaticResource Accions_Button}"
+                                    Click="EsborrarUsuariMenu_Click"/>
+                        </Grid>
+                    </Grid>
                 </Grid>
 
                 <!-- APARTAT DEL RESULTATS -->
-                <Grid Grid.Row="1" Background="White">
+                <Grid Grid.Row="1"
+                      Background="#e8e9e9">
+                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -179,9 +212,10 @@
 
                 <Grid Grid.Row="2">
                     <ListView x:Name="llistaUsuaris"
+                              ScrollViewer.VerticalScrollBarVisibility="Hidden"
                               ItemsSource="{Binding Usuaris}"
-                              Style="{StaticResource UsersListView}"
-                              ItemContainerStyle="{StaticResource UsersListViewItem}">
+                              Style="{StaticResource ListViewStyle}"
+                              ItemContainerStyle="{StaticResource ListViewStyleItem}">
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
@@ -239,7 +273,7 @@
               Background="#80000000">
 
             <!-- POPUP -->
-            <Border Width="300"
+            <Grid Width="300"
                     Background="White"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -315,17 +349,19 @@
                                 Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
 
-                        <Button Content="Guardar" 
-                                Width="80" 
+                        <Button Content="GUARDAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
                                 Margin="0,0,10,0"
                                 Click="Guardar_Click"/>
 
-                        <Button Content="Cancel·lar" 
-                                Width="80" 
+                        <Button Content="CANCEL·LAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
                                 Click="TancarOverlay_Click"/>
                     </StackPanel>
                 </Grid>
-            </Border>
+            </Grid>
         </Grid>
 
         <!-- MENU AFEGIR ALUMNE -->
@@ -334,7 +370,7 @@
               Background="#80000000">
 
             <!-- POPUP -->
-            <Border Width="300"
+            <Grid Width="300"
                     Background="White"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -353,7 +389,7 @@
                     <Grid Background="#131316" 
                           VerticalAlignment="Center">
 
-                        <TextBlock Text="AFEGIR ALUMNE" 
+                        <TextBlock Text="AFEGIR: ALUMNE" 
                                    Style="{StaticResource Fraktion_Light_Font}" 
                                    FontSize="12" 
                                    Margin="20, 10, 20, 10"/>
@@ -409,31 +445,33 @@
                     </StackPanel>
 
                     <!-- BOTONS -->
-                    <StackPanel Grid.Row="4" 
+                    <StackPanel Grid.Row="4"
                                 Margin="20"
                                 Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
 
-                        <Button Content="Guardar" 
-                                Width="80" 
+                        <Button Content="GUARDAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
                                 Margin="0,0,10,0"
                                 Click="AfegirAlumne_Click"/>
 
-                        <Button Content="Cancel·lar" 
-                                Width="80" 
+                        <Button Content="CANCEL·LAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
                                 Click="TancarOverlay_Click"/>
                     </StackPanel>
                 </Grid>
-            </Border>
+            </Grid>
         </Grid>
 
-        <!-- MENU AFEGIR ALUMNE -->
+        <!-- MENU AFEGIR PROFESSOR -->
         <Grid x:Name="OverlayAfegirProfessor"
               Visibility="Collapsed"
               Background="#80000000">
 
             <!-- POPUP -->
-            <Border Width="300"
+            <Grid Width="300"
                     Background="White"
                     HorizontalAlignment="Center"
                     VerticalAlignment="Center">
@@ -452,7 +490,7 @@
                     <Grid Background="#131316" 
                           VerticalAlignment="Center">
 
-                        <TextBlock Text="AFEGIR PROFESSOR" 
+                        <TextBlock Text="AFEGIR: PROFESSOR" 
                                    Style="{StaticResource Fraktion_Light_Font}" 
                                    FontSize="12" 
                                    Margin="20, 10, 20, 10"/>
@@ -513,17 +551,73 @@
                                 Orientation="Horizontal" 
                                 HorizontalAlignment="Right">
 
-                        <Button Content="Guardar" 
-                                Width="80" 
+                        <Button Content="GUARDAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
                                 Margin="0,0,10,0"
                                 Click="AfegirProfessor_Click"/>
 
-                        <Button Content="Cancel·lar" 
-                                Width="80" 
+                        <Button Content="CANCEL·LAR"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
                                 Click="TancarOverlay_Click"/>
                     </StackPanel>
                 </Grid>
-            </Border>
+            </Grid>
+        </Grid>
+
+        <!-- FINESTRA ERROR -->
+        <Grid x:Name="OverlayError"
+              Visibility="Collapsed"
+              Background="#80000000">
+
+            <!-- POPUP -->
+            <Grid MaxWidth="700" 
+                  MinWidth="300"
+                  Background="White"
+                  HorizontalAlignment="Center"
+                  VerticalAlignment="Center">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+
+                    <!-- TÍTOL -->
+                    <Grid Background="#131316" 
+                          VerticalAlignment="Center">
+
+                        <TextBlock Text="ERROR" 
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   FontSize="12" 
+                                   Margin="20, 10, 20, 10"/>
+                    </Grid>
+
+                    <!-- MISSATGE -->
+                    <StackPanel Grid.Row="1" 
+                                Margin="20, 10, 20, 0">
+                        <TextBlock x:Name="missatgeError" 
+                                   Text="Hi ha hagut un error." 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12"
+                                   TextWrapping="Wrap"/>
+                    </StackPanel>
+
+                    <!-- BOTONS -->
+                    <StackPanel Grid.Row="2" 
+                                Margin="20"
+                                Orientation="Horizontal" 
+                                HorizontalAlignment="Right">
+
+                        <Button Content="D'ACORD"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"
+                                Click="TancarOverlay_Click"/>
+                    </StackPanel>
+                </Grid>
+            </Grid>
         </Grid>
     </Grid>
 </UserControl>

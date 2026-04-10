@@ -2,7 +2,7 @@
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
     <!-- LISTVIEW PRINCIPAL -->
-    <Style x:Key="UsersListView"
+    <Style x:Key="ListViewStyle"
        TargetType="ListView">
 
         <Setter Property="Background" Value="White"/>
@@ -13,7 +13,7 @@
     </Style>
 
     <!-- ITEMS DEL LISTVIEW -->
-    <Style x:Key="UsersListViewItem"
+    <Style x:Key="ListViewStyleItem"
        TargetType="ListViewItem">
 
         <Setter Property="Background" Value="White"/>
@@ -27,6 +27,8 @@
         <Setter Property="BorderThickness" Value="0"/>
         <Setter Property="Padding" Value="0"/>
         <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
 
         <Setter Property="Template">
             <Setter.Value>

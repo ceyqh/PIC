@@ -10,9 +10,8 @@ using System.Windows;
 
 namespace PIC.ViewModel
 {
-    public enum TipusCerca
+    public enum UsuarisTipusCerca
     {
-        Tots,
         PerId,
         PerCurs,
         PerDepartament
@@ -23,8 +22,8 @@ namespace PIC.ViewModel
         public ObservableCollection<Usuari> Usuaris { get; set; }
 
         // TIPUS DE CERCA
-        private TipusCerca _tipusCercaActual;
-        public TipusCerca TipusCercaActual
+        private UsuarisTipusCerca _tipusCercaActual;
+        public UsuarisTipusCerca TipusCercaActual
         {
             get => _tipusCercaActual;
             set
@@ -35,14 +34,21 @@ namespace PIC.ViewModel
         }
 
         // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private string _parametreCerca;
-        public string ParametreCerca
+        private int _parametreCerca;
+        public int ParametreCerca
         {
             get => _parametreCerca;
             set
             {
-                _parametreCerca = value;
-                OnPropertyChanged();
+                //if (value != null)
+                //{
+                    _parametreCerca = value;
+                    OnPropertyChanged();
+                //}
+                //else
+                //{
+                //    _parametreCerca = 1;
+                //}
             }
         }
 
@@ -58,11 +64,10 @@ namespace PIC.ViewModel
             _professorsApiClient = new ProfessorsApiClient();
 
             Usuaris = new ObservableCollection<Usuari>();
-            TipusCercaActual = TipusCerca.Tots;
         }
 
-        // CARREGAR TOTS ELS USUARIS
-        public async Task LoadUsuarisAsync()
+        // MOSTRAR TOTS ELS USUARIS
+        public async Task MostrarUsuarisAsync()
         {
             try
             {
@@ -78,6 +83,32 @@ namespace PIC.ViewModel
             catch (Exception ex)
             {
                 MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
+        // EXECUTAR CERCA
+        public async Task CercaUsuarisAsync()
+        {
+            Usuaris.Clear();
+
+            switch (TipusCercaActual)
+            {
+                case UsuarisTipusCerca.PerId:
+                    var usuari = await _usuarisApiClient.GetUsuariPerIdAsync(ParametreCerca);
+                    Usuaris.Add(usuari);
+                    break;
+
+                case UsuarisTipusCerca.PerCurs:                    
+                    var curs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(ParametreCerca);
+                    foreach (var u in curs)
+                        Usuaris.Add(u);
+                    break;
+
+                case UsuarisTipusCerca.PerDepartament:
+                    var dep = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(ParametreCerca);
+                    foreach (var u in dep)
+                        Usuaris.Add(u);
+                    break;
             }
         }
 
@@ -97,7 +128,7 @@ namespace PIC.ViewModel
                         Cognom = result.Cognom
                     };
 
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
 
                     return usuari;
                 }
@@ -110,6 +141,23 @@ namespace PIC.ViewModel
             return null;
         }
 
+        // AFEGIR ALUMNE
+        public async Task AfegirAlumneAsync(Alumne alumneAAfegir)
+        {
+            try
+            {
+                Alumne result = await _alumnesApiClient.PostAlumneAsync(alumneAAfegir);
+                if (result != null)
+                {
+                    await MostrarUsuarisAsync();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show($"Error: {ex.Message}");
+            }
+        }
+
         // ACTUALITZAR USUARI
         public async Task ActualitzarUsuariAsync(Usuari usuariAModificar)
         {
@@ -119,54 +167,11 @@ namespace PIC.ViewModel
                 if (result > 0)
                 {
                     //MessageBox.Show("Usuari actualitzat correctament!");
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
                 }
                 else
                 {
                     MessageBox.Show("No s'ha pogut actualitzar l'usuari.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        // EXECUTAR CERCA
-        public async Task BuscarAsync()
-        {
-            Usuaris.Clear();
-
-            switch (TipusCercaActual)
-            {
-                case TipusCerca.PerId:
-                    var usuari = await _usuarisApiClient.GetUsuariPerIdAsync(int.Parse(ParametreCerca));
-                    Usuaris.Add(usuari);
-                    break;
-
-                case TipusCerca.PerCurs:
-                    var curs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(int.Parse(ParametreCerca));
-                    foreach (var u in curs)
-                        Usuaris.Add(u);
-                    break;
-
-                case TipusCerca.PerDepartament:
-                    var dep = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(int.Parse(ParametreCerca));
-                    foreach (var u in dep)
-                        Usuaris.Add(u);
-                    break;
-            }
-        }
-
-        // AFEGIR ALUMNE
-        public async Task AfegirAlumneAsync(Alumne alumneAAfegir)
-        {
-            try
-            {
-                Alumne result = await _alumnesApiClient.PostAlumneAsync(alumneAAfegir);
-                if (result != null)
-                {
-                    await LoadUsuarisAsync();
                 }
             }
             catch (Exception ex)
@@ -184,7 +189,7 @@ namespace PIC.ViewModel
                 if (result <= 0)
                 {
                     //MessageBox.Show("No s'ha pogut actualitzar l'alumne.");
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
                 }
             }
             catch (Exception ex)
@@ -201,7 +206,7 @@ namespace PIC.ViewModel
                 Professor result = await _professorsApiClient.PostProfessorAsync(professorAAfegir);
                 if (result != null)
                 {
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
                 }
             }
             catch (Exception ex)
@@ -219,7 +224,7 @@ namespace PIC.ViewModel
                 if (result <= 0)
                 {
                     //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
                 }
             }
             catch (Exception ex)
@@ -237,7 +242,7 @@ namespace PIC.ViewModel
                 if (result <= 0)
                 {
                     //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
                 }
             }
             catch (Exception ex)
@@ -255,7 +260,7 @@ namespace PIC.ViewModel
                 if (result <= 0)
                 {
                     //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
                 }
             }
             catch (Exception ex)
@@ -273,7 +278,7 @@ namespace PIC.ViewModel
                 if (result <= 0)
                 {
                     //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await LoadUsuarisAsync();
+                    await MostrarUsuarisAsync();
                 }
             }
             catch (Exception ex)

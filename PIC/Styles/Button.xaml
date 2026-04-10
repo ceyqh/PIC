@@ -1,6 +1,8 @@
 ﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
                     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
 
+    
+    <!-- BOTONS DEL MENÚ PRINCIPAL -->
     <Style x:Key="Main_Menu_Button" TargetType="RadioButton">
 
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -42,6 +44,7 @@
 
     </Style>
 
+    <!-- BOTONS DEL SUBMENÚ  -->
     <Style x:Key="Sub_Menu_Button" TargetType="RadioButton">
 
         <Setter Property="HorizontalAlignment" Value="Center"/>
@@ -87,6 +90,7 @@
 
     <ImageBrush x:Key="close_app_mo" ImageSource="/Images/shutdown_mo.png" Stretch="None" />
 
+    <!-- BOTONS DE SORTIR -->
     <Style x:Key="ExitApp" TargetType="{x:Type Button}">
 
         <Setter Property="Height" Value="40" />
@@ -125,6 +129,44 @@
 
             </Setter.Value>
 
+        </Setter>
+
+    </Style>
+
+    <!-- BOTONS DEL MENÚ SUPERIOR -->
+    <Style x:Key="Accions_Button" TargetType="Button">
+
+        <Setter Property="Foreground" Value="#e8e9e9"/>
+        <Setter Property="Background" Value="#131316"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+
+        <Setter Property="FontFamily" Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="FontSize" Value="12"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Grid x:Name="GridArea"
+                            Background="{TemplateBinding Background}">
+
+                            <ContentPresenter HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="{TemplateBinding Padding}"/>          
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+                        
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="GridArea" Property="Background" Value="#606064"/>
+                        </Trigger>
+                        
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
         </Setter>
 
     </Style>

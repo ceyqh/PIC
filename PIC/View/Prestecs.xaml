@@ -158,8 +158,8 @@
                 <Grid Grid.Row="2">
                     <ListView x:Name="llistaTasques"
                           ItemsSource="{Binding Prestecs}"
-                          Style="{StaticResource UsersListView}"
-                          ItemContainerStyle="{StaticResource UsersListViewItem}">
+                          Style="{StaticResource ListViewStyle}"
+                          ItemContainerStyle="{StaticResource ListViewStyleItem}">
 
                         <ListView.ItemTemplate>
                             <DataTemplate>
