@@ -218,3 +218,7 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.pdb
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\DataGrid.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\ListView.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\MissatgeError.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\MissatgeError.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirAlumne.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirAlumne.baml

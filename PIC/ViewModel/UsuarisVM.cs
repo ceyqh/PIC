@@ -1,5 +1,8 @@
 ﻿using PIC.APIClient;
 using PIC.Model;
+using PIC.Utilities;
+using PIC.View;
+using PIC.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -7,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace PIC.ViewModel
 {
@@ -20,6 +24,57 @@ namespace PIC.ViewModel
     internal class UsuarisVM : Utilities.ViewModelBase
     {
         public ObservableCollection<Usuari> Usuaris { get; set; }
+        public MissatgeErrorVM MissatgeError { get; set; }
+        public AfegirAlumneVM AfegirAlumne { get; set; }
+
+        private readonly UsuarisApiClient _usuarisApiClient;
+        private readonly AlumnesApiClient _alumnesApiClient;
+        private readonly ProfessorsApiClient _professorsApiClient;
+
+        // CONSTRUCTOR
+        public UsuarisVM()
+        {
+            Usuaris = new ObservableCollection<Usuari>();
+            
+            _usuarisApiClient = new UsuarisApiClient();
+            _alumnesApiClient = new AlumnesApiClient();
+            _professorsApiClient = new ProfessorsApiClient();
+
+            MissatgeError = new MissatgeErrorVM();
+            AfegirAlumne = new AfegirAlumneVM(this);
+        }
+
+        // USUARIO SEL·LECCIONAT
+        private Usuari _usuariSeleccionat;
+        public Usuari UsuariSeleccionat
+        {
+            get => _usuariSeleccionat;
+            set
+            {
+                _usuariSeleccionat = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // EDITAR USUARI
+        public ICommand EditarUsuariMenu_Click => new RelayCommand(_ =>
+        {
+            if (UsuariSeleccionat == null)
+            {
+                MissatgeError.Mostrar("Selecciona un usuari abans d'editar.");
+                return;
+            }
+        });
+
+        // AFGIR USUARI 
+        public ICommand AfegirAlumneMenu_Click => new RelayCommand(_ =>
+        {
+            AfegirAlumne.Mostrar();
+            //MostrarUsuarisAsync();
+
+        });
+
+
 
         // TIPUS DE CERCA
         private UsuarisTipusCerca _tipusCercaActual;
@@ -42,28 +97,14 @@ namespace PIC.ViewModel
             {
                 //if (value != null)
                 //{
-                    _parametreCerca = value;
-                    OnPropertyChanged();
+                _parametreCerca = value;
+                OnPropertyChanged();
                 //}
                 //else
                 //{
                 //    _parametreCerca = 1;
                 //}
             }
-        }
-
-        // CONSTRUCTOR
-        private readonly UsuarisApiClient _usuarisApiClient;
-        private readonly AlumnesApiClient _alumnesApiClient;
-        private readonly ProfessorsApiClient _professorsApiClient;
-
-        public UsuarisVM()
-        {
-            _usuarisApiClient = new UsuarisApiClient();
-            _alumnesApiClient = new AlumnesApiClient();
-            _professorsApiClient = new ProfessorsApiClient();
-
-            Usuaris = new ObservableCollection<Usuari>();
         }
 
         // MOSTRAR TOTS ELS USUARIS

@@ -103,14 +103,19 @@
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
+    <Compile Include="ViewModel\AfegirAlumneVM.cs" />
     <Compile Include="ViewModel\CategoriesVM.cs" />
     <Compile Include="ViewModel\CursosVM.cs" />
     <Compile Include="ViewModel\DepartamentsVM.cs" />
     <Compile Include="ViewModel\DispositiusVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
+    <Compile Include="ViewModel\MissatgeError.cs" />
     <Compile Include="ViewModel\NavigationVM.cs" />
     <Compile Include="ViewModel\PrestecsVM.cs" />
     <Compile Include="ViewModel\UsuarisVM.cs" />
+    <Compile Include="View\AfegirAlumne.xaml.cs">
+      <DependentUpon>AfegirAlumne.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Categories.xaml.cs">
       <DependentUpon>Categories.xaml</DependentUpon>
     </Compile>
@@ -125,6 +130,9 @@
     </Compile>
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\MissatgeError.xaml.cs">
+      <DependentUpon>MissatgeError.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Prestecs.xaml.cs">
       <DependentUpon>Prestecs.xaml</DependentUpon>
@@ -172,6 +180,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AfegirAlumne.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Categories.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -189,6 +201,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Home.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\MissatgeError.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

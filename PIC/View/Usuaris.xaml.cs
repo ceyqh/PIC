@@ -144,8 +144,8 @@ namespace PIC.View
             //SI HI HA UN USUARI SEL·LECCIONAT
             else
             {
-                missatgeError.Text = "Has de sel·leccionar un usuari.";
-                OverlayError.Visibility = Visibility.Visible;
+                //missatgeError.Text = "Has de sel·leccionar un usuari.";
+                //OverlayError.Visibility = Visibility.Visible;
             }
         }
 
@@ -175,8 +175,8 @@ namespace PIC.View
                 }
                 else
                 {
-                    missatgeError.Text = "Has de sel·leccionar un usuari.";
-                    OverlayError.Visibility = Visibility.Visible;
+                    //missatgeError.Text = "Has de sel·leccionar un usuari.";
+                    //OverlayError.Visibility = Visibility.Visible;
                 }
             }
             catch (Exception ex)
@@ -189,9 +189,9 @@ namespace PIC.View
         private void TancarOverlay_Click(object sender, RoutedEventArgs e)
         {
             OverlayEditar.Visibility = Visibility.Collapsed;
-            OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
+            //OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
             OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
-            OverlayError.Visibility = Visibility.Collapsed;
+            //OverlayError.Visibility = Visibility.Collapsed;
         }
 
         // GUARDAR CANVIS USUARI
@@ -241,19 +241,19 @@ namespace PIC.View
         // OBRIR MENU AFEGIR ALUMNE
         private async void AfegirAlumneMenu_Click(object sender, RoutedEventArgs e)
         {
-            aa_textNom.Text = "";
-            aa_textCognom.Text = "";
+            //aa_textNom.Text = "";
+            //aa_textCognom.Text = "";
 
-            OverlayAfegirAlumne.Visibility = Visibility.Visible;
+            //OverlayAfegirAlumne.Visibility = Visibility.Visible;
 
-            cbCursos.ItemsSource = null;
-            await cursosVM.MostrarCursosAsync();
-            cbCursos.ItemsSource = cursosVM.Cursos;
+            //cbCursos.ItemsSource = null;
+            //await cursosVM.MostrarCursosAsync();
+            //cbCursos.ItemsSource = cursosVM.Cursos;
 
-            if (cbCursos.ItemsSource != null)
-            {
-                cbCursos.SelectedIndex = 0;
-            }
+            //if (cbCursos.ItemsSource != null)
+            //{
+            //    cbCursos.SelectedIndex = 0;
+            //}
         }
 
         // OBRIR MENU AFEGIR PROFESSOR
@@ -277,37 +277,37 @@ namespace PIC.View
         // GUARDAR EL NOU ALUMNE
         private async void AfegirAlumne_Click(object sender, RoutedEventArgs e)
         {
-            try
-            {
-                NouUsuari nouUsuari = new NouUsuari
-                {
-                    Nom = aa_textNom.Text,
-                    Cognom = aa_textCognom.Text
+            //try
+            //{
+            //    NouUsuari nouUsuari = new NouUsuari
+            //    {
+            //        Nom = aa_textNom.Text,
+            //        Cognom = aa_textCognom.Text
 
-                };
+            //    };
 
-                var vm = (UsuarisVM)DataContext;
-                Usuari usuariCreat = await vm.AfegirUsuariAsync(nouUsuari);
+            //    var vm = (UsuarisVM)DataContext;
+            //    Usuari usuariCreat = await vm.AfegirUsuariAsync(nouUsuari);
 
-                //MessageBox.Show(usuariCreat.Id + " " + cbCursos.SelectedValue);
+            //    //MessageBox.Show(usuariCreat.Id + " " + cbCursos.SelectedValue);
 
-                if (usuariCreat != null)
-                {
-                    Alumne nouAlumne = new Alumne
-                    {
-                        IdUsuari = usuariCreat.Id,
-                        IdCurs = (long)cbCursos.SelectedValue
-                    };
+            //    if (usuariCreat != null)
+            //    {
+            //        Alumne nouAlumne = new Alumne
+            //        {
+            //            IdUsuari = usuariCreat.Id,
+            //            IdCurs = (long)cbCursos.SelectedValue
+            //        };
 
-                    await vm.AfegirAlumneAsync(nouAlumne);
-                }
+            //        await vm.AfegirAlumneAsync(nouAlumne);
+            //    }
 
-                OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
+            //    OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.ToString());
+            //}
         }
 
         // GUARDAR EL NOU PROFESSOR
