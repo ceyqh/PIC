@@ -104,10 +104,13 @@
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="ViewModel\AfegirAlumneVM.cs" />
+    <Compile Include="ViewModel\AfegirProfessorVM.cs" />
     <Compile Include="ViewModel\CategoriesVM.cs" />
+    <Compile Include="ViewModel\ConfirmarEsborrarVM.cs" />
     <Compile Include="ViewModel\CursosVM.cs" />
     <Compile Include="ViewModel\DepartamentsVM.cs" />
     <Compile Include="ViewModel\DispositiusVM.cs" />
+    <Compile Include="ViewModel\EditarUsuariVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="ViewModel\MissatgeError.cs" />
     <Compile Include="ViewModel\NavigationVM.cs" />
@@ -116,8 +119,14 @@
     <Compile Include="View\AfegirAlumne.xaml.cs">
       <DependentUpon>AfegirAlumne.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AfegirProfessor.xaml.cs">
+      <DependentUpon>AfegirProfessor.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Categories.xaml.cs">
       <DependentUpon>Categories.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\ConfirmarEsborrar.xaml.cs">
+      <DependentUpon>ConfirmarEsborrar.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Cursos.xaml.cs">
       <DependentUpon>Cursos.xaml</DependentUpon>
@@ -127,6 +136,9 @@
     </Compile>
     <Compile Include="View\Dispositius.xaml.cs">
       <DependentUpon>Dispositius.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditarUsuari.xaml.cs">
+      <DependentUpon>EditarUsuari.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
@@ -184,7 +196,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AfegirProfessor.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Categories.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\ConfirmarEsborrar.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -197,6 +217,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Dispositius.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditarUsuari.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

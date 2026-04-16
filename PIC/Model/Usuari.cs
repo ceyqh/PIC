@@ -13,6 +13,6 @@ namespace PIC.Model
         public string Cognom { get; set; }
         public string Tipus { get; set; }
         public string Grup { get; set; }
-        public long? IdGrup { get; set; }
+        public long IdGrup { get; set; }
     }
 }

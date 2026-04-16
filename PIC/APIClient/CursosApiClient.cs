@@ -17,6 +17,12 @@ namespace PIC.APIClient
         public CursosApiClient()
         {
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
+
+            if (string.IsNullOrEmpty(BaseUri))
+            {
+                BaseUri = "http://localhost/temp";
+                throw new Exception("Error, no s'ha trobat la clau de la API");
+            }
         }
 
         // TOTS ELS CURSOS

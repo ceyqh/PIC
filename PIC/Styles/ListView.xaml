@@ -64,6 +64,60 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
+    </Style>
+
+    <!-- ITEMS DEL LISTVIEW SUBMENNU -->
+    <Style x:Key="ListViewStyleItemSubmenu"
+   TargetType="ListViewItem">
+
+        <Setter Property="Background" Value="#e8e9e9"/>
+        <Setter Property="Foreground" Value="#131316"/>
+
+        <!-- ALTURA DELS ITEMS -->
+        <Setter Property="Height" Value="40"/>
+
+
+        <Setter Property="FocusVisualStyle" Value="{x:Null}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+        <Setter Property="Padding" Value="0"/>
+        <Setter Property="Margin" Value="0"/>
+        <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+        <Setter Property="VerticalContentAlignment" Value="Stretch"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="ListViewItem">
+
+                    <Grid x:Name="border"
+                    Background="{TemplateBinding Background}"
+                    SnapsToDevicePixels="True">
+
+                        <ContentPresenter
+                    Margin="0"
+                    HorizontalAlignment="Stretch"
+                    VerticalAlignment="Center"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="Transparent"/>
+                        </Trigger>
+
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter TargetName="border"
+                            Property="Background"
+                            Value="Transparent"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
 
     </Style>
 </ResourceDictionary>

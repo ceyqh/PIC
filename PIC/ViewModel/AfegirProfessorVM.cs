@@ -12,23 +12,26 @@ using System.Windows.Input;
 
 namespace PIC.ViewModel
 {
-    internal class AfegirAlumneVM : Utilities.ViewModelBase
+    internal class AfegirProfessorVM: Utilities.ViewModelBase
     {
         private readonly UsuarisApiClient _usuarisApiClient;
-        private readonly AlumnesApiClient _alumnesApiClient;
-        private readonly CursosApiClient _cursosApiClient;
+        private readonly ProfessorsApiClient _professorsApiClient;
+        private readonly DepartamentsApiClient _departamentsApiClient;
         private readonly UsuarisVM _usuarisVM;
 
         // CONSTRUCTOR
-        public AfegirAlumneVM(UsuarisVM usuarisVM)
+        public AfegirProfessorVM(UsuarisVM usuarisVM)
         {
             _usuarisVM = usuarisVM;
 
             _usuarisApiClient = new UsuarisApiClient();
-            _alumnesApiClient = new AlumnesApiClient();
-            _cursosApiClient = new CursosApiClient();
+            _professorsApiClient = new ProfessorsApiClient();
+            _departamentsApiClient = new DepartamentsApiClient();
 
-            CarregarCursos();
+            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(new System.Windows.FrameworkElement()))
+            {
+                CarregarDepartaments();
+            }
         }
 
         // NOM
@@ -67,48 +70,48 @@ namespace PIC.ViewModel
             }
         }
 
-        // LLISTA CURSOS
-        private List<Curs> _cursos;
-        public List<Curs> Cursos
+        // LLISTA DEPARTAMENTS
+        private List<Departament> _departaments;
+        public List<Departament> Departaments
         {
-            get => _cursos;
+            get => _departaments;
             set
             {
-                _cursos = value;
+                _departaments = value;
                 OnPropertyChanged();
             }
         }
 
-        // CURS SELECCIONAT
-        private long _cursId;
-        public long CursId
+        // DEPARTAMENT SELECCIONAT
+        private long _departamentId;
+        public long DepartamentId
         {
-            get => _cursId;
+            get => _departamentId;
             set
             {
-                _cursId = value;
+                _departamentId = value;
                 OnPropertyChanged();
             }
         }
 
-        // CARREGAR CURSOS
-        private async void CarregarCursos()
+        // CARREGAR DEPARTAMENTS
+        private async void CarregarDepartaments()
         {
-            var cursos = await _cursosApiClient.GetAllCursosAsync();
+            var departaments = await _departamentsApiClient.GetAllDepartamentsAsync();
 
             // OMPLIR EL COMBOBOX AMB ELS CURSOS
-            if (cursos != null)
+            if (departaments != null)
             {
-                Cursos = cursos.ToList();
+                Departaments = departaments.ToList();
             }
             else
             {
-                Cursos = new List<Curs>();
+                Departaments = new List<Departament>();
             }
 
-            if (Cursos != null && Cursos.Count > 0)
+            if (Departaments != null && Departaments.Count > 0)
             {
-                CursId = Cursos[0].Id;
+                DepartamentId = Departaments[0].Id;
             }
         }
 
@@ -119,21 +122,21 @@ namespace PIC.ViewModel
             Cognom = "";
             EsVisible = Visibility.Visible;
         }
-        
+
         // TANCAR FINESTRA
         public ICommand TancarFinestra => new RelayCommand(_ =>
         {
             EsVisible = Visibility.Collapsed;
         });
 
-        // AFEGIR ALUMNE CLICK
-        public ICommand AfegirAlumne_Click => new RelayCommand(async _ =>
+        // AFEGIR PROFESSOR CLICK
+        public ICommand AfegirProfessor_Click => new RelayCommand(async _ =>
         {
-            await GuardarNouAlumne();
+            await GuardarNouProfessor();
         });
 
-        // GUARDAR NOU ALUMNE (USUARI + ALUMNE)
-        private async Task GuardarNouAlumne()
+        // GUARDAR NOU PROFESSOR (USUARI + PROFESSOR)
+        private async Task GuardarNouProfessor()
         {
             // Crear usuari
             var nouUsuari = new NouUsuari
@@ -147,14 +150,14 @@ namespace PIC.ViewModel
             if (usuariCreat == null)
                 return;
 
-            // Crear alumne amb idUsuari + idCurs
-            var alumne = new Alumne
+            // Crear professor amb idUsuari + idDepartament
+            var professor = new Professor
             {
                 IdUsuari = usuariCreat.Id,
-                IdCurs = CursId
+                IdDepartament = DepartamentId,
             };
 
-            await CrearAlumneAsync(alumne);
+            await CrearProfessorAsync(professor);
 
             // Tornar a mostrar la llista d'usuaris actualitzada amb el nou usuari
             await _usuarisVM.MostrarUsuarisAsync();
@@ -177,16 +180,16 @@ namespace PIC.ViewModel
                     Cognom = result.Cognom
                 };
 
-                return usuari;                
+                return usuari;
             }
 
             return null;
         }
 
-        // CREAR ALUMNE
-        public async Task CrearAlumneAsync(Alumne alumneAAfegir)
+        // CREAR PROFESSOR
+        public async Task CrearProfessorAsync(Professor professorAAfegir)
         {
-            Alumne result = await _alumnesApiClient.PostAlumneAsync(alumneAAfegir);
+            Professor result = await _professorsApiClient.PostProfessorAsync(professorAAfegir);
         }
     }
 }

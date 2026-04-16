@@ -105,49 +105,49 @@ namespace PIC.View
             await ((UsuarisVM)DataContext).CercaUsuarisAsync();
         }
 
-        // EDITAR USUARI
-        private async void EditarUsuariMenu_Click(object sender, RoutedEventArgs e)
-        {
-            textNom.Text = "";
-            textCognom.Text = "";
+        //// EDITAR USUARI
+        //private async void EditarUsuariMenu_Click(object sender, RoutedEventArgs e)
+        //{
+        //    textNom.Text = "";
+        //    textCognom.Text = "";
 
-            usuariSeleccionat = llistaUsuaris.SelectedItem as Usuari;
+        //    usuariSeleccionat = llistaUsuaris.SelectedItem as Usuari;
 
-            //SI NO HI HA CAP USUARI SEL·LECCIONAT
-            if (usuariSeleccionat != null)
-            {
-                OverlayEditar.Visibility = Visibility.Visible;
+        //    //SI NO HI HA CAP USUARI SEL·LECCIONAT
+        //    if (usuariSeleccionat != null)
+        //    {
+        //        OverlayEditar.Visibility = Visibility.Visible;
 
-                if (usuariSeleccionat.Tipus == "Alumne")
-                {
-                    cbGrups.ItemsSource = null;
-                    await cursosVM.MostrarCursosAsync();
-                    cbGrups.ItemsSource = cursosVM.Cursos;
+        //        if (usuariSeleccionat.Tipus == "Alumne")
+        //        {
+        //            cbGrups.ItemsSource = null;
+        //            await cursosVM.MostrarCursosAsync();
+        //            cbGrups.ItemsSource = cursosVM.Cursos;
 
-                    cbGrups.SelectedValue = usuariSeleccionat.IdGrup;
-                }
+        //            cbGrups.SelectedValue = usuariSeleccionat.IdGrup;
+        //        }
 
-                else if (usuariSeleccionat.Tipus == "Professor")
-                {
-                    cbGrups.ItemsSource = null;
-                    await departamentsVM.LoadDepartamentsAsync();
-                    cbGrups.ItemsSource = departamentsVM.Departaments;
+        //        else if (usuariSeleccionat.Tipus == "Professor")
+        //        {
+        //            cbGrups.ItemsSource = null;
+        //            await departamentsVM.LoadDepartamentsAsync();
+        //            cbGrups.ItemsSource = departamentsVM.Departaments;
 
-                    cbGrups.SelectedValue = usuariSeleccionat.IdGrup;
+        //            cbGrups.SelectedValue = usuariSeleccionat.IdGrup;
 
-                }
+        //        }
 
-                textNom.Text = usuariSeleccionat.Nom;
-                textCognom.Text = usuariSeleccionat.Cognom;
-            }
+        //        textNom.Text = usuariSeleccionat.Nom;
+        //        textCognom.Text = usuariSeleccionat.Cognom;
+        //    }
 
-            //SI HI HA UN USUARI SEL·LECCIONAT
-            else
-            {
-                //missatgeError.Text = "Has de sel·leccionar un usuari.";
-                //OverlayError.Visibility = Visibility.Visible;
-            }
-        }
+        //    //SI HI HA UN USUARI SEL·LECCIONAT
+        //    else
+        //    {
+        //        //missatgeError.Text = "Has de sel·leccionar un usuari.";
+        //        //OverlayError.Visibility = Visibility.Visible;
+        //    }
+        //}
 
         // ESBORRAR USUARI
         private async void EsborrarUsuariMenu_Click(object sender, RoutedEventArgs e)
@@ -188,162 +188,54 @@ namespace PIC.View
         // TANCAR MENÚS
         private void TancarOverlay_Click(object sender, RoutedEventArgs e)
         {
-            OverlayEditar.Visibility = Visibility.Collapsed;
+            //OverlayEditar.Visibility = Visibility.Collapsed;
             //OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
-            OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
+            //OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
             //OverlayError.Visibility = Visibility.Collapsed;
         }
 
         // GUARDAR CANVIS USUARI
-        private async void Guardar_Click(object sender, RoutedEventArgs e)
-        {
-            usuariSeleccionat.Nom = textNom.Text.Trim();
-            usuariSeleccionat.Cognom = textCognom.Text.Trim();
-            usuariSeleccionat.IdGrup = (long)cbGrups.SelectedValue;
+        //private async void Guardar_Click(object sender, RoutedEventArgs e)
+        //{
+        //    usuariSeleccionat.Nom = textNom.Text.Trim();
+        //    usuariSeleccionat.Cognom = textCognom.Text.Trim();
+        //    usuariSeleccionat.IdGrup = (long)cbGrups.SelectedValue;
 
-            try
-            {
-                var vm = (UsuarisVM)DataContext;
+        //    try
+        //    {
+        //        var vm = (UsuarisVM)DataContext;
 
-                if (usuariSeleccionat.Tipus == "Alumne")
-                {
-                    Alumne alumneDades = new Alumne
-                    {
-                        IdUsuari = (int)usuariSeleccionat.Id,
-                        IdCurs = (int)usuariSeleccionat.IdGrup
-                    };
+        //        if (usuariSeleccionat.Tipus == "Alumne")
+        //        {
+        //            Alumne alumneDades = new Alumne
+        //            {
+        //                IdUsuari = (int)usuariSeleccionat.Id,
+        //                IdCurs = (int)usuariSeleccionat.IdGrup
+        //            };
 
-                    await vm.ActualitzarAlumneAsync(alumneDades);
-                }
+        //            await vm.ActualitzarAlumneAsync(alumneDades);
+        //        }
 
-                if (usuariSeleccionat.Tipus == "Professor")
-                {
-                    Professor professorDades = new Professor
-                    {
-                        IdUsuari = (int)usuariSeleccionat.Id,
-                        IdDepartament = (int)usuariSeleccionat.IdGrup
-                    };
+        //        if (usuariSeleccionat.Tipus == "Professor")
+        //        {
+        //            Professor professorDades = new Professor
+        //            {
+        //                IdUsuari = (int)usuariSeleccionat.Id,
+        //                IdDepartament = (int)usuariSeleccionat.IdGrup
+        //            };
 
-                    await vm.ActualitzarProfessorAsync(professorDades);
-                }
+        //            await vm.ActualitzarProfessorAsync(professorDades);
+        //        }
 
-                await vm.ActualitzarUsuariAsync(usuariSeleccionat);
+        //        await vm.ActualitzarUsuariAsync(usuariSeleccionat);
 
-                OverlayEditar.Visibility = Visibility.Collapsed;
-                MessageBox.Show("Usuari i curs actualitzats correctament.");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error en el procés de guardat: {ex.Message}");
-            }
-        }
-
-        // OBRIR MENU AFEGIR ALUMNE
-        private async void AfegirAlumneMenu_Click(object sender, RoutedEventArgs e)
-        {
-            //aa_textNom.Text = "";
-            //aa_textCognom.Text = "";
-
-            //OverlayAfegirAlumne.Visibility = Visibility.Visible;
-
-            //cbCursos.ItemsSource = null;
-            //await cursosVM.MostrarCursosAsync();
-            //cbCursos.ItemsSource = cursosVM.Cursos;
-
-            //if (cbCursos.ItemsSource != null)
-            //{
-            //    cbCursos.SelectedIndex = 0;
-            //}
-        }
-
-        // OBRIR MENU AFEGIR PROFESSOR
-        private async void AfegirProfessorMenu_Click(object sender, RoutedEventArgs e)
-        {
-            ap_textNom.Text = "";
-            ap_textCognom.Text = "";
-
-            OverlayAfegirProfessor.Visibility = Visibility.Visible;
-
-            cbDepartaments.ItemsSource = null;
-            await departamentsVM.LoadDepartamentsAsync();
-            cbDepartaments.ItemsSource = departamentsVM.Departaments;
-
-            if (cbDepartaments.ItemsSource != null)
-            {
-                cbDepartaments.SelectedIndex = 0;
-            }
-        }
-
-        // GUARDAR EL NOU ALUMNE
-        private async void AfegirAlumne_Click(object sender, RoutedEventArgs e)
-        {
-            //try
-            //{
-            //    NouUsuari nouUsuari = new NouUsuari
-            //    {
-            //        Nom = aa_textNom.Text,
-            //        Cognom = aa_textCognom.Text
-
-            //    };
-
-            //    var vm = (UsuarisVM)DataContext;
-            //    Usuari usuariCreat = await vm.AfegirUsuariAsync(nouUsuari);
-
-            //    //MessageBox.Show(usuariCreat.Id + " " + cbCursos.SelectedValue);
-
-            //    if (usuariCreat != null)
-            //    {
-            //        Alumne nouAlumne = new Alumne
-            //        {
-            //            IdUsuari = usuariCreat.Id,
-            //            IdCurs = (long)cbCursos.SelectedValue
-            //        };
-
-            //        await vm.AfegirAlumneAsync(nouAlumne);
-            //    }
-
-            //    OverlayAfegirAlumne.Visibility = Visibility.Collapsed;
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.ToString());
-            //}
-        }
-
-        // GUARDAR EL NOU PROFESSOR
-        private async void AfegirProfessor_Click(object sender, RoutedEventArgs e)
-        {
-            try
-            {
-                NouUsuari nouUsuari = new NouUsuari
-                {
-                    Nom = ap_textNom.Text,
-                    Cognom = ap_textCognom.Text
-
-                };
-
-                var vm = (UsuarisVM)DataContext;
-                Usuari usuariCreat = await vm.AfegirUsuariAsync(nouUsuari);
-
-                //MessageBox.Show(usuariCreat.Id + " " + cbCursos.SelectedValue);
-
-                if (usuariCreat != null)
-                {
-                    Professor nouProfessor = new Professor
-                    {
-                        IdUsuari = usuariCreat.Id,
-                        IdDepartament = (long)cbDepartaments.SelectedValue
-                    };
-
-                    await vm.AfegirProfessorAsync(nouProfessor);
-                }
-
-                OverlayAfegirProfessor.Visibility = Visibility.Collapsed;
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.ToString());
-            }
-        }
+        //        OverlayEditar.Visibility = Visibility.Collapsed;
+        //        MessageBox.Show("Usuari i curs actualitzats correctament.");
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show($"Error en el procés de guardat: {ex.Message}");
+        //    }
+        //}
     }
 }

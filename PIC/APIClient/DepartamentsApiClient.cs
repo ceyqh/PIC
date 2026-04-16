@@ -18,6 +18,12 @@ namespace PIC.APIClient
         public DepartamentsApiClient()
         {
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
+
+            if (string.IsNullOrEmpty(BaseUri))
+            {
+                BaseUri = "http://localhost/temp";
+                throw new Exception("Error, no s'ha trobat la clau de la API");
+            }
         }
 
         public async Task<List<Departament>> GetAllDepartamentsAsync()

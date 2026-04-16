@@ -26,6 +26,9 @@ namespace PIC.ViewModel
         public ObservableCollection<Usuari> Usuaris { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
         public AfegirAlumneVM AfegirAlumne { get; set; }
+        public AfegirProfessorVM AfegirProfessor{ get; set; }
+        public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
+        public EditarUsuariVM EditarUsuari{ get; set; }
 
         private readonly UsuarisApiClient _usuarisApiClient;
         private readonly AlumnesApiClient _alumnesApiClient;
@@ -42,6 +45,9 @@ namespace PIC.ViewModel
 
             MissatgeError = new MissatgeErrorVM();
             AfegirAlumne = new AfegirAlumneVM(this);
+            AfegirProfessor = new AfegirProfessorVM(this);
+            EditarUsuari= new EditarUsuariVM(this);
+            ConfirmarEsborrar = new ConfirmarEsborrarVM(this);
         }
 
         // USUARIO SEL·LECCIONAT
@@ -56,24 +62,36 @@ namespace PIC.ViewModel
             }
         }
 
-        // EDITAR USUARI
-        public ICommand EditarUsuariMenu_Click => new RelayCommand(_ =>
-        {
-            if (UsuariSeleccionat == null)
-            {
-                MissatgeError.Mostrar("Selecciona un usuari abans d'editar.");
-                return;
-            }
-        });
-
-        // AFGIR USUARI 
+        // AFGIR ALUMNE
         public ICommand AfegirAlumneMenu_Click => new RelayCommand(_ =>
         {
             AfegirAlumne.Mostrar();
-            //MostrarUsuarisAsync();
+        });
+
+        // AFGIR PROFESSOR 
+        public ICommand AfegirProfessorMenu_Click => new RelayCommand(_ =>
+        {
+            AfegirProfessor.Mostrar();
+        });
+
+        // EDITAR USUARI
+        public ICommand EditarUsuariMenu_Click => new RelayCommand(async _ =>
+        {
+            if (_usuariSeleccionat != null)
+            {
+                await EditarUsuari.Mostrar(UsuariSeleccionat);
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar un usuari.");
+            }
 
         });
 
+        public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
+        {
+            AfegirProfessor.Mostrar();
+        });
 
 
         // TIPUS DE CERCA
@@ -150,52 +168,6 @@ namespace PIC.ViewModel
                     foreach (var u in dep)
                         Usuaris.Add(u);
                     break;
-            }
-        }
-
-        // AFEGIR USUARI
-        public async Task<Usuari> AfegirUsuariAsync(NouUsuari usuariAAfegir)
-        {
-            try
-            {
-                NouUsuari result = await _usuarisApiClient.PostUsuariAsync(usuariAAfegir);
-
-                if (result != null)
-                {
-                    var usuari = new Usuari
-                    {
-                        Id = result.Id,
-                        Nom = result.Nom,
-                        Cognom = result.Cognom
-                    };
-
-                    await MostrarUsuarisAsync();
-
-                    return usuari;
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-
-            return null;
-        }
-
-        // AFEGIR ALUMNE
-        public async Task AfegirAlumneAsync(Alumne alumneAAfegir)
-        {
-            try
-            {
-                Alumne result = await _alumnesApiClient.PostAlumneAsync(alumneAAfegir);
-                if (result != null)
-                {
-                    await MostrarUsuarisAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 

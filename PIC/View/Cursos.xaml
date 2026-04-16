@@ -230,7 +230,7 @@
                                           ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                           ItemsSource="{Binding Usuaris}"
                                           Style="{StaticResource ListViewStyle}"
-                                          ItemContainerStyle="{StaticResource ListViewStyleItem}"
+                                          ItemContainerStyle="{StaticResource ListViewStyleItemSubmenu}"
                                           Background="#e8e9e9">
 
                                     <ListView.ItemTemplate>

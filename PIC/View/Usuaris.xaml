@@ -12,7 +12,7 @@
     <UserControl.DataContext>
         <vm:UsuarisVM/>
     </UserControl.DataContext>
-    
+
     <Grid>
         <Grid>
             <!--// Base Grid //-->
@@ -25,7 +25,7 @@
             <Grid HorizontalAlignment="Left" Width="200" Background="#e8e9e9">
 
                 <StackPanel Height="400" Width="200">
-                    
+
                     <!-- TOTS -->
                     <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="Tots_Click" IsChecked="True">
                         <Grid>
@@ -73,7 +73,7 @@
                         <RowDefinition Height="*"/>
                         <RowDefinition Height="20"/>
                     </Grid.RowDefinitions>
-                    
+
                     <StackPanel Grid.Row="0"
                                 Orientation="Horizontal" 
                                 VerticalAlignment="Center" 
@@ -110,7 +110,7 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
-                            
+
                             <!-- BOTO AFEGIR ALUMNE -->
                             <Button Name="afegirAlumne"
                                     Content="AFEGIR ALUMNE"
@@ -119,23 +119,22 @@
                         </Grid>
 
                         <Grid Grid.Column="1">
-                            
+
                             <!-- BOTO AFEGIR PROFESSOR -->
                             <Button Name="afegirProfessor"
                                     Content="AFEGIR PROFESSOR"
                                     Style="{StaticResource Accions_Button}"
-                                    Click="AfegirProfessorMenu_Click"/>
+                                    Command="{Binding AfegirProfessorMenu_Click}"/>
                         </Grid>
 
                         <Grid Grid.Column="2">
-                            
+
                             <!-- BOTO EDITAR -->
                             <Button Name="editarUsuari"
                                     Content="EDITAR USUARI"
                                     Style="{StaticResource Accions_Button}"
-                                    Command="{Binding EditarUsuariMenu_Click}"
-                                    Click="EditarUsuariMenu_Click"/>
-                            
+                                    Command="{Binding EditarUsuariMenu_Click}"/>
+
                         </Grid>
 
                         <Grid Grid.Column="3">
@@ -144,7 +143,7 @@
                             <Button Name="esborrarUsuari"
                                     Content="ESBORRAR USUARI"  
                                     Style="{StaticResource Accions_Button}"
-                                    Click="EsborrarUsuariMenu_Click"/>
+                                    Command="{Binding EsborrarMenu_Click}"/>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -152,7 +151,7 @@
                 <!-- APARTAT DEL RESULTATS -->
                 <Grid Grid.Row="1"
                       Background="#e8e9e9">
-                    
+
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -269,205 +268,9 @@
             </Grid>
         </Grid>
 
-        <!-- MENU EDITAR -->
-        <Grid x:Name="OverlayEditar"
-              Visibility="Collapsed"
-              Background="#80000000">
-
-            <!-- POPUP -->
-            <Grid Width="300"
-                    Background="White"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- TÍTOL -->
-                    <Grid Background="#131316" 
-                          VerticalAlignment="Center">
-
-                        <TextBlock Text="EDITAR USUARI" 
-                                   Style="{StaticResource Fraktion_Light_Font}" 
-                                   FontSize="12" 
-                                   Margin="20, 10, 20, 10"/>
-                    </Grid>
-
-                    <!-- NOM -->
-                    <StackPanel Grid.Row="1" Margin="20, 10, 20, 0">
-                        <TextBlock Text="NOM: " 
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   FontSize="12" 
-                                   Margin="0,0,0,10"/>
-
-                        <TextBox Name="textNom" 
-                                 Margin="0,0,0,20"  
-                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
-                    </StackPanel>
-
-                    <!-- COGNOM -->
-                    <StackPanel Grid.Row="2" 
-                                Margin="20, 0, 20, 0">
-
-                        <TextBlock Text="COGNOM: " 
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   FontSize="12" 
-                                   Margin="0,0,0,10"/>
-
-                        <TextBox Name="textCognom" 
-                                 Margin="0,0,0,20"                                 
-                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
-                    </StackPanel>
-
-                    <!-- GRUP -->
-                    <StackPanel Grid.Row="3" 
-                                Margin="20, 0, 20, 0">
-
-                        <TextBlock Text="GRUP: " 
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   FontSize="12" 
-                                   Margin="0,0,0,10"/>
-
-                        <ComboBox Name="cbGrups"
-                                  SelectedValuePath="Id">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Nom}" FontSize="12" Style="{StaticResource Fraktion_Dark_Font}"></TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-
-                    <!-- BOTONS -->
-                    <StackPanel Grid.Row="4" 
-                                Margin="20"
-                                Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-
-                        <Button Content="GUARDAR"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Margin="0,0,10,0"
-                                Click="Guardar_Click"/>
-
-                        <Button Content="CANCEL·LAR"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Click="TancarOverlay_Click"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Grid>
-
-        <!-- MENU AFEGIR PROFESSOR -->
-        <Grid x:Name="OverlayAfegirProfessor"
-              Visibility="Collapsed"
-              Background="#80000000">
-
-            <!-- POPUP -->
-            <Grid Width="300"
-                    Background="White"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- TÍTOL -->
-                    <Grid Background="#131316" 
-                          VerticalAlignment="Center">
-
-                        <TextBlock Text="AFEGIR: PROFESSOR" 
-                                   Style="{StaticResource Fraktion_Light_Font}" 
-                                   FontSize="12" 
-                                   Margin="20, 10, 20, 10"/>
-                    </Grid>
-
-                    <!-- NOM -->
-                    <StackPanel Grid.Row="1" 
-                                Margin="20, 10, 20, 0">
-                        <TextBlock Text="NOM: " 
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   FontSize="12" 
-                                   Margin="0,0,0,10"/>
-
-                        <TextBox Name="ap_textNom" 
-                                 Margin="0,0,0,20"  
-                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
-                    </StackPanel>
-
-                    <!-- COGNOM -->
-                    <StackPanel Grid.Row="2" 
-                                Margin="20, 0, 20, 0">
-
-                        <TextBlock Text="COGNOM: " 
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   FontSize="12" 
-                                   Margin="0,0,0,10"/>
-
-                        <TextBox Name="ap_textCognom" 
-                                 Margin="0,0,0,20"                                 
-                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
-                    </StackPanel>
-
-                    <!-- GRUP -->
-                    <StackPanel Grid.Row="3" 
-                                Margin="20, 0, 20, 0">
-
-                        <TextBlock Text="DEPARTAMENT: " 
-                                    Style="{StaticResource Fraktion_Dark_Font}" 
-                                    FontSize="12" 
-                                    Margin="0,0,0,10"/>
-
-                        <ComboBox Name="cbDepartaments"
-                                  SelectedValuePath="Id">
-                            <ComboBox.ItemTemplate>
-                                <DataTemplate>
-                                    <TextBlock Text="{Binding Path=Nom}" 
-                                       FontSize="12" 
-                                       Style="{StaticResource Fraktion_Dark_Font}">
-                                    </TextBlock>
-                                </DataTemplate>
-                            </ComboBox.ItemTemplate>
-                        </ComboBox>
-                    </StackPanel>
-
-                    <!-- BOTONS -->
-                    <StackPanel Grid.Row="4" 
-                                Margin="20"
-                                Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-
-                        <Button Content="GUARDAR"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Margin="0,0,10,0"
-                                Click="AfegirProfessor_Click"/>
-
-                        <Button Content="CANCEL·LAR"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Click="TancarOverlay_Click"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Grid>
-
         <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
         <local:AfegirAlumne DataContext="{Binding AfegirAlumne}" d:IsHidden="true"/>
+        <local:AfegirProfessor DataContext="{Binding AfegirProfessor}" d:IsHidden="true"/>
+        <local:EditarUsuari DataContext="{Binding EditarUsuari}" d:IsHidden="true"/>
     </Grid>
 </UserControl>
