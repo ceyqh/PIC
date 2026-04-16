@@ -272,5 +272,6 @@
         <local:AfegirAlumne DataContext="{Binding AfegirAlumne}" d:IsHidden="true"/>
         <local:AfegirProfessor DataContext="{Binding AfegirProfessor}" d:IsHidden="true"/>
         <local:EditarUsuari DataContext="{Binding EditarUsuari}" d:IsHidden="true"/>
+        <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

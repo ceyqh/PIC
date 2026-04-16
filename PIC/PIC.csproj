@@ -112,7 +112,7 @@
     <Compile Include="ViewModel\DispositiusVM.cs" />
     <Compile Include="ViewModel\EditarUsuariVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
-    <Compile Include="ViewModel\MissatgeError.cs" />
+    <Compile Include="ViewModel\MissatgeErrorMV.cs" />
     <Compile Include="ViewModel\NavigationVM.cs" />
     <Compile Include="ViewModel\PrestecsVM.cs" />
     <Compile Include="ViewModel\UsuarisVM.cs" />

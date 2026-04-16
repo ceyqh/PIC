@@ -90,7 +90,15 @@ namespace PIC.ViewModel
 
         public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
         {
-            AfegirProfessor.Mostrar();
+            if (_usuariSeleccionat != null)
+            {
+                ConfirmarEsborrar.Mostrar(UsuariSeleccionat);
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar un usuari.");
+            }
+            
         });
 
 
@@ -113,15 +121,8 @@ namespace PIC.ViewModel
             get => _parametreCerca;
             set
             {
-                //if (value != null)
-                //{
                 _parametreCerca = value;
                 OnPropertyChanged();
-                //}
-                //else
-                //{
-                //    _parametreCerca = 1;
-                //}
             }
         }
 
@@ -168,81 +169,6 @@ namespace PIC.ViewModel
                     foreach (var u in dep)
                         Usuaris.Add(u);
                     break;
-            }
-        }
-
-        // ACTUALITZAR USUARI
-        public async Task ActualitzarUsuariAsync(Usuari usuariAModificar)
-        {
-            try
-            {
-                int result = await _usuarisApiClient.UpdateUsuariAsync(usuariAModificar);
-                if (result > 0)
-                {
-                    //MessageBox.Show("Usuari actualitzat correctament!");
-                    await MostrarUsuarisAsync();
-                }
-                else
-                {
-                    MessageBox.Show("No s'ha pogut actualitzar l'usuari.");
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        // ACTUALITZAR ALUMNE
-        public async Task ActualitzarAlumneAsync(Alumne alumneAModificar)
-        {
-            try
-            {
-                int result = await _alumnesApiClient.UpdateAlumneAsync(alumneAModificar);
-                if (result <= 0)
-                {
-                    //MessageBox.Show("No s'ha pogut actualitzar l'alumne.");
-                    await MostrarUsuarisAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        // AFEGIR PROFESSOR
-        public async Task AfegirProfessorAsync(Professor professorAAfegir)
-        {
-            try
-            {
-                Professor result = await _professorsApiClient.PostProfessorAsync(professorAAfegir);
-                if (result != null)
-                {
-                    await MostrarUsuarisAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        // ACTUALITZAR PROFESSOR
-        public async Task ActualitzarProfessorAsync(Professor professorAModificar)
-        {
-            try
-            {
-                int result = await _professorsApiClient.UpdateProfessorAsync(professorAModificar);
-                if (result <= 0)
-                {
-                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await MostrarUsuarisAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
             }
         }
 
