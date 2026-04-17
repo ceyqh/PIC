@@ -27,14 +27,19 @@
                 <StackPanel Height="400" Width="200">
 
                     <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="Tots_Click" IsChecked="True">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="TOTS" 
+                              IsChecked="True">
                         <Grid>
                             <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerId_Click">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="PER_ID">
                         <Grid>
                             <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
@@ -66,24 +71,25 @@
                                 Margin="10">
 
                         <!-- TÍTOL -->
-                        <TextBlock Name="usuarisTitol" 
-                                   FontSize="12" 
+                        <TextBlock FontSize="12" 
+                                   Text="{Binding TitolPantalla}"
                                    Style="{StaticResource Fraktion_Dark_Font}" 
-                                   Margin="0, 0, 10, 0">CURSOS: TOTS</TextBlock>
+                                   Margin="0, 0, 10, 0"/>
 
                         <!-- INPUT -->
-                        <TextBox Name="inputArea"
-                                 VerticalAlignment="Center"
+                        <TextBox VerticalAlignment="Center"
                                  Width="200" 
-                                 Text="{Binding ParametreCerca, UpdateSourceTrigger=PropertyChanged}"
+                                 Visibility="{Binding CercaVisibility}" 
+                                 Text="{Binding ParametreCercaCursos, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,10,0"/>
 
                         <!-- BUSCAR -->
                         <Button Name="inputBoto"
-                                Content="BUSCAR"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Click="Buscar_Click"/>
+                                 Content="BUSCAR"
+                                 Visibility="{Binding CercaVisibility}"
+                                 Command="{Binding BuscarCommand}"
+                                 Padding="10, 0, 10, 0"
+                                 Style="{StaticResource Accions_Button}"/>
 
                     </StackPanel>
 
@@ -100,7 +106,7 @@
                             <Button Name="afegirCurs"
                                     Content="AFEGIR CURS"
                                     Style="{StaticResource Accions_Button}"
-                                    Click="AfegirCursMenu_Click"/>
+                                    Command="{Binding AfegirAlumneMenu_Click}"/>
                         </Grid>
 
                         <Grid Grid.Column="1">
@@ -108,7 +114,8 @@
                             <!-- BOTO EDITAR -->
                             <Button Name="editarCurs"
                                     Content="EDITAR CURS"
-                                    Style="{StaticResource Accions_Button}"/>
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding EditarCursMenu_Click}"/>
 
                         </Grid>
 
@@ -118,16 +125,15 @@
                             <Button Name="esborrarCurs"
                                     Content="ESBORRAR CURS"  
                                     Style="{StaticResource Accions_Button}"
-                                    Click="EsborrarCursMenu_Click"/>
+                                    Command="{Binding EsborrarCursMenu_Click}"/>
                         </Grid>
                     </Grid>
-
                 </Grid>
 
                 <!-- APARTAT DEL RESULTATS -->
                 <Grid Grid.Row="1" 
                       Background="White">
-                    
+
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="2*"/>
@@ -144,7 +150,7 @@
                             <!-- HEADER CURSOS -->
                             <Grid Grid.Row="0"
                                   Background="#e8e9e9">
-                                
+
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*"/>
                                     <ColumnDefinition Width="*"/>
@@ -217,7 +223,7 @@
                                 <Grid Grid.Column="1" VerticalAlignment="Center">
                                     <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
                                 </Grid>
-                                
+
                                 <Grid Grid.Column="2" VerticalAlignment="Center">
                                     <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">COGNOM</TextBlock>
                                 </Grid>
@@ -252,7 +258,7 @@
                                                            Grid.Column="1" 
                                                            Text="{Binding Nom}"
                                                            Style="{StaticResource Fraktion_Dark_Font}"/>
-                                                
+
                                                 <TextBlock FontSize="12" 
                                                            Grid.Column="2" 
                                                            Text="{Binding Cognom}"
@@ -268,65 +274,9 @@
             </Grid>
         </Grid>
 
-        <!-- MENU AFEGIR CURS -->
-        <Grid x:Name="OverlayAfegirCurs"
-              Visibility="Collapsed"
-              Background="#80000000">
-
-            <!-- POPUP -->
-            <Grid Width="300"
-                    Background="White"
-                    HorizontalAlignment="Center"
-                    VerticalAlignment="Center">
-
-                <Grid>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto"/>
-                        <RowDefinition Height="*"/>
-                        <RowDefinition Height="Auto"/>
-                    </Grid.RowDefinitions>
-
-                    <!-- TÍTOL -->
-                    <Grid Background="#131316" 
-                          VerticalAlignment="Center">
-
-                        <TextBlock Text="AFEGIR: CURS" 
-                                   Style="{StaticResource Fraktion_Light_Font}" 
-                                   FontSize="12" 
-                                   Margin="20, 10, 20, 10"/>
-                    </Grid>
-
-                    <!-- NOM -->
-                    <StackPanel Grid.Row="1" 
-                                Margin="20, 10, 20, 0">
-                        <TextBlock Text="NOM: " 
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   FontSize="12" 
-                                   Margin="0,0,0,10"/>
-
-                        <TextBox Name="aa_textNom" 
-                                 Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
-                    </StackPanel>
-
-                    <!-- BOTONS -->
-                    <StackPanel Grid.Row="2"
-                                Margin="20"
-                                Orientation="Horizontal" 
-                                HorizontalAlignment="Right">
-
-                        <Button Content="GUARDAR"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Margin="0,0,10,0"
-                                Click="AfegirCurs_Click"/>
-
-                        <Button Content="CANCEL·LAR"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Click="TancarOverlay_Click"/>
-                    </StackPanel>
-                </Grid>
-            </Grid>
-        </Grid>
+        <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
+        <local:AfegirCurs DataContext="{Binding AfegirCurs}" d:IsHidden="true"/>
+        <local:EditarCurs DataContext="{Binding EditarCurs}" d:IsHidden="true"/>
+        <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

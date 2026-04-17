@@ -31,6 +31,7 @@ namespace PIC.ViewModel
         private readonly DepartamentsApiClient _departamentsApiClient;
         
         private readonly UsuarisVM _usuarisVM;
+        private readonly CursosVM _cursosVM;
 
         private Usuari usuariSeleccionat;
         private Curs cursSeleccionat;
@@ -39,16 +40,22 @@ namespace PIC.ViewModel
         private Categoria categoriaSeleccionat;
         private Prestec prestecSeleccionat;
 
-        // CONSTRUCTOR
+        // CONSTRUCTOR PER USUARIS
         public ConfirmarEsborrarVM(UsuarisVM usuarisVM)
         {
             _usuarisVM = usuarisVM;
 
             _usuarisApiClient = new UsuarisApiClient();
             _alumnesApiClient = new AlumnesApiClient();
-            _professorsApiClient = new ProfessorsApiClient();
+            _professorsApiClient = new ProfessorsApiClient();          
+        }
+
+        // CONSTRUCTOR PER CURSOS
+        public ConfirmarEsborrarVM(CursosVM cursosVM)
+        {
+            _cursosVM = cursosVM;
+
             _cursosApiClient = new CursosApiClient();
-            _departamentsApiClient = new DepartamentsApiClient();            
         }
 
         private ElementAEsborrar _aEsborrar;
@@ -96,10 +103,9 @@ namespace PIC.ViewModel
         public void Mostrar(Usuari usuariAEsborrar)
         {
             usuariSeleccionat = usuariAEsborrar;
+            Missatge = $"Estàs a punt d'esborrar l'usuari { usuariAEsborrar.Nom} { usuariAEsborrar.Cognom} amb l'ID {usuariAEsborrar.Id}. Vols confirmar aquesta acció?";
 
-            Missatge = "Es vol esborrar l'usuari " + usuariAEsborrar.Nom + " " + usuariAEsborrar.Cognom + " amb l'ID " 
-                + usuariAEsborrar.Id + ". Vols confirmar aquesta acció?";
-
+            AEsborrar = ElementAEsborrar.Usuari;
             EsVisible = Visibility.Visible;
         }
 
@@ -108,8 +114,9 @@ namespace PIC.ViewModel
         {
             cursSeleccionat = cursAEsborrar;
 
-            Missatge = "";
+            Missatge = $"Estàs a punt d'esborrar el curs {cursAEsborrar.Nom} amb l'ID {cursAEsborrar.Id}. Vols confirmar aquesta acció?"; ;
 
+            AEsborrar = ElementAEsborrar.Curs;
             EsVisible = Visibility.Visible;
         }
 
@@ -169,12 +176,15 @@ namespace PIC.ViewModel
                     {
                         await _professorsApiClient.DeleteProfessorAsync((int)usuariSeleccionat.Id);
                     }
+
                     await _usuarisApiClient.DeleteUsuariAsync((int)usuariSeleccionat.Id);
                     await _usuarisVM.MostrarUsuarisAsync();
                     break;
 
                 // Si és un CURS
                 case ElementAEsborrar.Curs:
+                    await _cursosApiClient.DeleteCursAsync((int)cursSeleccionat.Id);
+                    await _cursosVM.MostrarCursosAsync();
                     break;
 
                 // Si és un DEPARTAMENT

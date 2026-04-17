@@ -1,5 +1,6 @@
 ﻿using PIC.APIClient;
 using PIC.Model;
+using PIC.Utilities;
 using PIC.View;
 using System;
 using System.Collections.Generic;
@@ -8,6 +9,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Input;
 
 namespace PIC.ViewModel
 {
@@ -21,158 +23,239 @@ namespace PIC.ViewModel
     {
         public ObservableCollection<Curs> Cursos { get; set; }
         public ObservableCollection<Usuari> Usuaris { get; set; }
+        public MissatgeErrorVM MissatgeError { get; set; }
+        public AfegirCursVM AfegirCurs { get; set; }
+        public EditarCursVM EditarCurs { get; set; }
+        public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
 
-        // CURS SELECCIONAT
+        private readonly CursosApiClient _cursosApiClient;
+        private readonly UsuarisApiClient _usuarisApiClient;
+
+        public CursosVM()
+        {
+            Cursos = new ObservableCollection<Curs>();
+            Usuaris = new ObservableCollection<Usuari>();
+
+            _cursosApiClient = new CursosApiClient();
+            _usuarisApiClient = new UsuarisApiClient();
+
+            MissatgeError = new MissatgeErrorVM();
+            AfegirCurs = new AfegirCursVM(this);
+            EditarCurs = new EditarCursVM(this);
+            ConfirmarEsborrar = new ConfirmarEsborrarVM(this);
+
+            _ = MostrarCursosAsync();
+        }
+
+        // PROPIETATS DE LA UI
+        private Visibility _cercaVisibility = Visibility.Collapsed;
+        public Visibility CercaVisibility
+        {
+            get => _cercaVisibility;
+            set { _cercaVisibility = value; OnPropertyChanged(); }
+        }
+
+        private string _titolPantalla = "CURSOS: TOTS";
+        public string TitolPantalla
+        {
+            get => _titolPantalla;
+            set { _titolPantalla = value; OnPropertyChanged(); }
+        }
+
+        // CURS SEL·LECCIONAT
         private Curs _cursSeleccionat;
         public Curs CursSeleccionat
         {
             get => _cursSeleccionat;
             set
             {
-                if (_cursSeleccionat == value) return;
-                if (value == null) return;
-
                 _cursSeleccionat = value;
                 OnPropertyChanged();
 
-                int idCurs = (int)_cursSeleccionat.Id;
-                CarregarUsuarisPerCurs(idCurs);
+                if (_cursSeleccionat != null)
+                {
+                    _ = CarregarUsuarisDelCursAsync((int)_cursSeleccionat.Id);
+                }
+            }
+        }
+
+        private async Task CarregarUsuarisDelCursAsync(int cursId)
+        {
+            try
+            {
+                var llista = await _usuarisApiClient.GetUsuarisPerIdCursAsync(cursId);
+
+                Usuaris.Clear();
+
+                foreach (var u in llista)
+                {
+                    Usuaris.Add(u);
+                }
+            }
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error carregant usuaris: " + ex.Message);
             }
         }
 
         // TIPUS DE CERCA
-        private CursosTipusCerca _tipusCercaActual;
-        public CursosTipusCerca TipusCercaActual
+        private CursosTipusCerca _tipusCercaActualCursos;
+        public CursosTipusCerca TipusCercaActualCursos
         {
-            get => _tipusCercaActual;
+            get => _tipusCercaActualCursos;
             set
             {
-                _tipusCercaActual = value;
+                _tipusCercaActualCursos = value;
                 OnPropertyChanged();
             }
         }
 
         // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private int _parametreCerca;
-        public int ParametreCerca
+        private int _parametreCercaCursos;
+        public int ParametreCercaCursos
         {
-            get => _parametreCerca;
+            get => _parametreCercaCursos;
             set
             {
-                _parametreCerca = value;
+                _parametreCercaCursos = value;
                 OnPropertyChanged();
             }
         }
 
-        // EXECUTAR CERCA
-        public async Task CercaCursosAsync()
+        // COMANDAMENTS
+        public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            Cursos.Clear();
+            if (param == null) return;
+            string mode = param.ToString();
 
-            switch (TipusCercaActual)
+            // Reset de la llista i visibilitat per defecte
+            Cursos.Clear();
+            CercaVisibility = Visibility.Visible;
+
+            switch (mode)
             {
-                case CursosTipusCerca.PerId:
-                    var curs = await _cursosApiClient.GetCursPerIdAsync(ParametreCerca);
-                    Cursos.Add(curs);
+                case "TOTS":
+                    TitolPantalla = "CURSOS: TOTS";
+                    ParametreCercaCursos = 0;
+                    ClearUsuaris();
+                    CercaVisibility = Visibility.Collapsed;
+                    _ = MostrarCursosAsync();
+                    break;
+
+                case "PER_ID":
+                    TitolPantalla = "CURSOS: PER ID";
+                    ParametreCercaCursos = 0;
+                    ClearUsuaris();
+                    TipusCercaActualCursos = CursosTipusCerca.PerId;
                     break;
             }
-        }
+        });
 
-        // CONSTRUCTOR
-        private readonly CursosApiClient _cursosApiClient;
-        private readonly UsuarisApiClient _usuarisApiClient;
-
-        public CursosVM()
+        // EXECUTAR CERCA
+        public ICommand BuscarCommand => new RelayCommand(async _ =>
         {
-            _cursosApiClient = new CursosApiClient();
-            _usuarisApiClient = new UsuarisApiClient();
+            await CercaCursosAsync();
+        });
 
-            Cursos = new ObservableCollection<Curs>();
-            Usuaris = new ObservableCollection<Usuari>();
-        }
-
-        // MOSTRAR TOTS ELS CURSOS
-        public async Task MostrarCursosAsync()
+        // MÈTODE DE CERCA AMB PROTECCIÓ DE NULLS
+        public async Task CercaCursosAsync()
         {
-            var llista = await _cursosApiClient.GetAllCursosAsync();
-            Cursos.Clear();
-
-            foreach (var u in llista)
+            try
             {
-                Cursos.Add(u);
+                Cursos.Clear();
+                switch (TipusCercaActualCursos)
+                {
+                    case CursosTipusCerca.PerId:
+                        var curs = await _cursosApiClient.GetCursPerIdAsync(ParametreCercaCursos);
+
+                        if (curs != null)
+                        {
+                            Cursos.Add(curs);
+                        }
+                        else
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap curs amb aquest ID.");
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
             }
         }
 
-        // CARREGAR ELS USUARIS D'UN CURS
-        public async void CarregarUsuarisPerCurs(int idCurs)
+        // MOSTRAR CURSOS
+        public async Task MostrarCursosAsync()
         {
-            await MostrarUsuarisPerCurs(idCurs);
-        }
-
-        // MOSTRAR ELS USUARIS PER CURS SEL·LECCIONAT
-        public async Task MostrarUsuarisPerCurs(int idCurs)
-        {
-            Usuaris.Clear();
-
-            var usuaris = await _usuarisApiClient.GetUsuarisPerIdCursAsync(idCurs);
-
-            foreach (var u in usuaris)
+            try
             {
-                Usuaris.Add(u);
+                var llista = await _cursosApiClient.GetAllCursosAsync();
+                Cursos.Clear();
+
+                foreach (var u in llista)
+                {
+                    Cursos.Add(u);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error: " + ex.Message);
             }
         }
 
         // AFEGIR CURS
-        public async Task<Curs> AfegirCursAsync(Curs cursAAfegir)
+        public ICommand AfegirAlumneMenu_Click => new RelayCommand(async _ =>
         {
-            try
+            AfegirCurs.Mostrar();
+        });
+
+        // EDITAR CURS
+        public ICommand EditarCursMenu_Click => new RelayCommand(async _ =>
+        {
+            if (_cursSeleccionat != null)
             {
-                Curs result = await _cursosApiClient.PostCursAsync(cursAAfegir);
-
-                if (result != null)
-                {
-                    var curs = new Curs
-                    {
-                        Id = result.Id,
-                        Nom = result.Nom
-                    };
-
-                    await MostrarCursosAsync();
-
-                    return curs;
-                }
+                await EditarCurs.Mostrar(CursSeleccionat);
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MissatgeError.Mostrar("Cal seleccionar un curs.");
             }
-
-            return null;
-        }
+        });
 
         // ESBORRAR CURS
-        public async Task EsborrarCursAsync(int id)
+        public ICommand EsborrarCursMenu_Click => new RelayCommand(async _ =>
         {
-            try
+            if (_cursSeleccionat != null)
             {
-                int result = await _cursosApiClient.DeleteCursAsync(id);
-                if (result <= 0)
+                int cursId = (int)_cursSeleccionat.Id;
+                var comptarUsuaris = await _usuarisApiClient.GetUsuarisPerIdCursAsync(cursId);
+
+                if (comptarUsuaris.Count > 0)
                 {
-                    await MostrarCursosAsync();
+                    MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
+                        "Si vols esborrar el curs, primer hasd'eliminar els seus alumnes");
+                }
+
+                else
+                {
+                    ConfirmarEsborrar.Mostrar(_cursSeleccionat);
                 }
             }
-            catch (Exception ex)
+            else
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MissatgeError.Mostrar("Cal seleccionar un curs.");
             }
-        }
+        });
 
-        // BUIDAR LIST VIEW
+        // BUIDAR LIST VIEW CURSOS
         public void ClearCursos()
         {
             Cursos.Clear();
         }
 
+        // BUIDAR LIST VIEW USUARIS
         public void ClearUsuaris()
         {
             Usuaris.Clear();

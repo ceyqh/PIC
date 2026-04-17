@@ -228,3 +228,7 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.pdb
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe.config
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ConfirmarEsborrar.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ConfirmarEsborrar.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCurs.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCurs.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCurs.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCurs.baml

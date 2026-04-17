@@ -38,7 +38,7 @@ namespace PIC.ViewModel
         public UsuarisVM()
         {
             Usuaris = new ObservableCollection<Usuari>();
-            
+
             _usuarisApiClient = new UsuarisApiClient();
             _alumnesApiClient = new AlumnesApiClient();
             _professorsApiClient = new ProfessorsApiClient();
@@ -46,11 +46,28 @@ namespace PIC.ViewModel
             MissatgeError = new MissatgeErrorVM();
             AfegirAlumne = new AfegirAlumneVM(this);
             AfegirProfessor = new AfegirProfessorVM(this);
-            EditarUsuari= new EditarUsuariVM(this);
+            EditarUsuari = new EditarUsuariVM(this);
             ConfirmarEsborrar = new ConfirmarEsborrarVM(this);
+
+            _ = MostrarUsuarisAsync();
         }
 
-        // USUARIO SEL·LECCIONAT
+        // PROPIETATS DE LA UI
+        private Visibility _cercaVisibility = Visibility.Collapsed;
+        public Visibility CercaVisibility
+        {
+            get => _cercaVisibility;
+            set { _cercaVisibility = value; OnPropertyChanged(); }
+        }
+
+        private string _titolPantalla = "USUARIS: TOTS";
+        public string TitolPantalla
+        {
+            get => _titolPantalla;
+            set { _titolPantalla = value; OnPropertyChanged(); }
+        }
+
+        // USUARI SEL·LECCIONAT
         private Usuari _usuariSeleccionat;
         public Usuari UsuariSeleccionat
         {
@@ -58,6 +75,30 @@ namespace PIC.ViewModel
             set
             {
                 _usuariSeleccionat = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // TIPUS DE CERCA
+        private UsuarisTipusCerca _tipusCercaActualUsuaris;
+        public UsuarisTipusCerca TipusCercaActualUsuaris
+        {
+            get => _tipusCercaActualUsuaris;
+            set
+            {
+                _tipusCercaActualUsuaris = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // PARAMETRE DE CERCA DEL CAMP DE TEXT
+        private int _parametreCercaUsuaris;
+        public int ParametreCercaUsuaris
+        {
+            get => _parametreCercaUsuaris;
+            set
+            {
+                _parametreCercaUsuaris = value;
                 OnPropertyChanged();
             }
         }
@@ -88,6 +129,7 @@ namespace PIC.ViewModel
 
         });
 
+        // ESBORRAR USUARI
         public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
         {
             if (_usuariSeleccionat != null)
@@ -101,30 +143,50 @@ namespace PIC.ViewModel
             
         });
 
-
-        // TIPUS DE CERCA
-        private UsuarisTipusCerca _tipusCercaActual;
-        public UsuarisTipusCerca TipusCercaActual
+        // COMANDAMENTS
+        public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            get => _tipusCercaActual;
-            set
-            {
-                _tipusCercaActual = value;
-                OnPropertyChanged();
-            }
-        }
+            if (param == null) return;
+            string mode = param.ToString();
 
-        // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private int _parametreCerca;
-        public int ParametreCerca
-        {
-            get => _parametreCerca;
-            set
+            // Reset de la llista i visibilitat per defecte
+            Usuaris.Clear();
+            CercaVisibility = Visibility.Visible;
+
+            switch (mode)
             {
-                _parametreCerca = value;
-                OnPropertyChanged();
+                case "TOTS":
+                    TitolPantalla = "USUARIS: TOTS";
+                    ParametreCercaUsuaris = 0;
+                    CercaVisibility = Visibility.Collapsed;
+                    _ = MostrarUsuarisAsync();
+                    break;
+
+                case "PER_ID":
+                    TitolPantalla = "USUARIS: PER ID";
+                    ParametreCercaUsuaris = 0;
+                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerId;
+                    break;
+
+                case "PER_CURS":
+                    TitolPantalla = "USUARIS: PER CURS";
+                    ParametreCercaUsuaris = 0;
+                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerCurs;
+                    break;
+
+                case "PER_DEPARTAMENT":
+                    TitolPantalla = "USUARIS: PER DEPARTAMENT";
+                    ParametreCercaUsuaris = 0;
+                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerDepartament;
+                    break;
             }
-        }
+        });
+
+        // EXECUTAR CERCA
+        public ICommand BuscarCommand => new RelayCommand(async _ => 
+        {
+            await CercaUsuarisAsync();
+        });
 
         // MOSTRAR TOTS ELS USUARIS
         public async Task MostrarUsuarisAsync()
@@ -142,89 +204,71 @@ namespace PIC.ViewModel
 
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MissatgeError.Mostrar("Error: " + ex.Message);
             }
         }
 
-        // EXECUTAR CERCA
+        // MÈTODE DE CERCA AMB PROTECCIÓ DE NULLS
         public async Task CercaUsuarisAsync()
         {
-            Usuaris.Clear();
-
-            switch (TipusCercaActual)
-            {
-                case UsuarisTipusCerca.PerId:
-                    var usuari = await _usuarisApiClient.GetUsuariPerIdAsync(ParametreCerca);
-                    Usuaris.Add(usuari);
-                    break;
-
-                case UsuarisTipusCerca.PerCurs:                    
-                    var curs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(ParametreCerca);
-                    foreach (var u in curs)
-                        Usuaris.Add(u);
-                    break;
-
-                case UsuarisTipusCerca.PerDepartament:
-                    var dep = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(ParametreCerca);
-                    foreach (var u in dep)
-                        Usuaris.Add(u);
-                    break;
-            }
-        }
-
-        // ESBORRAR USUARI
-        public async Task EsborrarUsuariAsync(int id)
-        {
             try
             {
-                int result = await _usuarisApiClient.DeleteUsuariAsync(id);
-                if (result <= 0)
+                Usuaris.Clear();
+                switch (TipusCercaActualUsuaris)
                 {
-                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await MostrarUsuarisAsync();
+                    case UsuarisTipusCerca.PerId:
+                        var usuari = await _usuarisApiClient.GetUsuariPerIdAsync(ParametreCercaUsuaris);
+                        
+                        if (usuari != null)
+                        {
+                            Usuaris.Add(usuari);
+                        }                            
+                        else
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID.");
+                        }                            
+                        break;
+
+                    case UsuarisTipusCerca.PerCurs:
+                        var curs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(ParametreCercaUsuaris);
+                        
+                        if (curs != null && curs.Any())
+                        {
+                            foreach (var u in curs)
+                            {
+                                Usuaris.Add(u);
+
+                            }
+                        }
+                        else
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Curs.");
+                        }
+                        break;
+
+                    case UsuarisTipusCerca.PerDepartament:
+                        var dep = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(ParametreCercaUsuaris);
+                        
+                        if (dep != null && dep.Any())
+                        {
+                            foreach (var u in dep)
+                            {
+                                Usuaris.Add(u);
+                            }
+                        }
+                        else
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Departament.");
+                        }
+                        break;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show($"Error: {ex.Message}");
+                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
             }
         }
 
-        // ESBORRAR ALUMNE
-        public async Task EsborrarAlumneAsync(int id)
-        {
-            try
-            {
-                int result = await _alumnesApiClient.DeleteAlumneAsync(id);
-                if (result <= 0)
-                {
-                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await MostrarUsuarisAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
-
-        // ESBORRAR PROFESSOR
-        public async Task EsborrarProfessorAsync(int id)
-        {
-            try
-            {
-                int result = await _professorsApiClient.DeleteProfessorAsync(id);
-                if (result <= 0)
-                {
-                    //MessageBox.Show("No s'ha pogut actualitzar el professor.");
-                    await MostrarUsuarisAsync();
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show($"Error: {ex.Message}");
-            }
-        }
 
         // BUIDAR LIST VIEW
         public void ClearUsuaris()

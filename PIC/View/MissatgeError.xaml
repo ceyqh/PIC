@@ -10,7 +10,7 @@
     <Grid Background="#80000000"
       Visibility="{Binding EsVisible}">
 
-        <Grid MaxWidth="700" MinWidth="300"
+        <Grid MaxWidth="500" MinWidth="300"
           Background="White"
           HorizontalAlignment="Center"
           VerticalAlignment="Center">

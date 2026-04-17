@@ -27,28 +27,37 @@
                 <StackPanel Height="400" Width="200">
 
                     <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="Tots_Click" IsChecked="True">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="TOTS" 
+                              IsChecked="True">
                         <Grid>
                             <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerId_Click">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="PER_ID">
                         <Grid>
                             <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID CURS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerCurs_Click">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="PER_CURS">
                         <Grid>
                             <TextBlock Text="PER CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" Click="PerDepartament_Click">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}"
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="PER_DEPARTAMENT">
                         <Grid>
                             <TextBlock Text="PER DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
@@ -80,24 +89,25 @@
                                 Margin="10">
 
                         <!-- TÍTOL -->
-                        <TextBlock Name="usuarisTitol" 
-                                   FontSize="12" 
+                        <TextBlock FontSize="12" 
+                                   Text="{Binding TitolPantalla}"
                                    Style="{StaticResource Fraktion_Dark_Font}" 
-                                   Margin="0, 0, 10, 0">USUARIS: TOTS</TextBlock>
+                                   Margin="0, 0, 10, 0"/>
 
                         <!-- INPUT -->
-                        <TextBox Name="inputArea"
-                                 VerticalAlignment="Center"
+                        <TextBox VerticalAlignment="Center"
                                  Width="200" 
-                                 Text="{Binding ParametreCerca, UpdateSourceTrigger=PropertyChanged}"
+                                 Visibility="{Binding CercaVisibility}" 
+                                 Text="{Binding ParametreCercaUsuaris, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,10,0"/>
 
                         <!-- BUSCAR -->
                         <Button Name="inputBoto"
                                 Content="BUSCAR"
+                                Visibility="{Binding CercaVisibility}"
+                                Command="{Binding BuscarCommand}"
                                 Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"
-                                Click="Buscar_Click"/>
+                                Style="{StaticResource Accions_Button}"/>
 
                     </StackPanel>
 
@@ -163,51 +173,39 @@
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">
-                                <Span x:Name="labelId">
-                                    <Run>ID</Run>
-                                </Span>
-                            </TextBlock>
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
                         </Grid>
 
-                        <Grid Grid.Column="1" VerticalAlignment="Center">
+                        <Grid Grid.Column="1" 
+                              VerticalAlignment="Center">
+
                             <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
                         </Grid>
 
                         <Grid Grid.Column="2" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">
-                                <Span x:Name="labelCognom">
-                                    <Run>COGNOM</Run>
-                                </Span>
-                            </TextBlock>
+                            <TextBlock Text="COGNOM"
+                                       FontSize="12" 
+                                       Style="{StaticResource Fraktion_Dark_Font}"/>
                         </Grid>
 
-                        <Grid Grid.Column="3" VerticalAlignment="Center">
+                        <Grid Grid.Column="3" 
+                              VerticalAlignment="Center">
+
                             <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">TIPUS</TextBlock>
                         </Grid>
 
-                        <Grid Grid.Column="4" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">CURS / DEPARTAMENT</TextBlock>
+                        <Grid Grid.Column="4" 
+                              VerticalAlignment="Center">
+
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">GRUP</TextBlock>
                         </Grid>
 
-                        <Grid Grid.Column="5" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">
-                                <Span>
-                                    <Run>ID</Run>
-                                </Span>
-                                <Span x:Name="labelIdCurs">
-                                    <Run>CURS</Run>
-                                </Span>
-                                <Span>
-                                    <Run>/</Run>
-                                </Span>
-                                <Span x:Name="labelIdDepartament">
-                                    <Run>DEPARTAMENT</Run>
-                                </Span>
-                            </TextBlock>
+                        <Grid Grid.Column="5" 
+                              VerticalAlignment="Center">
+ 
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID_GRUP</TextBlock>
                         </Grid>
                     </Grid>
-
                 </Grid>
 
                 <Grid Grid.Row="2">

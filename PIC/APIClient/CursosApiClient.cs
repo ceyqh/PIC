@@ -108,7 +108,31 @@ namespace PIC.APIClient
                 }
                 else
                 {
-                    throw new Exception($"Error al crear el curs: {response.StatusCode}");
+                    throw new Exception("Error al crear el curs: "+ response.StatusCode);
+                }
+            }
+        }
+
+        // ACTUALITZAR CURS
+        public async Task<int> UpdateCursAsync(Curs curs)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                HttpResponseMessage response = await client.PutAsJsonAsync($"cursos/{curs.Id}", curs);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<int>();
+                    return result;
+                }
+                else
+                {
+                    string errorContent = await response.Content.ReadAsStringAsync();
+                    throw new Exception("Error al actualitzar el curs " + response.StatusCode);
                 }
             }
         }

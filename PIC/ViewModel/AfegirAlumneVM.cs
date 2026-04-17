@@ -155,11 +155,8 @@ namespace PIC.ViewModel
             };
 
             await CrearAlumneAsync(alumne);
-
-            // Tornar a mostrar la llista d'usuaris actualitzada amb el nou usuari
             await _usuarisVM.MostrarUsuarisAsync();
 
-            // Tancar popup
             EsVisible = Visibility.Collapsed;
         }
 

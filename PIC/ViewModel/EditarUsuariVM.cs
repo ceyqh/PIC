@@ -58,7 +58,7 @@ namespace PIC.ViewModel
             }
         }
 
-        // ITEMPS SELECCIONABLES
+        // ITEMS SELECCIONABLES
         private List<object> _itemsSeleccionables;
         public List<object> ItemsSeleccionables
         {

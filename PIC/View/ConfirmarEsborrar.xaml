@@ -22,7 +22,7 @@
             </Grid.RowDefinitions>
 
             <!-- Títol -->
-            <Grid Background="#131316">
+            <Grid Background="#C44545">
                 <TextBlock Text="ALERTA"
                    Style="{StaticResource Fraktion_Light_Font}"
                    Margin="20, 10, 20, 10"/>
@@ -46,7 +46,7 @@
 
                 <Button Content="ESBORRAR"
                         Padding="10, 0, 10, 0"
-                        Style="{StaticResource Accions_Button}"
+                        Style="{StaticResource Alerta_Button}"
                         Margin="0,0,10,0"
                         Command="{Binding Esborrar_Click}"/>
 
