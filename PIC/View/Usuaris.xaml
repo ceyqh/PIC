@@ -191,7 +191,7 @@
                         <Grid Grid.Column="3" 
                               VerticalAlignment="Center">
 
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">TIPUS</TextBlock>
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID_GRUP</TextBlock>
                         </Grid>
 
                         <Grid Grid.Column="4" 
@@ -202,8 +202,8 @@
 
                         <Grid Grid.Column="5" 
                               VerticalAlignment="Center">
- 
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID_GRUP</TextBlock>
+
+                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">TIPUS</TextBlock>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -247,7 +247,7 @@
                                     <TextBlock Grid.Column="3" 
                                                FontSize="12"  
                                                Style="{StaticResource Fraktion_Dark_Font}"
-                                               Text="{Binding Tipus}"/>
+                                               Text="{Binding IdGrup}"/>
 
                                     <TextBlock Grid.Column="4" 
                                                FontSize="12" 
@@ -257,7 +257,7 @@
                                     <TextBlock Grid.Column="5" 
                                                FontSize="12"  
                                                Style="{StaticResource Fraktion_Dark_Font}"
-                                               Text="{Binding IdGrup}"/>
+                                               Text="{Binding Tipus}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>

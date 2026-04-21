@@ -1,36 +1,309 @@
-﻿using PIC.Model;
-using PIC.APIClient;
+﻿using PIC.APIClient;
+using PIC.Model;
+using PIC.Utilities;
+using PIC.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
 
 namespace PIC.ViewModel
 {
+    public enum DispositiusTipusCerca
+    {
+        PerId,
+        PerCategoria,
+    }
+
     internal class DispositiusVM : Utilities.ViewModelBase
     {
-        private readonly DispositiusApiClient _apiClient;
-
         public ObservableCollection<Dispositiu> Dispositius { get; set; }
+        public MissatgeErrorVM MissatgeError { get; set; }
+        //public AfegirAlumneVM AfegirAlumne { get; set; }
+        //public AfegirProfessorVM AfegirProfessor { get; set; }
+        //public EditarUsuariVM EditarUsuari { get; set; }
+        public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
+
+        private readonly DispositiusApiClient _dispositiusApiClient;
 
         public DispositiusVM()
         {
-            _apiClient = new DispositiusApiClient();
             Dispositius = new ObservableCollection<Dispositiu>();
+
+            _dispositiusApiClient = new DispositiusApiClient();
+
+            MissatgeError = new MissatgeErrorVM();
+            //AfegirAlumne = new AfegirAlumneVM(this);
+            //AfegirProfessor = new AfegirProfessorVM(this);
+            //EditarUsuari = new EditarUsuariVM(this);
+            ConfirmarEsborrar = new ConfirmarEsborrarVM();
+
+            _ = MostrarDispositiusAsync();
         }
 
-        public async Task LoadDispositiusAsync()
+        // PROPIETATS DE LA UI
+        private Visibility _cercaVisibility = Visibility.Collapsed;
+        public Visibility CercaVisibility
         {
-            var llista = await _apiClient.GetAllDispositiusAsync();
+            get => _cercaVisibility;
+            set { _cercaVisibility = value; OnPropertyChanged(); }
+        }
 
-            Dispositius.Clear();
+        private string _titolPantalla = "USUARIS: TOTS";
+        public string TitolPantalla
+        {
+            get => _titolPantalla;
+            set { _titolPantalla = value; OnPropertyChanged(); }
+        }
 
-            foreach (var p in llista)
+        // DISPOSITIU SELECCIONAT
+        private Dispositiu _dispositiuSeleccionat;
+        public Dispositiu DispositiuSeleccionat
+        {
+            get => _dispositiuSeleccionat;
+            set
             {
-                Dispositius.Add(p);
+                _dispositiuSeleccionat = value;
+                OnPropertyChanged();
             }
+        }
+
+        // TIPUS DE CERCA
+        private DispositiusTipusCerca _tipusCercaActualDispositius;
+        public DispositiusTipusCerca TipusCercaActualDispositius
+        {
+            get => _tipusCercaActualDispositius;
+            set
+            {
+                _tipusCercaActualDispositius = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // PARAMETRE DE CERCA DEL CAMP DE TEXT
+        private int _parametreCercaDispositius;
+        public int ParametreCercaDispositius
+        {
+            get => _parametreCercaDispositius;
+            set
+            {
+                _parametreCercaDispositius = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // AFGIR DISPOSITIU
+        public ICommand AfegirDispositiuMenu_Click => new RelayCommand(_ =>
+        {
+            //AfegirAlumne.Mostrar();
+        });
+
+        // EDITAR USUARI
+        public ICommand EditarDispositiuMenu_Click => new RelayCommand(async _ =>
+        {
+            if (_dispositiuSeleccionat != null)
+            {
+                //await EditarUsuari.Mostrar(UsuariSeleccionat);
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar un dispositiu.");
+            }
+        });
+
+        // ESBORRAR DISPOSITIU
+        public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
+        {
+            if (_dispositiuSeleccionat != null)
+            {
+                //ConfirmarEsborrar.Mostrar(_usuariSeleccionat, this);
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar un dispositiu.");
+            }
+
+        });
+
+        // COMANDAMENTS
+        public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
+        {
+            if (param == null) return;
+            string mode = param.ToString();
+
+            // Reset de la llista i visibilitat per defecte
+            Dispositius.Clear();
+            CercaVisibility = Visibility.Visible;
+
+            switch (mode)
+            {
+                case "TOTS":
+                    TitolPantalla = "DISPOSITIUS: TOTS";
+                    ParametreCercaDispositius= 0;
+                    CercaVisibility = Visibility.Collapsed;
+                    _ = MostrarDispositiusAsync();
+                    break;
+
+                case "PER_ID":
+                    TitolPantalla = "DISPOSITIUS: PER ID";
+                    ParametreCercaDispositius = 0;
+                    TipusCercaActualDispositius = DispositiusTipusCerca.PerId;
+                    break;
+
+                case "PER_CATEGORIA":
+                    TitolPantalla = "DISPOSITIUS: PER CATEGORIA";
+                    ParametreCercaDispositius = 0;
+                    TipusCercaActualDispositius = DispositiusTipusCerca.PerCategoria;
+                    break;
+
+                case "DISPONIBLES":
+                    TitolPantalla = "DISPOSITIUS: DISPONIBLES";
+                    ParametreCercaDispositius = 0;
+                    CercaVisibility = Visibility.Collapsed;
+                    _ = MostrarDispositiusDisponiblesAsync();
+                    break;
+
+                case "NO_DISPONIBLES":
+                    TitolPantalla = "DISPOSITIUS: NO DISPONIBLES";
+                    ParametreCercaDispositius = 0;
+                    CercaVisibility = Visibility.Collapsed;
+                    _ = MostrarDispositiusNoDisponiblesAsync();
+                    break;
+            }
+        });
+
+        // EXECUTAR CERCA
+        public ICommand BuscarCommand => new RelayCommand(async _ =>
+        {
+            await CercaDispositiusAsync();
+        });
+
+        // MOSTRAR TOTS ELS DISPOSITIUS
+        public async Task MostrarDispositiusAsync()
+        {
+            try
+            {
+                var llista = await _dispositiusApiClient.GetAllDispositiusAsync();
+                Dispositius.Clear();
+
+                foreach (var u in llista)
+                {
+                    Dispositius.Add(u);
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error: " + ex.Message);
+            }
+        }
+
+        // MOSTRAR DISPOSITIUS DISPONIBLES
+        public async Task MostrarDispositiusDisponiblesAsync()
+        {
+            try
+            {
+                var llista = await _dispositiusApiClient.GetDispositiusDisponiblesAsync();
+                Dispositius.Clear();
+
+                if (llista != null && llista.Any())
+                {
+                    foreach (var u in llista)
+                    {
+                        Dispositius.Add(u);
+                    }
+                }
+                else
+                {
+                    MissatgeError.Mostrar("No hi ha cap dispositiu disponible.");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error: " + ex.Message);
+            }
+        }
+
+        // MOSTRAR DISPOSITIUS NO DISPONIBLES
+        public async Task MostrarDispositiusNoDisponiblesAsync()
+        {
+            try
+            {
+                var llista = await _dispositiusApiClient.GetDispositiusNoDisponiblesAsync();
+                Dispositius.Clear();
+
+                if (llista != null && llista.Any())
+                {
+                    foreach (var u in llista)
+                    {
+                        Dispositius.Add(u);
+                    }
+                }
+                else
+                {
+                    MissatgeError.Mostrar("Tots els dispositius estan disponibles.");
+                }
+            }
+
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error: " + ex.Message);
+            }
+        }
+
+        // MÈTODE DE CERCA
+        public async Task CercaDispositiusAsync()
+        {
+            try
+            {
+                Dispositius.Clear();
+                switch (TipusCercaActualDispositius)
+                {
+                    case DispositiusTipusCerca.PerId:
+                        var dispositiu = await _dispositiusApiClient.GetDispositiuPerIdAsync(ParametreCercaDispositius);
+
+                        if (dispositiu != null)
+                        {
+                            Dispositius.Add(dispositiu);
+                        }
+                        else
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap dispositiu amb aquest ID.");
+                        }
+                        break;
+
+                    case DispositiusTipusCerca.PerCategoria:
+                        var categoria = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(ParametreCercaDispositius);
+
+                        if (categoria != null && categoria.Any())
+                        {
+                            foreach (var u in categoria)
+                            {
+                                Dispositius.Add(u);
+                            }
+                        }
+                        else
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap dispositiu amb aquest ID de categoria.");
+                        }
+                        break;
+                }
+            }
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
+            }
+        }
+
+        // BUIDAR LIST VIEW
+        public void ClearDispositius()
+        {
+            Dispositius.Clear();
         }
     }
 }

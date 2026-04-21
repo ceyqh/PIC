@@ -24,10 +24,6 @@ namespace PIC.View
         public Dispositius()
         {
             InitializeComponent();
-            Loaded += async (s, e) =>
-            {
-                await ((DispositiusVM)DataContext).LoadDispositiusAsync();
-            };
         }
     }
 }

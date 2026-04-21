@@ -31,8 +31,6 @@ namespace PIC.ViewModel
         public EditarUsuariVM EditarUsuari{ get; set; }
 
         private readonly UsuarisApiClient _usuarisApiClient;
-        private readonly AlumnesApiClient _alumnesApiClient;
-        private readonly ProfessorsApiClient _professorsApiClient;
 
         // CONSTRUCTOR
         public UsuarisVM()
@@ -40,8 +38,6 @@ namespace PIC.ViewModel
             Usuaris = new ObservableCollection<Usuari>();
 
             _usuarisApiClient = new UsuarisApiClient();
-            _alumnesApiClient = new AlumnesApiClient();
-            _professorsApiClient = new ProfessorsApiClient();
 
             MissatgeError = new MissatgeErrorVM();
             AfegirAlumne = new AfegirAlumneVM(this);
@@ -67,7 +63,7 @@ namespace PIC.ViewModel
             set { _titolPantalla = value; OnPropertyChanged(); }
         }
 
-        // USUARI SEL·LECCIONAT
+        // USUARI SELECCIONAT
         private Usuari _usuariSeleccionat;
         public Usuari UsuariSeleccionat
         {
@@ -126,7 +122,6 @@ namespace PIC.ViewModel
             {
                 MissatgeError.Mostrar("Cal seleccionar un usuari.");
             }
-
         });
 
         // ESBORRAR USUARI
@@ -139,8 +134,7 @@ namespace PIC.ViewModel
             else
             {
                 MissatgeError.Mostrar("Cal seleccionar un usuari.");
-            }
-            
+            }            
         });
 
         // COMANDAMENTS
@@ -208,7 +202,7 @@ namespace PIC.ViewModel
             }
         }
 
-        // MÈTODE DE CERCA AMB PROTECCIÓ DE NULLS
+        // MÈTODE DE CERCA
         public async Task CercaUsuarisAsync()
         {
             try

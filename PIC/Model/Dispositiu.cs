@@ -11,6 +11,7 @@ namespace PIC.Model
         public long Id { get; set; }
         public string Nom { get; set; }
         public long IdCategoria { get; set; }
+        public string Categoria { get; set; }
         public bool Disponible { get; set; }
     }
 }
