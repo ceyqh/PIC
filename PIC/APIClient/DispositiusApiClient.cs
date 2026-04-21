@@ -20,6 +20,7 @@ namespace PIC.APIClient
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
         }
 
+        // DISPOSITIU PER ID
         public async Task<Dispositiu> GetDispositiuPerIdAsync(int Id)
         {
             Dispositiu dispositiu = new Dispositiu();
@@ -54,6 +55,7 @@ namespace PIC.APIClient
             return dispositiu;
         }
 
+        // TOTS ELS DISPOSITIUS 
         public async Task<List<Dispositiu>> GetAllDispositiusAsync()
         {
             List<Dispositiu> dispositiu = new List<Dispositiu>();
@@ -80,6 +82,42 @@ namespace PIC.APIClient
             return dispositiu;
         }
 
+        // DISPOSITIUS PER CATEGORIA
+        public async Task<List<Dispositiu>> GetDispositiusPerIdCategoriaAsync(int Id)
+        {
+            List<Dispositiu> dispositius = new List<Dispositiu>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                //Enviem una petició GET al endpoint /usuaris/cursos?id={Id}
+                HttpResponseMessage response = await client.GetAsync($"dispositius/categories?id={Id}");
+                if (response.IsSuccessStatusCode)
+                {
+                    //Reposta 204 quan no ha trobat dades
+                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    {
+                        dispositius = null;
+                    }
+                    else
+                    {
+                        //Obtenim el resultat i el carreguem al Objecte Usuari
+                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
+                        response.Dispose();
+                    }
+                }
+                else
+                {
+                    //TODO: que fer si ha anat malament? retornar null? 
+                }
+            }
+            return dispositius;
+        }
+
+        // AFEGIR DISPOSITIU
         public async Task AddDispositiuAsync(Dispositiu dispositiu)
         {
             using (var client = new HttpClient())
@@ -94,6 +132,8 @@ namespace PIC.APIClient
             }
         }
 
+        // EDITAR DISPOSITIU
+
         public async Task UpdateDispositiuAsync(Dispositiu dispositiu)
         {
             using (var client = new HttpClient())
@@ -107,6 +147,8 @@ namespace PIC.APIClient
                 response.EnsureSuccessStatusCode();
             }
         }
+
+        // ESBORRAR DISPOSITIU
 
         public async Task DeleteDispositiuAsync(int Id)
         {

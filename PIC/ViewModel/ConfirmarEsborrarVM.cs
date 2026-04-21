@@ -29,10 +29,12 @@ namespace PIC.ViewModel
         private readonly ProfessorsApiClient _professorsApiClient = new ProfessorsApiClient();
         private readonly CursosApiClient _cursosApiClient = new CursosApiClient();
         private readonly DepartamentsApiClient _departamentsApiClient = new DepartamentsApiClient();
+        private readonly CategoriesApiClient _categoriesApiClient = new CategoriesApiClient();
 
         private UsuarisVM _usuarisVM;
         private CursosVM _cursosVM;
         private DepartamentsVM _departamentsVM;
+        private CategoriesVM _categoriesVM;
 
         private Usuari usuariSeleccionat;
         private Curs cursSeleccionat;
@@ -58,6 +60,7 @@ namespace PIC.ViewModel
             _usuarisApiClient = new UsuarisApiClient();
             _alumnesApiClient = new AlumnesApiClient();
             _professorsApiClient = new ProfessorsApiClient();          
+            _categoriesApiClient = new CategoriesApiClient();          
         }
 
         private ElementAEsborrar _aEsborrar;
@@ -137,6 +140,18 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Visible;
         }
 
+        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN DEPARTAMENT
+        public void Mostrar(Categoria categoriaAEsborrar, CategoriesVM parentVM)
+        {
+            this._categoriesVM = parentVM; // Ens assegurem que tenim la referència actual
+            this.categoriaSeleccionat = categoriaAEsborrar;
+
+            Missatge = $"Estàs a punt d'esborrar la categoria {categoriaAEsborrar.Nom} amb ID({categoriaAEsborrar.Id}). Vols confirmar aquesta acció?";
+
+            AEsborrar = ElementAEsborrar.Categoria;
+            EsVisible = Visibility.Visible;
+        }
+
         // ESBORRAR L'ELEMENT DESITJAT
         public ICommand Esborrar_Click => new RelayCommand(async _ =>
         {
@@ -176,6 +191,8 @@ namespace PIC.ViewModel
 
                 // Si és una CATEGORIA
                 case ElementAEsborrar.Categoria:
+                    await _categoriesApiClient.DeleteCategoriaAsync((int)categoriaSeleccionat.Id);
+                    await _categoriesVM.MostrarCategoriesAsync();
                     break;
 
                 // Si és un PRÉSTEC

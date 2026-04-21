@@ -82,21 +82,21 @@ namespace PIC.ViewModel
 
         private async Task CarregarDispositiusDeCategoriaAsync(int cursId)
         {
-            //try
-            //{
-            //    var llista = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(cursId);
+            try
+            {
+                var llista = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(cursId);
 
-            //    Dispositius.Clear();
+                Dispositius.Clear();
 
-            //    foreach (var u in llista)
-            //    {
-            //        Dispositius.Add(u);
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MissatgeError.Mostrar("Error carregant usuaris: " + ex.Message);
-            //}
+                foreach (var u in llista)
+                {
+                    Dispositius.Add(u);
+                }
+            }
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error carregant dispositius: " + ex.Message);
+            }
         }
 
         // TIPUS DE CERCA
@@ -226,28 +226,28 @@ namespace PIC.ViewModel
         });
 
         // ESBORRAR CURS
-        public ICommand EsborrarCursMenu_Click => new RelayCommand(async _ =>
+        public ICommand EsborrarCategoriaMenu_Click => new RelayCommand(async _ =>
         {
-            //if (_categoriaSeleccionada != null)
-            //{
-            //    int cursId = (int)_categoriaSeleccionada.Id;
-            //    var comptarUsuaris = await _dispositiusApiClient.GetUsuarisPerIdCursAsync(cursId);
+            if (_categoriaSeleccionada != null)
+            {
+                int categoriad = (int)_categoriaSeleccionada.Id;
+                var comptarUsuaris = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(categoriad);
 
-            //    if (comptarUsuaris.Count > 0)
-            //    {
-            //        MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
-            //            "Si vols esborrar aquest curs, primer hasd'eliminar els seus alumnes.");
-            //    }
+                if (comptarUsuaris.Count > 0)
+                {
+                    MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
+                        "Si vols esborrar aquest curs, primer hasd'eliminar els seus alumnes.");
+                }
 
-            //    else
-            //    {
-            //        ConfirmarEsborrar.Mostrar(_categoriaSeleccionada, this);
-            //    }
-            //}
-            //else
-            //{
-            //    MissatgeError.Mostrar("Cal seleccionar un curs.");
-            //}
+                else
+                {
+                    ConfirmarEsborrar.Mostrar(_categoriaSeleccionada, this);
+                }
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar una categoria.");
+            }
         });
 
         // BUIDAR LIST VIEW CURSOS

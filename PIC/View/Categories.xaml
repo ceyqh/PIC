@@ -121,7 +121,7 @@
                             <!-- BOTO ESBORRAR -->
                             <Button Content="ESBORRAR CATEGORIA"  
                                     Style="{StaticResource Accions_Button}"
-                                    Command="{Binding EsborrarCategoriesMenu_Click}"/>
+                                    Command="{Binding EsborrarCategoriaMenu_Click}"/>
                         </Grid>
                     </Grid>
                 </Grid>
@@ -228,7 +228,7 @@
                           Background="#e8e9e9">
 
                                 <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                  ItemsSource="{Binding Dispositiu}"
+                                  ItemsSource="{Binding Dispositius}"
                                   Style="{StaticResource ListViewStyle}"
                                   ItemContainerStyle="{StaticResource ListViewStyleItemSubmenu}"
                                   Background="#e8e9e9">
