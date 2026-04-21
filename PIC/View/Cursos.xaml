@@ -84,12 +84,11 @@
                                  Margin="0,0,10,0"/>
 
                         <!-- BUSCAR -->
-                        <Button Name="inputBoto"
-                                 Content="BUSCAR"
-                                 Visibility="{Binding CercaVisibility}"
-                                 Command="{Binding BuscarCommand}"
-                                 Padding="10, 0, 10, 0"
-                                 Style="{StaticResource Accions_Button}"/>
+                        <Button Content="BUSCAR"
+                                Visibility="{Binding CercaVisibility}"
+                                Command="{Binding BuscarCommand}"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"/>
 
                     </StackPanel>
 
@@ -103,17 +102,15 @@
                         <Grid Grid.Column="0">
 
                             <!-- BOTO AFEGIR PROFESSOR -->
-                            <Button Name="afegirCurs"
-                                    Content="AFEGIR CURS"
+                            <Button Content="AFEGIR CURS"
                                     Style="{StaticResource Accions_Button}"
-                                    Command="{Binding AfegirAlumneMenu_Click}"/>
+                                    Command="{Binding AfegirCursMenu_Click}"/>
                         </Grid>
 
                         <Grid Grid.Column="1">
 
                             <!-- BOTO EDITAR -->
-                            <Button Name="editarCurs"
-                                    Content="EDITAR CURS"
+                            <Button Content="EDITAR CURS"
                                     Style="{StaticResource Accions_Button}"
                                     Command="{Binding EditarCursMenu_Click}"/>
 
@@ -122,8 +119,7 @@
                         <Grid Grid.Column="2">
 
                             <!-- BOTO ESBORRAR -->
-                            <Button Name="esborrarCurs"
-                                    Content="ESBORRAR CURS"  
+                            <Button Content="ESBORRAR CURS"  
                                     Style="{StaticResource Accions_Button}"
                                     Command="{Binding EsborrarCursMenu_Click}"/>
                         </Grid>
@@ -167,8 +163,7 @@
 
                             <!-- LLISTAT CURSOS -->
                             <Grid Grid.Row="2">
-                                <ListView x:Name="llistaCursos"
-                                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                           ItemsSource="{Binding Cursos}"
                                           SelectedItem="{Binding CursSeleccionat, Mode=TwoWay}"
                                           Style="{StaticResource ListViewStyle}"
@@ -232,8 +227,7 @@
                             <Grid Grid.Row="1"
                                   Background="#e8e9e9">
 
-                                <ListView x:Name="llistaAlumnes"
-                                          ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                           ItemsSource="{Binding Usuaris}"
                                           Style="{StaticResource ListViewStyle}"
                                           ItemContainerStyle="{StaticResource ListViewStyleItemSubmenu}"

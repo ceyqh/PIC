@@ -21,7 +21,6 @@ namespace PIC.ViewModel
         public AfegirCursVM(CursosVM cursosVM)
         {
             _cursosVM = cursosVM;
-
             _cursosApiClient = new CursosApiClient();
         }
 

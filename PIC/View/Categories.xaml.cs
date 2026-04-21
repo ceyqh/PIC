@@ -24,10 +24,6 @@ namespace PIC.View
         public Categories()
         {
             InitializeComponent();
-            Loaded += async (s, e) =>
-            {
-                await ((CategoriesVM)DataContext).LoadCategoriesAsync();
-            };
         }
     }
 }

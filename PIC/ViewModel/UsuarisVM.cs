@@ -47,7 +47,7 @@ namespace PIC.ViewModel
             AfegirAlumne = new AfegirAlumneVM(this);
             AfegirProfessor = new AfegirProfessorVM(this);
             EditarUsuari = new EditarUsuariVM(this);
-            ConfirmarEsborrar = new ConfirmarEsborrarVM(this);
+            ConfirmarEsborrar = new ConfirmarEsborrarVM();
 
             _ = MostrarUsuarisAsync();
         }
@@ -134,7 +134,7 @@ namespace PIC.ViewModel
         {
             if (_usuariSeleccionat != null)
             {
-                ConfirmarEsborrar.Mostrar(UsuariSeleccionat);
+                ConfirmarEsborrar.Mostrar(_usuariSeleccionat, this);
             }
             else
             {

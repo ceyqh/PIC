@@ -24,14 +24,15 @@ namespace PIC.ViewModel
 
     internal class ConfirmarEsborrarVM: Utilities.ViewModelBase
     {
-        private readonly UsuarisApiClient _usuarisApiClient;
-        private readonly AlumnesApiClient _alumnesApiClient;
-        private readonly ProfessorsApiClient _professorsApiClient;
-        private readonly CursosApiClient _cursosApiClient;
-        private readonly DepartamentsApiClient _departamentsApiClient;
-        
-        private readonly UsuarisVM _usuarisVM;
-        private readonly CursosVM _cursosVM;
+        private readonly UsuarisApiClient _usuarisApiClient = new UsuarisApiClient();
+        private readonly AlumnesApiClient _alumnesApiClient = new AlumnesApiClient();
+        private readonly ProfessorsApiClient _professorsApiClient = new ProfessorsApiClient();
+        private readonly CursosApiClient _cursosApiClient = new CursosApiClient();
+        private readonly DepartamentsApiClient _departamentsApiClient = new DepartamentsApiClient();
+
+        private UsuarisVM _usuarisVM;
+        private CursosVM _cursosVM;
+        private DepartamentsVM _departamentsVM;
 
         private Usuari usuariSeleccionat;
         private Curs cursSeleccionat;
@@ -39,6 +40,15 @@ namespace PIC.ViewModel
         private Dispositiu dispositiuSeleccionat;
         private Categoria categoriaSeleccionat;
         private Prestec prestecSeleccionat;
+
+        public ConfirmarEsborrarVM() 
+        {
+
+        }
+
+        public void SetVM(UsuarisVM vm) => _usuarisVM = vm;
+        public void SetVM(CursosVM vm) => _cursosVM = vm;
+        public void SetVM(DepartamentsVM vm) => _departamentsVM = vm;
 
         // CONSTRUCTOR PER USUARIS
         public ConfirmarEsborrarVM(UsuarisVM usuarisVM)
@@ -48,14 +58,6 @@ namespace PIC.ViewModel
             _usuarisApiClient = new UsuarisApiClient();
             _alumnesApiClient = new AlumnesApiClient();
             _professorsApiClient = new ProfessorsApiClient();          
-        }
-
-        // CONSTRUCTOR PER CURSOS
-        public ConfirmarEsborrarVM(CursosVM cursosVM)
-        {
-            _cursosVM = cursosVM;
-
-            _cursosApiClient = new CursosApiClient();
         }
 
         private ElementAEsborrar _aEsborrar;
@@ -100,63 +102,38 @@ namespace PIC.ViewModel
         });
 
         // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN USUARI
-        public void Mostrar(Usuari usuariAEsborrar)
+        public void Mostrar(Usuari usuariAEsborrar, UsuarisVM parentVM)
         {
-            usuariSeleccionat = usuariAEsborrar;
-            Missatge = $"Estàs a punt d'esborrar l'usuari { usuariAEsborrar.Nom} { usuariAEsborrar.Cognom} amb l'ID {usuariAEsborrar.Id}. Vols confirmar aquesta acció?";
+            this._usuarisVM = parentVM;
+            this.usuariSeleccionat = usuariAEsborrar;
+
+            Missatge = $"Estàs a punt d'esborrar l'usuari {usuariAEsborrar.Nom} {usuariAEsborrar.Cognom} amb ID({usuariAEsborrar.Id}). Vols confirmar aquesta acció?";
 
             AEsborrar = ElementAEsborrar.Usuari;
             EsVisible = Visibility.Visible;
         }
 
         // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN CURS
-        public void Mostrar(Curs cursAEsborrar)
+        public void Mostrar(Curs cursAEsborrar, CursosVM parentVM)
         {
-            cursSeleccionat = cursAEsborrar;
+            this._cursosVM = parentVM;
+            this.cursSeleccionat = cursAEsborrar;
 
-            Missatge = $"Estàs a punt d'esborrar el curs {cursAEsborrar.Nom} amb l'ID {cursAEsborrar.Id}. Vols confirmar aquesta acció?"; ;
+            Missatge = $"Estàs a punt d'esborrar el curs {cursAEsborrar.Nom} amb ID({cursAEsborrar.Id}). Vols confirmar aquesta acció?";
 
             AEsborrar = ElementAEsborrar.Curs;
             EsVisible = Visibility.Visible;
         }
 
         // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN DEPARTAMENT
-        public void Mostrar(Departament departamentAEsborrar)
+        public void Mostrar(Departament departamentAEsborrar, DepartamentsVM parentVM)
         {
-            departamentSeleccionat = departamentAEsborrar;
+            this._departamentsVM = parentVM; // Ens assegurem que tenim la referència actual
+            this.departamentSeleccionat = departamentAEsborrar;
 
-            Missatge = "";
+            Missatge = $"Estàs a punt d'esborrar el departament {departamentAEsborrar.Nom} amb ID({departamentAEsborrar.Id}). Vols confirmar aquesta acció?";
 
-            EsVisible = Visibility.Visible;
-        }
-
-        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN DISPOSITIU
-        public void Mostrar(Dispositiu dispositiuAEsborrar)
-        {
-            dispositiuSeleccionat = dispositiuAEsborrar;
-
-            Missatge = "";
-
-            EsVisible = Visibility.Visible;
-        }
-
-        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UNA CATEGORIA
-        public void Mostrar(Categoria categoriaAEsborrar)
-        {
-            categoriaSeleccionat = categoriaAEsborrar;
-
-            Missatge = "";
-
-            EsVisible = Visibility.Visible;
-        }
-
-        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN PRESTEC
-        public void Mostrar(Prestec prestecAEsborrar)
-        {
-            prestecSeleccionat = prestecAEsborrar;
-
-            Missatge = "";
-
+            AEsborrar = ElementAEsborrar.Departament;
             EsVisible = Visibility.Visible;
         }
 
@@ -189,6 +166,8 @@ namespace PIC.ViewModel
 
                 // Si és un DEPARTAMENT
                 case ElementAEsborrar.Departament:
+                    await _departamentsApiClient.DeleteDepartamentAsync((int)departamentSeleccionat.Id);
+                    await _departamentsVM.MostrarDepartamentsAsync();
                     break;
 
                 // Si és un DISPOSITIU

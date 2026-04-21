@@ -104,14 +104,18 @@
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
     <Compile Include="ViewModel\AfegirAlumneVM.cs" />
+    <Compile Include="ViewModel\AfegirCategoriaVM.cs" />
     <Compile Include="ViewModel\AfegirCursVM.cs" />
+    <Compile Include="ViewModel\AfegirDepartamentVM.cs" />
     <Compile Include="ViewModel\AfegirProfessorVM.cs" />
     <Compile Include="ViewModel\CategoriesVM.cs" />
     <Compile Include="ViewModel\ConfirmarEsborrarVM.cs" />
     <Compile Include="ViewModel\CursosVM.cs" />
     <Compile Include="ViewModel\DepartamentsVM.cs" />
     <Compile Include="ViewModel\DispositiusVM.cs" />
+    <Compile Include="ViewModel\EditarCategoriaVM.cs" />
     <Compile Include="ViewModel\EditarCursVM.cs" />
+    <Compile Include="ViewModel\EditarDepartamentVM.cs" />
     <Compile Include="ViewModel\EditarUsuariVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="ViewModel\MissatgeErrorMV.cs" />
@@ -121,8 +125,14 @@
     <Compile Include="View\AfegirAlumne.xaml.cs">
       <DependentUpon>AfegirAlumne.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\AfegirCategoria.xaml.cs">
+      <DependentUpon>AfegirCategoria.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AfegirCurs.xaml.cs">
       <DependentUpon>AfegirCurs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AfegirDepartament.xaml.cs">
+      <DependentUpon>AfegirDepartament.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AfegirProfessor.xaml.cs">
       <DependentUpon>AfegirProfessor.xaml</DependentUpon>
@@ -142,8 +152,14 @@
     <Compile Include="View\Dispositius.xaml.cs">
       <DependentUpon>Dispositius.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\EditarCategoria.xaml.cs">
+      <DependentUpon>EditarCategoria.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\EditarCurs.xaml.cs">
       <DependentUpon>EditarCurs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditarDepartament.xaml.cs">
+      <DependentUpon>EditarDepartament.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditarUsuari.xaml.cs">
       <DependentUpon>EditarUsuari.xaml</DependentUpon>
@@ -204,7 +220,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\AfegirCategoria.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\AfegirCurs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AfegirDepartament.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -232,7 +256,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\EditarCategoria.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\EditarCurs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditarDepartament.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

@@ -42,7 +42,7 @@ namespace PIC.ViewModel
             MissatgeError = new MissatgeErrorVM();
             AfegirCurs = new AfegirCursVM(this);
             EditarCurs = new EditarCursVM(this);
-            ConfirmarEsborrar = new ConfirmarEsborrarVM(this);
+            ConfirmarEsborrar = new ConfirmarEsborrarVM();
 
             _ = MostrarCursosAsync();
         }
@@ -206,7 +206,7 @@ namespace PIC.ViewModel
         }
 
         // AFEGIR CURS
-        public ICommand AfegirAlumneMenu_Click => new RelayCommand(async _ =>
+        public ICommand AfegirCursMenu_Click => new RelayCommand(async _ =>
         {
             AfegirCurs.Mostrar();
         });
@@ -235,12 +235,12 @@ namespace PIC.ViewModel
                 if (comptarUsuaris.Count > 0)
                 {
                     MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
-                        "Si vols esborrar el curs, primer hasd'eliminar els seus alumnes");
+                        "Si vols esborrar aquest curs, primer hasd'eliminar els seus alumnes.");
                 }
 
                 else
                 {
-                    ConfirmarEsborrar.Mostrar(_cursSeleccionat);
+                    ConfirmarEsborrar.Mostrar(_cursSeleccionat, this);
                 }
             }
             else

@@ -133,7 +133,7 @@
 
     </Style>
 
-    <!-- BOTONS D'ACCIONS -->
+    <!-- BOTONS ACCIONS -->
     <Style x:Key="Accions_Button" TargetType="Button">
 
         <Setter Property="Foreground" Value="#e8e9e9"/>
@@ -170,7 +170,7 @@
         </Setter>
     </Style>
 
-    <!-- BOTÓ D'ALERTA -->
+    <!-- BOTÓ ALERTA -->
     <Style x:Key="Alerta_Button" TargetType="Button">
 
         <Setter Property="Foreground" Value="#e8e9e9"/>
@@ -198,6 +198,43 @@
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="GridArea" Property="Background" Value="#eb6c6c"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+
+    <!-- BOTÓ CONFIRMAR -->
+    <Style x:Key="Confirmar_Button" TargetType="Button">
+
+        <Setter Property="Foreground" Value="#e8e9e9"/>
+        <Setter Property="Background" Value="#1fb9f9"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+
+        <Setter Property="FontFamily" Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="FontSize" Value="12"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Grid x:Name="GridArea"
+                        Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="{TemplateBinding Padding}"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="GridArea" Property="Background" Value="#5bcdfc"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

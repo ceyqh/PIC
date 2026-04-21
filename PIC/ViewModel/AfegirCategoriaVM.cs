@@ -1,0 +1,81 @@
+﻿using PIC.APIClient;
+using PIC.Model;
+using PIC.Utilities;
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Input;
+
+namespace PIC.ViewModel
+{
+    internal class AfegirCategoriaVM : Utilities.ViewModelBase
+    {
+        private readonly CategoriesApiClient _categoriesApiClient;
+        private readonly CategoriesVM _categoriesVM;
+
+        // CONSTRUCTOR
+        public AfegirCategoriaVM(CategoriesVM categoriesVM)
+        {
+            _categoriesVM = categoriesVM;
+            _categoriesApiClient = new CategoriesApiClient();
+        }
+
+        // NOM
+        private string _nom;
+        public string Nom
+        {
+            get => _nom;
+            set
+            {
+                _nom = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // VISIBILITAT MENU
+        private Visibility _esVisble = Visibility.Collapsed;
+        public Visibility EsVisible
+        {
+            get => _esVisble;
+            set
+            {
+                _esVisble = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // OBRIR FINESTRA
+        public void Mostrar()
+        {
+            Nom = "";
+            EsVisible = Visibility.Visible;
+        }
+
+        // TANCAR FINESTRA
+        public ICommand TancarFinestra => new RelayCommand(_ =>
+        {
+            EsVisible = Visibility.Collapsed;
+        });
+
+        // AFEGIR NOU CURS
+        public ICommand AfegirCategoria_Click => new RelayCommand(async _ =>
+        {
+            await CrearNovaCategoria();
+        });
+
+        // CREAR NOU CURS
+        private async Task CrearNovaCategoria()
+        {
+            Categoria novaCategoria = new Categoria();
+            novaCategoria.Nom = Nom;
+
+            await _categoriesApiClient.PostCategoriaAsync(novaCategoria);
+            await _categoriesVM.MostrarCategoriesAsync();
+
+            EsVisible = Visibility.Collapsed;
+        }
+    }
+}

@@ -24,10 +24,6 @@ namespace PIC.View
         public Departaments()
         {
             InitializeComponent();
-            Loaded += async (s, e) =>
-            {
-                await ((DepartamentsVM)DataContext).LoadDepartamentsAsync();
-            };
         }
     }
 }

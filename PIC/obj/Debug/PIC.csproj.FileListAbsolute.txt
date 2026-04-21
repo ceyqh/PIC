@@ -232,3 +232,11 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCurs.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCurs.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCurs.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCurs.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirDepartament.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarDepartament.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirDepartament.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarDepartament.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCategoria.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCategoria.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCategoria.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCategoria.baml

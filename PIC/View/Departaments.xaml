@@ -27,14 +27,19 @@
                 <StackPanel Height="400" Width="200">
 
                     <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" IsChecked="True">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="TOTS" 
+                              IsChecked="True">
                         <Grid>
                             <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}">
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="PER_ID">
                         <Grid>
                             <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
@@ -48,64 +53,224 @@
 
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
-                    <RowDefinition Height="40"/>
                     <RowDefinition Height="*"/>
                 </Grid.RowDefinitions>
 
                 <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
-                <Grid Grid.Row="0" Background="#a5a6af">
+                <Grid Grid.Row="0" 
+                      Background="#a5a6af">
 
-                </Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="*"/>
+                        <RowDefinition Height="20"/>
+                    </Grid.RowDefinitions>
 
-                <!-- APARTAT DEL RESULTATS -->
-                <Grid Grid.Row="1" Background="White">
-                    <Grid>
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Center" 
+                                Margin="10">
+
+                        <!-- TÍTOL -->
+                        <TextBlock FontSize="12" 
+                                   Text="{Binding TitolPantalla}"
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   Margin="0, 0, 10, 0"/>
+
+                        <!-- INPUT -->
+                        <TextBox VerticalAlignment="Center"
+                                 Width="200" 
+                                 Visibility="{Binding CercaVisibility}" 
+                                 Text="{Binding ParametreCercaDepartaments, UpdateSourceTrigger=PropertyChanged}"
+                                 Margin="0,0,10,0"/>
+
+                        <!-- BUSCAR -->
+                        <Button Content="BUSCAR"
+                                Visibility="{Binding CercaVisibility}"
+                                Command="{Binding BuscarCommand}"
+                                Padding="10, 0, 10, 0"
+                                Style="{StaticResource Accions_Button}"/>
+
+                    </StackPanel>
+
+                    <Grid Grid.Row="1">
                         <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
-                        <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
+                        <Grid Grid.Column="0">
+
+                            <!-- BOTO AFEGIR PROFESSOR -->
+                            <Button Content="AFEGIR DEPARTAMENT"
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding AfegirDepartamentMenu_Click}"/>
                         </Grid>
 
-                        <Grid Grid.Column="1" VerticalAlignment="Center">
-                            <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
+                        <Grid Grid.Column="1">
+
+                            <!-- BOTO EDITAR -->
+                            <Button Content="EDITAR DEPARTAMENT"
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding EditarDepartamentMenu_Click}"/>
+
+                        </Grid>
+
+                        <Grid Grid.Column="2">
+
+                            <!-- BOTO ESBORRAR -->
+                            <Button Content="ESBORRAR DEPARTAMENT"  
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding EsborrarDepartamentMenu_Click}"/>
                         </Grid>
                     </Grid>
-
                 </Grid>
 
-                <Grid Grid.Row="2">
-                    <ListView x:Name="llistaTasques"
-                      ItemsSource="{Binding Departaments}"
-                      Style="{StaticResource ListViewStyle}"
-                      ItemContainerStyle="{StaticResource ListViewStyleItem}">
+                <!-- APARTAT DEL RESULTATS -->
+                <Grid Grid.Row="1" 
+                      Background="White">
 
-                        <ListView.ItemTemplate>
-                            <DataTemplate>
-                                <Grid>
-                                    <Grid.ColumnDefinitions>
-                                        <ColumnDefinition Width="*"/>
-                                        <ColumnDefinition Width="*"/>
-                                    </Grid.ColumnDefinitions>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="2*"/>
+                            <ColumnDefinition Width="3*"/>
+                        </Grid.ColumnDefinitions>
 
-                                    <TextBlock FontSize="12" 
-                                               Grid.Column="0" 
-                                               Text="{Binding Id}" 
-                                               Style="{StaticResource Fraktion_Dark_Font}"
-                                               Margin="10,0,0,0"/>
+                        <!-- CURSOS -->
+                        <Grid Grid.Column="0">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
 
-                                    <TextBlock FontSize="12" 
-                                               Grid.Column="1" 
-                                               Text="{Binding Nom}"
-                                               Style="{StaticResource Fraktion_Dark_Font}"/>
+                            <!-- HEADER CURSOS -->
+                            <Grid Grid.Row="0"
+                                  Background="#e8e9e9">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
                                 </Grid>
-                            </DataTemplate>
-                        </ListView.ItemTemplate>
-                    </ListView>
+
+                                <Grid Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
+                                </Grid>
+                            </Grid>
+
+                            <!-- LLISTAT CURSOS -->
+                            <Grid Grid.Row="2">
+                                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                          ItemsSource="{Binding Departaments}"
+                                          SelectedItem="{Binding DepartamentSeleccionat, Mode=TwoWay}"
+                                          Style="{StaticResource ListViewStyle}"
+                                          ItemContainerStyle="{StaticResource ListViewStyleItem}">
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="0" 
+                                                           Text="{Binding Id}" 
+                                                           Style="{StaticResource Fraktion_Dark_Font}"
+                                                           Margin="10,0,0,0"/>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="1" 
+                                                           Text="{Binding Nom}"
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Grid>
+
+                        <!-- USUARIS -->
+                        <Grid Grid.Column="1">
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="40"/>
+                                <RowDefinition Height="*"/>
+                            </Grid.RowDefinitions>
+
+                            <!-- HEADER CURSOS -->
+                            <Grid Grid.Row="0"
+                                  Background="#c5c6cd">
+
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                    <ColumnDefinition Width="*"/>
+                                </Grid.ColumnDefinitions>
+
+                                <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
+                                </Grid>
+
+                                <Grid Grid.Column="1" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">NOM</TextBlock>
+                                </Grid>
+
+                                <Grid Grid.Column="2" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">COGNOM</TextBlock>
+                                </Grid>
+                            </Grid>
+
+                            <Grid Grid.Row="1"
+                                  Background="#e8e9e9">
+
+                                <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
+                                          ItemsSource="{Binding Usuaris}"
+                                          Style="{StaticResource ListViewStyle}"
+                                          ItemContainerStyle="{StaticResource ListViewStyleItemSubmenu}"
+                                          Background="#e8e9e9">
+
+                                    <ListView.ItemTemplate>
+                                        <DataTemplate>
+                                            <Grid>
+                                                <Grid.ColumnDefinitions>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                    <ColumnDefinition Width="*"/>
+                                                </Grid.ColumnDefinitions>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="0" 
+                                                           Text="{Binding Id}" 
+                                                           Style="{StaticResource Fraktion_Dark_Font}"
+                                                           Margin="10,0,0,0"/>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="1" 
+                                                           Text="{Binding Nom}"
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                                                <TextBlock FontSize="12" 
+                                                           Grid.Column="2" 
+                                                           Text="{Binding Cognom}"
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                            </Grid>
+                                        </DataTemplate>
+                                    </ListView.ItemTemplate>
+                                </ListView>
+                            </Grid>
+                        </Grid>
+                    </Grid>
                 </Grid>
             </Grid>
         </Grid>
+
+        <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
+        <local:AfegirDepartament DataContext="{Binding AfegirDepartament}" d:IsHidden="true"/>
+        <local:EditarDepartament DataContext="{Binding EditarDepartament}" d:IsHidden="true"/>
+        <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
     </Grid>
 </UserControl>
