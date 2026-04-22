@@ -16,11 +16,14 @@ namespace PIC.ViewModel
     {
         private readonly CursosApiClient _cursosApiClient;
         private readonly CursosVM _cursosVM;
+        public MissatgeErrorVM MissatgeError { get; set; }
 
         // CONSTRUCTOR
         public AfegirCursVM(CursosVM cursosVM)
         {
             _cursosVM = cursosVM;
+
+            MissatgeError = new MissatgeErrorVM();
             _cursosApiClient = new CursosApiClient();
         }
 
@@ -64,7 +67,14 @@ namespace PIC.ViewModel
         // AFEGIR NOU CURS
         public ICommand AfegirCurs_Click => new RelayCommand(async _ =>
         {
-            await CrearNouCurs();
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                await CrearNouCurs();
+            }
         });
 
         // CREAR NOU CURS

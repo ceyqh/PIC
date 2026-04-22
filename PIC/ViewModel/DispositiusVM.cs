@@ -23,9 +23,8 @@ namespace PIC.ViewModel
     {
         public ObservableCollection<Dispositiu> Dispositius { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
-        //public AfegirAlumneVM AfegirAlumne { get; set; }
-        //public AfegirProfessorVM AfegirProfessor { get; set; }
-        //public EditarUsuariVM EditarUsuari { get; set; }
+        public AfegirDispositiuVM AfegirDispositiu { get; set; }
+        public EditarDispositiuVM EditarDispositiu { get; set; }
         public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
 
         private readonly DispositiusApiClient _dispositiusApiClient;
@@ -37,9 +36,8 @@ namespace PIC.ViewModel
             _dispositiusApiClient = new DispositiusApiClient();
 
             MissatgeError = new MissatgeErrorVM();
-            //AfegirAlumne = new AfegirAlumneVM(this);
-            //AfegirProfessor = new AfegirProfessorVM(this);
-            //EditarUsuari = new EditarUsuariVM(this);
+            AfegirDispositiu = new AfegirDispositiuVM(this);
+            EditarDispositiu = new EditarDispositiuVM(this);
             ConfirmarEsborrar = new ConfirmarEsborrarVM();
 
             _ = MostrarDispositiusAsync();
@@ -99,7 +97,7 @@ namespace PIC.ViewModel
         // AFGIR DISPOSITIU
         public ICommand AfegirDispositiuMenu_Click => new RelayCommand(_ =>
         {
-            //AfegirAlumne.Mostrar();
+            AfegirDispositiu.Mostrar();
         });
 
         // EDITAR USUARI
@@ -107,7 +105,47 @@ namespace PIC.ViewModel
         {
             if (_dispositiuSeleccionat != null)
             {
-                //await EditarUsuari.Mostrar(UsuariSeleccionat);
+                await EditarDispositiu.Mostrar(DispositiuSeleccionat);
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar un dispositiu.");
+            }
+        });
+
+        public ICommand HabilitarDispositiuMenu_Click => new RelayCommand(async _ =>
+        {
+            if (_dispositiuSeleccionat != null)
+            {
+                if (_dispositiuSeleccionat.Estat.ToLower() == "disponible")
+                {
+                    MissatgeError.Mostrar("Aquest dispositiu ja està disponible.");
+                }
+
+                else
+                {
+                    ConfirmarEsborrar.Mostrar(_dispositiuSeleccionat, this, "habilitar");
+                }
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar un dispositiu.");
+            }
+        });
+
+        public ICommand DeshabilitarDispositiuMenu_Click => new RelayCommand(async _ =>
+        {
+            if (_dispositiuSeleccionat != null)
+            {
+                if (_dispositiuSeleccionat.Estat.ToLower() == "nodisponible")
+                {
+                    MissatgeError.Mostrar("Aquest dispositiu ja està deshabilitat.");
+                }
+
+                else
+                {
+                    ConfirmarEsborrar.Mostrar(_dispositiuSeleccionat, this, "deshabilitar");
+                }
             }
             else
             {
@@ -120,7 +158,7 @@ namespace PIC.ViewModel
         {
             if (_dispositiuSeleccionat != null)
             {
-                //ConfirmarEsborrar.Mostrar(_usuariSeleccionat, this);
+                ConfirmarEsborrar.Mostrar(_dispositiuSeleccionat, this, "esborrar");
             }
             else
             {

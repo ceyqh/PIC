@@ -240,3 +240,7 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCategoria.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirCategoria.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCategoria.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarCategoria.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirDispositiu.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirDispositiu.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarDispositiu.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarDispositiu.baml

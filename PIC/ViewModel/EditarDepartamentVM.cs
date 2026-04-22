@@ -19,11 +19,14 @@ namespace PIC.ViewModel
         private readonly DepartamentsVM _departamentsVM;
 
         private Departament _departamentEnEdicio;
+        public MissatgeErrorVM MissatgeError { get; set; }
 
         // CONSTRUCTOR
         public EditarDepartamentVM(DepartamentsVM departamentsVM)
         {
             _departamentsVM = departamentsVM;
+
+            MissatgeError = new MissatgeErrorVM();
             _departamentsApiClient = new DepartamentsApiClient();
         }
 
@@ -63,13 +66,20 @@ namespace PIC.ViewModel
         // GUARDAR CURS
         public ICommand GuardarCurs_Click => new RelayCommand(async _ =>
         {
-            _departamentEnEdicio.Nom = Nom;
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                _departamentEnEdicio.Nom = Nom;
 
-            //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
-            await _departamentsApiClient.UpdateDepartamentAsync(_departamentEnEdicio);
-            await _departamentsVM.MostrarDepartamentsAsync();
+                //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
+                await _departamentsApiClient.UpdateDepartamentAsync(_departamentEnEdicio);
+                await _departamentsVM.MostrarDepartamentsAsync();
 
-            EsVisible = Visibility.Collapsed;
+                EsVisible = Visibility.Collapsed;
+            }            
         });
 
         // OBRIR FINESTRA

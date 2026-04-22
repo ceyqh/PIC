@@ -18,12 +18,14 @@ namespace PIC.ViewModel
         private readonly ProfessorsApiClient _professorsApiClient;
         private readonly DepartamentsApiClient _departamentsApiClient;
         private readonly UsuarisVM _usuarisVM;
+        public MissatgeErrorVM MissatgeError { get; set; }
 
         // CONSTRUCTOR
         public AfegirProfessorVM(UsuarisVM usuarisVM)
         {
             _usuarisVM = usuarisVM;
 
+            MissatgeError = new MissatgeErrorVM();
             _usuarisApiClient = new UsuarisApiClient();
             _professorsApiClient = new ProfessorsApiClient();
             _departamentsApiClient = new DepartamentsApiClient();
@@ -132,7 +134,14 @@ namespace PIC.ViewModel
         // AFEGIR PROFESSOR CLICK
         public ICommand AfegirProfessor_Click => new RelayCommand(async _ =>
         {
-            await GuardarNouProfessor();
+            if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Cognom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                await GuardarNouProfessor();
+            }
         });
 
         // GUARDAR NOU PROFESSOR (USUARI + PROFESSOR)

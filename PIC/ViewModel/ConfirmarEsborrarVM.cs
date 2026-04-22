@@ -12,14 +12,16 @@ using System.Windows.Input;
 
 namespace PIC.ViewModel
 {
-    public enum ElementAEsborrar
+    public enum AccioAConfirmar
     {
-        Usuari,
-        Curs,
-        Departament,
-        Dispositiu,
-        Categoria,
-        Prestec
+        EsborrarUsuari,
+        EsborrarCurs,
+        EsborrarDepartament,
+        EsborrarDispositiu,
+        HabilitarDispositiu,
+        DeshabilitarDispositiu,
+        EsborrarCategoria,
+        EsborrarPrestec,
     }
 
     internal class ConfirmarEsborrarVM: Utilities.ViewModelBase
@@ -30,11 +32,13 @@ namespace PIC.ViewModel
         private readonly CursosApiClient _cursosApiClient = new CursosApiClient();
         private readonly DepartamentsApiClient _departamentsApiClient = new DepartamentsApiClient();
         private readonly CategoriesApiClient _categoriesApiClient = new CategoriesApiClient();
+        private readonly DispositiusApiClient _dispositiusApiClient = new DispositiusApiClient();
 
         private UsuarisVM _usuarisVM;
         private CursosVM _cursosVM;
         private DepartamentsVM _departamentsVM;
         private CategoriesVM _categoriesVM;
+        private DispositiusVM _dispositiusVM;
 
         private Usuari usuariSeleccionat;
         private Curs cursSeleccionat;
@@ -61,10 +65,27 @@ namespace PIC.ViewModel
             _alumnesApiClient = new AlumnesApiClient();
             _professorsApiClient = new ProfessorsApiClient();          
             _categoriesApiClient = new CategoriesApiClient();          
+            _dispositiusApiClient = new DispositiusApiClient();          
         }
 
-        private ElementAEsborrar _aEsborrar;
-        public ElementAEsborrar AEsborrar
+        // TEXT BOTO
+        private string _textBoto = "ESBORRAR";
+        public string TextBoto
+        {
+            get => _textBoto;
+            set { _textBoto = value; OnPropertyChanged(); }
+        }
+
+        // COLOR FINESTRA
+        private string _colorFons = "#C44545";
+        public string ColorFons
+        {
+            get => _colorFons;
+            set { _colorFons = value; OnPropertyChanged(); }
+        }
+
+        private AccioAConfirmar _aEsborrar;
+        public AccioAConfirmar AEsborrar
         {
             get => _aEsborrar;
             set
@@ -104,7 +125,7 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Collapsed;
         });
 
-        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN USUARI
+        // OBRIR FINESTRA: USUARI
         public void Mostrar(Usuari usuariAEsborrar, UsuarisVM parentVM)
         {
             this._usuarisVM = parentVM;
@@ -112,11 +133,11 @@ namespace PIC.ViewModel
 
             Missatge = $"Estàs a punt d'esborrar l'usuari {usuariAEsborrar.Nom} {usuariAEsborrar.Cognom} amb ID({usuariAEsborrar.Id}). Vols confirmar aquesta acció?";
 
-            AEsborrar = ElementAEsborrar.Usuari;
+            AEsborrar = AccioAConfirmar.EsborrarUsuari;
             EsVisible = Visibility.Visible;
         }
 
-        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN CURS
+        // OBRIR FINESTRA: CURS
         public void Mostrar(Curs cursAEsborrar, CursosVM parentVM)
         {
             this._cursosVM = parentVM;
@@ -124,11 +145,11 @@ namespace PIC.ViewModel
 
             Missatge = $"Estàs a punt d'esborrar el curs {cursAEsborrar.Nom} amb ID({cursAEsborrar.Id}). Vols confirmar aquesta acció?";
 
-            AEsborrar = ElementAEsborrar.Curs;
+            AEsborrar = AccioAConfirmar.EsborrarCurs;
             EsVisible = Visibility.Visible;
         }
 
-        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN DEPARTAMENT
+        // OBRIR FINESTRA: DEPARTAMENT
         public void Mostrar(Departament departamentAEsborrar, DepartamentsVM parentVM)
         {
             this._departamentsVM = parentVM; // Ens assegurem que tenim la referència actual
@@ -136,11 +157,11 @@ namespace PIC.ViewModel
 
             Missatge = $"Estàs a punt d'esborrar el departament {departamentAEsborrar.Nom} amb ID({departamentAEsborrar.Id}). Vols confirmar aquesta acció?";
 
-            AEsborrar = ElementAEsborrar.Departament;
+            AEsborrar = AccioAConfirmar.EsborrarDepartament;
             EsVisible = Visibility.Visible;
         }
 
-        // OBRIR FINESTRA: QUAN ES VOL ESBORRAR UN DEPARTAMENT
+        // OBRIR FINESTRA: CATEGORIA
         public void Mostrar(Categoria categoriaAEsborrar, CategoriesVM parentVM)
         {
             this._categoriesVM = parentVM; // Ens assegurem que tenim la referència actual
@@ -148,17 +169,57 @@ namespace PIC.ViewModel
 
             Missatge = $"Estàs a punt d'esborrar la categoria {categoriaAEsborrar.Nom} amb ID({categoriaAEsborrar.Id}). Vols confirmar aquesta acció?";
 
-            AEsborrar = ElementAEsborrar.Categoria;
+            AEsborrar = AccioAConfirmar.EsborrarCategoria;
             EsVisible = Visibility.Visible;
         }
 
-        // ESBORRAR L'ELEMENT DESITJAT
+        // OBRIR FINESTRA: DISPOSITIU
+        public void Mostrar(Dispositiu disposittiuAModificar, DispositiusVM parentVM, string accio)
+        {
+            if (accio.ToLower() == "esborrar")
+            {
+                this._dispositiusVM = parentVM; // Ens assegurem que tenim la referència actual
+                this.dispositiuSeleccionat = disposittiuAModificar;
+
+                Missatge = $"Estàs a punt d'esborrar el dispositiu {disposittiuAModificar.Nom} amb ID({disposittiuAModificar.Id}). Vols confirmar aquesta acció?";
+
+                AEsborrar = AccioAConfirmar.EsborrarDispositiu;
+                EsVisible = Visibility.Visible;
+            }
+
+            if (accio.ToLower() == "habilitar")
+            {
+                this._dispositiusVM = parentVM; // Ens assegurem que tenim la referència actual
+                this.dispositiuSeleccionat = disposittiuAModificar;
+
+                Missatge = $"Estàs a punt d'habilitar la categoria {disposittiuAModificar.Nom} amb ID({disposittiuAModificar.Id}). Vols confirmar aquesta acció?";
+
+                TextBoto = "HABILITAR";
+                AEsborrar = AccioAConfirmar.HabilitarDispositiu;
+                EsVisible = Visibility.Visible;
+            }
+
+            if (accio.ToLower() == "deshabilitar")
+            {
+                this._dispositiusVM = parentVM; // Ens assegurem que tenim la referència actual
+                this.dispositiuSeleccionat = disposittiuAModificar;
+
+                Missatge = $"Estàs a punt de deshabilitar la categoria {disposittiuAModificar.Nom} amb ID({disposittiuAModificar.Id}). Vols confirmar aquesta acció?";
+
+                TextBoto = "DESHABILITAR";
+                AEsborrar = AccioAConfirmar.DeshabilitarDispositiu;
+                EsVisible = Visibility.Visible;
+            }
+
+        }
+
+        // ACCIONS
         public ICommand Esborrar_Click => new RelayCommand(async _ =>
         {
             switch (AEsborrar)
             {
                 // Si és un USUARI
-                case ElementAEsborrar.Usuari:
+                case AccioAConfirmar.EsborrarUsuari:
                     if (usuariSeleccionat.Tipus.ToLower() == "alumne")
                     {
                         await _alumnesApiClient.DeleteAlumneAsync((int)usuariSeleccionat.Id);
@@ -174,29 +235,45 @@ namespace PIC.ViewModel
                     break;
 
                 // Si és un CURS
-                case ElementAEsborrar.Curs:
+                case AccioAConfirmar.EsborrarCurs:
                     await _cursosApiClient.DeleteCursAsync((int)cursSeleccionat.Id);
                     await _cursosVM.MostrarCursosAsync();
                     break;
 
                 // Si és un DEPARTAMENT
-                case ElementAEsborrar.Departament:
+                case AccioAConfirmar.EsborrarDepartament:
                     await _departamentsApiClient.DeleteDepartamentAsync((int)departamentSeleccionat.Id);
                     await _departamentsVM.MostrarDepartamentsAsync();
                     break;
 
-                // Si és un DISPOSITIU
-                case ElementAEsborrar.Dispositiu:
+                // Si és un DISPOSITIU (esborrar)
+                case AccioAConfirmar.EsborrarDispositiu:
+                    await _dispositiusApiClient.DeleteDispositiuAsync((int)dispositiuSeleccionat.Id);
+                    await _dispositiusVM.MostrarDispositiusAsync();
+                    break;
+
+                // Si és un DISPOSITIU (habilitar)
+                case AccioAConfirmar.HabilitarDispositiu:
+                    dispositiuSeleccionat.Estat = "Disponible";
+                    await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuSeleccionat);
+                    await _dispositiusVM.MostrarDispositiusAsync();
+                    break;
+
+                // Si és un DISPOSITIU (deshabilitar)
+                case AccioAConfirmar.DeshabilitarDispositiu:
+                    dispositiuSeleccionat.Estat = "No disponible";
+                    await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuSeleccionat);
+                    await _dispositiusVM.MostrarDispositiusAsync();
                     break;
 
                 // Si és una CATEGORIA
-                case ElementAEsborrar.Categoria:
+                case AccioAConfirmar.EsborrarCategoria:
                     await _categoriesApiClient.DeleteCategoriaAsync((int)categoriaSeleccionat.Id);
                     await _categoriesVM.MostrarCategoriesAsync();
                     break;
 
                 // Si és un PRÉSTEC
-                case ElementAEsborrar.Prestec:
+                case AccioAConfirmar.EsborrarPrestec:
                     break;
             }
 

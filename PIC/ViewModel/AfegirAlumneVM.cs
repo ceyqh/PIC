@@ -17,13 +17,16 @@ namespace PIC.ViewModel
         private readonly UsuarisApiClient _usuarisApiClient;
         private readonly AlumnesApiClient _alumnesApiClient;
         private readonly CursosApiClient _cursosApiClient;
+
         private readonly UsuarisVM _usuarisVM;
+        public MissatgeErrorVM MissatgeError { get; set; }
 
         // CONSTRUCTOR
         public AfegirAlumneVM(UsuarisVM usuarisVM)
         {
             _usuarisVM = usuarisVM;
 
+            MissatgeError = new MissatgeErrorVM();
             _usuarisApiClient = new UsuarisApiClient();
             _alumnesApiClient = new AlumnesApiClient();
             _cursosApiClient = new CursosApiClient();
@@ -129,7 +132,14 @@ namespace PIC.ViewModel
         // AFEGIR ALUMNE CLICK
         public ICommand AfegirAlumne_Click => new RelayCommand(async _ =>
         {
-            await GuardarNouAlumne();
+            if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                await GuardarNouAlumne(); 
+            }
         });
 
         // GUARDAR NOU ALUMNE (USUARI + ALUMNE)

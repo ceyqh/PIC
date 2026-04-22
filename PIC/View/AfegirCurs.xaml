@@ -66,5 +66,7 @@
                 </StackPanel>
             </Grid>
         </Grid>
+
+        <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

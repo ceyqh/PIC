@@ -1,28 +1,7 @@
 {
   "Version": 1,
   "WorkspaceRootPath": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\",
-  "Documents": [
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\dispositius.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\dispositius.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\model\\dispositiu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\model\\dispositiu.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\dispositiusvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\dispositiusvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\usuaris.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\usuaris.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\usuarisvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\usuarisvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    }
-  ],
+  "Documents": [],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -30,74 +9,11 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": -1,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{aa2115a1-9712-457b-9047-dbb71ca2cdd2}"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "Dispositiu.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\Dispositiu.cs",
-              "RelativeDocumentMoniker": "PIC\\Model\\Dispositiu.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\Dispositiu.cs",
-              "RelativeToolTip": "PIC\\Model\\Dispositiu.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAtAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T14:20:58.493Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "UsuarisVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\UsuarisVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\UsuarisVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\UsuarisVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\UsuarisVM.cs",
-              "ViewState": "AgIAAKwAAAAAAAAAAAAgwA4BAAAJAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T14:47:57.031Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 2,
-              "Title": "DispositiusVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\DispositiusVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\DispositiusVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\DispositiusVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\DispositiusVM.cs",
-              "ViewState": "AgIAACoAAAAAAAAAAAAowN0AAABOAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-21T14:47:53.393Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Usuaris.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Usuaris.xaml",
-              "RelativeDocumentMoniker": "PIC\\View\\Usuaris.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Usuaris.xaml",
-              "RelativeToolTip": "PIC\\View\\Usuaris.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-21T14:29:56.475Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "Dispositius.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Dispositius.xaml",
-              "RelativeDocumentMoniker": "PIC\\View\\Dispositius.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Dispositius.xaml",
-              "RelativeToolTip": "PIC\\View\\Dispositius.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-21T14:29:59.399Z",
-              "EditorCaption": ""
             }
           ]
         },

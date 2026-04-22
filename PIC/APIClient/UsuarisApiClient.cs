@@ -17,6 +17,13 @@ namespace PIC.APIClient
         public UsuarisApiClient()
         {
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
+
+            // Si no troba la ruta de l'API
+            if (string.IsNullOrEmpty(BaseUri))
+            {
+                BaseUri = "http://localhost/temp";
+                throw new Exception("Error, no s'ha trobat la clau de la API");
+            }
         }
 
         // TOTS ELS USUARIS
@@ -40,7 +47,7 @@ namespace PIC.APIClient
                 }
                 else
                 {
-                    //TODO: que fer si ha anat malament? retornar null? missatge?
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
             return usuari;
@@ -75,7 +82,7 @@ namespace PIC.APIClient
                 }
                 else
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
             return usuari;
@@ -110,7 +117,7 @@ namespace PIC.APIClient
                 }
                 else
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
             return usuari;
@@ -145,7 +152,7 @@ namespace PIC.APIClient
                 }
                 else
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
             return usuari;

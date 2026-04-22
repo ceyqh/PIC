@@ -17,6 +17,13 @@ namespace PIC.APIClient
         public AlumnesApiClient()
         {
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
+
+            // Si no troba la ruta de l'API
+            if (string.IsNullOrEmpty(BaseUri))
+            {
+                BaseUri = "http://localhost/temp";
+                throw new Exception("Error, no s'ha trobat la clau de la API");
+            }
         }
 
         // AFEGIR ALUMNE
@@ -28,12 +35,12 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                // Enviem una petició POST amb JSON directament
+                // Petició
                 HttpResponseMessage response = await client.PostAsJsonAsync("alumnes", nouAlumne);
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Retornem l'usuari creat amb l'ID assignat pel servidor
+                    // Retorn
                     var createdAlumne = await response.Content.ReadAsAsync<Alumne>();
                     response.Dispose();
                     return createdAlumne;
@@ -54,17 +61,19 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                // Petició
                 HttpResponseMessage response = await client.PutAsJsonAsync($"alumnes/{alumne.IdUsuari}", alumne);
 
                 if (response.IsSuccessStatusCode)
                 {
+                    // Retorn
                     var result = await response.Content.ReadAsAsync<int>();
+                    response.Dispose();
                     return result;
                 }
                 else
                 {
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error API ({response.StatusCode}): {errorContent}");
+                    throw new Exception($"Error al actualitzar l'usuari: {response.StatusCode}");
                 }
             }
         }
@@ -82,7 +91,7 @@ namespace PIC.APIClient
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Si el teu backend retorna algun valor (ex: 1)
+                    // Retorn
                     var result = await response.Content.ReadAsAsync<int>();
                     response.Dispose();
                     return result;

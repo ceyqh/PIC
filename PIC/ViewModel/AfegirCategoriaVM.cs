@@ -16,10 +16,14 @@ namespace PIC.ViewModel
         private readonly CategoriesApiClient _categoriesApiClient;
         private readonly CategoriesVM _categoriesVM;
 
+        public MissatgeErrorVM MissatgeError { get; set; }
+
         // CONSTRUCTOR
         public AfegirCategoriaVM(CategoriesVM categoriesVM)
         {
             _categoriesVM = categoriesVM;
+
+            MissatgeError = new MissatgeErrorVM();
             _categoriesApiClient = new CategoriesApiClient();
         }
 
@@ -63,7 +67,14 @@ namespace PIC.ViewModel
         // AFEGIR NOU CURS
         public ICommand AfegirCategoria_Click => new RelayCommand(async _ =>
         {
-            await CrearNovaCategoria();
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                await CrearNovaCategoria();
+            }
         });
 
         // CREAR NOU CURS

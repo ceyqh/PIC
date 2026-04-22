@@ -18,6 +18,13 @@ namespace PIC.APIClient
         public DispositiusApiClient()
         {
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
+
+            // Si no troba la ruta de l'API
+            if (string.IsNullOrEmpty(BaseUri))
+            {
+                BaseUri = "http://localhost/temp";
+                throw new Exception("Error, no s'ha trobat la clau de la API");
+            }
         }
 
         // TOTS ELS DISPOSITIUS 
@@ -188,7 +195,7 @@ namespace PIC.APIClient
         }
 
         // AFEGIR DISPOSITIU
-        public async Task AddDispositiuAsync(Dispositiu dispositiu)
+        public async Task<NouDispositiu> PostDispositiuAsync(NouDispositiu nouDispositiu)
         {
             using (var client = new HttpClient())
             {
@@ -196,14 +203,24 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició POST al endpoint /dispositius}
-                HttpResponseMessage response = await client.PostAsJsonAsync("dispositius", dispositiu);
-                response.EnsureSuccessStatusCode();
+                // Petició
+                HttpResponseMessage response = await client.PostAsJsonAsync("dispositius", nouDispositiu);
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var dispositiuCreat = await response.Content.ReadAsAsync<NouDispositiu>();
+                    response.Dispose();
+                    return dispositiuCreat;
+                }
+                else
+                {
+                    throw new Exception("Error al crear el dispositiu: " + response.StatusCode);
+                }
             }
         }
 
-        // EDITAR DISPOSITIU
-        public async Task UpdateDispositiuAsync(Dispositiu dispositiu)
+        // ACTUALITZAR DISPOSITIU
+        public async Task<int> UpdateDispositiuAsync(Dispositiu dispositiu)
         {
             using (var client = new HttpClient())
             {
@@ -211,14 +228,24 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició PUT al endpoint /users/Id
+                // Petició
                 HttpResponseMessage response = await client.PutAsJsonAsync($"dispositius/{dispositiu.Id}", dispositiu);
-                response.EnsureSuccessStatusCode();
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<int>();
+                    response.Dispose();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception("Error al actualitzar el dispositiu " + response.StatusCode);
+                }
             }
         }
 
-        // ESBORRAR DISPOSITIU
-        public async Task DeleteDispositiuAsync(int Id)
+        // ESBORRAR CURS
+        public async Task<int> DeleteDispositiuAsync(int id)
         {
             using (var client = new HttpClient())
             {
@@ -226,9 +253,19 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició DELETE al endpoint /users/Id
-                HttpResponseMessage response = await client.DeleteAsync($"dispositius/{Id}");
-                response.EnsureSuccessStatusCode();
+                // Petició
+                HttpResponseMessage response = await client.DeleteAsync($"dispositius/{id}");
+
+                if (response.IsSuccessStatusCode)
+                {
+                    var result = await response.Content.ReadAsAsync<int>();
+                    response.Dispose();
+                    return result;
+                }
+                else
+                {
+                    throw new Exception($"Error al esborrar el dispositiu: {response.StatusCode}");
+                }
             }
         }
     }

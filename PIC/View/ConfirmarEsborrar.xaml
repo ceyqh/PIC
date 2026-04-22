@@ -22,7 +22,7 @@
             </Grid.RowDefinitions>
 
             <!-- Títol -->
-            <Grid Background="#C44545">
+            <Grid Background="{Binding ColorFons}">
                 <TextBlock Text="ALERTA"
                    Style="{StaticResource Fraktion_Light_Font}"
                    Margin="20, 10, 20, 10"/>
@@ -44,7 +44,7 @@
                         Orientation="Horizontal" 
                         HorizontalAlignment="Right">
 
-                <Button Content="ESBORRAR"
+                <Button Content="{Binding TextBoto}"
                         Padding="10, 0, 10, 0"
                         Style="{StaticResource Alerta_Button}"
                         Margin="0,0,10,0"

@@ -18,6 +18,7 @@ namespace PIC.APIClient
         {
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
 
+            // Si no troba la ruta de l'API
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
@@ -36,7 +37,7 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /cursos}
+                // Petició
                 HttpResponseMessage response = await client.GetAsync("cursos");
                 if (response.IsSuccessStatusCode)
                 {
@@ -46,7 +47,7 @@ namespace PIC.APIClient
                 }
                 else
                 {
-                    //TODO: que fer si ha anat malament? retornar null? missatge?
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
             return curs;
@@ -63,25 +64,25 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /cursos/{Id}
+                // Petició
                 HttpResponseMessage response = await client.GetAsync($"cursos/{Id}");
                 if (response.IsSuccessStatusCode)
                 {
-                    //Reposta 204 quan no ha trobat dades
+                    // Si no troba dades
                     if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
                     {
                         curs = null;
                     }
                     else
                     {
-                        //Obtenim el resultat i el carreguem al Objecte Curs
+                        // Retorn
                         curs = await response.Content.ReadAsAsync<Curs>();
                         response.Dispose();
                     }
                 }
                 else
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    throw new Exception($"Error: {response.StatusCode}");
                 }
             }
             return curs;
@@ -96,7 +97,7 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                // Enviem una petició POST amb JSON directament
+                // Petició
                 HttpResponseMessage response = await client.PostAsJsonAsync("cursos", nouCurs);
 
                 if (response.IsSuccessStatusCode)
@@ -122,16 +123,17 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                // Petició
                 HttpResponseMessage response = await client.PutAsJsonAsync($"cursos/{curs.Id}", curs);
 
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadAsAsync<int>();
+                    response.Dispose();
                     return result;
                 }
                 else
                 {
-                    string errorContent = await response.Content.ReadAsStringAsync();
                     throw new Exception("Error al actualitzar el curs " + response.StatusCode);
                 }
             }
@@ -146,11 +148,11 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
+                // Petició
                 HttpResponseMessage response = await client.DeleteAsync($"cursos/{id}");
 
                 if (response.IsSuccessStatusCode)
                 {
-                    // Si el teu backend retorna algun valor (ex: 1)
                     var result = await response.Content.ReadAsAsync<int>();
                     response.Dispose();
                     return result;

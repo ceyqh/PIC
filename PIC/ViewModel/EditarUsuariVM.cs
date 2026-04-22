@@ -22,11 +22,13 @@ namespace PIC.ViewModel
         private readonly UsuarisApiClient _usuarisApiClient;
 
         private Usuari _usuariEnEdicio;
+        public MissatgeErrorVM MissatgeError { get; set; }
 
         public EditarUsuariVM(UsuarisVM usuarisVM)
         {
             _usuarisVM = usuarisVM;
 
+            MissatgeError = new MissatgeErrorVM();
             _cursosApiClient = new CursosApiClient();
             _departamentsApiClient = new DepartamentsApiClient();
             _alumnesApiClient = new AlumnesApiClient();
@@ -120,31 +122,38 @@ namespace PIC.ViewModel
         // GUARDAR CANVIS USUARI
         public ICommand GuardarUsuari_Click => new RelayCommand(async _ =>
         {
-            _usuariEnEdicio.Nom = Nom;
-            _usuariEnEdicio.Cognom = Cognom;
-            _usuariEnEdicio.IdGrup = IdSeleccionat;
-
-            if (_usuariEnEdicio.Tipus.ToLower() == "alumne")
+            if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Cognom))
             {
-                Alumne alumne = new Alumne();
-                alumne.IdUsuari = _usuariEnEdicio.Id;
-                alumne.IdCurs = _usuariEnEdicio.IdGrup;
-
-                await _alumnesApiClient.UpdateAlumneAsync(alumne);
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
             }
-            else if (_usuariEnEdicio.Tipus.ToLower() == "professor")
+            else
             {
-                Professor professor = new Professor();
-                professor.IdUsuari = _usuariEnEdicio.Id;
-                professor.IdDepartament = _usuariEnEdicio.IdGrup;
+                _usuariEnEdicio.Nom = Nom;
+                _usuariEnEdicio.Cognom = Cognom;
+                _usuariEnEdicio.IdGrup = IdSeleccionat;
 
-                await _professorsApiClient.UpdateProfessorAsync(professor);
+                if (_usuariEnEdicio.Tipus.ToLower() == "alumne")
+                {
+                    Alumne alumne = new Alumne();
+                    alumne.IdUsuari = _usuariEnEdicio.Id;
+                    alumne.IdCurs = _usuariEnEdicio.IdGrup;
+
+                    await _alumnesApiClient.UpdateAlumneAsync(alumne);
+                }
+                else if (_usuariEnEdicio.Tipus.ToLower() == "professor")
+                {
+                    Professor professor = new Professor();
+                    professor.IdUsuari = _usuariEnEdicio.Id;
+                    professor.IdDepartament = _usuariEnEdicio.IdGrup;
+
+                    await _professorsApiClient.UpdateProfessorAsync(professor);
+                }
+
+                await _usuarisApiClient.UpdateUsuariAsync(_usuariEnEdicio);
+                await _usuarisVM.MostrarUsuarisAsync();
+
+                EsVisible = Visibility.Collapsed;
             }
-
-            await _usuarisApiClient.UpdateUsuariAsync(_usuariEnEdicio);
-            await _usuarisVM.MostrarUsuarisAsync();
-
-            EsVisible = Visibility.Collapsed;
         });
     }
 }

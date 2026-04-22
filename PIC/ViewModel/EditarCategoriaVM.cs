@@ -17,11 +17,14 @@ namespace PIC.ViewModel
         private readonly CategoriesVM _categoriesVM;
 
         private Categoria _categoriaEnEdicio;
+        public MissatgeErrorVM MissatgeError { get; set; }
 
         // CONSTRUCTOR
         public EditarCategoriaVM(CategoriesVM categoriesVM)
         {
             _categoriesVM = categoriesVM;
+
+            MissatgeError = new MissatgeErrorVM();
             _categoriesApiClient = new CategoriesApiClient();
         }
 
@@ -61,13 +64,20 @@ namespace PIC.ViewModel
         // GUARDAR CURS
         public ICommand GuardarCategoria_Click => new RelayCommand(async _ =>
         {
-            _categoriaEnEdicio.Nom = Nom;
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                _categoriaEnEdicio.Nom = Nom;
 
-            //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
-            await _categoriesApiClient.UpdateCategoriaAsync(_categoriaEnEdicio);
-            await _categoriesVM.MostrarCategoriesAsync();
+                //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
+                await _categoriesApiClient.UpdateCategoriaAsync(_categoriaEnEdicio);
+                await _categoriesVM.MostrarCategoriesAsync();
 
-            EsVisible = Visibility.Collapsed;
+                EsVisible = Visibility.Collapsed;
+            }            
         });
 
         // OBRIR FINESTRA

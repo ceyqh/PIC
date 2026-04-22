@@ -17,10 +17,14 @@ namespace PIC.ViewModel
         private readonly DepartamentsApiClient _departamentsApiClient;
         private readonly DepartamentsVM _departamentsVM;
 
+        public MissatgeErrorVM MissatgeError { get; set; }
+
         // CONSTRUCTOR
         public AfegirDepartamentVM(DepartamentsVM departamentsVM)
         {
             _departamentsVM = departamentsVM;
+
+            MissatgeError = new MissatgeErrorVM();
             _departamentsApiClient = new DepartamentsApiClient();
         }
 
@@ -64,7 +68,14 @@ namespace PIC.ViewModel
         // AFEGIR NOU CURS
         public ICommand AfegirDepartament_Click => new RelayCommand(async _ =>
         {
-            await CrearNouDepartament();
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                await CrearNouDepartament();
+            }            
         });
 
         // CREAR NOU CURS

@@ -18,12 +18,14 @@ namespace PIC.ViewModel
         private readonly CursosVM _cursosVM;
 
         private Curs _cursEnEdicio;
+        public MissatgeErrorVM MissatgeError { get; set; }
 
         // CONSTRUCTOR
         public EditarCursVM(CursosVM cursosVM)
         {
             _cursosVM = cursosVM;
 
+            MissatgeError = new MissatgeErrorVM();
             _cursosApiClient = new CursosApiClient();
         }
 
@@ -63,13 +65,20 @@ namespace PIC.ViewModel
         // GUARDAR CURS
         public ICommand GuardarCurs_Click => new RelayCommand(async _ =>
         {
-            _cursEnEdicio.Nom = Nom;
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+            }
+            else
+            {
+                _cursEnEdicio.Nom = Nom;
 
-            //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
-            await _cursosApiClient.UpdateCursAsync(_cursEnEdicio);
-            await _cursosVM.MostrarCursosAsync();
+                //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
+                await _cursosApiClient.UpdateCursAsync(_cursEnEdicio);
+                await _cursosVM.MostrarCursosAsync();
 
-            EsVisible = Visibility.Collapsed;
+                EsVisible = Visibility.Collapsed;
+            }
         });
 
         // OBRIR FINESTRA

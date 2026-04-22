@@ -127,6 +127,8 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
@@ -140,15 +142,31 @@
                         <Grid Grid.Column="1">
 
                             <!-- BOTO EDITAR DISPOSITIU -->
-                            <Button Content="EDITAR USUARI"
+                            <Button Content="HABILITAR DISPOSITIU"
                                     Style="{StaticResource Accions_Button}"
-                                    Command="{Binding EditarDispositiuMenu_Click}"/>
+                                    Command="{Binding HabilitarDispositiuMenu_Click}"/>
                         </Grid>
 
                         <Grid Grid.Column="2">
 
+                            <!-- BOTO EDITAR DISPOSITIU -->
+                            <Button Content="DESHABILITAR DISPOSITIU"
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding DeshabilitarDispositiuMenu_Click}"/>
+                        </Grid>
+
+                        <Grid Grid.Column="3">
+
+                            <!-- BOTO EDITAR DISPOSITIU -->
+                            <Button Content="EDITAR DISPOSITIU"
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding EditarDispositiuMenu_Click}"/>
+                        </Grid>
+
+                        <Grid Grid.Column="4">
+
                             <!-- BOTO ESBORRAR DISPOSITIU -->
-                            <Button Content="ESBORRAR USUARI"  
+                            <Button Content="ESBORRAR DISPOSITIU"  
                                     Style="{StaticResource Accions_Button}"
                                     Command="{Binding EsborrarMenu_Click}"/>
                         </Grid>
@@ -204,7 +222,7 @@
                         <Grid Grid.Column="4" 
                               VerticalAlignment="Center">
 
-                            <TextBlock Text="DISPONIBLE"
+                            <TextBlock Text="ESTAT"
                                        FontSize="12" 
                                        Style="{StaticResource Fraktion_Dark_Font}"/>
                         </Grid>
@@ -253,7 +271,7 @@
                                     <TextBlock Grid.Column="4" 
                                                FontSize="12"  
                                                Style="{StaticResource Fraktion_Dark_Font}"
-                                               Text="{Binding Disponible}"/>
+                                               Text="{Binding Estat}"/>
                                 </Grid>
                             </DataTemplate>
                         </ListView.ItemTemplate>
@@ -263,5 +281,9 @@
         </Grid>
 
         <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
+        <local:AfegirDispositiu DataContext="{Binding AfegirDispositiu}" d:IsHidden="true"/>
+        <local:EditarDispositiu DataContext="{Binding EditarDispositiu}" d:IsHidden="true"/>
+        <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
+        <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

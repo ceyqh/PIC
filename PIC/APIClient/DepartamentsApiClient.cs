@@ -19,6 +19,7 @@ namespace PIC.APIClient
         {
             BaseUri = ConfigurationManager.AppSettings["BaseUri"];
 
+            // Si no troba la ruta de l'API
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
