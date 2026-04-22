@@ -23,7 +23,6 @@ namespace PIC.APIClient
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
-                throw new Exception("Error, no s'ha trobat la clau de la API");
             }
         }
 
@@ -36,21 +35,27 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                // Enviem una petició POST amb JSON directament
-                HttpResponseMessage response = await client.PostAsJsonAsync("professors", nouProfessor);
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync("professors", nouProfessor);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    // Retornem l'usuari creat amb l'ID assignat pel servidor
-                    var createdProfessor = await response.Content.ReadAsAsync<Professor>();
-                    response.Dispose();
-                    return createdProfessor;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var createdProfessor = await response.Content.ReadAsAsync<Professor>();
+                        response.Dispose();
+                        return createdProfessor;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al crear usuari: {response.StatusCode}");
+                    return null;
                 }
             }
+            return nouProfessor;
         }
 
         // ACTUALITZAR PROFESSOR
@@ -62,20 +67,27 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.PutAsJsonAsync($"professors/{professor.IdUsuari}", professor);
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"professors/{professor.IdUsuari}", professor);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsAsync<int>();
-                    return result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    // Això t'ajudarà a depurar si torna a fallar
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception($"Error API ({response.StatusCode}): {errorContent}");
+                    return -1;
                 }
             }
+            return -1;
         }
 
         // ESBORRAR PROFESSOR
@@ -87,20 +99,27 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.DeleteAsync($"professors/{id}");
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.DeleteAsync($"professors/{id}");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    // Si el teu backend retorna algun valor (ex: 1)
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al esborrar el professor: {response.StatusCode}");
+                    return -1;
                 }
             }
+            return -1;
         }
     }
 }

@@ -23,7 +23,6 @@ namespace PIC.APIClient
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
-                throw new Exception("Error, no s'ha trobat la clau de la API");
             }
         }
 
@@ -38,17 +37,23 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /departaments}
-                HttpResponseMessage response = await client.GetAsync("departaments");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Obtenim el resultat i el carreguem al objecte llista de departaments
-                    departament = await response.Content.ReadAsAsync<List<Departament>>();
-                    response.Dispose();
+                    HttpResponseMessage response = await client.GetAsync("departaments");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        departament = await response.Content.ReadAsAsync<List<Departament>>();
+                        response.Dispose();
+                        return departament;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? missatge?
+                    return null;
                 }
             }
             return departament;
@@ -65,25 +70,23 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /cursos/{Id}
-                HttpResponseMessage response = await client.GetAsync($"departaments/{Id}");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Reposta 204 quan no ha trobat dades
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    HttpResponseMessage response = await client.GetAsync($"departaments/{Id}");
+                    if (response.IsSuccessStatusCode)
                     {
-                        departament = null;
-                    }
-                    else
-                    {
-                        //Obtenim el resultat i el carreguem al Objecte Curs
+                        // Retorn
                         departament = await response.Content.ReadAsAsync<Departament>();
                         response.Dispose();
+                        return departament;
                     }
                 }
-                else
-                {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                
+                // Si falla
+                catch 
+                { 
+                    return null; 
                 }
             }
             return departament;
@@ -98,21 +101,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                // Enviem una petició POST amb JSON directament
-                HttpResponseMessage response = await client.PostAsJsonAsync("departaments", nouDepartament);
-
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    // Retornem el curs creat amb l'ID assignat pel servidor
-                    var createdCurs = await response.Content.ReadAsAsync<Departament>();
-                    response.Dispose();
-                    return createdCurs;
+                    HttpResponseMessage response = await client.PostAsJsonAsync("departaments", nouDepartament);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var createdCurs = await response.Content.ReadAsAsync<Departament>();
+                        response.Dispose();
+                        return createdCurs;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception("Error al crear el departament: " + response.StatusCode);
+                    return null;
                 }
             }
+            return nouDepartament;
         }
 
         // ACTUALITZAR DEPARTAMENT
@@ -124,19 +132,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.PutAsJsonAsync($"departaments/{departament.Id}", departament);
-
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    var result = await response.Content.ReadAsAsync<int>();
-                    return result;
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"departaments/{departament.Id}", departament);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception("Error al actualitzar el departament " + response.StatusCode);
+                    return -1;
                 }
             }
+            return -1;
         }
 
         // ESBORRAR DEPARTAMENT
@@ -148,20 +163,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.DeleteAsync($"departaments/{id}");
-
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    // Si el teu backend retorna algun valor (ex: 1)
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    HttpResponseMessage response = await client.DeleteAsync($"departaments/{id}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al esborrar el departament: {response.StatusCode}");
+                    return -1;
                 }
             }
+            return -1;
         }
     }
 }

@@ -22,7 +22,6 @@ namespace PIC.APIClient
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
-                throw new Exception("Error, no s'ha trobat la clau de la API");
             }
         }
 
@@ -38,16 +37,22 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.GetAsync("cursos");
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    //Obtenim el resultat i el carreguem al objecte llista de cursos
-                    curs = await response.Content.ReadAsAsync<List<Curs>>();
-                    response.Dispose();
+                    HttpResponseMessage response = await client.GetAsync("cursos");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        curs = await response.Content.ReadAsAsync<List<Curs>>();
+                        response.Dispose();
+                        return curs;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error: {response.StatusCode}");
+                    return null;
                 }
             }
             return curs;
@@ -65,24 +70,30 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.GetAsync($"cursos/{Id}");
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    // Si no troba dades
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    HttpResponseMessage response = await client.GetAsync($"cursos/{Id}");
+                    if (response.IsSuccessStatusCode)
                     {
-                        curs = null;
-                    }
-                    else
-                    {
-                        // Retorn
-                        curs = await response.Content.ReadAsAsync<Curs>();
-                        response.Dispose();
+                        // Si no troba dades
+                        if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                        {
+                            curs = null;
+                        }
+                        else
+                        {
+                            // Retorn
+                            curs = await response.Content.ReadAsAsync<Curs>();
+                            response.Dispose();
+                            return curs;
+                        }
                     }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error: {response.StatusCode}");
+                    return null;
                 }
             }
             return curs;
@@ -98,20 +109,25 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.PostAsJsonAsync("cursos", nouCurs);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    // Retornem el curs creat amb l'ID assignat pel servidor
-                    var createdCurs = await response.Content.ReadAsAsync<Curs>();
-                    response.Dispose();
-                    return createdCurs;
+                    HttpResponseMessage response = await client.PostAsJsonAsync("cursos", nouCurs);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var createdCurs = await response.Content.ReadAsAsync<Curs>();
+                        response.Dispose();
+                        return createdCurs;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception("Error al crear el curs: "+ response.StatusCode);
+                    return null;
                 }
             }
+            return nouCurs;
         }
 
         // ACTUALITZAR CURS
@@ -124,19 +140,25 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.PutAsJsonAsync($"cursos/{curs.Id}", curs);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"cursos/{curs.Id}", curs);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception("Error al actualitzar el curs " + response.StatusCode);
+                    return -1;
                 }
             }
+            return -1;
         }
 
         // ESBORRAR CURS
@@ -149,19 +171,25 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.DeleteAsync($"cursos/{id}");
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    HttpResponseMessage response = await client.DeleteAsync($"cursos/{id}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al esborrar el curs: {response.StatusCode}");
+                    return -1;
                 }
             }
+            return -1;
         }
     }
 }

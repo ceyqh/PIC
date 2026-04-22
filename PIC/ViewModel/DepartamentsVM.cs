@@ -4,6 +4,7 @@ using PIC.Utilities;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -188,18 +189,33 @@ namespace PIC.ViewModel
         {
             try
             {
-                var llista = await _departamentsApiClient.GetAllDepartamentsAsync();
-                Departaments.Clear();
-
-                foreach (var d in llista)
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
                 {
-                    Departaments.Add(d);
+                    MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
                 }
+                else
+                {
+                    var llista = await _departamentsApiClient.GetAllDepartamentsAsync();
+                    if (llista == null)
+                    {
+                        MissatgeError.Mostrar("No s'han pogut mostrar els Departaments. Comprova que la connexió entre l'API i l'aplicació o la seva configuració.");
+                    }
+                    else
+                    {
+                        Departaments.Clear();
+
+                        foreach (var d in llista)
+                        {
+                            Departaments.Add(d);
+                        }
+                    }
+                    
+                }                    
             }
 
             catch (Exception ex)
             {
-                MissatgeError.Mostrar("Error: " + ex.Message);
+                MissatgeError.Mostrar("No es pot connectar amb el servidor: " + ex.Message);
             }
         }
 

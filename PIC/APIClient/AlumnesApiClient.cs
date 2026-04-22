@@ -22,7 +22,6 @@ namespace PIC.APIClient
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
-                throw new Exception("Error, no s'ha trobat la clau de la API");
             }
         }
 
@@ -36,20 +35,25 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.PostAsJsonAsync("alumnes", nouAlumne);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    // Retorn
-                    var createdAlumne = await response.Content.ReadAsAsync<Alumne>();
-                    response.Dispose();
-                    return createdAlumne;
+                    HttpResponseMessage response = await client.PostAsJsonAsync("alumnes", nouAlumne);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var createdAlumne = await response.Content.ReadAsAsync<Alumne>();
+                        response.Dispose();
+                        return createdAlumne;
+                    }
                 }
-                else
+
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al crear usuari: {response.StatusCode}");
+                    return null;
                 }
             }
+            return nouAlumne;
         }
 
         // ACTUALITZAR ALUMNE
@@ -62,20 +66,25 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.PutAsJsonAsync($"alumnes/{alumne.IdUsuari}", alumne);
-
-                if (response.IsSuccessStatusCode)
+                try
                 {
-                    // Retorn
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"alumnes/{alumne.IdUsuari}", alumne);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al actualitzar l'usuari: {response.StatusCode}");
+                    return -1;
                 }
             }
+            return -1;
         }
 
         // ESBORRAR ALUMNE
@@ -86,21 +95,28 @@ namespace PIC.APIClient
                 client.BaseAddress = new Uri(BaseUri);
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-
-                HttpResponseMessage response = await client.DeleteAsync($"alumnes/{id}");
-
-                if (response.IsSuccessStatusCode)
+                
+                // Petició
+                try
                 {
-                    // Retorn
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    HttpResponseMessage response = await client.DeleteAsync($"alumnes/{id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al esborrar l'usuari: {response.StatusCode}");
+                    return -1;
                 }
             }
+            return -1;
         }
     }
 }

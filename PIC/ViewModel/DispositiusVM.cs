@@ -5,6 +5,7 @@ using PIC.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Configuration;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -225,18 +226,32 @@ namespace PIC.ViewModel
         {
             try
             {
-                var llista = await _dispositiusApiClient.GetAllDispositiusAsync();
-                Dispositius.Clear();
-
-                foreach (var u in llista)
+                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
                 {
-                    Dispositius.Add(u);
+                    MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+                }
+                else
+                {
+                    var llista = await _dispositiusApiClient.GetAllDispositiusAsync();
+                    if (llista == null)
+                    {
+                        MissatgeError.Mostrar("No s'han pogut mostrar els Dispositius. Comprova que la connexió entre l'API i l'aplicació o la seva configuració.");
+                    }
+                    else
+                    {
+                        Dispositius.Clear();
+
+                        foreach (var u in llista)
+                        {
+                            Dispositius.Add(u);
+                        }
+                    }                    
                 }
             }
 
             catch (Exception ex)
             {
-                MissatgeError.Mostrar("Error: " + ex.Message);
+                MissatgeError.Mostrar("No es pot connectar amb el servidor: " + ex.Message);
             }
         }
 

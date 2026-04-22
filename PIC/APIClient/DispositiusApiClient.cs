@@ -23,7 +23,6 @@ namespace PIC.APIClient
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
-                throw new Exception("Error, no s'ha trobat la clau de la API");
             }
         }
 
@@ -38,17 +37,23 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /dispositius}
-                HttpResponseMessage response = await client.GetAsync("dispositius");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Obtenim el resultat i el carreguem al objecte llista de dispositius
-                    dispositiu = await response.Content.ReadAsAsync<List<Dispositiu>>();
-                    response.Dispose();
-                }
-                else
+                    HttpResponseMessage response = await client.GetAsync("dispositius");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        dispositiu = await response.Content.ReadAsAsync<List<Dispositiu>>();
+                        response.Dispose();
+                        return dispositiu;
+                    }
+                }                
+
+                // Si falla
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? missatge?
+                    return null;
                 }
             }
             return dispositiu;
@@ -65,25 +70,22 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /dispositius/{Id}
-                HttpResponseMessage response = await client.GetAsync($"dispositius/{Id}");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Reposta 204 quan no ha trobat dades
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    HttpResponseMessage response = await client.GetAsync($"dispositius/{Id}");
+                    if (response.IsSuccessStatusCode)
                     {
-                        dispositiu = null;
-                    }
-                    else
-                    {
-                        //Obtenim el resultat i el carreguem al Objecte dispositius
+                        // Retorn
                         dispositiu = await response.Content.ReadAsAsync<Dispositiu>();
                         response.Dispose();
+                        return dispositiu;
                     }
                 }
-                else
+                
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    return null; 
                 }
             }
             return dispositiu;
@@ -100,25 +102,23 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /usuaris/cursos?id={Id}
-                HttpResponseMessage response = await client.GetAsync($"dispositius/categories?id={Id}");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Reposta 204 quan no ha trobat dades
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    HttpResponseMessage response = await client.GetAsync($"dispositius/categories?id={Id}");
+                    if (response.IsSuccessStatusCode)
                     {
-                        dispositius = null;
-                    }
-                    else
-                    {
-                        //Obtenim el resultat i el carreguem al Objecte Usuari
+                        // Retorn
                         dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
                         response.Dispose();
+                        return dispositius;
                     }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    return null;
                 }
             }
             return dispositius;
@@ -135,25 +135,23 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /usuaris/cursos?id={Id}
-                HttpResponseMessage response = await client.GetAsync($"dispositius/disponibles");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Reposta 204 quan no ha trobat dades
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    HttpResponseMessage response = await client.GetAsync($"dispositius/disponibles");
+                    if (response.IsSuccessStatusCode)
                     {
-                        dispositius = null;
-                    }
-                    else
-                    {
-                        //Obtenim el resultat i el carreguem al Objecte Usuari
+                        // Retorn
                         dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
                         response.Dispose();
+                        return dispositius;
                     }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    return null;
                 }
             }
             return dispositius;
@@ -170,25 +168,23 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /usuaris/cursos?id={Id}
-                HttpResponseMessage response = await client.GetAsync($"dispositius/no-disponibles");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Reposta 204 quan no ha trobat dades
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    HttpResponseMessage response = await client.GetAsync($"dispositius/no-disponibles");
+                    if (response.IsSuccessStatusCode)
                     {
-                        dispositius = null;
-                    }
-                    else
-                    {
-                        //Obtenim el resultat i el carreguem al Objecte Usuari
+                        // Retorn
                         dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
                         response.Dispose();
+                        return dispositius;
                     }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    return null;
                 }
             }
             return dispositius;
@@ -204,19 +200,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.PostAsJsonAsync("dispositius", nouDispositiu);
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync("dispositius", nouDispositiu);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var dispositiuCreat = await response.Content.ReadAsAsync<NouDispositiu>();
-                    response.Dispose();
-                    return dispositiuCreat;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var dispositiuCreat = await response.Content.ReadAsAsync<NouDispositiu>();
+                        response.Dispose();
+                        return dispositiuCreat;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception("Error al crear el dispositiu: " + response.StatusCode);
+                    return null;
                 }
             }
+            return nouDispositiu;
         }
 
         // ACTUALITZAR DISPOSITIU
@@ -229,19 +232,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.PutAsJsonAsync($"dispositius/{dispositiu.Id}", dispositiu);
+                try 
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"dispositius/{dispositiu.Id}", dispositiu);
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception("Error al actualitzar el dispositiu " + response.StatusCode);
+                    return -1;
                 }
             }
+            return -1;
         }
 
         // ESBORRAR CURS
@@ -254,19 +264,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
                 // Petició
-                HttpResponseMessage response = await client.DeleteAsync($"dispositius/{id}");
+                try
+                {
+                    HttpResponseMessage response = await client.DeleteAsync($"dispositius/{id}");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al esborrar el dispositiu: {response.StatusCode}");
+                    return -1;
                 }
             }
+            return -1;
         }
     }
 }

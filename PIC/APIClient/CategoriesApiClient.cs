@@ -20,7 +20,6 @@ namespace PIC.APIClient
             if (string.IsNullOrEmpty(BaseUri))
             {
                 BaseUri = "http://localhost/temp";
-                throw new Exception("Error, no s'ha trobat la clau de la API");
             }
         }
 
@@ -35,17 +34,23 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /cursos}
-                HttpResponseMessage response = await client.GetAsync("categories");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Obtenim el resultat i el carreguem al objecte llista de cursos
-                    categoria = await response.Content.ReadAsAsync<List<Categoria>>();
-                    response.Dispose();
+                    HttpResponseMessage response = await client.GetAsync("categories");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        categoria = await response.Content.ReadAsAsync<List<Categoria>>();
+                        response.Dispose();
+                        return categoria;
+                    }
                 }
-                else
+
+                // Si falla
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? missatge?
+                    return null;
                 }
             }
             return categoria;
@@ -62,32 +67,30 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                //Enviem una petició GET al endpoint /cursos/{Id}
-                HttpResponseMessage response = await client.GetAsync($"categories/{Id}");
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    //Reposta 204 quan no ha trobat dades
-                    if (response.StatusCode == System.Net.HttpStatusCode.NoContent)
+                    HttpResponseMessage response = await client.GetAsync($"categories/{Id}");
+                    if (response.IsSuccessStatusCode)
                     {
-                        categoria = null;
-                    }
-                    else
-                    {
-                        //Obtenim el resultat i el carreguem al Objecte Curs
+                        // Retorn
                         categoria = await response.Content.ReadAsAsync<Categoria>();
                         response.Dispose();
+                        return categoria;
                     }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    //TODO: que fer si ha anat malament? retornar null? 
+                    return null; 
                 }
             }
             return categoria;
         }
 
         // AFEGIR CATEGORIA
-        public async Task<Categoria> PostCategoriaAsync(Categoria nouCategoria)
+        public async Task<Categoria> PostCategoriaAsync(Categoria novaCategoria)
         {
             using (var client = new HttpClient())
             {
@@ -95,21 +98,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                // Enviem una petició POST amb JSON directament
-                HttpResponseMessage response = await client.PostAsJsonAsync("categories", nouCategoria);
-
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    // Retornem el curs creat amb l'ID assignat pel servidor
-                    var createdCategoria = await response.Content.ReadAsAsync<Categoria>();
-                    response.Dispose();
-                    return createdCategoria;
+                    HttpResponseMessage response = await client.PostAsJsonAsync("categories", novaCategoria);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var createdCategoria = await response.Content.ReadAsAsync<Categoria>();
+                        response.Dispose();
+                        return createdCategoria;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception("Error al crear la categoria: " + response.StatusCode);
+                    return null;
                 }
             }
+            return novaCategoria;
         }
 
         // ACTUALITZAR CURS
@@ -121,19 +129,26 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.PutAsJsonAsync($"categories/{categoria.Id}", categoria);
-
-                if (response.IsSuccessStatusCode)
+                // Petició
+                try
                 {
-                    var result = await response.Content.ReadAsAsync<int>();
-                    return result;
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"categories/{categoria.Id}", categoria);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    string errorContent = await response.Content.ReadAsStringAsync();
-                    throw new Exception("Error al actualitzar la categoria " + response.StatusCode);
+                    return -1;
                 }
             }
+            return -1;
         }
 
         // ESBORRAR CURS
@@ -145,20 +160,27 @@ namespace PIC.APIClient
                 client.DefaultRequestHeaders.Accept.Clear();
                 client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-                HttpResponseMessage response = await client.DeleteAsync($"categories/{id}");
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.DeleteAsync($"categories/{id}");
 
-                if (response.IsSuccessStatusCode)
-                {
-                    // Si el teu backend retorna algun valor (ex: 1)
-                    var result = await response.Content.ReadAsAsync<int>();
-                    response.Dispose();
-                    return result;
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
                 }
-                else
+                
+                // Si falla
+                catch
                 {
-                    throw new Exception($"Error al esborrar la categoria: {response.StatusCode}");
+                    return -1;
                 }
             }
+            return -1;
         }
     }
 }
