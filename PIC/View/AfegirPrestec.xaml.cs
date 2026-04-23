@@ -1,7 +1,4 @@
-﻿using PIC.APIClient;
-using PIC.Model;
-using PIC.ViewModel;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -18,9 +15,12 @@ using System.Windows.Shapes;
 
 namespace PIC.View
 {
-    public partial class Prestecs : UserControl
+    /// <summary>
+    /// Lógica de interacción para AfegirPrestec.xaml
+    /// </summary>
+    public partial class AfegirPrestec : UserControl
     {
-        public Prestecs()
+        public AfegirPrestec()
         {
             InitializeComponent();
         }

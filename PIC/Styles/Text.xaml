@@ -98,4 +98,13 @@
             Value="#131316"/>
     </Style>
 
+    <!-- TEXT FOSC  -->
+    <Style x:Key="Fraktion_Dark_Font_CheckBox" TargetType="CheckBox">
+
+        <Setter Property="FontFamily" 
+        Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="Foreground"
+        Value="#131316"/>
+    </Style>
+
 </ResourceDictionary>

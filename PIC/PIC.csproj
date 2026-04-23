@@ -109,6 +109,7 @@
     <Compile Include="ViewModel\AfegirCursVM.cs" />
     <Compile Include="ViewModel\AfegirDepartamentVM.cs" />
     <Compile Include="ViewModel\AfegirDispositiuVM.cs" />
+    <Compile Include="ViewModel\AfegirPrestecVM.cs" />
     <Compile Include="ViewModel\AfegirProfessorVM.cs" />
     <Compile Include="ViewModel\CategoriesVM.cs" />
     <Compile Include="ViewModel\ConfirmarEsborrarVM.cs" />
@@ -139,6 +140,9 @@
     </Compile>
     <Compile Include="View\AfegirDispositiu.xaml.cs">
       <DependentUpon>AfegirDispositiu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\AfegirPrestec.xaml.cs">
+      <DependentUpon>AfegirPrestec.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\AfegirProfessor.xaml.cs">
       <DependentUpon>AfegirProfessor.xaml</DependentUpon>
@@ -242,6 +246,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\AfegirDispositiu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AfegirPrestec.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

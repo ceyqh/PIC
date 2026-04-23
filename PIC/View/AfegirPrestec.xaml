@@ -1,0 +1,170 @@
+﻿<UserControl x:Class="PIC.View.AfegirPrestec"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PIC.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Visibility="{Binding EsVisible}"
+          Background="#80000000">
+
+        <!-- POPUP -->
+        <Grid Width="300"
+              Background="White"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- TÍTOL -->
+                <Grid Background="#131316" 
+                      VerticalAlignment="Center">
+
+                    <TextBlock Text="AFEGIR: PRÉSTEC" 
+                               Style="{StaticResource Fraktion_Light_Font}" 
+                               FontSize="12" 
+                               Margin="20, 10, 20, 10"/>
+                </Grid>
+
+                <!-- ID USUARI -->
+                <StackPanel Grid.Row="1" 
+                            Margin="20, 10, 20, 0">
+
+                    <TextBlock Text="ID USUARI: " 
+                               Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"/>
+
+                    <TextBox Text="{Binding UsuariID}"  
+                             Margin="0,0,0,20"  
+                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                </StackPanel>
+
+                <!-- ID DISPOSITIU -->
+                <StackPanel Grid.Row="2" 
+                            Margin="20, 0, 20, 0">
+
+                    <TextBlock Text="ID DISPOSITIU: " 
+                               Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"/>
+
+                    <TextBox Text="{Binding DispositiuID}" 
+                             Margin="0,0,0,20"                                 
+                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                </StackPanel>
+
+                <!-- DATA ENTREGA -->
+                <StackPanel Grid.Row="3" 
+                            Margin="20, 0, 20, 0">
+
+                    <TextBlock Text="DATA ENTREGA: " 
+                               Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"/>
+
+                    <DatePicker SelectedDate="{Binding DataEntrega}"
+                                Margin="0,0,0,20"/>
+                </StackPanel>
+
+                <!-- DATA RETORN -->
+                <Grid Grid.Row="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Column="0" 
+                                Margin="20, 0, 10, 0">
+
+                        <TextBlock Text="DATA RETORN: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <DatePicker SelectedDate="{Binding DataRetorn}"
+                                    Margin="0,0,0,10"/>
+                    </StackPanel>
+
+                    <StackPanel Grid.Column="1" 
+                                Margin="10, 0, 20, 0">
+
+                        <TextBlock Text="HORA: " 
+                                   Style="{StaticResource Fraktion_Dark_Font}" 
+                                   FontSize="12" 
+                                   Margin="0,0,0,10"/>
+
+                        <ComboBox SelectedValuePath="Content"
+                                  SelectedValue="{Binding HoraSeleccionada}">
+                            
+                            <ComboBoxItem Content="1"/>
+                            <ComboBoxItem Content="2"/>
+                            <ComboBoxItem Content="3"/>
+                            <ComboBoxItem Content="4"/>
+                            <ComboBoxItem Content="5"/>
+                            <ComboBoxItem Content="6"/>
+                            <ComboBoxItem Content="7"/>
+                            <ComboBoxItem Content="8"/>
+                            <ComboBoxItem Content="9"/>
+                            <ComboBoxItem Content="10"/>
+                            <ComboBoxItem Content="11"/>
+                            <ComboBoxItem Content="12"/>
+                            <ComboBoxItem Content="13"/>
+                            <ComboBoxItem Content="14"/>
+                            <ComboBoxItem Content="15"/>
+                            <ComboBoxItem Content="16"/>
+                            <ComboBoxItem Content="17"/>
+                            <ComboBoxItem Content="18"/>
+                            <ComboBoxItem Content="19"/>
+                            <ComboBoxItem Content="20"/>
+                            <ComboBoxItem Content="21"/>
+                            <ComboBoxItem Content="22"/>
+                            <ComboBoxItem Content="23"/>
+                        </ComboBox>
+                    </StackPanel>
+                </Grid>
+
+                <!-- ENTREGAR A FINAL DE CURS -->
+                <StackPanel Grid.Row="5" 
+                            Margin="20, 0, 20, 0">
+                    
+                    <CheckBox Content="Tornar a final de curs."
+                              Style="{StaticResource Fraktion_Dark_Font_CheckBox}" 
+                              VerticalContentAlignment="Center"
+                              IsChecked="{Binding FinalCurs}"/>
+                </StackPanel>
+
+                <!-- BOTONS -->
+                <StackPanel Grid.Row="6"
+                            Margin="20"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Right">
+
+                    <Button Content="AFEGIR"
+                            Padding="10, 0, 10, 0"
+                            Style="{StaticResource Accions_Button}"
+                            Margin="0,0,10,0"
+                            Command="{Binding AfegirPrestec_Click}"/>
+
+                    <Button Content="CANCEL·LAR"
+                            Padding="10, 0, 10, 0"
+                            Style="{StaticResource Accions_Button}"
+                            Command="{Binding TancarFinestra}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
+    </Grid>
+</UserControl>

@@ -15,6 +15,5 @@ namespace PIC.Model
         public int IdDispositiu { get; set; }
         public DateTime DataEntrega { get; set; }
         public DateTime DataRetorn { get; set; }
-        public bool Retornat { get; set; }
     }
 }

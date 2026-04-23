@@ -7,9 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
 
-    <!-- MENU AFEGIR PROFESSOR -->
-    <Grid x:Name="OverlayAfegirAlumne"
-          Visibility="{Binding EsVisible}"
+    <Grid Visibility="{Binding EsVisible}"
           Background="#80000000">
 
         <!-- POPUP -->
