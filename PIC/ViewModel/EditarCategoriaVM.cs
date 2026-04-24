@@ -19,6 +19,9 @@ namespace PIC.ViewModel
         private Categoria _categoriaEnEdicio;
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotEditar = true;
+
         // CONSTRUCTOR
         public EditarCategoriaVM(CategoriesVM categoriesVM)
         {
@@ -61,23 +64,37 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Visible;
         }
 
-        // GUARDAR CURS
+        // GUARDAR CATEGORIA
         public ICommand GuardarCategoria_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom))
+            if (esPotEditar)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                // Si hi ha camps buits
+                if (string.IsNullOrWhiteSpace(Nom))
+                {
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
+                }
+                else
+                {
+                    _categoriaEnEdicio.Nom = Nom;
+
+                    int categoriaActualitzada = await _categoriesApiClient.UpdateCategoriaAsync(_categoriaEnEdicio);
+
+                    // Si actualitzar la categoria falla
+                    if(categoriaActualitzada == -1)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar la categoria.");
+                    }
+                    // Si actualitzar la categoria funciona
+                    else
+                    {
+                        esPotEditar = false;
+                        await _categoriesVM.MostrarCategoriesAsync();
+                        EsVisible = Visibility.Collapsed;
+                    }
+                    
+                }
             }
-            else
-            {
-                _categoriaEnEdicio.Nom = Nom;
-
-                //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
-                await _categoriesApiClient.UpdateCategoriaAsync(_categoriaEnEdicio);
-                await _categoriesVM.MostrarCategoriesAsync();
-
-                EsVisible = Visibility.Collapsed;
-            }            
         });
 
         // OBRIR FINESTRA

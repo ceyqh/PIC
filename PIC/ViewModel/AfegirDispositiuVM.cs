@@ -20,6 +20,9 @@ namespace PIC.ViewModel
         private readonly DispositiusVM _dispositiusVM;
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotAfegir = true;
+
         // CONSTRUCTOR
         public AfegirDispositiuVM(DispositiusVM dispositiusVM)
         {
@@ -113,31 +116,40 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Collapsed;
         });
 
-        // AFEGIR DISPOSITIU CLICK
+        // AFEGIR NOU DISPOSITIU
         public ICommand AfegirDispositiu_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom))
+            if (esPotAfegir)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                await CrearNouDispositiu();
-            }            
+                // Si hi ha camps buits
+                if (string.IsNullOrWhiteSpace(Nom))
+                {
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
+                }
+                else
+                {
+                    esPotAfegir = false;
+
+                    NouDispositiu dispositiuCurs = new NouDispositiu();
+                    dispositiuCurs.IdCategoria = CategoriaId;
+                    dispositiuCurs.Nom = Nom;
+                    dispositiuCurs.Estat = "Disponible";
+
+                    NouDispositiu dispositiuCreat = await _dispositiusApiClient.PostDispositiuAsync(dispositiuCurs);
+
+                    // Si crear el dispositiu falla
+                    if (dispositiuCreat == null)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al crear el dispositiu.");
+                    }
+                    // Si crear el dispositiu funciona
+                    else
+                    {
+                        await _dispositiusVM.MostrarDispositiusAsync();
+                        EsVisible = Visibility.Collapsed;
+                    }
+                }
+            }                       
         });
-
-        // GUARDAR NOU ALUMNE (USUARI + ALUMNE)
-        private async Task CrearNouDispositiu()
-        {
-            NouDispositiu dispositiuCurs = new NouDispositiu();
-            dispositiuCurs.IdCategoria = CategoriaId;
-            dispositiuCurs.Nom = Nom;
-            dispositiuCurs.Estat = "Disponible";
-
-            await _dispositiusApiClient.PostDispositiuAsync(dispositiuCurs);
-            await _dispositiusVM.MostrarDispositiusAsync();
-
-            EsVisible = Visibility.Collapsed;
-        }
     }
 }

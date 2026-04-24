@@ -14,14 +14,18 @@
         </Grid.RowDefinitions>
 
         <!-- HEADER -->
-        <Grid Grid.Row="0" Background="#e8e9e9">
+        <Grid Grid.Row="0" 
+              Background="#e8e9e9">
+            
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
 
-                <Grid Grid.Row="0" Margin="0, 25, 0, 0">
+                <Grid Grid.Row="0" 
+                      Margin="0, 25, 0, 0">
+                    
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition/>
@@ -30,20 +34,34 @@
 
                         <!-- IMATGE HEADER 1 -->
                         <Grid Grid.Column="0">
-                            <Border BorderBrush="#131316" BorderThickness="0, 0, 1, 0"></Border>
-                            <Image Source="/Images/logo.png" HorizontalAlignment="Right" Margin="0, 0, 25, 0"></Image>
+                            <Border BorderBrush="#131316" 
+                                    BorderThickness="0, 0, 1, 0"/>
+
+                            <Image Source="/Images/logo.png" 
+                                   HorizontalAlignment="Right" 
+                                   Margin="0, 0, 25, 0"/>
                         </Grid>
 
                         <!-- IMATGE HEADER 2 -->
                         <Grid Grid.Column="1">
-                            <Image Source="/Images/logo_campalans.png" HorizontalAlignment="Left" Margin="25, 0, 0, 0"></Image>
+                            <Image Source="/Images/logo_campalans.png" 
+                                   HorizontalAlignment="Left" 
+                                   Margin="25, 0, 0, 0"/>
                         </Grid>
                     </Grid>
                 </Grid>
 
                 <!-- TEXT HEADER -->
-                <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000">
-                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}" TextWrapping="Wrap" TextAlignment="Center">Benvingut/da a PIC, el gestor de préstecs de material de l'Institut Rafael Campalans.</TextBlock>
+                <Grid Grid.Row="1" 
+                      HorizontalAlignment="Center" 
+                      VerticalAlignment="Center" 
+                      Width="1000">
+                    
+                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}" 
+                               TextWrapping="Wrap" 
+                               TextAlignment="Center">
+                        Benvingut/da a PIC, el gestor de préstecs de material de l'Institut Rafael Campalans.
+                    </TextBlock>
                 </Grid>
             </Grid>
         </Grid>

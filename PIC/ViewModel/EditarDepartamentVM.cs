@@ -21,6 +21,9 @@ namespace PIC.ViewModel
         private Departament _departamentEnEdicio;
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotEditar = true;
+
         // CONSTRUCTOR
         public EditarDepartamentVM(DepartamentsVM departamentsVM)
         {
@@ -63,23 +66,36 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Visible;
         }
 
-        // GUARDAR CURS
-        public ICommand GuardarCurs_Click => new RelayCommand(async _ =>
+        // GUARDAR DEPARTAMENT
+        public ICommand GuardarDepartament_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom))
+            if (esPotEditar)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                _departamentEnEdicio.Nom = Nom;
+                // Si hi ha camps buits
+                if (string.IsNullOrWhiteSpace(Nom))
+                {
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
+                }
+                else
+                {
+                    _departamentEnEdicio.Nom = Nom;
 
-                //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
-                await _departamentsApiClient.UpdateDepartamentAsync(_departamentEnEdicio);
-                await _departamentsVM.MostrarDepartamentsAsync();
+                    int departamentActualitzat = await _departamentsApiClient.UpdateDepartamentAsync(_departamentEnEdicio);
 
-                EsVisible = Visibility.Collapsed;
-            }            
+                    // Si actualitzar el departament falla
+                    if (departamentActualitzat == -1)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el departament.");
+                    }
+                    // Si actualitzar el curs funciona
+                    else
+                    {
+                        esPotEditar = false;
+                        await _departamentsVM.MostrarDepartamentsAsync();
+                        EsVisible = Visibility.Collapsed;
+                    }
+                }
+            }                      
         });
 
         // OBRIR FINESTRA

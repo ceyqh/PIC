@@ -24,6 +24,9 @@ namespace PIC.ViewModel
         private Usuari _usuariEnEdicio;
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotEditar = true;
+
         public EditarUsuariVM(UsuarisVM usuarisVM)
         {
             _usuarisVM = usuarisVM;
@@ -122,37 +125,65 @@ namespace PIC.ViewModel
         // GUARDAR CANVIS USUARI
         public ICommand GuardarUsuari_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Cognom))
+            if (esPotEditar)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                _usuariEnEdicio.Nom = Nom;
-                _usuariEnEdicio.Cognom = Cognom;
-                _usuariEnEdicio.IdGrup = IdSeleccionat;
-
-                if (_usuariEnEdicio.Tipus.ToLower() == "alumne")
+                // Si hi ha camps buits
+                if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Cognom))
                 {
-                    Alumne alumne = new Alumne();
-                    alumne.IdUsuari = _usuariEnEdicio.Id;
-                    alumne.IdCurs = _usuariEnEdicio.IdGrup;
-
-                    await _alumnesApiClient.UpdateAlumneAsync(alumne);
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
                 }
-                else if (_usuariEnEdicio.Tipus.ToLower() == "professor")
+                else
                 {
-                    Professor professor = new Professor();
-                    professor.IdUsuari = _usuariEnEdicio.Id;
-                    professor.IdDepartament = _usuariEnEdicio.IdGrup;
+                    _usuariEnEdicio.Nom = Nom;
+                    _usuariEnEdicio.Cognom = Cognom;
+                    _usuariEnEdicio.IdGrup = IdSeleccionat;
 
-                    await _professorsApiClient.UpdateProfessorAsync(professor);
+                    // Si és un alumne
+                    if (_usuariEnEdicio.Tipus.ToLower() == "alumne")
+                    {
+                        Alumne alumne = new Alumne();
+                        alumne.IdUsuari = _usuariEnEdicio.Id;
+                        alumne.IdCurs = _usuariEnEdicio.IdGrup;
+
+                        int alumneActualitzat = await _alumnesApiClient.UpdateAlumneAsync(alumne);
+
+                        // Si actualitzar l'alumne falla
+                        if (alumneActualitzat == -1)
+                        {
+                            MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar l'alumne.");
+                        }
+                    }
+                    // Si és un professor
+                    else if (_usuariEnEdicio.Tipus.ToLower() == "professor")
+                    {
+                        Professor professor = new Professor();
+                        professor.IdUsuari = _usuariEnEdicio.Id;
+                        professor.IdDepartament = _usuariEnEdicio.IdGrup;
+
+                        int professorActualitzat = await _professorsApiClient.UpdateProfessorAsync(professor);
+
+                        // Si actualitzar el professor falla
+                        if (professorActualitzat == -1)
+                        {
+                            MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el professor.");
+                        }
+                    }
+
+                    int usuariActualitzat = await _usuarisApiClient.UpdateUsuariAsync(_usuariEnEdicio);
+
+                    // Si actualitzar l'usuari falla
+                    if (usuariActualitzat == -1)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar l'usuari.");
+                    }
+                    // Si actualitzar l'usuari funciona
+                    else
+                    {
+                        esPotEditar = false;
+                        await _usuarisVM.MostrarUsuarisAsync();
+                        EsVisible = Visibility.Collapsed;
+                    }                        
                 }
-
-                await _usuarisApiClient.UpdateUsuariAsync(_usuariEnEdicio);
-                await _usuarisVM.MostrarUsuarisAsync();
-
-                EsVisible = Visibility.Collapsed;
             }
         });
     }

@@ -32,4 +32,8 @@
         <view:Departaments />
     </DataTemplate>
 
+    <DataTemplate DataType="{x:Type vm:PicVM}">
+        <view:Pic />
+    </DataTemplate>
+
 </ResourceDictionary>

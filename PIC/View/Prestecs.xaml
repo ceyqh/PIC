@@ -292,10 +292,15 @@
                                                Style="{StaticResource Fraktion_Dark_Font}"
                                                Text="{Binding IdDispositiu}"/>
 
-                                    <TextBlock Grid.Column="5" 
-                                               FontSize="12" 
-                                               Style="{StaticResource Fraktion_Dark_Font}"
-                                               Text="{Binding DataEntrega}"/>
+                                    <StackPanel Grid.Column="5">
+                                        <TextBlock FontSize="12"  
+                                                   Style="{StaticResource Fraktion_Dark_Font}"
+                                                   Text="{Binding IdDispositiu}"/>
+
+                                        <TextBlock FontSize="12"  
+                                                   Style="{StaticResource Fraktion_Dark_Font}"
+                                                   Text="{Binding IdDispositiu}"/>
+                                    </StackPanel>
 
                                     <TextBlock Grid.Column="6" 
                                                FontSize="12"  

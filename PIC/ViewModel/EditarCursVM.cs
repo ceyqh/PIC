@@ -20,6 +20,9 @@ namespace PIC.ViewModel
         private Curs _cursEnEdicio;
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotEditar = true;
+
         // CONSTRUCTOR
         public EditarCursVM(CursosVM cursosVM)
         {
@@ -65,20 +68,33 @@ namespace PIC.ViewModel
         // GUARDAR CURS
         public ICommand GuardarCurs_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom))
+            if (esPotEditar)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                _cursEnEdicio.Nom = Nom;
+                // Si hi ha camps buits
+                if (string.IsNullOrWhiteSpace(Nom))
+                {
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
+                }
+                else
+                {
+                    _cursEnEdicio.Nom = Nom;
 
-                //MessageBox.Show($"{_cursEnEdicio.Id} + {_cursEnEdicio.Nom}");
-                await _cursosApiClient.UpdateCursAsync(_cursEnEdicio);
-                await _cursosVM.MostrarCursosAsync();
+                    int cursActualitzat = await _cursosApiClient.UpdateCursAsync(_cursEnEdicio);
 
-                EsVisible = Visibility.Collapsed;
-            }
+                    // Si actualitzar el curs falla
+                    if (cursActualitzat == -1)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el curs.");
+                    }
+                    // Si actualitzar el curs funciona
+                    else
+                    {
+                        esPotEditar = false;
+                        await _cursosVM.MostrarCursosAsync();
+                        EsVisible = Visibility.Collapsed;
+                    }                        
+                }
+            }            
         });
 
         // OBRIR FINESTRA

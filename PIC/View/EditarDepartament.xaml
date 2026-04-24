@@ -57,7 +57,7 @@
                             Padding="10, 0, 10, 0"
                             Style="{StaticResource Accions_Button}"
                             Margin="0,0,10,0"
-                            Command="{Binding GuardarCurs_Click}"/>
+                            Command="{Binding GuardarDepartament_Click}"/>
 
                     <Button Content="CANCEL·LAR"
                             Padding="10, 0, 10, 0"

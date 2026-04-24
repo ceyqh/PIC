@@ -20,6 +20,9 @@ namespace PIC.ViewModel
         private Dispositiu _dispositiuEnEdicio;
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotEditar = true;
+
         public EditarDispositiuVM(DispositiusVM dispositiusVM)
         {
             _dispositiusVM = dispositiusVM;
@@ -88,23 +91,37 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Collapsed;
         });
 
-        // GUARDAR CANVIS USUARI
+        // GUARDAR DISPOSITIU
         public ICommand GuardarDispositiu_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom))
+            if (esPotEditar)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                _dispositiuEnEdicio.Nom = Nom;
-                _dispositiuEnEdicio.IdCategoria = CategoriaId;
+                // Si hi ha camps buits
+                if (string.IsNullOrWhiteSpace(Nom))
+                {
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
+                }
+                else
+                {
+                    _dispositiuEnEdicio.Nom = Nom;
+                    _dispositiuEnEdicio.IdCategoria = CategoriaId;
 
-                await _dispositiusApiClient.UpdateDispositiuAsync(_dispositiuEnEdicio);
-                await _dispositiusVM.MostrarDispositiusAsync();
+                    int dispositiuActualitzat = await _dispositiusApiClient.UpdateDispositiuAsync(_dispositiuEnEdicio);
 
-                EsVisible = Visibility.Collapsed;
-            }            
+                    // Si actualitzar el dispositiu falla
+                    if (dispositiuActualitzat == -1)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el dispositiu.");
+                    }
+                    // Si actualitzar el dispositiu funciona
+                    else
+                    {
+                        esPotEditar = false;
+                        await _dispositiusVM.MostrarDispositiusAsync();
+                        EsVisible = Visibility.Collapsed;
+                    }                        
+                }
+            }                     
         });
     }
 }

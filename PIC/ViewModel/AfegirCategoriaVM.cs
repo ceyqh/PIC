@@ -18,6 +18,9 @@ namespace PIC.ViewModel
 
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotAfegir = true;
+
         // CONSTRUCTOR
         public AfegirCategoriaVM(CategoriesVM categoriesVM)
         {
@@ -64,29 +67,37 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Collapsed;
         });
 
-        // AFEGIR NOU CURS
+        // AFEGIR NOVA CATEGORIA
         public ICommand AfegirCategoria_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom))
+            if (esPotAfegir)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                await CrearNovaCategoria();
-            }
+                // Si hi ha camps buits
+                if (string.IsNullOrWhiteSpace(Nom))
+                {
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
+                }
+                else
+                {
+                    Categoria novaCategoria = new Categoria();
+                    novaCategoria.Nom = Nom;
+
+                    Categoria categoriaCreada = await _categoriesApiClient.PostCategoriaAsync(novaCategoria);
+
+                    // Si crear la categoria falla
+                    if (categoriaCreada == null)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al crear la categoria.");
+                    }
+                    // Si crear la categoria funciona
+                    else
+                    {
+                        esPotAfegir = false;
+                        await _categoriesVM.MostrarCategoriesAsync();
+                        EsVisible = Visibility.Collapsed;                         
+                    }
+                }
+            }            
         });
-
-        // CREAR NOU CURS
-        private async Task CrearNovaCategoria()
-        {
-            Categoria novaCategoria = new Categoria();
-            novaCategoria.Nom = Nom;
-
-            await _categoriesApiClient.PostCategoriaAsync(novaCategoria);
-            await _categoriesVM.MostrarCategoriesAsync();
-
-            EsVisible = Visibility.Collapsed;
-        }
     }
 }

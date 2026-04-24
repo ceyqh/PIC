@@ -24,6 +24,9 @@ namespace PIC.ViewModel
 
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotEditar = true;
+
         // CONSTRUCTOR
         public EditarPrestecVM(PrestecsVM prestecsVM)
         {
@@ -157,135 +160,139 @@ namespace PIC.ViewModel
         // AFEGIR PRÉSTEC
         public ICommand GuardarPrestec_Click => new RelayCommand(async _ =>
         {
-            // Si els camps d'ID estan buits
-            if (string.IsNullOrWhiteSpace(UsuariID.ToString()) || string.IsNullOrWhiteSpace(DispositiuID.ToString()))
+            if (esPotEditar)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                // Comprovar que l'ID d'Usuari existeix
-                var usuaris = await _usuarisApiClient.GetAllUsuarisAsync();
-
-                // Si falla la consulta
-                if (usuaris == null)
+                // Si els camps d'ID estan buits
+                if (string.IsNullOrWhiteSpace(UsuariID.ToString()) || string.IsNullOrWhiteSpace(DispositiuID.ToString()))
                 {
-                    MissatgeError.Mostrar("Hi ha hagun un problema consultant l'usuari");
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
                 }
-
-                // Si funciona la consulta
                 else
                 {
-                    // Comprovar que l'usuari existeix
-                    bool existeixUsuari = false;
-                    int i = 0;
+                    // Comprovar que l'ID d'Usuari existeix
+                    var usuaris = await _usuarisApiClient.GetAllUsuarisAsync();
 
-                    while (i < usuaris.Count && !existeixUsuari)
+                    // Si falla la consulta
+                    if (usuaris == null)
                     {
-                        if (usuaris[i].Id == UsuariID)
-                        {
-                            existeixUsuari = true;
-                        }
-                        else { i++; }
+                        MissatgeError.Mostrar("Hi ha hagun un problema consultant l'usuari");
                     }
 
-                    // Si no existeix l'ID d'Usuari
-                    if (!existeixUsuari)
-                    {
-                        MissatgeError.Mostrar($"No existeix cap usuari amb ID({UsuariID}).");
-                    }
-
-                    // Si l'ID d'usuari existeix
+                    // Si funciona la consulta
                     else
                     {
-                        // Comprovar que l'ID de Dispositiu existeix
-                        var dispositius = await _dispositiusApiClient.GetAllDispositiusAsync();
+                        // Comprovar que l'usuari existeix
+                        bool existeixUsuari = false;
+                        int i = 0;
 
-                        bool existeixDispositiu = false;
-                        int j = 0;
-
-                        while (j < dispositius.Count && !existeixDispositiu)
+                        while (i < usuaris.Count && !existeixUsuari)
                         {
-                            if (dispositius[j].Id == DispositiuID)
+                            if (usuaris[i].Id == UsuariID)
                             {
-                                existeixDispositiu = true;
+                                existeixUsuari = true;
                             }
-                            else { j++; }
+                            else { i++; }
                         }
 
-                        // Si no existeix l'ID de Dispositiu
-                        if (!existeixDispositiu)
+                        // Si no existeix l'ID d'Usuari
+                        if (!existeixUsuari)
                         {
-                            MissatgeError.Mostrar($"No existeix cap dispositiu amb ID({DispositiuID}).");
+                            MissatgeError.Mostrar($"No existeix cap usuari amb ID({UsuariID}).");
                         }
 
-                        // Si existeix l'ID de Dispositiu
+                        // Si l'ID d'usuari existeix
                         else
                         {
-                            // Assignar data de retorn
-                            if (!FinalCurs)
+                            // Comprovar que l'ID de Dispositiu existeix
+                            var dispositius = await _dispositiusApiClient.GetAllDispositiusAsync();
+
+                            bool existeixDispositiu = false;
+                            int j = 0;
+
+                            while (j < dispositius.Count && !existeixDispositiu)
                             {
-                                DataRetorn = new DateTime(DataRetorn.Year, DataRetorn.Month, DataRetorn.Day, HoraSeleccionada, 0, 0);
+                                if (dispositius[j].Id == DispositiuID)
+                                {
+                                    existeixDispositiu = true;
+                                }
+                                else { j++; }
                             }
-                            // Si es marca que es retorna a final de curs
+
+                            // Si no existeix l'ID de Dispositiu
+                            if (!existeixDispositiu)
+                            {
+                                MissatgeError.Mostrar($"No existeix cap dispositiu amb ID({DispositiuID}).");
+                            }
+
+                            // Si existeix l'ID de Dispositiu
                             else
                             {
-                                DataRetorn = new DateTime(DataEntrega.Year, 6, 30, 21, 0, 0);
-                            }
-
-                            // Si la data de retorn és anterior a la d'entrega
-                            if (DataEntrega > DataRetorn)
-                            {
-                                MissatgeError.Mostrar("La data de retorn no pot ser anterior a la d'entrega");
-                            }
-
-                            // Si les dates són correctes
-                            else
-                            {
-                                Usuari usuariConsulta = await _usuarisApiClient.GetUsuariPerIdAsync(UsuariID);
-                                Dispositiu dispositiuConsulta = await _dispositiusApiClient.GetDispositiuPerIdAsync(DispositiuID);
-
-                                // Si falla la consulta a Usuaris 
-                                if (usuariConsulta == null)
+                                // Assignar data de retorn
+                                if (!FinalCurs)
                                 {
-                                    MissatgeError.Mostrar("Hi ha hagun un problema consultant l'usuari");
+                                    DataRetorn = new DateTime(DataRetorn.Year, DataRetorn.Month, DataRetorn.Day, HoraSeleccionada, 0, 0);
                                 }
-                                // Si falla la consulta a Dispositius
-                                else if (dispositiuConsulta == null)
-                                {
-                                    MissatgeError.Mostrar("Hi ha hagun un problema consultant el dispositiu");
-                                }
+                                // Si es marca que es retorna a final de curs
                                 else
                                 {
-                                    Prestec nouPrestec = new Prestec();
+                                    DataRetorn = new DateTime(DataEntrega.Year, 6, 30, 21, 0, 0);
+                                }
 
-                                    nouPrestec.Id = _prestecEnEdicio.Id;
-                                    nouPrestec.NomUsuari = usuariConsulta.Nom;
-                                    nouPrestec.IdUsuari = UsuariID;
-                                    nouPrestec.NomDispositiu = dispositiuConsulta.Nom;
-                                    nouPrestec.IdDispositiu = DispositiuID;
-                                    nouPrestec.DataEntrega = DataEntrega;
-                                    nouPrestec.DataRetorn = DataRetorn;
+                                // Si la data de retorn és anterior a la d'entrega
+                                if (DataEntrega > DataRetorn)
+                                {
+                                    MissatgeError.Mostrar("La data de retorn no pot ser anterior a la d'entrega");
+                                }
 
-                                    int prestecActualitzat = await _prestecsApiClient.UpdatePrestecAsync(nouPrestec);
+                                // Si les dates són correctes
+                                else
+                                {
+                                    Usuari usuariConsulta = await _usuarisApiClient.GetUsuariPerIdAsync(UsuariID);
+                                    Dispositiu dispositiuConsulta = await _dispositiusApiClient.GetDispositiuPerIdAsync(DispositiuID);
 
-                                    // Si crear el préstec falla
-                                    if (prestecActualitzat == -1)
+                                    // Si falla la consulta a Usuaris 
+                                    if (usuariConsulta == null)
                                     {
-                                        MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar el préstec");
+                                        MissatgeError.Mostrar("Hi ha hagun un problema consultant l'usuari");
                                     }
-                                    // Si es crea sense problemes
+                                    // Si falla la consulta a Dispositius
+                                    else if (dispositiuConsulta == null)
+                                    {
+                                        MissatgeError.Mostrar("Hi ha hagun un problema consultant el dispositiu");
+                                    }
                                     else
                                     {
-                                        await _prestecsVM.MostrarPrestecsAsync();
-                                        EsVisible = Visibility.Collapsed;
+                                        Prestec nouPrestec = new Prestec();
+
+                                        nouPrestec.Id = _prestecEnEdicio.Id;
+                                        nouPrestec.NomUsuari = usuariConsulta.Nom;
+                                        nouPrestec.IdUsuari = UsuariID;
+                                        nouPrestec.NomDispositiu = dispositiuConsulta.Nom;
+                                        nouPrestec.IdDispositiu = DispositiuID;
+                                        nouPrestec.DataEntrega = DataEntrega;
+                                        nouPrestec.DataRetorn = DataRetorn;
+
+                                        int prestecActualitzat = await _prestecsApiClient.UpdatePrestecAsync(nouPrestec);
+
+                                        // Si actualitzar el préstec falla
+                                        if (prestecActualitzat == -1)
+                                        {
+                                            MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar el préstec");
+                                        }
+                                        // Si actualitzar el préstec funciona
+                                        else
+                                        {
+                                            esPotEditar = false;
+                                            await _prestecsVM.MostrarPrestecsAsync();
+                                            EsVisible = Visibility.Collapsed;
+                                        }
                                     }
                                 }
                             }
                         }
                     }
                 }
-            }
+            }            
         });
     }
 }

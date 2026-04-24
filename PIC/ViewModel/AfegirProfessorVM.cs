@@ -20,6 +20,9 @@ namespace PIC.ViewModel
         private readonly UsuarisVM _usuarisVM;
         public MissatgeErrorVM MissatgeError { get; set; }
 
+        // Validador per assegurar que no es dupliquen accions
+        private bool esPotAfegir = true;
+
         // CONSTRUCTOR
         public AfegirProfessorVM(UsuarisVM usuarisVM)
         {
@@ -30,10 +33,7 @@ namespace PIC.ViewModel
             _professorsApiClient = new ProfessorsApiClient();
             _departamentsApiClient = new DepartamentsApiClient();
 
-            if (!System.ComponentModel.DesignerProperties.GetIsInDesignMode(new System.Windows.FrameworkElement()))
-            {
-                CarregarDepartaments();
-            }
+            CarregarDepartaments();
         }
 
         // NOM
@@ -134,71 +134,55 @@ namespace PIC.ViewModel
         // AFEGIR PROFESSOR CLICK
         public ICommand AfegirProfessor_Click => new RelayCommand(async _ =>
         {
-            if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Cognom))
+            if (esPotAfegir)
             {
-                MissatgeError.Mostrar("No hi poden haver camps buits.");
-            }
-            else
-            {
-                await GuardarNouProfessor();
+                // Si els camps no estan buits
+                if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Nom))
+                {
+                    MissatgeError.Mostrar("No hi poden haver camps buits.");
+                }
+                else
+                {
+                    // Crear usuari
+                    var nouUsuari = new NouUsuari
+                    {
+                        Nom = Nom,
+                        Cognom = Cognom
+                    };
+
+                    NouUsuari usuariCreat = await _usuarisApiClient.PostUsuariAsync(nouUsuari);
+
+                    // Si crear l'usuari falla
+                    if (usuariCreat == null)
+                    {
+                        MissatgeError.Mostrar("Hi ha hagut un problema al crear l'usuari.");
+                    }
+                    // Si crear l'usuari funciona
+                    else
+                    {
+                        var nouProfessor = new Professor
+                        {
+                            IdUsuari = usuariCreat.Id,
+                            IdDepartament = DepartamentId
+                        };
+
+                        Professor professorCreat = await _professorsApiClient.PostProfessorAsync(nouProfessor);
+
+                        // Si crear el professor falla
+                        if (professorCreat == null)
+                        {
+                            MissatgeError.Mostrar("Hi ha hagut un problema al crear el professor.");
+                        }
+                        // Si crear el professor funciona
+                        else
+                        {
+                            esPotAfegir = false;
+                            await _usuarisVM.MostrarUsuarisAsync();
+                            EsVisible = Visibility.Collapsed;
+                        }
+                    }
+                }
             }
         });
-
-        // GUARDAR NOU PROFESSOR (USUARI + PROFESSOR)
-        private async Task GuardarNouProfessor()
-        {
-            // Crear usuari
-            var nouUsuari = new NouUsuari
-            {
-                Nom = Nom,
-                Cognom = Cognom
-            };
-
-            var usuariCreat = await CrearUsuariAsync(nouUsuari);
-
-            if (usuariCreat == null)
-                return;
-
-            // Crear professor amb idUsuari + idDepartament
-            var professor = new Professor
-            {
-                IdUsuari = usuariCreat.Id,
-                IdDepartament = DepartamentId,
-            };
-
-            await CrearProfessorAsync(professor);
-
-            // Tornar a mostrar la llista d'usuaris actualitzada amb el nou usuari
-            await _usuarisVM.MostrarUsuarisAsync();
-
-            // Tancar popup
-            EsVisible = Visibility.Collapsed;
-        }
-
-        // CREAR USUARI
-        public async Task<Usuari> CrearUsuariAsync(NouUsuari usuariAAfegir)
-        {
-            NouUsuari result = await _usuarisApiClient.PostUsuariAsync(usuariAAfegir);
-
-            if (result != null)
-            {
-                var usuari = new Usuari
-                {
-                    Id = result.Id,
-                    Nom = result.Nom,
-                    Cognom = result.Cognom
-                };
-
-                return usuari;
-            }
-
-            return null;
-        }
-
-        // CREAR PROFESSOR
-        public async Task CrearProfessorAsync(Professor professorAAfegir)
-        {
-            Professor result = await _professorsApiClient.PostProfessorAsync(professorAAfegir);
-        }
     }
 }
