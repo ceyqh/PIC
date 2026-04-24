@@ -12,7 +12,7 @@ using System.Windows.Input;
 
 namespace PIC.ViewModel
 {
-    internal class AfegirPrestecVM: Utilities.ViewModelBase
+    internal class EditarPrestecVM: Utilities.ViewModelBase
     {
         private readonly PrestecsApiClient _prestecsApiClient;
         private readonly UsuarisApiClient _usuarisApiClient;
@@ -20,10 +20,12 @@ namespace PIC.ViewModel
 
         private readonly PrestecsVM _prestecsVM;
 
+        private Prestec _prestecEnEdicio;
+
         public MissatgeErrorVM MissatgeError { get; set; }
 
         // CONSTRUCTOR
-        public AfegirPrestecVM(PrestecsVM prestecsVM)
+        public EditarPrestecVM(PrestecsVM prestecsVM)
         {
             _prestecsVM = prestecsVM;
 
@@ -48,7 +50,7 @@ namespace PIC.ViewModel
         // ID USUARI
         private int _usuariID;
         public int UsuariID
-        { 
+        {
             get => _usuariID;
             set
             {
@@ -118,14 +120,30 @@ namespace PIC.ViewModel
         }
 
         // OBRIR FINESTRA
-        public void Mostrar()
+        public async Task Mostrar(Prestec prestec)
         {
-            UsuariID = 0;
-            DispositiuID = 0;
-            DataEntrega = DateTime.Now;
-            HoraSeleccionada = 21;
-            DataRetorn = new DateTime(DataEntrega.Year, DataEntrega.Month, DataEntrega.Day, HoraSeleccionada, 0, 0);
-            FinalCurs = false;
+            _prestecEnEdicio = prestec;
+            UsuariID = _prestecEnEdicio.IdUsuari;
+            DispositiuID = _prestecEnEdicio.IdDispositiu;
+            DataEntrega = _prestecEnEdicio.DataEntrega;
+            HoraSeleccionada = _prestecEnEdicio.DataRetorn.Hour;
+            DataRetorn = _prestecEnEdicio.DataRetorn;
+
+            if (DataRetorn == new DateTime(
+                DataEntrega.Year,
+                6,
+                30,
+                21,
+                DataRetorn.Minute,
+                DataRetorn.Second
+             ))
+            {
+                FinalCurs = true;
+            }
+            else
+            {
+                FinalCurs = false;
+            }
 
             EsVisible = Visibility.Visible;
         }
@@ -137,7 +155,7 @@ namespace PIC.ViewModel
         });
 
         // AFEGIR PRÉSTEC
-        public ICommand AfegirPrestec_Click => new RelayCommand(async _ =>
+        public ICommand GuardarPrestec_Click => new RelayCommand(async _ =>
         {
             // Si els camps d'ID estan buits
             if (string.IsNullOrWhiteSpace(UsuariID.ToString()) || string.IsNullOrWhiteSpace(DispositiuID.ToString()))
@@ -152,7 +170,7 @@ namespace PIC.ViewModel
                 // Si falla la consulta
                 if (usuaris == null)
                 {
-                    MissatgeError.Mostrar("Hi ha hagun un problema al consultar l'usuari");
+                    MissatgeError.Mostrar("Hi ha hagun un problema consultant l'usuari");
                 }
 
                 // Si funciona la consulta
@@ -230,29 +248,31 @@ namespace PIC.ViewModel
                                 // Si falla la consulta a Usuaris 
                                 if (usuariConsulta == null)
                                 {
-                                    MissatgeError.Mostrar("Hi ha hagun un problema al consultar l'usuari");
+                                    MissatgeError.Mostrar("Hi ha hagun un problema consultant l'usuari");
                                 }
                                 // Si falla la consulta a Dispositius
                                 else if (dispositiuConsulta == null)
                                 {
-                                    MissatgeError.Mostrar("Hi ha hagun un problema al consultar el dispositiu");
+                                    MissatgeError.Mostrar("Hi ha hagun un problema consultant el dispositiu");
                                 }
                                 else
                                 {
                                     Prestec nouPrestec = new Prestec();
+
+                                    nouPrestec.Id = _prestecEnEdicio.Id;
                                     nouPrestec.NomUsuari = usuariConsulta.Nom;
                                     nouPrestec.IdUsuari = UsuariID;
                                     nouPrestec.NomDispositiu = dispositiuConsulta.Nom;
-                                    nouPrestec.IdDispositiu= DispositiuID;
+                                    nouPrestec.IdDispositiu = DispositiuID;
                                     nouPrestec.DataEntrega = DataEntrega;
                                     nouPrestec.DataRetorn = DataRetorn;
 
-                                    Prestec prestecCreat = await _prestecsApiClient.PostPrestecAsync(nouPrestec);
+                                    int prestecActualitzat = await _prestecsApiClient.UpdatePrestecAsync(nouPrestec);
 
                                     // Si crear el préstec falla
-                                    if (prestecCreat == null)
+                                    if (prestecActualitzat == -1)
                                     {
-                                        MissatgeError.Mostrar("Hi ha hagun un problema al crear el préstec");
+                                        MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar el préstec");
                                     }
                                     // Si es crea sense problemes
                                     else
@@ -264,8 +284,8 @@ namespace PIC.ViewModel
                             }
                         }
                     }
-                }                
-            }            
+                }
+            }
         });
     }
 }

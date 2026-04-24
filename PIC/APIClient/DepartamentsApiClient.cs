@@ -56,7 +56,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return departament;
+            return null;
         }
 
         // DEPARTAMENT PER ID
@@ -89,7 +89,7 @@ namespace PIC.APIClient
                     return null; 
                 }
             }
-            return departament;
+            return null;
         }
 
         // AFEGIR DEPARTAMENT
@@ -120,7 +120,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return nouDepartament;
+            return null;
         }
 
         // ACTUALITZAR DEPARTAMENT

@@ -53,7 +53,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return categoria;
+            return null;
         }
 
         // CATEGORIA PER ID
@@ -86,7 +86,7 @@ namespace PIC.APIClient
                     return null; 
                 }
             }
-            return categoria;
+            return null;
         }
 
         // AFEGIR CATEGORIA
@@ -117,7 +117,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return novaCategoria;
+            return null;
         }
 
         // ACTUALITZAR CURS

@@ -55,7 +55,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return nouProfessor;
+            return null;
         }
 
         // ACTUALITZAR PROFESSOR

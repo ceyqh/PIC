@@ -56,7 +56,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return dispositiu;
+            return null;
         }
 
         // DISPOSITIU PER ID
@@ -88,7 +88,7 @@ namespace PIC.APIClient
                     return null; 
                 }
             }
-            return dispositiu;
+            return null;
         }
 
         // DISPOSITIUS PER CATEGORIA
@@ -121,7 +121,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return dispositius;
+            return null;
         }
 
         // DISPOSITIUS DISPONIBLES
@@ -154,7 +154,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return dispositius;
+            return null;
         }
 
         // DISPOSITIUS NO DISPONIBLES
@@ -187,7 +187,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return dispositius;
+            return null;
         }
 
         // AFEGIR DISPOSITIU
@@ -219,7 +219,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return nouDispositiu;
+            return null;
         }
 
         // ACTUALITZAR DISPOSITIU

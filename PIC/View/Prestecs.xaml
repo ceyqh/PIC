@@ -133,6 +133,7 @@
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
                             <ColumnDefinition Width="*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
 
                         <Grid Grid.Column="0">
@@ -153,6 +154,15 @@
                         </Grid>
 
                         <Grid Grid.Column="2">
+
+                            <!-- BOTO FINALITZAR -->
+                            <Button Content="FINALITZAR PRÉSTEC"
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding FinalitzarPrestec_Click}"/>
+
+                        </Grid>
+
+                        <Grid Grid.Column="3">
 
                             <!-- BOTO ESBORRAR -->
                             <Button Content="ESBORRAR PRÉSTEC"  
@@ -301,5 +311,7 @@
 
         <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
         <local:AfegirPrestec DataContext="{Binding AfegirPrestec}" d:IsHidden="true"/>
+        <local:EditarPrestec DataContext="{Binding EditarPrestec}" d:IsHidden="true"/>
+        <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

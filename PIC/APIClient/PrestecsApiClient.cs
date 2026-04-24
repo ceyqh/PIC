@@ -56,7 +56,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return prestec;
+            return null;
         }
 
         // PRESTEC PER ID
@@ -90,7 +90,100 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return prestec;
+            return null;
+        }
+
+        // AFEGIR PRÉSTEC
+        public async Task<Prestec> PostPrestecAsync(Prestec nouPrestec)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.PostAsJsonAsync("prestecs", nouPrestec);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var createdPrestec = await response.Content.ReadAsAsync<Prestec>();
+                        response.Dispose();
+                        return createdPrestec;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        // ACTUALITZAR PRÉSTEC
+        public async Task<int> UpdatePrestecAsync(Prestec prestec)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"prestecs/{prestec.Id}", prestec);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return -1;
+                }
+            }
+            return -1;
+        }
+
+        // ESBORRAR PRÉSTEC
+        public async Task<int> DeletePrestecAsync(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.DeleteAsync($"prestecs/{id}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return -1;
+                }
+            }
+            return -1;
         }
     }
 }

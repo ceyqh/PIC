@@ -53,7 +53,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return nouAlumne;
+            return null;
         }
 
         // ACTUALITZAR ALUMNE

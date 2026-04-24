@@ -27,7 +27,7 @@ namespace PIC.ViewModel
         public ObservableCollection<Prestec> Prestecs { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
         public AfegirPrestecVM AfegirPrestec { get; set; }
-        //public EditarUsuariVM EditarUsuari { get; set; }
+        public EditarPrestecVM EditarPrestec{ get; set; }
         public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
 
         private readonly PrestecsApiClient _prestecsApiClient;
@@ -41,7 +41,7 @@ namespace PIC.ViewModel
 
             MissatgeError = new MissatgeErrorVM();
             AfegirPrestec = new AfegirPrestecVM(this);
-            //EditarUsuari = new EditarUsuariVM(this);
+            EditarPrestec = new EditarPrestecVM(this);
             ConfirmarEsborrar = new ConfirmarEsborrarVM();
 
             _ = MostrarPrestecsAsync();
@@ -109,7 +109,7 @@ namespace PIC.ViewModel
         {
             if (_prestecSeleccionat != null)
             {
-                //await EditarUsuari.Mostrar(UsuariSeleccionat);
+                await EditarPrestec.Mostrar(PrestecSeleccionat);
             }
             else
             {
@@ -122,7 +122,7 @@ namespace PIC.ViewModel
         {
             if (_prestecSeleccionat != null)
             {
-                //ConfirmarEsborrar.Mostrar(_usuariSeleccionat, this);
+                ConfirmarEsborrar.Mostrar(_prestecSeleccionat, this);
             }
             else
             {

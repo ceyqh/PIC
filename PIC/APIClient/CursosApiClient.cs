@@ -55,7 +55,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return curs;
+            return null;
         }
 
         // CURS PER ID
@@ -96,7 +96,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return curs;
+            return null;
         }
 
         // AFEGIR CURS
@@ -127,7 +127,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return nouCurs;
+            return null;
         }
 
         // ACTUALITZAR CURS

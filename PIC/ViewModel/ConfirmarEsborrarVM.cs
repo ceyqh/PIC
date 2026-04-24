@@ -33,12 +33,14 @@ namespace PIC.ViewModel
         private readonly DepartamentsApiClient _departamentsApiClient = new DepartamentsApiClient();
         private readonly CategoriesApiClient _categoriesApiClient = new CategoriesApiClient();
         private readonly DispositiusApiClient _dispositiusApiClient = new DispositiusApiClient();
+        private readonly PrestecsApiClient _prestecsApiClient = new PrestecsApiClient();
 
         private UsuarisVM _usuarisVM;
         private CursosVM _cursosVM;
         private DepartamentsVM _departamentsVM;
         private CategoriesVM _categoriesVM;
         private DispositiusVM _dispositiusVM;
+        private PrestecsVM _prestecsVM;
 
         private Usuari usuariSeleccionat;
         private Curs cursSeleccionat;
@@ -52,9 +54,9 @@ namespace PIC.ViewModel
 
         }
 
-        public void SetVM(UsuarisVM vm) => _usuarisVM = vm;
-        public void SetVM(CursosVM vm) => _cursosVM = vm;
-        public void SetVM(DepartamentsVM vm) => _departamentsVM = vm;
+        //public void SetVM(UsuarisVM vm) => _usuarisVM = vm;
+        //public void SetVM(CursosVM vm) => _cursosVM = vm;
+        //public void SetVM(DepartamentsVM vm) => _departamentsVM = vm;
 
         // CONSTRUCTOR PER USUARIS
         public ConfirmarEsborrarVM(UsuarisVM usuarisVM)
@@ -66,6 +68,7 @@ namespace PIC.ViewModel
             _professorsApiClient = new ProfessorsApiClient();          
             _categoriesApiClient = new CategoriesApiClient();          
             _dispositiusApiClient = new DispositiusApiClient();          
+            _prestecsApiClient = new PrestecsApiClient();          
         }
 
         // TEXT BOTO
@@ -213,6 +216,18 @@ namespace PIC.ViewModel
 
         }
 
+        // OBRIR FINESTRA: PRÉSTECS
+        public void Mostrar(Prestec prestecAEsborrar, PrestecsVM parentVM)
+        {
+            this._prestecsVM = parentVM; // Ens assegurem que tenim la referència actual
+            this.prestecSeleccionat = prestecAEsborrar;
+
+            Missatge = $"Estàs a punt d'esborrar el préstec de {prestecAEsborrar.NomDispositiu} amb ID({prestecAEsborrar.IdDispositiu}) a en/na  {prestecAEsborrar.NomUsuari} amb ID({prestecAEsborrar.IdUsuari}). Vols confirmar aquesta acció?";
+
+            AEsborrar = AccioAConfirmar.EsborrarPrestec;
+            EsVisible = Visibility.Visible;
+        }
+
         // ACCIONS
         public ICommand Esborrar_Click => new RelayCommand(async _ =>
         {
@@ -274,6 +289,8 @@ namespace PIC.ViewModel
 
                 // Si és un PRÉSTEC
                 case AccioAConfirmar.EsborrarPrestec:
+                    await _prestecsApiClient.DeletePrestecAsync((int)prestecSeleccionat.Id);
+                    await _prestecsVM.MostrarPrestecsAsync();
                     break;
             }
 

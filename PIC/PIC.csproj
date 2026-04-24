@@ -120,6 +120,7 @@
     <Compile Include="ViewModel\EditarCursVM.cs" />
     <Compile Include="ViewModel\EditarDepartamentVM.cs" />
     <Compile Include="ViewModel\EditarDispositiuVM.cs" />
+    <Compile Include="ViewModel\EditarPrestecVM.cs" />
     <Compile Include="ViewModel\EditarUsuariVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="ViewModel\MissatgeErrorMV.cs" />
@@ -173,6 +174,9 @@
     </Compile>
     <Compile Include="View\EditarDispositiu.xaml.cs">
       <DependentUpon>EditarDispositiu.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditarPrestec.xaml.cs">
+      <DependentUpon>EditarPrestec.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditarUsuari.xaml.cs">
       <DependentUpon>EditarUsuari.xaml</DependentUpon>
@@ -290,6 +294,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\EditarDispositiu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditarPrestec.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

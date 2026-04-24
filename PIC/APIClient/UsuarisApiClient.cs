@@ -55,7 +55,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return usuari;
+            return null;
         }
 
         // USUARI PER ID
@@ -89,7 +89,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return usuari;
+            return null;
         }
 
         // USUARIS PER CURS
@@ -122,7 +122,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return usuari;
+            return null;
         }
 
         // USUARIS PER DEPARTAMENT
@@ -155,7 +155,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return usuari;
+            return null;
         }
 
         // AFEGIR USUARI
@@ -186,7 +186,7 @@ namespace PIC.APIClient
                     return null;
                 }
             }
-            return nouUsuari;
+            return null;
         }
 
         // ACTUALITZAR USUARI
