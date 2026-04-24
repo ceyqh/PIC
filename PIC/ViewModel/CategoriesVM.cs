@@ -202,7 +202,7 @@ namespace PIC.ViewModel
                     var llista = await _categoriesApiClient.GetAllCategoriesAsync();
                     if (llista == null)
                     {
-                        MissatgeError.Mostrar("No s'han pogut mostrar les Categories. Comprova que la connexió entre l'API i l'aplicació o la seva configuració.");
+                        MissatgeError.Mostrar("No s'han pogut mostrar les Categories. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                     }
                     else
                     {

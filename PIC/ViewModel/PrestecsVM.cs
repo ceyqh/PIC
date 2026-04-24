@@ -201,7 +201,7 @@ namespace PIC.ViewModel
                     var llista = await _prestecsApiClient.GetAllPrestecsAsync();
                     if (llista == null)
                     {
-                        MissatgeError.Mostrar("No s'han pogut mostrar els Préstecs. Comprova que la connexió entre l'API i l'aplicació o la seva configuració.");
+                        MissatgeError.Mostrar("No s'han pogut mostrar els Préstecs. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                     }
                     else
                     {

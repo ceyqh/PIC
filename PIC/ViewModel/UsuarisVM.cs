@@ -197,7 +197,7 @@ namespace PIC.ViewModel
                     var llista = await _usuarisApiClient.GetAllUsuarisAsync();
                     if (llista == null)
                     {
-                        MissatgeError.Mostrar("No s'han pogut mostrar els Usuaris. Comprova que la connexió entre l'API i l'aplicació o la seva configuració.");
+                        MissatgeError.Mostrar("No s'han pogut mostrar els Usuaris. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                     }
                     else
                     {

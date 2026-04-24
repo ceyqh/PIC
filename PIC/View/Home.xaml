@@ -6,12 +6,14 @@
              xmlns:local="clr-namespace:PIC.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="1400">
+    
     <Grid Background="White">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
 
+        <!-- HEADER -->
         <Grid Grid.Row="0" Background="#e8e9e9">
             <Grid>
                 <Grid.RowDefinitions>
@@ -26,25 +28,171 @@
                             <ColumnDefinition/>
                         </Grid.ColumnDefinitions>
 
+                        <!-- IMATGE HEADER 1 -->
                         <Grid Grid.Column="0">
                             <Border BorderBrush="#131316" BorderThickness="0, 0, 1, 0"></Border>
                             <Image Source="/Images/logo.png" HorizontalAlignment="Right" Margin="0, 0, 25, 0"></Image>
                         </Grid>
 
+                        <!-- IMATGE HEADER 2 -->
                         <Grid Grid.Column="1">
                             <Image Source="/Images/logo_campalans.png" HorizontalAlignment="Left" Margin="25, 0, 0, 0"></Image>
                         </Grid>
                     </Grid>
                 </Grid>
-                
+
+                <!-- TEXT HEADER -->
                 <Grid Grid.Row="1" HorizontalAlignment="Center" VerticalAlignment="Center" Width="1000">
                     <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}" TextWrapping="Wrap" TextAlignment="Center">Benvingut/da a PIC, el gestor de préstecs de material de l'Institut Rafael Campalans.</TextBlock>
                 </Grid>
             </Grid>
         </Grid>
 
+        <!-- MAIN -->
         <Grid Grid.Row="1">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="*"/>
+            </Grid.ColumnDefinitions>
 
+            <!-- APARTAT 1 -->
+            <StackPanel HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Margin="50, 20" 
+                        Grid.Column="0">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- IMATGE -->
+                        <Image Source="/Images/manualusuari-logo.png"
+                               Grid.Column="0"
+                               Margin="0, 0, 0, 20"
+                               HorizontalAlignment="Left"
+                               Width="100"/>
+
+                        <!-- ENLLAÇ -->
+                        <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                                   Grid.Column="1"
+                                   Margin="0, 0, 0, 20"
+                                   VerticalAlignment="Bottom">
+    
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" 
+                                       NavigateUri="https://google.com">Manual d'usuari</Hyperlink>
+                        </TextBlock>
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                               TextAlignment="Justify"
+                               Grid.Row="1"
+                               TextWrapping="Wrap">
+                        En cas de necessitar ajuda o dubtes, es disposa d'un manual d'usuari amb tota la informació
+                        necessària sobre el funcionament de l'aplicació.
+                    </TextBlock>
+                </Grid>
+            </StackPanel>
+            
+            <!-- APARTAT 2 -->
+            <StackPanel HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Margin="50, 20" 
+                        Grid.Column="1">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- IMATGE -->
+                        <Image Source="/Images/phpMyadmin-logo.png"
+                               Grid.Column="0"
+                               Margin="0, 0, 0, 20"
+                               HorizontalAlignment="Left"
+                               Width="100"/>
+
+                        <!-- ENLLAÇ -->
+                        <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                                   Grid.Column="1"
+                                   Margin="0, 0, 0, 20"
+                                   VerticalAlignment="Bottom">
+    
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" 
+                                       NavigateUri="https://google.com">Base de dades</Hyperlink>
+                        </TextBlock>
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                               TextAlignment="Justify"
+                               Grid.Row="1"
+                               TextWrapping="Wrap">
+                        Aquest enllaç dirigeix directament a la base de dades la qual emmagatzema
+                        tota la informació amb la que s'interactua.
+                    </TextBlock>
+                </Grid>
+            </StackPanel>
+            
+            <!-- APARTAT 3 -->
+            <StackPanel HorizontalAlignment="Center" 
+                        VerticalAlignment="Center"
+                        Margin="50, 20" 
+                        Grid.Column="2">
+
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="100"/>
+                        <RowDefinition Height="100"/>
+                    </Grid.RowDefinitions>
+
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="100"/>
+                            <ColumnDefinition Width="*"/>
+                        </Grid.ColumnDefinitions>
+
+                        <!-- IMATGE -->
+                        <Image Source="/Images/swagger-logo.png"
+                               Grid.Column="0"
+                               Margin="0, 0, 0, 20"
+                               HorizontalAlignment="Left"
+                               Width="100"/>
+
+                        <!-- ENLLAÇ -->
+                        <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                                   Grid.Column="1"
+                                   Margin="0, 0, 0, 20"
+                                   VerticalAlignment="Bottom">
+    
+                            <Hyperlink RequestNavigate="Hyperlink_RequestNavigate" 
+                                       NavigateUri="https://google.com">API</Hyperlink>
+                        </TextBlock>
+                    </Grid>
+
+                    <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                               TextAlignment="Justify"
+                               Grid.Row="1"
+                               TextWrapping="Wrap">
+                        En cas de problemes, o si es volgués utilitzar per altres projectes o funcions, aquesta enllaç
+                        dirigeix a l'API que gestiona les consultes i informació de l'aplicació.
+                    </TextBlock>
+                </Grid>
+            </StackPanel>
         </Grid>
     </Grid>
 </UserControl>

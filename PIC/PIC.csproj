@@ -125,6 +125,7 @@
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="ViewModel\MissatgeErrorMV.cs" />
     <Compile Include="ViewModel\NavigationVM.cs" />
+    <Compile Include="ViewModel\PicVM.cs" />
     <Compile Include="ViewModel\PrestecsVM.cs" />
     <Compile Include="ViewModel\UsuarisVM.cs" />
     <Compile Include="View\AfegirAlumne.xaml.cs">
@@ -187,6 +188,9 @@
     <Compile Include="View\MissatgeError.xaml.cs">
       <DependentUpon>MissatgeError.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\Pic.xaml.cs">
+      <DependentUpon>Pic.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Prestecs.xaml.cs">
       <DependentUpon>Prestecs.xaml</DependentUpon>
     </Compile>
@@ -206,10 +210,6 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\Button.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="Styles\DataGrid.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -313,6 +313,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\Pic.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Prestecs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -360,6 +364,15 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo_campalans.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\swagger-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\phpmyadmin-logo.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\manualusuari-logo.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

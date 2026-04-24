@@ -183,7 +183,6 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\System.Runtime.CompilerServ
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\System.Threading.Tasks.Extensions.xml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.csproj.AssemblyReference.cache
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\Button.baml
-C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\DataGrid.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\Image.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\ListView.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\Page.baml
@@ -248,3 +247,5 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirPrestec.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirPrestec.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarPrestec.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarPrestec.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Pic.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Pic.baml

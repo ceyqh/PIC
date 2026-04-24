@@ -200,7 +200,7 @@ namespace PIC.ViewModel
                     var llista = await _cursosApiClient.GetAllCursosAsync();
                     if (llista == null)
                     {
-                        MissatgeError.Mostrar("No s'han pogut retornar els Cursos. Comprova que la connexió entre l'API i l'aplicació o la seva configuració.");
+                        MissatgeError.Mostrar("No s'han pogut retornar els Cursos. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                     }
                     else
                     {

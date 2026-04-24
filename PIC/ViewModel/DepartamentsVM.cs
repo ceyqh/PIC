@@ -198,7 +198,7 @@ namespace PIC.ViewModel
                     var llista = await _departamentsApiClient.GetAllDepartamentsAsync();
                     if (llista == null)
                     {
-                        MissatgeError.Mostrar("No s'han pogut mostrar els Departaments. Comprova que la connexió entre l'API i l'aplicació o la seva configuració.");
+                        MissatgeError.Mostrar("No s'han pogut mostrar els Departaments. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                     }
                     else
                     {
