@@ -290,6 +290,17 @@ namespace PIC.ViewModel
                 // Si és un PRÉSTEC
                 case AccioAConfirmar.EsborrarPrestec:
                     await _prestecsApiClient.DeletePrestecAsync((int)prestecSeleccionat.Id);
+
+                    Dispositiu dispositiuConsulta = await _dispositiusApiClient.GetDispositiuPerIdAsync(prestecSeleccionat.IdDispositiu);
+
+                    Dispositiu dispositiuPrestat = new Dispositiu();
+                    dispositiuPrestat.Id = prestecSeleccionat.IdDispositiu;
+                    dispositiuPrestat.Nom = dispositiuConsulta.Nom;
+                    dispositiuPrestat.IdCategoria = dispositiuConsulta.IdCategoria;
+                    dispositiuPrestat.Estat = "Disponible";
+
+                    int confirmarDispositiuPrestat = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestat);
+
                     await _prestecsVM.MostrarPrestecsAsync();
                     break;
             }

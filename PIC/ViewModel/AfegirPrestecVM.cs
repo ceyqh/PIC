@@ -249,10 +249,24 @@ namespace PIC.ViewModel
 
                                     Prestec prestecCreat = await _prestecsApiClient.PostPrestecAsync(nouPrestec);
 
+                                    Dispositiu dispositiuPrestat = new Dispositiu();
+                                    dispositiuPrestat.Id = DispositiuID;
+                                    dispositiuPrestat.Nom = dispositiuConsulta.Nom;
+                                    dispositiuPrestat.IdCategoria = dispositiuConsulta.IdCategoria;
+                                    dispositiuPrestat.Estat = "En prestec";
+
+
+                                    int confirmarDispositiuPrestat = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestat);
+
                                     // Si crear el préstec falla
                                     if (prestecCreat == null)
                                     {
-                                        MissatgeError.Mostrar("Hi ha hagun un problema al crear el préstec");
+                                        MissatgeError.Mostrar("Hi ha hagun un problema al crear el préstec.");
+                                    }
+                                    // Si actualitzar el dispositiu falla
+                                    else if (confirmarDispositiuPrestat == -1)
+                                    {
+                                        MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar el dispositiu.");
                                     }
                                     // Si es crea sense problemes
                                     else

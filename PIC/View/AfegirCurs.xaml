@@ -7,15 +7,14 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <Grid x:Name="OverlayAfegirAlumne"
-      Visibility="{Binding EsVisible}"
-      Background="#80000000">
+    <Grid Visibility="{Binding EsVisible}"
+          Background="#80000000">
 
         <!-- POPUP -->
         <Grid Width="300"
-          Background="White"
-          HorizontalAlignment="Center"
-          VerticalAlignment="Center">
+              Background="White"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
 
             <Grid>
                 <Grid.RowDefinitions>
@@ -26,43 +25,43 @@
 
                 <!-- TÍTOL -->
                 <Grid Background="#131316" 
-                  VerticalAlignment="Center">
+                      VerticalAlignment="Center">
 
                     <TextBlock Text="AFEGIR: CURS" 
-                           Style="{StaticResource Fraktion_Light_Font}" 
-                           FontSize="12" 
-                           Margin="20, 10, 20, 10"/>
+                               Style="{StaticResource Fraktion_Light_Font}" 
+                               FontSize="12" 
+                               Margin="20, 10, 20, 10"/>
                 </Grid>
 
                 <!-- NOM -->
                 <StackPanel Grid.Row="1" 
-                        Margin="20, 10, 20, 0">
+                            Margin="20, 10, 20, 0">
 
                     <TextBlock Text="NOM: " 
-                           Style="{StaticResource Fraktion_Dark_Font}" 
-                           FontSize="12" 
-                           Margin="0,0,0,10"/>
+                               Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"/>
 
                     <TextBox Text="{Binding Nom}"  
-                         Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
                 </StackPanel>
 
                 <!-- BOTONS -->
                 <StackPanel Grid.Row="4"
-                        Margin="20"
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Right">
+                            Margin="20"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Right">
 
                     <Button Content="AFEGIR"
-                        Padding="10, 0, 10, 0"
-                        Style="{StaticResource Accions_Button}"
-                        Margin="0,0,10,0"
-                        Command="{Binding AfegirCurs_Click}"/>
+                            Padding="10, 0, 10, 0"
+                            Style="{StaticResource Accions_Button}"
+                            Margin="0,0,10,0"
+                            Command="{Binding AfegirCurs_Click}"/>
 
                     <Button Content="CANCEL·LAR"
-                        Padding="10, 0, 10, 0"
-                        Style="{StaticResource Accions_Button}"
-                        Command="{Binding TancarFinestra}"/>
+                            Padding="10, 0, 10, 0"
+                            Style="{StaticResource Accions_Button}"
+                            Command="{Binding TancarFinestra}"/>
                 </StackPanel>
             </Grid>
         </Grid>

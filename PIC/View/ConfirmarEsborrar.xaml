@@ -31,10 +31,10 @@
             <StackPanel Grid.Row="1" 
                         Margin="20, 10, 20, 0">
 
-                <TextBlock x:Name="missatgeEsborrar" 
-                           Text="{Binding Missatge}"
+                <TextBlock Text="{Binding Missatge}"
                            Style="{StaticResource Fraktion_Dark_Font}" 
                            FontSize="12"
+                           TextAlignment="Justify"
                            TextWrapping="Wrap"/>
             </StackPanel>
 

@@ -122,7 +122,10 @@ namespace PIC.ViewModel
                 {
                     MissatgeError.Mostrar("Aquest dispositiu ja està disponible.");
                 }
-
+                else if (_dispositiuSeleccionat.Estat.ToLower() == "en prestec")
+                {
+                    MissatgeError.Mostrar("Aquest dispositiu ja està disponible i es troba en mig d'un préstec.");
+                }
                 else
                 {
                     ConfirmarEsborrar.Mostrar(_dispositiuSeleccionat, this, "habilitar");
@@ -142,7 +145,10 @@ namespace PIC.ViewModel
                 {
                     MissatgeError.Mostrar("Aquest dispositiu ja està deshabilitat.");
                 }
-
+                else if (_dispositiuSeleccionat.Estat.ToLower() == "en prestec")
+                {
+                    MissatgeError.Mostrar("Aquest dispositiu es troba en mig d'un préstec.");
+                }
                 else
                 {
                     ConfirmarEsborrar.Mostrar(_dispositiuSeleccionat, this, "deshabilitar");
@@ -159,7 +165,14 @@ namespace PIC.ViewModel
         {
             if (_dispositiuSeleccionat != null)
             {
-                ConfirmarEsborrar.Mostrar(_dispositiuSeleccionat, this, "esborrar");
+                if (_dispositiuSeleccionat.Estat == "En prestec")
+                {
+                    MissatgeError.Mostrar("Aquest dispositiu es troba en mig d'un préstec.");
+                }
+                else
+                {
+                    ConfirmarEsborrar.Mostrar(_dispositiuSeleccionat, this, "esborrar");
+                }
             }
             else
             {

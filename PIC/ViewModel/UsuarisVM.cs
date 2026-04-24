@@ -32,6 +32,7 @@ namespace PIC.ViewModel
         public EditarUsuariVM EditarUsuari{ get; set; }
 
         private readonly UsuarisApiClient _usuarisApiClient;
+        private readonly PrestecsApiClient _prestecsApiClient;
 
         // CONSTRUCTOR
         public UsuarisVM()
@@ -39,6 +40,7 @@ namespace PIC.ViewModel
             Usuaris = new ObservableCollection<Usuari>();
 
             _usuarisApiClient = new UsuarisApiClient();
+            _prestecsApiClient = new PrestecsApiClient();
 
             MissatgeError = new MissatgeErrorVM();
             AfegirAlumne = new AfegirAlumneVM(this);
@@ -115,6 +117,7 @@ namespace PIC.ViewModel
         // EDITAR USUARI
         public ICommand EditarUsuariMenu_Click => new RelayCommand(async _ =>
         {
+            // Si no hi ha cap usuari seleccionat
             if (_usuariSeleccionat != null)
             {
                 await EditarUsuari.Mostrar(UsuariSeleccionat);
@@ -126,11 +129,37 @@ namespace PIC.ViewModel
         });
 
         // ESBORRAR USUARI
-        public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
+        public ICommand EsborrarMenu_Click => new RelayCommand(async _ =>
         {
+            // Si no hi ha cap usuari seleccionat
             if (_usuariSeleccionat != null)
-            {
-                ConfirmarEsborrar.Mostrar(_usuariSeleccionat, this);
+            {                
+                List<Prestec> llistaPrestecs = await _prestecsApiClient.GetAllPrestecsAsync();
+
+                bool usuariTrobat = false;
+                int i = 0;
+
+                while (i < llistaPrestecs.Count && !usuariTrobat)
+                {
+                    if (llistaPrestecs[i].IdUsuari == UsuariSeleccionat.Id)
+                    {
+                        usuariTrobat |= true;
+                    }
+                    else
+                    {
+                        i++;
+                    }
+                }
+
+                // Si l'usuari té un prestec en curs
+                if (usuariTrobat)
+                {
+                    MissatgeError.Mostrar("Aquest usuari es troba en mig d'un préstec.");
+                }
+                else
+                {
+                    ConfirmarEsborrar.Mostrar(_usuariSeleccionat, this);
+                }
             }
             else
             {

@@ -285,12 +285,12 @@
                                     <TextBlock Grid.Column="3" 
                                                FontSize="12"  
                                                Style="{StaticResource Fraktion_Dark_Font}"
-                                               Text="{Binding IdDispositiu}"/>
+                                               Text="{Binding NomDispositiu}"/>
                                     
                                     <TextBlock Grid.Column="4" 
                                                FontSize="12"  
                                                Style="{StaticResource Fraktion_Dark_Font}"
-                                               Text="{Binding NomDispositiu}"/>
+                                               Text="{Binding IdDispositiu}"/>
 
                                     <TextBlock Grid.Column="5" 
                                                FontSize="12" 
