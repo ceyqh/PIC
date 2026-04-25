@@ -148,6 +148,7 @@ namespace PIC.ViewModel
                 FinalCurs = false;
             }
 
+            esPotEditar = true;
             EsVisible = Visibility.Visible;
         }
 

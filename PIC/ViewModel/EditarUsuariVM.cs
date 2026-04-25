@@ -113,6 +113,7 @@ namespace PIC.ViewModel
 
             IdSeleccionat = usuari.IdGrup;
 
+            esPotEditar = true;
             EsVisible = Visibility.Visible;
         }
 

@@ -101,6 +101,8 @@ namespace PIC.ViewModel
         public void Mostrar()
         {
             Nom = "";
+
+            esPotEditar = true;
             EsVisible = Visibility.Visible;
         }
 

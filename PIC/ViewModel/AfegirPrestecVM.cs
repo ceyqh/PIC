@@ -130,6 +130,7 @@ namespace PIC.ViewModel
             DataRetorn = new DateTime(DataEntrega.Year, DataEntrega.Month, DataEntrega.Day, HoraSeleccionada, 0, 0);
             FinalCurs = false;
 
+            esPotAfegir = true;
             EsVisible = Visibility.Visible;
         }
 
@@ -157,7 +158,7 @@ namespace PIC.ViewModel
                     // Si falla la consulta
                     if (usuaris == null)
                     {
-                        MissatgeError.Mostrar("Hi ha hagun un problema al consultar l'usuari");
+                        MissatgeError.Mostrar("Hi ha hagun un problema al consultar l'usuari.");
                     }
                     // Si funciona la consulta
                     else
@@ -220,7 +221,7 @@ namespace PIC.ViewModel
                                 // Si la data de retorn és anterior a la d'entrega
                                 if (DataEntrega > DataRetorn)
                                 {
-                                    MissatgeError.Mostrar("La data de retorn no pot ser anterior a la d'entrega");
+                                    MissatgeError.Mostrar("La data de retorn no pot ser anterior a la d'entrega.");
                                 }
                                 // Si les dates són correctes
                                 else
@@ -231,12 +232,22 @@ namespace PIC.ViewModel
                                     // Si falla la consulta a Usuaris 
                                     if (usuariConsulta == null)
                                     {
-                                        MissatgeError.Mostrar("Hi ha hagun un problema al consultar l'usuari");
+                                        MissatgeError.Mostrar("Hi ha hagun un problema al consultar l'usuari.");
                                     }
                                     // Si falla la consulta a Dispositius
                                     else if (dispositiuConsulta == null)
                                     {
-                                        MissatgeError.Mostrar("Hi ha hagun un problema al consultar el dispositiu");
+                                        MissatgeError.Mostrar("Hi ha hagun un problema al consultar el dispositiu.");
+                                    }
+                                    // Si el dispositiu està deshabilitat
+                                    else if (dispositiuConsulta.Estat.ToLower() == "no disponible")
+                                    {
+                                        MissatgeError.Mostrar("Aquest dispositiu no es troba disponible.");
+                                    }
+                                    // Si el dispositiu està en préstec
+                                    else if (dispositiuConsulta.Estat.ToLower() == "en prestec")
+                                    {
+                                        MissatgeError.Mostrar("Aquest dispositiu es troba en mig d'un préstec.");
                                     }
                                     else
                                     {

@@ -222,7 +222,7 @@ namespace PIC.ViewModel
             this._prestecsVM = parentVM; // Ens assegurem que tenim la referència actual
             this.prestecSeleccionat = prestecAEsborrar;
 
-            Missatge = $"Estàs a punt d'esborrar el préstec de {prestecAEsborrar.NomDispositiu} amb ID({prestecAEsborrar.IdDispositiu}) a en/na  {prestecAEsborrar.NomUsuari} amb ID({prestecAEsborrar.IdUsuari}). Vols confirmar aquesta acció?";
+            Missatge = $"Estàs a punt d'esborrar el préstec de {prestecAEsborrar.NomDispositiu} amb ID({prestecAEsborrar.IdDispositiu}) prestat a en/na  {prestecAEsborrar.NomUsuari} amb ID({prestecAEsborrar.IdUsuari}). Vols confirmar aquesta acció?";
 
             AEsborrar = AccioAConfirmar.EsborrarPrestec;
             EsVisible = Visibility.Visible;

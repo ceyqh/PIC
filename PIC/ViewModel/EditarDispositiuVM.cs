@@ -82,6 +82,7 @@ namespace PIC.ViewModel
             Categories = categories.ToList();
             CategoriaId = dispositiu.IdCategoria;
 
+            esPotEditar = true;
             EsVisible = Visibility.Visible;
         }
 

@@ -59,6 +59,8 @@ namespace PIC.ViewModel
         public void Mostrar()
         {
             Nom = "";
+
+            esPotAfegir = true;
             EsVisible = Visibility.Visible;
         }
 

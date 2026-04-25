@@ -61,6 +61,7 @@ namespace PIC.ViewModel
             _categoriaEnEdicio = categoria;
             Nom = categoria.Nom;
 
+            esPotEditar = true;
             EsVisible = Visibility.Visible;
         }
 

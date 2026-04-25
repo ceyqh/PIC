@@ -190,6 +190,39 @@ namespace PIC.APIClient
             return null;
         }
 
+        // DISPOSITIUS EN PRESTEC
+        public async Task<List<Dispositiu>> GetDispositiusEnPrestecAsync()
+        {
+            List<Dispositiu> dispositius = new List<Dispositiu>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync($"dispositius/en-prestec");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
+                        response.Dispose();
+                        return dispositius;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return null;
+                }
+            }
+            return null;
+        }
+
         // AFEGIR DISPOSITIU
         public async Task<NouDispositiu> PostDispositiuAsync(NouDispositiu nouDispositiu)
         {

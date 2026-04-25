@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PIC.Model
@@ -15,5 +17,8 @@ namespace PIC.Model
         public int IdDispositiu { get; set; }
         public DateTime DataEntrega { get; set; }
         public DateTime DataRetorn { get; set; }
+
+        public string DataEntregaFormatat => $"E: {DataEntrega}";
+        public string DataRetornFormatat => $"R: {DataRetorn}";
     }
 }

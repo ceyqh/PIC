@@ -52,7 +52,7 @@ namespace PIC.ViewModel
             set { _cercaVisibility = value; OnPropertyChanged(); }
         }
 
-        private string _titolPantalla = "USUARIS: TOTS";
+        private string _titolPantalla = "DISPOSITIUS: TOTS";
         public string TitolPantalla
         {
             get => _titolPantalla;
@@ -141,7 +141,7 @@ namespace PIC.ViewModel
         {
             if (_dispositiuSeleccionat != null)
             {
-                if (_dispositiuSeleccionat.Estat.ToLower() == "nodisponible")
+                if (_dispositiuSeleccionat.Estat.ToLower() == "no disponible")
                 {
                     MissatgeError.Mostrar("Aquest dispositiu ja està deshabilitat.");
                 }
@@ -165,7 +165,7 @@ namespace PIC.ViewModel
         {
             if (_dispositiuSeleccionat != null)
             {
-                if (_dispositiuSeleccionat.Estat == "En prestec")
+                if (_dispositiuSeleccionat.Estat.ToLower() == "en prestec")
                 {
                     MissatgeError.Mostrar("Aquest dispositiu es troba en mig d'un préstec.");
                 }
@@ -224,6 +224,13 @@ namespace PIC.ViewModel
                     ParametreCercaDispositius = 0;
                     CercaVisibility = Visibility.Collapsed;
                     _ = MostrarDispositiusNoDisponiblesAsync();
+                    break;
+
+                case "EN_PRESTEC":
+                    TitolPantalla = "DISPOSITIUS: EN PRÉSTEC";
+                    ParametreCercaDispositius = 0;
+                    CercaVisibility = Visibility.Collapsed;
+                    _ = MostrarDispositiusEnPrestecAsync();
                     break;
             }
         });
@@ -310,9 +317,32 @@ namespace PIC.ViewModel
                         Dispositius.Add(u);
                     }
                 }
+            }
+
+            catch (Exception ex)
+            {
+                MissatgeError.Mostrar("Error: " + ex.Message);
+            }
+        }
+
+        // MOSTRAR DISPOSITIUS EN PRÉSTEC
+        public async Task MostrarDispositiusEnPrestecAsync()
+        {
+            try
+            {
+                var llista = await _dispositiusApiClient.GetDispositiusEnPrestecAsync();
+                Dispositius.Clear();
+
+                if (llista != null && llista.Any())
+                {
+                    foreach (var u in llista)
+                    {
+                        Dispositius.Add(u);
+                    }
+                }
                 else
                 {
-                    MissatgeError.Mostrar("Tots els dispositius estan disponibles.");
+                    MissatgeError.Mostrar("No hi ha cap dispositiu en préstec.");
                 }
             }
 

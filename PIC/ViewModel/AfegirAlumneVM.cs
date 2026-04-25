@@ -129,6 +129,8 @@ namespace PIC.ViewModel
         {
             Nom = "";
             Cognom = "";
+
+            esPotAfegir = true;
             EsVisible = Visibility.Visible;
         }
         

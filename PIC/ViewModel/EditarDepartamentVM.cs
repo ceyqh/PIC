@@ -63,6 +63,7 @@ namespace PIC.ViewModel
             _departamentEnEdicio = departament;
             Nom = departament.Nom;
 
+            esPotEditar = true;
             EsVisible = Visibility.Visible;
         }
 

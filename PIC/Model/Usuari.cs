@@ -14,5 +14,7 @@ namespace PIC.Model
         public string Tipus { get; set; }
         public string Grup { get; set; }
         public long IdGrup { get; set; }
+
+        public string GrupFormatat => $"{IdGrup} | {Grup}";
     }
 }

@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace PIC.Model
@@ -13,5 +15,7 @@ namespace PIC.Model
         public long IdCategoria { get; set; }
         public string Categoria { get; set; }
         public string Estat { get; set; }
+
+        public string CategoriaFormatat => $"{IdCategoria} | {Categoria}";
     }
 }

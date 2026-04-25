@@ -22,7 +22,9 @@
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" Width="200" Background="#e8e9e9">
+            <Grid HorizontalAlignment="Left" 
+                  Width="200" 
+                  Background="#e8e9e9">
 
                 <StackPanel Height="400" Width="200">
 
@@ -44,13 +46,10 @@
                             <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
                         </Grid>
                     </Menu:Btn>
-
                 </StackPanel>
-
             </Grid>
 
             <Grid Grid.Column="1">
-
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="*"/>
