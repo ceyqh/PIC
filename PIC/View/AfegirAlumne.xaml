@@ -92,17 +92,18 @@
                 <!-- BOTONS -->
                 <StackPanel Grid.Row="4"
                             Margin="20"
+                            Height="25"
                             Orientation="Horizontal" 
                             HorizontalAlignment="Right">
 
                     <Button Content="AFEGIR"
-                            Padding="10, 0, 10, 0"
-                            Style="{StaticResource Accions_Button}"
                             Margin="0,0,10,0"
+                            Padding="10, 0"
+                            Style="{StaticResource Accions_Button}"
                             Command="{Binding AfegirAlumne_Click}"/>
 
                     <Button Content="CANCEL·LAR"
-                            Padding="10, 0, 10, 0"
+                            Padding="10, 0"
                             Style="{StaticResource Accions_Button}"
                             Command="{Binding TancarFinestra}"/>
                 </StackPanel>

@@ -101,17 +101,23 @@ namespace PIC.ViewModel
         {
             var departaments = await _departamentsApiClient.GetAllDepartamentsAsync();
 
-            // OMPLIR EL COMBOBOX AMB ELS CURSOS
-            if (departaments != null)
-            {
-                Departaments = departaments.ToList();
-            }
-            else
+            // Si falla la càrrega de cursos
+            if (departaments == null)
             {
                 Departaments = new List<Departament>();
             }
+            // Si es retornen els departaments correctament
+            else
+            {
+                Departaments = departaments.ToList();                
+            }
 
-            if (Departaments != null && Departaments.Count > 0)
+            // Si es retornen buits
+            if (Departaments == null || Departaments.Count < 1)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al carregar els departaments.");
+            }
+            else
             {
                 DepartamentId = Departaments[0].Id;
             }

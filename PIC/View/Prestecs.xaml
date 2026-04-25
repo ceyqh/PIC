@@ -295,11 +295,11 @@
                                     <StackPanel Grid.Column="5">
                                         <TextBlock FontSize="12"  
                                                    Style="{StaticResource Fraktion_Dark_Font}"
-                                                   Text="{Binding IdDispositiu}"/>
+                                                   Text="{Binding DataEntrega}"/>
 
                                         <TextBlock FontSize="12"  
                                                    Style="{StaticResource Fraktion_Dark_Font}"
-                                                   Text="{Binding IdDispositiu}"/>
+                                                   Text="{Binding DataRetorn}"/>
                                     </StackPanel>
 
                                     <TextBlock Grid.Column="6" 

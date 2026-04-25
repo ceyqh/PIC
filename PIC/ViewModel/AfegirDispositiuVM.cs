@@ -88,16 +88,23 @@ namespace PIC.ViewModel
         {
             var categories = await _categoriesApiClient.GetAllCategoriesAsync();
 
-            if (categories != null)
-            {
-                Categories = categories.ToList();
-            }
-            else
+            // Si falla la càrrega de categories
+            if (categories == null)
             {
                 Categories = new List<Categoria>();
             }
+            // Si es retornen les categories correctament
+            else
+            {
+                Categories = categories.ToList();
+            }
 
-            if (Categories != null && Categories.Count > 0)
+            // Si es retornen buits
+            if (Categories == null || Categories.Count < 1)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al carregar les categories.");
+            }
+            else
             {
                 CategoriaId = Categories[0].Id;
             }

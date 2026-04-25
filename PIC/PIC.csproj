@@ -92,6 +92,7 @@
     <Compile Include="APIClient\PrestecsApiClient.cs" />
     <Compile Include="APIClient\ProfessorsApiClient.cs" />
     <Compile Include="APIClient\UsuarisApiClient.cs" />
+    <Compile Include="Model\Administrador.cs" />
     <Compile Include="Model\Alumne.cs" />
     <Compile Include="Model\Categoria.cs" />
     <Compile Include="Model\Curs.cs" />

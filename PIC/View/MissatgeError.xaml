@@ -41,6 +41,7 @@
             <!-- Botó -->
             <Button Grid.Row="2"
                     Content="D'ACORD"
+                    Height="25"
                     Padding="10, 0, 10, 0"
                     Style="{StaticResource Accions_Button}"
                     HorizontalAlignment="Right"

@@ -114,7 +114,7 @@ namespace PIC.ViewModel
             }
 
             // Si es retornen buits
-            if (Cursos == null && Cursos.Count < 1)
+            if (Cursos == null || Cursos.Count < 1)
             {
                 MissatgeError.Mostrar("Hi ha hagut un problema al carregar els cursos.");
             }

@@ -6,6 +6,7 @@
              xmlns:local="clr-namespace:PIC.View"
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
+    
     <Grid Visibility="{Binding EsVisible}"
           Background="#80000000">
 
@@ -147,17 +148,18 @@
                 <!-- BOTONS -->
                 <StackPanel Grid.Row="6"
                             Margin="20"
+                            Height="25"
                             Orientation="Horizontal" 
                             HorizontalAlignment="Right">
 
                     <Button Content="GUARDAR"
-                            Padding="10, 0, 10, 0"
-                            Style="{StaticResource Accions_Button}"
                             Margin="0,0,10,0"
+                            Padding="10, 0"
+                            Style="{StaticResource Accions_Button}"
                             Command="{Binding GuardarPrestec_Click}"/>
 
                     <Button Content="CANCEL·LAR"
-                            Padding="10, 0, 10, 0"
+                            Padding="10, 0"
                             Style="{StaticResource Accions_Button}"
                             Command="{Binding TancarFinestra}"/>
                 </StackPanel>
