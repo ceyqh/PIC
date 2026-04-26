@@ -249,3 +249,5 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarPrestec.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarPrestec.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Pic.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Pic.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Registres.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Registres.baml

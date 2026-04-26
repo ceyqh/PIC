@@ -17,6 +17,7 @@ namespace PIC.ViewModel
         private readonly PrestecsApiClient _prestecsApiClient;
         private readonly UsuarisApiClient _usuarisApiClient;
         private readonly DispositiusApiClient _dispositiusApiClient;
+        private readonly RegistresApiClient _registresApiClient;
 
         private readonly PrestecsVM _prestecsVM;
 
@@ -34,6 +35,7 @@ namespace PIC.ViewModel
             _prestecsApiClient = new PrestecsApiClient();
             _usuarisApiClient = new UsuarisApiClient();
             _dispositiusApiClient = new DispositiusApiClient();
+            _registresApiClient = new RegistresApiClient();
         }
 
         // VISIBILITAT MENU
@@ -164,6 +166,9 @@ namespace PIC.ViewModel
                     else
                     {
                         // Comprovar que l'usuari existeix
+                        
+                        Usuari usuariPrestec = new Usuari();
+                        
                         bool existeixUsuari = false;
                         int i = 0;
 
@@ -172,6 +177,7 @@ namespace PIC.ViewModel
                             if (usuaris[i].Id == UsuariID)
                             {
                                 existeixUsuari = true;
+                                usuariPrestec = usuaris[i];
                             }
                             else { i++; }
                         }
@@ -284,9 +290,32 @@ namespace PIC.ViewModel
                                         // Si crear el préstec funciona
                                         else
                                         {
-                                            esPotAfegir = false;
-                                            await _prestecsVM.MostrarPrestecsAsync();
-                                            EsVisible = Visibility.Collapsed;
+                                            Registre nouRegistre = new Registre();
+                                            nouRegistre.IdPrestec = prestecCreat.Id;
+                                            nouRegistre.Accio = "Prestec";
+                                            nouRegistre.NomUsuari = $"{usuariPrestec.Nom} {usuariPrestec.Cognom}";
+                                            nouRegistre.IdUsuari = (int)usuariPrestec.Id;
+                                            nouRegistre.NomDispositiu = dispositiuPrestat.Nom;
+                                            nouRegistre.IdDispositiu= (int)dispositiuPrestat.Id;
+                                            nouRegistre.NomGrup = usuariPrestec.Grup;
+                                            nouRegistre.IdGrup = (int)usuariPrestec.IdGrup;
+                                            nouRegistre.DataAccio = DataEntrega;
+                                            nouRegistre.DataRetorn= DataRetorn;
+
+                                            Registre registreCreat= await _registresApiClient.PostRegistreAsync(nouRegistre);
+
+                                            // Si crear el registre falla
+                                            if (registreCreat == null)
+                                            {
+                                                MissatgeError.Mostrar("Hi ha hagun un problema al crear el registre.");
+                                            }
+                                            // Si crear el registre funciona
+                                            else
+                                            {
+                                                esPotAfegir = false;
+                                                await _prestecsVM.MostrarPrestecsAsync();
+                                                EsVisible = Visibility.Collapsed;
+                                            }                                                
                                         }
                                     }
                                 }

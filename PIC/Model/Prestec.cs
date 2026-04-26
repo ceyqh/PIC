@@ -17,6 +17,17 @@ namespace PIC.Model
         public int IdDispositiu { get; set; }
         public DateTime DataEntrega { get; set; }
         public DateTime DataRetorn { get; set; }
+        public string Estat
+        {
+            get
+            {
+                if (DataRetorn < DateTime.Now)
+                {
+                    return "Caducat";
+                }
+                return "En curs"; // O l'estat que tinguis per defecte
+            }
+        }
 
         public string DataEntregaFormatat => $"E: {DataEntrega}";
         public string DataRetornFormatat => $"R: {DataRetorn}";

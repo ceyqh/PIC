@@ -91,6 +91,7 @@
     <Compile Include="APIClient\DispositiusApiClient.cs" />
     <Compile Include="APIClient\PrestecsApiClient.cs" />
     <Compile Include="APIClient\ProfessorsApiClient.cs" />
+    <Compile Include="APIClient\RegistresApiClient.cs" />
     <Compile Include="APIClient\UsuarisApiClient.cs" />
     <Compile Include="Model\Administrador.cs" />
     <Compile Include="Model\Alumne.cs" />
@@ -101,6 +102,7 @@
     <Compile Include="Model\NouDispositiu.cs" />
     <Compile Include="Model\NouUsuari.cs" />
     <Compile Include="Model\Professor.cs" />
+    <Compile Include="Model\Registre.cs" />
     <Compile Include="Model\Usuari.cs" />
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
@@ -128,6 +130,7 @@
     <Compile Include="ViewModel\NavigationVM.cs" />
     <Compile Include="ViewModel\PicVM.cs" />
     <Compile Include="ViewModel\PrestecsVM.cs" />
+    <Compile Include="ViewModel\RegistresVM.cs" />
     <Compile Include="ViewModel\UsuarisVM.cs" />
     <Compile Include="View\AfegirAlumne.xaml.cs">
       <DependentUpon>AfegirAlumne.xaml</DependentUpon>
@@ -194,6 +197,9 @@
     </Compile>
     <Compile Include="View\Prestecs.xaml.cs">
       <DependentUpon>Prestecs.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Registres.xaml.cs">
+      <DependentUpon>Registres.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Usuaris.xaml.cs">
       <DependentUpon>Usuaris.xaml</DependentUpon>
@@ -319,6 +325,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Prestecs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Registres.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

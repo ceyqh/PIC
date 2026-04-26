@@ -24,6 +24,7 @@ namespace PIC.ViewModel
         public ICommand CursosCommand { get; set; }
         public ICommand DepartamentsCommand { get; set; }
         public ICommand PicCommand { get; set; }
+        public ICommand RegistresCommand { get; set; }
 
         private void Home(object obj) => CurrentView = new HomeVM();
         private void Prestecs(object obj) => CurrentView = new PrestecsVM();
@@ -33,6 +34,7 @@ namespace PIC.ViewModel
         private void Cursos(object obj) => CurrentView = new CursosVM();
         private void Departaments(object obj) => CurrentView = new DepartamentsVM();
         private void Pic(object obj) => CurrentView = new PicVM();
+        private void Registres(object obj) => CurrentView = new RegistresVM();
 
         public NavigationVM()
         {
@@ -44,6 +46,7 @@ namespace PIC.ViewModel
             CursosCommand = new RelayCommand(Cursos);
             DepartamentsCommand = new RelayCommand(Departaments);
             PicCommand = new RelayCommand(Pic);
+            RegistresCommand = new RelayCommand(Registres);
 
             // Startup Page
             CurrentView = new HomeVM();

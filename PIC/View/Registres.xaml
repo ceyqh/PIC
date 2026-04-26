@@ -1,4 +1,4 @@
-﻿<UserControl x:Class="PIC.View.Prestecs"
+﻿<UserControl x:Class="PIC.View.Registres"
              xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
@@ -10,15 +10,15 @@
              d:DesignHeight="450" d:DesignWidth="1400">
 
     <UserControl.DataContext>
-        <vm:PrestecsVM/>
+        <vm:RegistresVM/>
     </UserControl.DataContext>
-
+    
     <Grid>
         <Grid>
             <!--// Base Grid //-->
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="200" />
-                <ColumnDefinition/>
+                <ColumnDefinition Width="*"/>
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
@@ -41,27 +41,27 @@
                     <!-- PER ID -->
                     <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
                               Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_ID">
+                              CommandParameter="PER_ID_PRESTEC">
                         <Grid>
-                            <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                            <TextBlock Text="PER ID PRÉSTEC" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER CURS -->
                     <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
                               Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_CURS">
+                              CommandParameter="PER_ID_DISPOSITIU">
                         <Grid>
-                            <TextBlock Text="PER CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                            <TextBlock Text="PER ID DISPOSITIU" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER DEPARTAMENT -->
                     <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
                               Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_DEPARTAMENT">
+                              CommandParameter="PER_NOM_GRUP">
                         <Grid>
-                            <TextBlock Text="PER DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                            <TextBlock Text="PER NOM GRUP" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
                 </StackPanel>
@@ -97,8 +97,8 @@
                         <TextBox VerticalAlignment="Center"
                                  Width="200" 
                                  Visibility="{Binding CercaVisibility}" 
-                                 Text="{Binding ParametreCercaUsuaris, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,10,0"/>
+                                 Text="{Binding ParametreCercaRegistres, UpdateSourceTrigger=PropertyChanged}"
+                     Margin="0,0,10,0"/>
 
                         <!-- BUSCAR -->
                         <Button Content="BUSCAR"
@@ -110,7 +110,7 @@
                     </StackPanel>
 
                     <Grid Grid.Row="1"
-                          Background="#131316">
+                      Background="#131316">
 
                     </Grid>
                 </Grid>
@@ -122,7 +122,6 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
-                            <ColumnDefinition Width="272.73"/>
                         </Grid.ColumnDefinitions>
 
                         <!-- USUARIS -->
@@ -138,38 +137,43 @@
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70"/>
-                                    <ColumnDefinition Width="1.5*"/>
                                     <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1.5*"/>
-                                    <ColumnDefinition Width="0.5*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
 
                                 <Grid Grid.Column="0" Margin="10, 0, 0, 0" VerticalAlignment="Center">
-                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID</TextBlock>
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ID_P</TextBlock>
                                 </Grid>
 
                                 <Grid Grid.Column="1" VerticalAlignment="Center">
-                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">USUARI</TextBlock>
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ACCIO</TextBlock>
                                 </Grid>
 
                                 <Grid Grid.Column="2" VerticalAlignment="Center">
-                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">DISPOSITIU</TextBlock>
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">USUARI</TextBlock>
                                 </Grid>
 
                                 <Grid Grid.Column="3" VerticalAlignment="Center">
-                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">DATES</TextBlock>
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">DISPOSITIU</TextBlock>
                                 </Grid>
 
                                 <Grid Grid.Column="4" VerticalAlignment="Center">
-                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">ESTAT</TextBlock>
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">GRUP</TextBlock>
+                                </Grid>
+                                
+                                <Grid Grid.Column="5" VerticalAlignment="Center">
+                                    <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}">DATES</TextBlock>
                                 </Grid>
                             </Grid>
 
                             <!-- LLISTAT USUARIS -->
                             <Grid Grid.Row="2">
                                 <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
-                                          ItemsSource="{Binding Prestecs}"
-                                          SelectedItem="{Binding PrestecSeleccionat, Mode=TwoWay}"
+                                          ItemsSource="{Binding Registres}"
+                                          SelectedItem="{Binding RegistreSeleccionat, Mode=TwoWay}"
                                           Style="{StaticResource ListViewStyle}"
                                           ItemContainerStyle="{StaticResource ListViewStyleItem}">
 
@@ -178,19 +182,25 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="70"/>
-                                                    <ColumnDefinition Width="1.5*"/>
                                                     <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1.5*"/>
-                                                    <ColumnDefinition Width="0.5*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="1*"/>
                                                 </Grid.ColumnDefinitions>
 
                                                 <TextBlock FontSize="12"  
                                                            Grid.Column="0" 
-                                                           Text="{Binding Id}" 
+                                                           Text="{Binding IdPrestec}" 
                                                            Style="{StaticResource Fraktion_Dark_Font}"
                                                            Margin="10,0,0,0"/>
+                                                
+                                                <TextBlock FontSize="12"  
+                                                           Grid.Column="1" 
+                                                           Text="{Binding Accio}" 
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
 
-                                                <StackPanel Grid.Column="1" >
+                                                <StackPanel Grid.Column="2" >
                                                     <TextBlock FontSize="12"  
                                                                Text="{Binding IdUsuari}"
                                                                Style="{StaticResource Fraktion_Dark_Font}"/>
@@ -200,7 +210,7 @@
                                                                Style="{StaticResource Fraktion_Dark_Font}"/>
                                                 </StackPanel>
 
-                                                <StackPanel Grid.Column="2" >
+                                                <StackPanel Grid.Column="3" >
                                                     <TextBlock FontSize="12"  
                                                                Text="{Binding IdDispositiu}"
                                                                Style="{StaticResource Fraktion_Dark_Font}"/>
@@ -209,78 +219,37 @@
                                                                Text="{Binding NomDispositiu}"
                                                                Style="{StaticResource Fraktion_Dark_Font}"/>
                                                 </StackPanel>
-                                                
-                                                <StackPanel Grid.Column="3" >
+
+                                                <StackPanel Grid.Column="4" >
                                                     <TextBlock FontSize="12"  
-                                                               Text="{Binding DataEntregaFormatat}"
+                                                               Text="{Binding IdGrup}"
                                                                Style="{StaticResource Fraktion_Dark_Font}"/>
 
                                                     <TextBlock FontSize="12"                                                                
-                                                               Text="{Binding DataRetornFormatat}"
-                                                               Style="{StaticResource Fraktion_Dark_Font}"/>
+                                                           Text="{Binding NomGrup}"
+                                                           Style="{StaticResource Fraktion_Dark_Font}"/>
                                                 </StackPanel>
 
-                                                <TextBlock FontSize="12" 
-                                                           Grid.Column="4" 
-                                                           Text="{Binding Estat}"
+                                                <StackPanel Grid.Column="5" >
+                                                    <TextBlock FontSize="12"  
+                                                               Text="{Binding DataAccioFormatat}"
+                                                               Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                                                    <TextBlock FontSize="12"                                                                
+                                                           Text="{Binding DataRetornFormatat}"
                                                            Style="{StaticResource Fraktion_Dark_Font}"/>
+                                                </StackPanel>
                                             </Grid>
                                         </DataTemplate>
                                     </ListView.ItemTemplate>
                                 </ListView>
                             </Grid>
                         </Grid>
-
-                        <!-- BOTONS -->
-                        <StackPanel Grid.Column="2" 
-                                    Background="#a5a6af">
-
-                            <Grid Margin="0, 40, 0 , 0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
-                                </Grid.RowDefinitions>
-
-                                <Button Content="AFEGIR PRÉSTEC"
-                                        Grid.Row="0"
-                                        Width="200"
-                                        Style="{StaticResource Accions_Button}"
-                                        Command="{Binding AfegirPrestecMenu_Click}"/>
-
-                                <Button Content="EDITAR PRÉSTEC"
-                                        Grid.Row="2"
-                                        Width="200"
-                                        Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
-
-                                <Button Content="FINALITZAR PRÉSTEC"
-                                        Grid.Row="4"
-                                        Width="200"
-                                        Style="{StaticResource Accions_Button}"
-                                        Command="{Binding FinalitzarPrestec_Click}"/>
-                                
-                                <Button Content="ESBORRAR PRÉSTEC"
-                                        Grid.Row="6"
-                                        Width="200"
-                                        Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EsborrarMenu_Click}"/>
-                            </Grid>
-                        </StackPanel>
                     </Grid>
                 </Grid>
             </Grid>
         </Grid>
 
         <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
-        <local:AfegirPrestec DataContext="{Binding AfegirPrestec}" d:IsHidden="true"/>
-        <local:EditarPrestec DataContext="{Binding EditarPrestec}" d:IsHidden="true"/>
-        <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

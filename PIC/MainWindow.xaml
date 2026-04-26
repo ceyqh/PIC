@@ -85,6 +85,13 @@
                         </Grid>
                     </Menu:Btn>
 
+                    <!--// REGISTRES //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding RegistresCommand}">
+                        <Grid>
+                            <TextBlock Text="REGISTRES" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
                     <!--// PIC //-->
                     <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding PicCommand}">
                         <Grid>

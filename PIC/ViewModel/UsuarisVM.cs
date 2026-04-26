@@ -308,7 +308,6 @@ namespace PIC.ViewModel
             }
         }
 
-
         // BUIDAR LIST VIEW
         public void ClearUsuaris()
         {
