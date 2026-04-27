@@ -43,7 +43,7 @@ namespace PIC.ViewModel
                 }
                 else
                 {
-                    var llista = await _administradorsApiClient.GetAllAdministradorsAsync();
+                    List<Administrador> llista = await _administradorsApiClient.GetAllAdministradorsAsync();
                     if (llista == null)
                     {
                         MissatgeError.Mostrar("No s'han pogut mostrar els Administradors. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");

@@ -3,32 +3,16 @@
   "WorkspaceRootPath": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\apiclient\\administradorsapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\apiclient\\administradorsapiclient.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\departamentsvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\departamentsvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\registresvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\registresvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\viewmodel\\categoriesvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\categoriesvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\picvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\picvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\pic.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\pic.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\registres.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\registres.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\confirmaresborrarvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\confirmaresborrarvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\view\\prestecs.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\prestecs.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\cursosvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\cursosvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -47,89 +31,40 @@
             {
               "$type": "Document",
               "DocumentIndex": 0,
-              "Title": "AdministradorsApiClient.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\APIClient\\AdministradorsApiClient.cs",
-              "RelativeDocumentMoniker": "PIC\\APIClient\\AdministradorsApiClient.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\APIClient\\AdministradorsApiClient.cs",
-              "RelativeToolTip": "PIC\\APIClient\\AdministradorsApiClient.cs",
-              "ViewState": "AgIAAB4AAAAAAAAAAAAAAB4AAAAtAAAAAAAAAA==",
+              "Title": "DepartamentsVM.cs",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\DepartamentsVM.cs",
+              "RelativeDocumentMoniker": "PIC\\ViewModel\\DepartamentsVM.cs",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\DepartamentsVM.cs",
+              "RelativeToolTip": "PIC\\ViewModel\\DepartamentsVM.cs",
+              "ViewState": "AgIAAPMAAAAAAAAAAAAAwAIBAABlAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T23:45:46.536Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RegistresVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\RegistresVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\RegistresVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\RegistresVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\RegistresVM.cs",
-              "ViewState": "AgIAACAAAAAAAAAAAAAWwJoAAAARAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T23:36:32.646Z",
+              "WhenOpened": "2026-04-27T16:46:52.261Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "PicVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\PicVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\PicVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\PicVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\PicVM.cs",
-              "ViewState": "AgIAABUAAAAAAAAAAAASwC0AAABcAAAAAAAAAA==",
+              "Title": "CursosVM.cs",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\CursosVM.cs",
+              "RelativeDocumentMoniker": "PIC\\ViewModel\\CursosVM.cs",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\CursosVM.cs",
+              "RelativeToolTip": "PIC\\ViewModel\\CursosVM.cs",
+              "ViewState": "AgIAAO8AAAAAAAAAAAAqwP8AAABfAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T23:36:23.746Z",
+              "WhenOpened": "2026-04-27T15:05:37.129Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Pic.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Pic.xaml",
-              "RelativeDocumentMoniker": "PIC\\View\\Pic.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Pic.xaml",
-              "RelativeToolTip": "PIC\\View\\Pic.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-26T23:16:29.918Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "Registres.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Registres.xaml",
-              "RelativeDocumentMoniker": "PIC\\View\\Registres.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Registres.xaml",
-              "RelativeToolTip": "PIC\\View\\Registres.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-26T23:16:28.483Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "ConfirmarEsborrarVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\ConfirmarEsborrarVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\ConfirmarEsborrarVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\ConfirmarEsborrarVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\ConfirmarEsborrarVM.cs",
-              "ViewState": "AgIAAFcBAAAAAAAAAAAqwHEBAAA9AAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "CategoriesVM.cs",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\CategoriesVM.cs",
+              "RelativeDocumentMoniker": "PIC\\ViewModel\\CategoriesVM.cs",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\CategoriesVM.cs",
+              "RelativeToolTip": "PIC\\ViewModel\\CategoriesVM.cs",
+              "ViewState": "AgIAAPQAAAAAAAAAAAAAwAQBAABkAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-26T19:25:09.141Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "Prestecs.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Prestecs.xaml",
-              "RelativeDocumentMoniker": "PIC\\View\\Prestecs.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Prestecs.xaml",
-              "RelativeToolTip": "PIC\\View\\Prestecs.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-26T18:05:55.209Z",
+              "WhenOpened": "2026-04-27T15:06:25.517Z",
               "EditorCaption": ""
             }
           ]

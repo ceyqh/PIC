@@ -43,8 +43,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var createdProfessor = await response.Content.ReadAsAsync<Professor>();
-                        response.Dispose();
+                        var createdProfessor = await response.Content.ReadAsAsync<Professor>(); 
                         return createdProfessor;
                     }
                 }
@@ -75,8 +74,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }
@@ -107,8 +105,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }

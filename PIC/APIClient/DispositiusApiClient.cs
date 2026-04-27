@@ -44,8 +44,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        dispositiu = await response.Content.ReadAsAsync<List<Dispositiu>>();
-                        response.Dispose();
+                        dispositiu = await response.Content.ReadAsAsync<List<Dispositiu>>(); 
                         return dispositiu;
                     }
                 }                
@@ -77,8 +76,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        dispositiu = await response.Content.ReadAsAsync<Dispositiu>();
-                        response.Dispose();
+                        dispositiu = await response.Content.ReadAsAsync<Dispositiu>(); 
                         return dispositiu;
                     }
                 }
@@ -109,8 +107,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
-                        response.Dispose();
+                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>(); 
                         return dispositius;
                     }
                 }
@@ -142,8 +139,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
-                        response.Dispose();
+                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>(); 
                         return dispositius;
                     }
                 }
@@ -175,8 +171,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
-                        response.Dispose();
+                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>(); 
                         return dispositius;
                     }
                 }
@@ -208,8 +203,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>();
-                        response.Dispose();
+                        dispositius = await response.Content.ReadAsAsync<List<Dispositiu>>(); 
                         return dispositius;
                     }
                 }
@@ -240,8 +234,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var dispositiuCreat = await response.Content.ReadAsAsync<NouDispositiu>();
-                        response.Dispose();
+                        var dispositiuCreat = await response.Content.ReadAsAsync<NouDispositiu>(); 
                         return dispositiuCreat;
                     }
                 }
@@ -272,8 +265,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }
@@ -304,8 +296,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }

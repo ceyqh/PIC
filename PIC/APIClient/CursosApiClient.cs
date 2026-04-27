@@ -44,7 +44,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         curs = await response.Content.ReadAsAsync<List<Curs>>();
-                        response.Dispose();
                         return curs;
                     }
                 }
@@ -84,7 +83,6 @@ namespace PIC.APIClient
                         {
                             // Retorn
                             curs = await response.Content.ReadAsAsync<Curs>();
-                            response.Dispose();
                             return curs;
                         }
                     }
@@ -115,8 +113,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var createdCurs = await response.Content.ReadAsAsync<Curs>();
-                        response.Dispose();
+                        var createdCurs = await response.Content.ReadAsAsync<Curs>(); 
                         return createdCurs;
                     }
                 }
@@ -146,8 +143,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }
@@ -177,8 +173,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }

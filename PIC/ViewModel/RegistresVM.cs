@@ -70,8 +70,8 @@ namespace PIC.ViewModel
         }
 
         // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private int _parametreCercRegistres;
-        public int ParametreCercaRegistres
+        private string _parametreCercRegistres;
+        public string ParametreCercaRegistres
         {
             get => _parametreCercRegistres;
             set
@@ -84,40 +84,46 @@ namespace PIC.ViewModel
         // COMANDAMENTS
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            if (param == null) return;
-            string mode = param.ToString();
-
-            // Reset de la llista i visibilitat per defecte
-            Registres.Clear();
-            CercaVisibility = Visibility.Visible;
-
-            switch (mode)
+            // Si el textbox és buit
+            if (param == null)
             {
-                case "TOTS":
-                    TitolPantalla = "REGISTRES: TOTS";
-                    ParametreCercaRegistres = 0;
-                    CercaVisibility = Visibility.Collapsed;
-                    _ = MostrarRegistresAsync();
-                    break;
-
-                case "PER_ID_PRESTEC":
-                    TitolPantalla = "REGISTRES: PER ID PRESTEC";
-                    ParametreCercaRegistres = 0;
-                    TipusCercaActualRegistres = RegistresTipusCerca.PerIdPrestec;
-                    break;
-
-                case "PER_ID_DISPOSITIU":
-                    TitolPantalla = "REGISTRES: PER ID DISPOSITIU";
-                    ParametreCercaRegistres = 0;
-                    TipusCercaActualRegistres = RegistresTipusCerca.PerIdDispositiu;
-                    break;
-
-                case "PER_NOM_GRUP":
-                    TitolPantalla = "REGISTRES: PER NOM GRUP";
-                    ParametreCercaRegistres = 0;
-                    TipusCercaActualRegistres = RegistresTipusCerca.PerNomGrup;
-                    break;
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
+            else
+            {
+                string mode = param.ToString();
+
+                Registres.Clear();
+                CercaVisibility = Visibility.Visible;
+
+                switch (mode)
+                {
+                    case "TOTS":
+                        TitolPantalla = "REGISTRES: TOTS";
+                        ParametreCercaRegistres = "";
+                        CercaVisibility = Visibility.Collapsed;
+                        _ = MostrarRegistresAsync();
+                        break;
+
+                    case "PER_ID_PRESTEC":
+                        TitolPantalla = "REGISTRES: PER ID PRESTEC";
+                        ParametreCercaRegistres = "";
+                        TipusCercaActualRegistres = RegistresTipusCerca.PerIdPrestec;
+                        break;
+
+                    case "PER_ID_DISPOSITIU":
+                        TitolPantalla = "REGISTRES: PER ID DISPOSITIU";
+                        ParametreCercaRegistres = "";
+                        TipusCercaActualRegistres = RegistresTipusCerca.PerIdDispositiu;
+                        break;
+
+                    case "PER_NOM_GRUP":
+                        TitolPantalla = "REGISTRES: PER NOM GRUP";
+                        ParametreCercaRegistres = "";
+                        TipusCercaActualRegistres = RegistresTipusCerca.PerNomGrup;
+                        break;
+                }
+            }               
         });
 
         // EXECUTAR CERCA
@@ -126,103 +132,107 @@ namespace PIC.ViewModel
             await CercaRegistresAsync();
         });
 
-        // MOSTRAR TOTS ELS USUARIS
+        // MOSTRAR TOTS ELS REGISTRES
         public async Task MostrarRegistresAsync()
         {
-            try
+            // Si la api falla
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
+                MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+            }
+            // Si la api funciona
+            else
+            {
+                var llista = await _registresApiClient.GetAllRegistresAsync();
+
+                // Si la consulta falla
+                if (llista == null)
                 {
-                    MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+                    MissatgeError.Mostrar("No s'han pogut mostrar els Registres. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                 }
+                // Si la consulta funciona
                 else
                 {
-                    var llista = await _registresApiClient.GetAllRegistresAsync();
-                    if (llista == null)
-                    {
-                        MissatgeError.Mostrar("No s'han pogut mostrar els Registres. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
-                    }
-                    else
-                    {
-                        Registres.Clear();
+                    Registres.Clear();
 
-                        foreach (var u in llista)
-                        {
-                            Registres.Add(u);
-                        }
+                    foreach (var u in llista)
+                    {
+                        Registres.Add(u);
                     }
-
                 }
-            }
 
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("No es pot connectar amb el servidor: " + ex.Message);
             }
         }
 
         // MÈTODE DE CERCA
         public async Task CercaRegistresAsync()
         {
-            try
+            // Si el textbox és buit
+            if (string.IsNullOrEmpty(ParametreCercaRegistres))
+            {
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
+            }
+            else
             {
                 Registres.Clear();
                 switch (TipusCercaActualRegistres)
                 {
                     case RegistresTipusCerca.PerIdPrestec:
-                        var prestec = await _registresApiClient.GetRegistresPerIdPrestecAsync(ParametreCercaRegistres);
+                        var perIdPrestec = await _registresApiClient.GetRegistresPerIdPrestecAsync(int.Parse(ParametreCercaRegistres));
 
-                        if (prestec != null && prestec.Any())
+                        // Si la consulta falla o és buida
+                        if (perIdPrestec == null || !perIdPrestec.Any())
                         {
-                            foreach (var u in prestec)
+                            MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest ID de Préstec.");
+                        }
+                        // Si la consulta funciona
+                        else
+                        {
+                            foreach (var u in perIdPrestec)
                             {
                                 Registres.Add(u);
 
                             }
-                        }
-                        else
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest ID de Préstec.");
                         }
                         break;
 
                     case RegistresTipusCerca.PerIdDispositiu:
-                        var curs = await _registresApiClient.GetRegistresPerIdDispositiuAsync(ParametreCercaRegistres);
+                        var perIdDispositiu = await _registresApiClient.GetRegistresPerIdDispositiuAsync(int.Parse(ParametreCercaRegistres));
 
-                        if (curs != null && curs.Any())
+                        // Si la consulta falla o és buida
+                        if (perIdDispositiu == null || !perIdDispositiu.Any())
                         {
-                            foreach (var u in curs)
+                            MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest ID de Dispositiu.");
+                        }
+                        // Si la consulta funciona
+                        else
+                        {
+                            foreach (var u in perIdDispositiu)
                             {
                                 Registres.Add(u);
 
-                            }
-                        }
-                        else
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest ID de Dispositiu.");
+                            }                            
                         }
                         break;
 
                     case RegistresTipusCerca.PerNomGrup:
-                        var dep = await _registresApiClient.GetRegistresPerNomGrupAsync(ParametreCercaRegistres.ToString());
+                        var perNomGrup = await _registresApiClient.GetRegistresPerNomGrupAsync(ParametreCercaRegistres.ToString());
 
-                        if (dep != null && dep.Any())
-                        {
-                            foreach (var u in dep)
-                            {
-                                Registres.Add(u);
-                            }
-                        }
-                        else
+                        // Si la consulta falla o és buida
+                        if (perNomGrup == null || !perNomGrup.Any())
                         {
                             MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest nom de Grup.");
                         }
+                        // Si la consulta funciona
+                        else
+                        {
+                            foreach (var u in perNomGrup)
+                            {
+                                Registres.Add(u);
+                            }                            
+                        }
                         break;
-                }
-            }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
+                }                
             }
         }
     }

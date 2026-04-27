@@ -17,10 +17,8 @@ namespace PIC.ViewModel
     public enum PrestecsTipusCerca
     {
         PerId,
-        PerDispositiu,
-        PerCategoria,
-        PerCurs,
-        PerDepartament
+        PerUsuari,
+        PerDispositiu
     }
     internal class PrestecsVM : Utilities.ViewModelBase
     {
@@ -87,8 +85,8 @@ namespace PIC.ViewModel
         }
 
         // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private int _parametreCercaPrestecs;
-        public int ParametreCercaPrestecs
+        private string _parametreCercaPrestecs;
+        public string ParametreCercaPrestecs
         {
             get => _parametreCercaPrestecs;
             set
@@ -107,6 +105,7 @@ namespace PIC.ViewModel
         // EDITAR PRÉSTEC
         public ICommand EditarPrestecMenu_Click => new RelayCommand(async _ =>
         {
+            // Si no hi ha cap préstec seleccionat
             if (_prestecSeleccionat != null)
             {
                 await EditarPrestec.Mostrar(PrestecSeleccionat);
@@ -120,6 +119,7 @@ namespace PIC.ViewModel
         // FINALITZAR PRÉSTEC
         public ICommand FinalitzarPrestec_Click => new RelayCommand(_ =>
         {
+            // Si no hi ha cap préstec seleccionat
             if (_prestecSeleccionat != null)
             {
                 ConfirmarEsborrar.Mostrar(_prestecSeleccionat, this, "finalitzar");
@@ -133,6 +133,7 @@ namespace PIC.ViewModel
         // ESBORRAR PRÉSTEC
         public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
         {
+            // Si no hi ha cap préstec seleccionat
             if (_prestecSeleccionat != null)
             {
                 ConfirmarEsborrar.Mostrar(_prestecSeleccionat, this, "esborrar");
@@ -146,52 +147,60 @@ namespace PIC.ViewModel
         // COMANDAMENTS
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            if (param == null) return;
-            string mode = param.ToString();
-
-            // Reset de la llista i visibilitat per defecte
-            Prestecs.Clear();
-            CercaVisibility = Visibility.Visible;
-
-            switch (mode)
+            // Si no hi ha paràmetre
+            if (param == null) 
             {
-                case "TOTS":
-                    TitolPantalla = "PRÉSTECS: TOTS";
-                    ParametreCercaPrestecs = 0;
-                    CercaVisibility = Visibility.Collapsed;
-                    _ = MostrarPrestecsAsync();
-                    break;
-
-                case "PER_ID":
-                    TitolPantalla = "PRÉSTECS: PER ID";
-                    ParametreCercaPrestecs = 0;
-                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerId;
-                    break;
-
-                case "PER_DISPOSITIU":
-                    TitolPantalla = "PRÉSTECS: PER DISPOSITIU";
-                    ParametreCercaPrestecs = 0;
-                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerDispositiu;
-                    break;
-
-                case "PER_CATEGRIA":
-                    TitolPantalla = "PRÉSTECS: PER CATEGORIA";
-                    ParametreCercaPrestecs = 0;
-                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerCategoria;
-                    break;
-
-                case "PER_DEPARTAMENT":
-                    TitolPantalla = "PRÉSTECS: PER DEPARTAMENT";
-                    ParametreCercaPrestecs = 0;
-                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerDepartament;
-                    break;
-
-                case "PER_CURS":
-                    TitolPantalla = "USUARIS: PER CURS";
-                    ParametreCercaPrestecs = 0;
-                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerCurs;
-                    break;
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
+            else
+            {
+                string mode = param.ToString();
+
+                Prestecs.Clear();
+                CercaVisibility = Visibility.Visible;
+
+                switch (mode)
+                {
+                    case "TOTS":
+                        TitolPantalla = "PRÉSTECS: TOTS";
+                        ParametreCercaPrestecs = "";
+                        CercaVisibility = Visibility.Collapsed;
+                        _ = MostrarPrestecsAsync();
+                        break;
+
+                    case "PER_ID":
+                        TitolPantalla = "PRÉSTECS: PER ID";
+                        ParametreCercaPrestecs = "";
+                        TipusCercaActualPrestecs = PrestecsTipusCerca.PerId;
+                        break;
+
+                    case "PER_USUARI":
+                        TitolPantalla = "PRÉSTECS: PER USUARI";
+                        ParametreCercaPrestecs = "";
+                        TipusCercaActualPrestecs = PrestecsTipusCerca.PerUsuari;
+                        break;
+
+                    case "PER_DISPOSITIU":
+                        TitolPantalla = "PRÉSTECS: PER DISPOSITIU";
+                        ParametreCercaPrestecs = "";
+                        TipusCercaActualPrestecs = PrestecsTipusCerca.PerDispositiu;
+                        break;
+
+                    case "EN_CURS":
+                        TitolPantalla = "PRÉSTECS: EN CURS";
+                        ParametreCercaPrestecs = "";
+                        CercaVisibility = Visibility.Collapsed;
+                        _ = MostrarPrestecsEnCursAsync();
+                        break;
+
+                    case "CADUCATS":
+                        TitolPantalla = "USUARIS: CADUCATS";
+                        ParametreCercaPrestecs = "";
+                        CercaVisibility = Visibility.Collapsed;
+                        _ = MostrarPrestecsCaducatsAsync();
+                        break;
+                }
+            }                
         });
 
         // EXECUTAR CERCA
@@ -203,96 +212,163 @@ namespace PIC.ViewModel
         // MOSTRAR TOTS ELS PRÉSTECS
         public async Task MostrarPrestecsAsync()
         {
-            try
+            // Si la api falla
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
+                MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+            }
+            // Si la api funciona
+            else
+            {
+                var llista = await _prestecsApiClient.GetAllPrestecsAsync();
+
+                // Si la consulta falla
+                if (llista == null)
                 {
-                    MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+                    MissatgeError.Mostrar("No s'han pogut mostrar els Préstecs. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                 }
+                // Si la consulta funciona
                 else
                 {
-                    var llista = await _prestecsApiClient.GetAllPrestecsAsync();
-                    if (llista == null)
+                    Prestecs.Clear();
+                    foreach (var u in llista)
                     {
-                        MissatgeError.Mostrar("No s'han pogut mostrar els Préstecs. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
+                        Prestecs.Add(u);
                     }
-                    else
-                    {
-                        Prestecs.Clear();
+                }
+            }            
+        }
 
-                        foreach (var u in llista)
+        // MOSTRAR PRÉSTECS EN CURS
+        public async Task MostrarPrestecsEnCursAsync()
+        {
+            // Si la api falla
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
+            {
+                MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+            }
+            // Si la api funciona
+            else
+            {
+                Prestecs.Clear();
+                var enCurs = await _prestecsApiClient.GetAllPrestecsAsync();
+
+                // Si la consulta falla
+                if (enCurs == null)
+                {
+                    MissatgeError.Mostrar("No s'han pogut mostrar els Préstecs. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
+
+                }
+                // Si la consulta funciona
+                else
+                {
+                    foreach (var u in enCurs)
+                    {
+                        if (u.Estat.ToLower() == "en curs")
                         {
                             Prestecs.Add(u);
                         }
                     }
+                }
+            }            
+        }
+
+        public async Task MostrarPrestecsCaducatsAsync()
+        {
+            // Si la api falla
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
+            {
+                MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+            }
+            // Si la api funciona
+            else
+            {
+                Prestecs.Clear();
+                var caducats = await _prestecsApiClient.GetAllPrestecsAsync();
+
+                // Si la consulta falla
+                if (caducats == null)
+                {
+                    MissatgeError.Mostrar("No s'han pogut mostrar els Préstecs. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
 
                 }
-            }
-
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("No es pot connectar amb el servidor: " + ex.Message);
+                // Si la consulta funciona
+                else
+                {
+                    foreach (var u in caducats)
+                    {
+                        if (u.Estat.ToLower() == "caducat")
+                        {
+                            Prestecs.Add(u);
+                        }
+                    }
+                }
             }
         }
 
         // MÈTODE DE CERCA
         public async Task CercaPrestecsAsync()
         {
-            try
+            if (string.IsNullOrEmpty(ParametreCercaPrestecs))
+            {
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
+            }
+            else
             {
                 Prestecs.Clear();
                 switch (TipusCercaActualPrestecs)
                 {
                     case PrestecsTipusCerca.PerId:
-                        var usuari = await _prestecsApiClient.GetPrestecPerIdAsync(ParametreCercaPrestecs);
+                        var perId = await _prestecsApiClient.GetPrestecPerIdAsync(int.Parse(ParametreCercaPrestecs));
 
-                        if (usuari != null)
+                        // Si la consulta falla o no es troba
+                        if (perId == null)
                         {
-                            Prestecs.Add(usuari);
+                            MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID.");
+
                         }
                         else
                         {
-                            MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID.");
+                            Prestecs.Add(perId);
                         }
                         break;
 
-                    //case PrestecsTipusCerca.PerCurs:
-                    //    var curs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(ParametreCercaUsuaris);
+                    case PrestecsTipusCerca.PerUsuari:
+                        var perIdUsuari = await _prestecsApiClient.GetPrestecsPerIdUsuariAsync(int.Parse(ParametreCercaPrestecs));
 
-                    //    if (curs != null && curs.Any())
-                    //    {
-                    //        foreach (var u in curs)
-                    //        {
-                    //            Usuaris.Add(u);
+                        // Si la consulta falla o no es troba
+                        if (perIdUsuari == null || !perIdUsuari.Any())
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID d'Usuari.");
+                        }
+                        else
+                        {
+                            foreach (var u in perIdUsuari)
+                            {
+                                Prestecs.Add(u);
 
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Curs.");
-                    //    }
-                    //    break;
+                            }
+                        }
+                        break;
 
-                    //case PrestecsTipusCerca.PerDepartament:
-                    //    var dep = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(ParametreCercaUsuaris);
+                    case PrestecsTipusCerca.PerDispositiu:
+                        var perIdDispositiu = await _prestecsApiClient.GetPrestecsPerIdDispositiuAsync(int.Parse(ParametreCercaPrestecs));
 
-                    //    if (dep != null && dep.Any())
-                    //    {
-                    //        foreach (var u in dep)
-                    //        {
-                    //            Usuaris.Add(u);
-                    //        }
-                    //    }
-                    //    else
-                    //    {
-                    //        MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Departament.");
-                    //    }
-                    //    break;
+                        // Si la consulta falla o no es troba
+                        if (perIdDispositiu == null || !perIdDispositiu.Any())
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID de Dispositiu.");
+                        }
+                        else
+                        {
+                            foreach (var u in perIdDispositiu)
+                            {
+                                Prestecs.Add(u);
+
+                            }
+                        }
+                        break;
                 }
-            }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
             }
         }
     }

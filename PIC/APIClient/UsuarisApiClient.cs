@@ -43,8 +43,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        usuari = await response.Content.ReadAsAsync<List<Usuari>>();
-                        response.Dispose();
+                        usuari = await response.Content.ReadAsAsync<List<Usuari>>(); 
                         return usuari;
                     }
                 }
@@ -76,8 +75,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        usuari = await response.Content.ReadAsAsync<Usuari>();
-                        response.Dispose();
+                        usuari = await response.Content.ReadAsAsync<Usuari>(); 
                         return usuari;
                     }
                 }
@@ -110,8 +108,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        usuari = await response.Content.ReadAsAsync<List<Usuari>>();
-                        response.Dispose();
+                        usuari = await response.Content.ReadAsAsync<List<Usuari>>(); 
                         return usuari;
                     }
                 }
@@ -143,8 +140,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        usuari = await response.Content.ReadAsAsync<List<Usuari>>();
-                        response.Dispose();
+                        usuari = await response.Content.ReadAsAsync<List<Usuari>>(); 
                         return usuari;
                     }
                 }
@@ -174,8 +170,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var createdUser = await response.Content.ReadAsAsync<NouUsuari>();
-                        response.Dispose();
+                        var createdUser = await response.Content.ReadAsAsync<NouUsuari>(); 
                         return createdUser;
                     }
                 }
@@ -205,8 +200,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }
@@ -236,8 +230,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }

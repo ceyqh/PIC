@@ -91,8 +91,8 @@ namespace PIC.ViewModel
         }
 
         // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private int _parametreCercaUsuaris;
-        public int ParametreCercaUsuaris
+        private string _parametreCercaUsuaris;
+        public string ParametreCercaUsuaris
         {
             get => _parametreCercaUsuaris;
             set
@@ -170,40 +170,46 @@ namespace PIC.ViewModel
         // COMANDAMENTS
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            if (param == null) return;
-            string mode = param.ToString();
-
-            // Reset de la llista i visibilitat per defecte
-            Usuaris.Clear();
-            CercaVisibility = Visibility.Visible;
-
-            switch (mode)
+            // Si no hi ha paràmetre
+            if (param == null)
             {
-                case "TOTS":
-                    TitolPantalla = "USUARIS: TOTS";
-                    ParametreCercaUsuaris = 0;
-                    CercaVisibility = Visibility.Collapsed;
-                    _ = MostrarUsuarisAsync();
-                    break;
-
-                case "PER_ID":
-                    TitolPantalla = "USUARIS: PER ID";
-                    ParametreCercaUsuaris = 0;
-                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerId;
-                    break;
-
-                case "PER_CURS":
-                    TitolPantalla = "USUARIS: PER CURS";
-                    ParametreCercaUsuaris = 0;
-                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerCurs;
-                    break;
-
-                case "PER_DEPARTAMENT":
-                    TitolPantalla = "USUARIS: PER DEPARTAMENT";
-                    ParametreCercaUsuaris = 0;
-                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerDepartament;
-                    break;
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
+            else
+            {
+                string mode = param.ToString();
+
+                Usuaris.Clear();
+                CercaVisibility = Visibility.Visible;
+
+                switch (mode)
+                {
+                    case "TOTS":
+                        TitolPantalla = "USUARIS: TOTS";
+                        ParametreCercaUsuaris = "";
+                        CercaVisibility = Visibility.Collapsed;
+                        _ = MostrarUsuarisAsync();
+                        break;
+
+                    case "PER_ID":
+                        TitolPantalla = "USUARIS: PER ID";
+                        ParametreCercaUsuaris = "";
+                        TipusCercaActualUsuaris = UsuarisTipusCerca.PerId;
+                        break;
+
+                    case "PER_CURS":
+                        TitolPantalla = "USUARIS: PER CURS";
+                        ParametreCercaUsuaris = "";
+                        TipusCercaActualUsuaris = UsuarisTipusCerca.PerCurs;
+                        break;
+
+                    case "PER_DEPARTAMENT":
+                        TitolPantalla = "USUARIS: PER DEPARTAMENT";
+                        ParametreCercaUsuaris = "";
+                        TipusCercaActualUsuaris = UsuarisTipusCerca.PerDepartament;
+                        break;
+                }
+            }            
         });
 
         // EXECUTAR CERCA
@@ -215,97 +221,100 @@ namespace PIC.ViewModel
         // MOSTRAR TOTS ELS USUARIS
         public async Task MostrarUsuarisAsync()
         {
-            try
+            // Si la api falla
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
+                MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+            }
+            // Si la api funciona
+            else
+            {
+                var llista = await _usuarisApiClient.GetAllUsuarisAsync();
+
+                // Si la consulta falla
+                if (llista == null)
                 {
-                    MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+                    MissatgeError.Mostrar("No s'han pogut mostrar els Usuaris. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                 }
+                // Si la consulta funciona
                 else
                 {
-                    var llista = await _usuarisApiClient.GetAllUsuarisAsync();
-                    if (llista == null)
-                    {
-                        MissatgeError.Mostrar("No s'han pogut mostrar els Usuaris. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
-                    }
-                    else
-                    {
-                        Usuaris.Clear();
+                    Usuaris.Clear();
 
-                        foreach (var u in llista)
-                        {
-                            Usuaris.Add(u);
-                        }
+                    foreach (var u in llista)
+                    {
+                        Usuaris.Add(u);
                     }
-                        
                 }
-            }
-
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("No es pot connectar amb el servidor: " + ex.Message);
             }
         }
 
         // MÈTODE DE CERCA
         public async Task CercaUsuarisAsync()
         {
-            try
+            // Si el textbox és buit
+            if (string.IsNullOrEmpty(ParametreCercaUsuaris))
+            {
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
+            }
+            else
             {
                 Usuaris.Clear();
                 switch (TipusCercaActualUsuaris)
                 {
                     case UsuarisTipusCerca.PerId:
-                        var usuari = await _usuarisApiClient.GetUsuariPerIdAsync(ParametreCercaUsuaris);
-                        
-                        if (usuari != null)
-                        {
-                            Usuaris.Add(usuari);
-                        }                            
-                        else
+                        var perId = await _usuarisApiClient.GetUsuariPerIdAsync(int.Parse(ParametreCercaUsuaris));
+
+                        // Si la consulta falla o és buida
+                        if (perId == null)
                         {
                             MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID.");
-                        }                            
+                        }
+                        // Si la consulta funciona
+                        else
+                        {
+                            Usuaris.Add(perId);
+                        }
                         break;
 
                     case UsuarisTipusCerca.PerCurs:
-                        var curs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(ParametreCercaUsuaris);
-                        
-                        if (curs != null && curs.Any())
+                        var perIdCurs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(int.Parse(ParametreCercaUsuaris));
+
+                        // Si la consulta falla o és buida
+                        if (perIdCurs == null || !perIdCurs.Any())
                         {
-                            foreach (var u in curs)
+                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Curs.");
+                        }
+                        // Si la consulta funciona
+                        else
+                        {
+                            foreach (var u in perIdCurs)
                             {
                                 Usuaris.Add(u);
 
                             }
-                        }
-                        else
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Curs.");
                         }
                         break;
 
                     case UsuarisTipusCerca.PerDepartament:
-                        var dep = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(ParametreCercaUsuaris);
-                        
-                        if (dep != null && dep.Any())
+                        var perIdDepartament = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(int.Parse(ParametreCercaUsuaris));
+
+                        // Si la consulta falla o és buida
+                        if (perIdDepartament == null || !perIdDepartament.Any())
                         {
-                            foreach (var u in dep)
+                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Departament.");
+                        }
+                        // Si la consulta funciona
+                        else
+                        {
+                            foreach (var u in perIdDepartament)
                             {
                                 Usuaris.Add(u);
                             }
                         }
-                        else
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Departament.");
-                        }
                         break;
                 }
-            }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
-            }
+            }                
         }
 
         // BUIDAR LIST VIEW

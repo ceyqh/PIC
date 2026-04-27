@@ -44,7 +44,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         administrador = await response.Content.ReadAsAsync<List<Administrador>>();
-                        response.Dispose();
                         return administrador;
                     }
                 }
@@ -75,7 +74,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         var createdAlumne = await response.Content.ReadAsAsync<Administrador>();
-                        response.Dispose();
                         return createdAlumne;
                     }
                 }

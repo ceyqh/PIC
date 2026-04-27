@@ -44,8 +44,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        departament = await response.Content.ReadAsAsync<List<Departament>>();
-                        response.Dispose();
+                        departament = await response.Content.ReadAsAsync<List<Departament>>(); 
                         return departament;
                     }
                 }
@@ -77,8 +76,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        departament = await response.Content.ReadAsAsync<Departament>();
-                        response.Dispose();
+                        departament = await response.Content.ReadAsAsync<Departament>(); 
                         return departament;
                     }
                 }
@@ -108,8 +106,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var createdCurs = await response.Content.ReadAsAsync<Departament>();
-                        response.Dispose();
+                        var createdCurs = await response.Content.ReadAsAsync<Departament>(); 
                         return createdCurs;
                     }
                 }
@@ -139,8 +136,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }
@@ -170,8 +166,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }

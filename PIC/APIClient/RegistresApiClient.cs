@@ -43,8 +43,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        registre = await response.Content.ReadAsAsync<List<Registre>>();
-                        response.Dispose();
+                        registre = await response.Content.ReadAsAsync<List<Registre>>(); 
                         return registre;
                     }
                 }
@@ -76,8 +75,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        registres = await response.Content.ReadAsAsync<List<Registre>>();
-                        response.Dispose();
+                        registres = await response.Content.ReadAsAsync<List<Registre>>(); 
                         return registres;
                     }
                 }
@@ -109,8 +107,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        registres = await response.Content.ReadAsAsync<List<Registre>>();
-                        response.Dispose();
+                        registres = await response.Content.ReadAsAsync<List<Registre>>(); 
                         return registres;
                     }
                 }
@@ -142,8 +139,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        registres = await response.Content.ReadAsAsync<List<Registre>>();
-                        response.Dispose();
+                        registres = await response.Content.ReadAsAsync<List<Registre>>(); 
                         return registres;
                     }
                 }
@@ -173,8 +169,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var createdRegistre = await response.Content.ReadAsAsync<Registre>();
-                        response.Dispose();
+                        var createdRegistre = await response.Content.ReadAsAsync<Registre>(); 
                         return createdRegistre;
                     }
                 }
@@ -204,8 +199,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }

@@ -32,6 +32,7 @@ namespace PIC.ViewModel
         private readonly CursosApiClient _cursosApiClient;
         private readonly UsuarisApiClient _usuarisApiClient;
 
+        // CONSTRUCTOR
         public CursosVM()
         {
             Cursos = new ObservableCollection<Curs>();
@@ -63,7 +64,7 @@ namespace PIC.ViewModel
             set { _titolPantalla = value; OnPropertyChanged(); }
         }
 
-        // CURS SEL·LECCIONAT
+        // CURS SELECCIONAT
         private Curs _cursSeleccionat;
         public Curs CursSeleccionat
         {
@@ -73,6 +74,7 @@ namespace PIC.ViewModel
                 _cursSeleccionat = value;
                 OnPropertyChanged();
 
+                // Carregar els alumnes del curs al seleccionar-ne un
                 if (_cursSeleccionat != null)
                 {
                     _ = CarregarUsuarisDelCursAsync((int)_cursSeleccionat.Id);
@@ -80,22 +82,19 @@ namespace PIC.ViewModel
             }
         }
 
+        // CARREGAR USUARIS DEL CURS
         private async Task CarregarUsuarisDelCursAsync(int cursId)
         {
-            try
+            Usuaris.Clear();
+            var llista = await _usuarisApiClient.GetUsuarisPerIdCursAsync(cursId);
+
+            // Si la consulta funciona
+            if (llista != null)
             {
-                var llista = await _usuarisApiClient.GetUsuarisPerIdCursAsync(cursId);
-
-                Usuaris.Clear();
-
                 foreach (var u in llista)
                 {
                     Usuaris.Add(u);
                 }
-            }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error carregant usuaris: " + ex.Message);
             }
         }
 
@@ -112,8 +111,8 @@ namespace PIC.ViewModel
         }
 
         // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private int _parametreCercaCursos;
-        public int ParametreCercaCursos
+        private string _parametreCercaCursos;
+        public string ParametreCercaCursos
         {
             get => _parametreCercaCursos;
             set
@@ -126,30 +125,36 @@ namespace PIC.ViewModel
         // COMANDAMENTS
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            if (param == null) return;
-            string mode = param.ToString();
-
-            // Reset de la llista i visibilitat per defecte
-            Cursos.Clear();
-            CercaVisibility = Visibility.Visible;
-
-            switch (mode)
+            // Si el paràmetre és buit
+            if (param == null)
             {
-                case "TOTS":
-                    TitolPantalla = "CURSOS: TOTS";
-                    ParametreCercaCursos = 0;
-                    ClearUsuaris();
-                    CercaVisibility = Visibility.Collapsed;
-                    _ = MostrarCursosAsync();
-                    break;
-
-                case "PER_ID":
-                    TitolPantalla = "CURSOS: PER ID";
-                    ParametreCercaCursos = 0;
-                    ClearUsuaris();
-                    TipusCercaActualCursos = CursosTipusCerca.PerId;
-                    break;
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
+            else
+            {
+                string mode = param.ToString();
+
+                Cursos.Clear();
+                CercaVisibility = Visibility.Visible;
+
+                switch (mode)
+                {
+                    case "TOTS":
+                        TitolPantalla = "CURSOS: TOTS";
+                        ParametreCercaCursos = "";
+                        ClearUsuaris();
+                        CercaVisibility = Visibility.Collapsed;
+                        _ = MostrarCursosAsync();
+                        break;
+
+                    case "PER_ID":
+                        TitolPantalla = "CURSOS: PER ID";
+                        ParametreCercaCursos = "";
+                        ClearUsuaris();
+                        TipusCercaActualCursos = CursosTipusCerca.PerId;
+                        break;
+                }
+            }                
         });
 
         // EXECUTAR CERCA
@@ -158,16 +163,21 @@ namespace PIC.ViewModel
             await CercaCursosAsync();
         });
 
-        // MÈTODE DE CERCA AMB PROTECCIÓ DE NULLS
+        // MÈTODE DE CERCA
         public async Task CercaCursosAsync()
         {
-            try
+            // Si el textbox és buit
+            if (string.IsNullOrEmpty(ParametreCercaCursos))
+            {
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
+            }
+            else
             {
                 Cursos.Clear();
                 switch (TipusCercaActualCursos)
                 {
                     case CursosTipusCerca.PerId:
-                        var curs = await _cursosApiClient.GetCursPerIdAsync(ParametreCercaCursos);
+                        var curs = await _cursosApiClient.GetCursPerIdAsync(int.Parse(ParametreCercaCursos));
 
                         if (curs != null)
                         {
@@ -180,43 +190,35 @@ namespace PIC.ViewModel
                         break;
                 }
             }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
-            }
         }
 
         // MOSTRAR CURSOS
         public async Task MostrarCursosAsync()
         {
-            try
+            // Si la api falla
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
+                MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+            }
+            // Si la api funciona
+            else
+            {                
+                var llista = await _cursosApiClient.GetAllCursosAsync();
+
+                // Si la consulta falla
+                if (llista == null)
                 {
-                    MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+                    MissatgeError.Mostrar("No s'han pogut retornar els Cursos. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                 }
                 else
                 {
-                    var llista = await _cursosApiClient.GetAllCursosAsync();
-                    if (llista == null)
-                    {
-                        MissatgeError.Mostrar("No s'han pogut retornar els Cursos. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
-                    }
-                    else
-                    {
-                        Cursos.Clear();
+                    Cursos.Clear();
 
-                        foreach (var u in llista)
-                        {
-                            Cursos.Add(u);
-                        }
+                    foreach (var u in llista)
+                    {
+                        Cursos.Add(u);
                     }
-                }                    
-            }
-
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("No es pot connectar amb el servidor: " + ex.Message);
+                }                
             }
         }
 
@@ -229,6 +231,7 @@ namespace PIC.ViewModel
         // EDITAR CURS
         public ICommand EditarCursMenu_Click => new RelayCommand(async _ =>
         {
+            // Si no hi ha cap curs seleccionat
             if (_cursSeleccionat != null)
             {
                 await EditarCurs.Mostrar(CursSeleccionat);
@@ -242,17 +245,23 @@ namespace PIC.ViewModel
         // ESBORRAR CURS
         public ICommand EsborrarCursMenu_Click => new RelayCommand(async _ =>
         {
+            // Si no hi ha cap curs seleccionat
             if (_cursSeleccionat != null)
             {
                 int cursId = (int)_cursSeleccionat.Id;
                 var comptarUsuaris = await _usuarisApiClient.GetUsuarisPerIdCursAsync(cursId);
 
-                if (comptarUsuaris.Count > 0)
+                // Si la consulta falla
+                if (comptarUsuaris == null)
+                {
+                    MissatgeError.Mostrar("Hi ha hagut un prolema al intentar esborrar el curs.");
+                }
+                // Si el curs conté alumnes
+                else if (comptarUsuaris.Count > 0)
                 {
                     MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
                         "Si vols esborrar aquest curs, primer hasd'eliminar els seus alumnes.");
                 }
-
                 else
                 {
                     ConfirmarEsborrar.Mostrar(_cursSeleccionat, this);
@@ -263,12 +272,6 @@ namespace PIC.ViewModel
                 MissatgeError.Mostrar("Cal seleccionar un curs.");
             }
         });
-
-        // BUIDAR LIST VIEW CURSOS
-        public void ClearCursos()
-        {
-            Cursos.Clear();
-        }
 
         // BUIDAR LIST VIEW USUARIS
         public void ClearUsuaris()

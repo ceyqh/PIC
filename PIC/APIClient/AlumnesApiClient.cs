@@ -42,7 +42,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         var createdAlumne = await response.Content.ReadAsAsync<Alumne>();
-                        response.Dispose();
                         return createdAlumne;
                     }
                 }
@@ -73,7 +72,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
                         return result;
                     }
                 }
@@ -105,7 +103,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
                         return result;
                     }
                 }

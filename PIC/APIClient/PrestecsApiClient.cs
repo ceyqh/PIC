@@ -44,8 +44,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        prestec = await response.Content.ReadAsAsync<List<Prestec>>();
-                        response.Dispose();
+                        prestec = await response.Content.ReadAsAsync<List<Prestec>>(); 
                         return prestec;
                     }
                 }
@@ -77,12 +76,75 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        prestec = await response.Content.ReadAsAsync<Prestec>();
-                        response.Dispose();
+                        prestec = await response.Content.ReadAsAsync<Prestec>(); 
                         return prestec;
                     }
                 }
                 
+
+                // Si falla
+                catch
+                {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        // PRÉSTECS PER USUARI
+        public async Task<List<Prestec>> GetPrestecsPerIdUsuariAsync(int Id)
+        {
+            List<Prestec> prestecs = new List<Prestec>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync($"prestecs/usuaris?id={Id}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        prestecs = await response.Content.ReadAsAsync<List<Prestec>>();
+                        return prestecs;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return null;
+                }
+            }
+            return null;
+        }
+
+        // PRÉSTECS PER USUARI
+        public async Task<List<Prestec>> GetPrestecsPerIdDispositiuAsync(int Id)
+        {
+            List<Prestec> prestecs = new List<Prestec>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync($"prestecs/dispositius?id={Id}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        prestecs = await response.Content.ReadAsAsync<List<Prestec>>();
+                        return prestecs;
+                    }
+                }
 
                 // Si falla
                 catch
@@ -109,8 +171,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var createdPrestec = await response.Content.ReadAsAsync<Prestec>();
-                        response.Dispose();
+                        var createdPrestec = await response.Content.ReadAsAsync<Prestec>(); 
                         return createdPrestec;
                     }
                 }
@@ -140,8 +201,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }
@@ -171,8 +231,7 @@ namespace PIC.APIClient
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn
-                        var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
+                        var result = await response.Content.ReadAsAsync<int>(); 
                         return result;
                     }
                 }

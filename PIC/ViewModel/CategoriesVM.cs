@@ -64,7 +64,7 @@ namespace PIC.ViewModel
             set { _titolPantalla = value; OnPropertyChanged(); }
         }
 
-        // CURS SEL·LECCIONAT
+        // CATEGORIA SELECCIONADA
         private Categoria _categoriaSeleccionada;
         public Categoria CategoriaSeleccionada
         {
@@ -74,6 +74,7 @@ namespace PIC.ViewModel
                 _categoriaSeleccionada = value;
                 OnPropertyChanged();
 
+                // Carregar els dispositius de la categoria al seleccionar-ne una
                 if (_categoriaSeleccionada != null)
                 {
                     _ = CarregarDispositiusDeCategoriaAsync((int)_categoriaSeleccionada.Id);
@@ -81,23 +82,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // CARREGAR DISPOSITIUS DE LA CATEGORIA
         private async Task CarregarDispositiusDeCategoriaAsync(int cursId)
         {
-            try
+            Dispositius.Clear();
+            var llista = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(cursId);
+
+            // Si la consulta funciona
+            if (llista != null)
             {
-                var llista = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(cursId);
-
-                Dispositius.Clear();
-
                 foreach (var u in llista)
                 {
                     Dispositius.Add(u);
                 }
-            }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error carregant dispositius: " + ex.Message);
-            }
+            }            
         }
 
         // TIPUS DE CERCA
@@ -113,8 +111,8 @@ namespace PIC.ViewModel
         }
 
         // PARAMETRE DE CERCA DEL CAMP DE TEXT
-        private int _parametreCercaCategories;
-        public int ParametreCercaCategories
+        private string _parametreCercaCategories;
+        public string ParametreCercaCategories
         {
             get => _parametreCercaCategories;
             set
@@ -127,30 +125,36 @@ namespace PIC.ViewModel
         // COMANDAMENTS
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            if (param == null) return;
-            string mode = param.ToString();
-
-            // Reset de la llista i visibilitat per defecte
-            Categories.Clear();
-            CercaVisibility = Visibility.Visible;
-
-            switch (mode)
+            // Si el el paràmetre és buit
+            if (param == null)
             {
-                case "TOTS":
-                    TitolPantalla = "CATEGORIES: TOTS";
-                    ParametreCercaCategories = 0;
-                    ClearUsuaris();
-                    CercaVisibility = Visibility.Collapsed;
-                    _ = MostrarCategoriesAsync();
-                    break;
-
-                case "PER_ID":
-                    TitolPantalla = "CATEGORIES: PER ID";
-                    ParametreCercaCategories = 0;
-                    ClearUsuaris();
-                    TipusCercaActualCategories = CategoriesTipusCerca.PerId;
-                    break;
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
+            else
+            {
+                string mode = param.ToString();
+
+                Categories.Clear();
+                CercaVisibility = Visibility.Visible;
+
+                switch (mode)
+                {
+                    case "TOTS":
+                        TitolPantalla = "CATEGORIES: TOTS";
+                        ParametreCercaCategories = "";
+                        ClearDispositius();
+                        CercaVisibility = Visibility.Collapsed;
+                        _ = MostrarCategoriesAsync();
+                        break;
+
+                    case "PER_ID":
+                        TitolPantalla = "CATEGORIES: PER ID";
+                        ParametreCercaCategories = "";
+                        ClearDispositius();
+                        TipusCercaActualCategories = CategoriesTipusCerca.PerId;
+                        break;
+                }
+            }            
         });
 
         // EXECUTAR CERCA
@@ -159,78 +163,78 @@ namespace PIC.ViewModel
             await CercaCategoriesAsync();
         });
 
-        // MÈTODE DE CERCA AMB PROTECCIÓ DE NULLS
+        // MÈTODE DE CERCA
         public async Task CercaCategoriesAsync()
         {
-            try
+            // Si el textbox és buit
+            if (string.IsNullOrEmpty(ParametreCercaCategories))
+            {
+                MissatgeError.Mostrar("El camp no pot quedar buit.");
+            }
+            else
             {
                 Categories.Clear();
                 switch (TipusCercaActualCategories)
                 {
                     case CategoriesTipusCerca.PerId:
-                        var curs = await _categoriesApiClient.GetCategoriaPerIdAsync(ParametreCercaCategories);
+                        var curs = await _categoriesApiClient.GetCategoriaPerIdAsync(int.Parse(ParametreCercaCategories));
 
-                        if (curs != null)
-                        {
-                            Categories.Add(curs);
-                        }
-                        else
+                        // Si la consulta falla o és buida
+                        if (curs == null)
                         {
                             MissatgeError.Mostrar("No s'ha trobat cap categoria amb aquest ID.");
                         }
+                        // Si la consulta funciona
+                        else
+                        {
+                            Categories.Add(curs);
+                        }
                         break;
                 }
-            }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error en la cerca: " + ex.Message);
-            }
+            }           
         }
 
-        // MOSTRAR CURSOS
+        // MOSTRAR CATEGORIES
         public async Task MostrarCategoriesAsync()
         {
-            try
+            // Si la api falla
+            if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
-                if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
+                MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+            }
+            // Si la api funciona
+            else
+            {
+                var llista = await _categoriesApiClient.GetAllCategoriesAsync();
+
+                // Si la consulta falla
+                if (llista == null)
                 {
-                    MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
-                    
+                    MissatgeError.Mostrar("No s'han pogut mostrar les Categories. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
                 }
+                // Si la consulta funciona
                 else
                 {
-                    var llista = await _categoriesApiClient.GetAllCategoriesAsync();
-                    if (llista == null)
+                    Categories.Clear();
+
+                    foreach (var u in llista)
                     {
-                        MissatgeError.Mostrar("No s'han pogut mostrar les Categories. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
+                        Categories.Add(u);
                     }
-                    else
-                    {
-                        Categories.Clear();
-
-                        foreach (var u in llista)
-                        {
-                            Categories.Add(u);
-                        }
-                    }                    
-                }                    
-            }
-
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("No es pot connectar amb el servidor: " + ex.Message);
+                }
             }
         }
 
-        // AFEGIR CURS
+        // AFEGIR CATEGORIA
         public ICommand AfegirCategoriaMenu_Click => new RelayCommand(async _ =>
         {
             AfegirCategoria.Mostrar();
         });
 
-        // EDITAR CURS
+        // EDITAR CATEGORIA
         public ICommand EditarCategoriaMenu_Click => new RelayCommand(async _ =>
         {
+            // Si no hi ha cap categoria seleccionada
             if (_categoriaSeleccionada != null)
             {
                 await EditarCategoria.Mostrar(CategoriaSeleccionada);
@@ -241,20 +245,26 @@ namespace PIC.ViewModel
             }
         });
 
-        // ESBORRAR CURS
+        // ESBORRAR CATEGORIA
         public ICommand EsborrarCategoriaMenu_Click => new RelayCommand(async _ =>
         {
+            // Si no hi ha cap categoria seleccionada
             if (_categoriaSeleccionada != null)
             {
                 int categoriad = (int)_categoriaSeleccionada.Id;
                 var comptarUsuaris = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(categoriad);
 
-                if (comptarUsuaris.Count > 0)
+                // Si la consulta falla
+                if (comptarUsuaris == null)
+                {
+                    MissatgeError.Mostrar("Hi ha hagut un prolema al intentar esborrar la categoria.");
+                }
+                // Si la categoria conté dispositius
+                else if (comptarUsuaris.Count > 0)
                 {
                     MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
                         "Si vols esborrar aquest curs, primer hasd'eliminar els seus alumnes.");
                 }
-
                 else
                 {
                     ConfirmarEsborrar.Mostrar(_categoriaSeleccionada, this);
@@ -266,14 +276,8 @@ namespace PIC.ViewModel
             }
         });
 
-        // BUIDAR LIST VIEW CURSOS
-        public void ClearCursos()
-        {
-            Categories.Clear();
-        }
-
-        // BUIDAR LIST VIEW USUARIS
-        public void ClearUsuaris()
+        // BUIDAR LIST VIEW CATEGORIES
+        public void ClearDispositius()
         {
             Dispositius.Clear();
         }

@@ -50,18 +50,36 @@
                     <!-- PER CURS -->
                     <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
                               Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_CURS">
+                              CommandParameter="PER_DISPOSITIU">
                         <Grid>
-                            <TextBlock Text="PER CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                            <TextBlock Text="PER DISPOSITIU" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
 
                     <!-- PER DEPARTAMENT -->
                     <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
                               Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_DEPARTAMENT">
+                              CommandParameter="PER_USUARI">
                         <Grid>
-                            <TextBlock Text="PER DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                            <TextBlock Text="PER USUARI" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+                    
+                    <!-- PER DEPARTAMENT -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="EN_CURS">
+                        <Grid>
+                            <TextBlock Text="EN CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+                    
+                    <!-- PER DEPARTAMENT -->
+                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
+                              Command="{Binding CanviarModeCercaCommand}"
+                              CommandParameter="CADUCATS">
+                        <Grid>
+                            <TextBlock Text="CADUCATS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
                         </Grid>
                     </Menu:Btn>
                 </StackPanel>
@@ -97,7 +115,7 @@
                         <TextBox VerticalAlignment="Center"
                                  Width="200" 
                                  Visibility="{Binding CercaVisibility}" 
-                                 Text="{Binding ParametreCercaUsuaris, UpdateSourceTrigger=PropertyChanged}"
+                                 Text="{Binding ParametreCercaPrestecs, UpdateSourceTrigger=PropertyChanged}"
                          Margin="0,0,10,0"/>
 
                         <!-- BUSCAR -->

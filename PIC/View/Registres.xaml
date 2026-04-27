@@ -137,10 +137,10 @@
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70"/>
+                                    <ColumnDefinition Width="0.75*"/>
+                                    <ColumnDefinition Width="1.25*"/>
                                     <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
+                                    <ColumnDefinition Width="0.75*"/>
                                     <ColumnDefinition Width="1*"/>
                                 </Grid.ColumnDefinitions>
 
@@ -182,10 +182,10 @@
                                             <Grid>
                                                 <Grid.ColumnDefinitions>
                                                     <ColumnDefinition Width="70"/>
+                                                    <ColumnDefinition Width="0.75*"/>
+                                                    <ColumnDefinition Width="1.25*"/>
                                                     <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
-                                                    <ColumnDefinition Width="1*"/>
+                                                    <ColumnDefinition Width="0.75*"/>
                                                     <ColumnDefinition Width="1*"/>
                                                 </Grid.ColumnDefinitions>
 

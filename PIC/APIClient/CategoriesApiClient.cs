@@ -42,7 +42,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         categoria = await response.Content.ReadAsAsync<List<Categoria>>();
-                        response.Dispose();
                         return categoria;
                     }
                 }
@@ -75,7 +74,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         categoria = await response.Content.ReadAsAsync<Categoria>();
-                        response.Dispose();
                         return categoria;
                     }
                 }
@@ -106,7 +104,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         var createdCategoria = await response.Content.ReadAsAsync<Categoria>();
-                        response.Dispose();
                         return createdCategoria;
                     }
                 }
@@ -137,7 +134,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
                         return result;
                     }
                 }
@@ -169,7 +165,6 @@ namespace PIC.APIClient
                     {
                         // Retorn
                         var result = await response.Content.ReadAsAsync<int>();
-                        response.Dispose();
                         return result;
                     }
                 }
