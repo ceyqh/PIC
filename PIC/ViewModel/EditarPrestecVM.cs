@@ -1,11 +1,7 @@
 ﻿using PIC.APIClient;
 using PIC.Model;
 using PIC.Utilities;
-using PIC.View;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
@@ -17,6 +13,7 @@ namespace PIC.ViewModel
         private readonly PrestecsApiClient _prestecsApiClient;
         private readonly UsuarisApiClient _usuarisApiClient;
         private readonly DispositiusApiClient _dispositiusApiClient;
+        private readonly RegistresApiClient _registresApiClient;
 
         private readonly PrestecsVM _prestecsVM;
 
@@ -27,6 +24,12 @@ namespace PIC.ViewModel
         // Validador per assegurar que no es dupliquen accions
         private bool esPotEditar = true;
 
+        // ID Dispositiu antic
+        int DispositiuAnticID;
+
+        // ID Usuari antic
+        int UsuariAnticID;
+
         // CONSTRUCTOR
         public EditarPrestecVM(PrestecsVM prestecsVM)
         {
@@ -36,6 +39,7 @@ namespace PIC.ViewModel
             _prestecsApiClient = new PrestecsApiClient();
             _usuarisApiClient = new UsuarisApiClient();
             _dispositiusApiClient = new DispositiusApiClient();
+            _registresApiClient = new RegistresApiClient();
         }
 
         // VISIBILITAT MENU
@@ -131,6 +135,9 @@ namespace PIC.ViewModel
             DataEntrega = _prestecEnEdicio.DataEntrega;
             HoraSeleccionada = _prestecEnEdicio.DataRetorn.Hour;
             DataRetorn = _prestecEnEdicio.DataRetorn;
+            
+            UsuariAnticID = _prestecEnEdicio.IdUsuari;
+            DispositiuAnticID = _prestecEnEdicio.IdDispositiu;
 
             if (DataRetorn == new DateTime(
                 DataEntrega.Year,
@@ -183,6 +190,8 @@ namespace PIC.ViewModel
                     else
                     {
                         // Comprovar que l'usuari existeix
+                        Usuari usuariPrestec = new Usuari();
+
                         bool existeixUsuari = false;
                         int i = 0;
 
@@ -191,6 +200,7 @@ namespace PIC.ViewModel
                             if (usuaris[i].Id == UsuariID)
                             {
                                 existeixUsuari = true;
+                                usuariPrestec = usuaris[i];
                             }
                             else { i++; }
                         }
@@ -275,12 +285,60 @@ namespace PIC.ViewModel
 
                                         int prestecActualitzat = await _prestecsApiClient.UpdatePrestecAsync(nouPrestec);
 
+                                        // Nou dispositiu amb l'estat actualitzat
+                                        Dispositiu nouDispositiuPrestat = new Dispositiu();
+                                        nouDispositiuPrestat.Id = DispositiuID;
+                                        nouDispositiuPrestat.Nom = dispositiuConsulta.Nom;
+                                        nouDispositiuPrestat.IdCategoria = dispositiuConsulta.IdCategoria;
+                                        nouDispositiuPrestat.Estat = "En prestec";
+
+                                        int confirmarDispositiuPrestat = await _dispositiusApiClient.UpdateDispositiuAsync(nouDispositiuPrestat);
+                                        
+                                        // Antic dispositiu amb l'estat actualitzat
+                                        Dispositiu anticDispositiuPrestat = new Dispositiu();
+                                        anticDispositiuPrestat.Id = DispositiuAnticID;
+                                        anticDispositiuPrestat.Nom = dispositiuConsulta.Nom;
+                                        anticDispositiuPrestat.IdCategoria = dispositiuConsulta.IdCategoria;
+                                        anticDispositiuPrestat.Estat = "Disponible";
+
+                                        int confirmarDispositiuActualitzat= await _dispositiusApiClient.UpdateDispositiuAsync(anticDispositiuPrestat);
+
+                                        // Crear registre
+                                        Registre nouRegistre = new Registre();
+                                        nouRegistre.IdPrestec = _prestecEnEdicio.Id;
+                                        nouRegistre.NomUsuari = $"{usuariPrestec.Nom} {usuariPrestec.Cognom}";
+                                        nouRegistre.Accio = "Modificat";
+                                        nouRegistre.IdUsuari = (int)usuariPrestec.Id;
+                                        nouRegistre.NomDispositiu = dispositiuConsulta.Nom;
+                                        nouRegistre.IdDispositiu = (int)dispositiuConsulta.Id;
+                                        nouRegistre.NomGrup = usuariPrestec.Grup;
+                                        nouRegistre.IdGrup = (int)usuariPrestec.IdGrup;
+                                        nouRegistre.DataAccio = DateTime.Now;
+                                        nouRegistre.DataRetorn = DataRetorn;
+
+                                        Registre registreActualitzat = await _registresApiClient.PostRegistreAsync(nouRegistre);
+
                                         // Si actualitzar el préstec falla
                                         if (prestecActualitzat == -1)
                                         {
                                             MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar el préstec");
                                         }
-                                        // Si actualitzar el préstec funciona
+                                        // Si actualitzar el nou dispositiu falla
+                                        else if (confirmarDispositiuPrestat == -1)
+                                        {
+                                            MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar el nou dispositius.");
+                                        }
+                                        // Si actualitzar l'antic dispositiu falla
+                                        else if (confirmarDispositiuActualitzat == -1)
+                                        {
+                                            MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar l'antic dispositius.");
+                                        }
+                                        // Si crear el registre falla
+                                        else if (registreActualitzat == null)
+                                        {
+                                            MissatgeError.Mostrar("Hi ha hagun un problema al crear el registre.");
+                                        }
+                                        // Si tot funciona
                                         else
                                         {
                                             esPotEditar = false;

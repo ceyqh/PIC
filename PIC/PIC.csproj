@@ -84,6 +84,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="APIClient\AdministradorsApiClient.cs" />
     <Compile Include="APIClient\AlumnesApiClient.cs" />
     <Compile Include="APIClient\CategoriesApiClient.cs" />
     <Compile Include="APIClient\CursosApiClient.cs" />

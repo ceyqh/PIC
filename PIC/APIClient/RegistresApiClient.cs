@@ -187,5 +187,36 @@ namespace PIC.APIClient
             }
             return null;
         }
+
+        // ACTUALITZAR REGISTRE
+        public async Task<int> UpdateRegistreAsync(Registre registre)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"registres/{registre.Id}", registre);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        response.Dispose();
+                        return result;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return -1;
+                }
+            }
+            return -1;
+        }
     }
 }

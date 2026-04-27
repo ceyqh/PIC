@@ -22,6 +22,7 @@ namespace PIC.ViewModel
         DeshabilitarDispositiu,
         EsborrarCategoria,
         EsborrarPrestec,
+        FinalitzarPrestec
     }
 
     internal class ConfirmarEsborrarVM: Utilities.ViewModelBase
@@ -34,6 +35,7 @@ namespace PIC.ViewModel
         private readonly CategoriesApiClient _categoriesApiClient = new CategoriesApiClient();
         private readonly DispositiusApiClient _dispositiusApiClient = new DispositiusApiClient();
         private readonly PrestecsApiClient _prestecsApiClient = new PrestecsApiClient();
+        private readonly RegistresApiClient _registresApiClient = new RegistresApiClient();
 
         private UsuarisVM _usuarisVM;
         private CursosVM _cursosVM;
@@ -69,6 +71,7 @@ namespace PIC.ViewModel
             _categoriesApiClient = new CategoriesApiClient();          
             _dispositiusApiClient = new DispositiusApiClient();          
             _prestecsApiClient = new PrestecsApiClient();          
+            _registresApiClient = new RegistresApiClient();          
         }
 
         // TEXT BOTO
@@ -217,15 +220,30 @@ namespace PIC.ViewModel
         }
 
         // OBRIR FINESTRA: PRÉSTECS
-        public void Mostrar(Prestec prestecAEsborrar, PrestecsVM parentVM)
+        public void Mostrar(Prestec prestecAEsborrar, PrestecsVM parentVM, string accio)
         {
-            this._prestecsVM = parentVM; // Ens assegurem que tenim la referència actual
-            this.prestecSeleccionat = prestecAEsborrar;
+            if (accio.ToLower() == "esborrar")
+            {
+                this._prestecsVM = parentVM;
+                this.prestecSeleccionat = prestecAEsborrar;
 
-            Missatge = $"Estàs a punt d'esborrar el préstec de {prestecAEsborrar.NomDispositiu} amb ID({prestecAEsborrar.IdDispositiu}) prestat a en/na  {prestecAEsborrar.NomUsuari} amb ID({prestecAEsborrar.IdUsuari}). Vols confirmar aquesta acció?";
+                Missatge = $"Estàs a punt d'esborrar el préstec de {prestecAEsborrar.NomDispositiu} amb ID({prestecAEsborrar.IdDispositiu}) prestat a en/na  {prestecAEsborrar.NomUsuari} amb ID({prestecAEsborrar.IdUsuari}). Vols confirmar aquesta acció?";
 
-            AEsborrar = AccioAConfirmar.EsborrarPrestec;
-            EsVisible = Visibility.Visible;
+                AEsborrar = AccioAConfirmar.EsborrarPrestec;
+                EsVisible = Visibility.Visible;
+            }
+
+            if (accio.ToLower() == "finalitzar")
+            {
+                TextBoto = "FINALITZAR";
+                this._prestecsVM = parentVM;
+                this.prestecSeleccionat = prestecAEsborrar;
+
+                Missatge = $"Estàs a punt de finalitzar el préstec de {prestecAEsborrar.NomDispositiu} amb ID({prestecAEsborrar.IdDispositiu}) prestat a en/na  {prestecAEsborrar.NomUsuari} amb ID({prestecAEsborrar.IdUsuari}). Vols confirmar aquesta acció?";
+
+                AEsborrar = AccioAConfirmar.FinalitzarPrestec;
+                EsVisible = Visibility.Visible;
+            }            
         }
 
         // ACCIONS
@@ -289,18 +307,66 @@ namespace PIC.ViewModel
 
                 // Si és un PRÉSTEC
                 case AccioAConfirmar.EsborrarPrestec:
+                    Dispositiu dispositiuConsultaEsborrar = await _dispositiusApiClient.GetDispositiuPerIdAsync(prestecSeleccionat.IdDispositiu);
+
+                    Dispositiu dispositiuPrestatEsborrar = new Dispositiu();
+                    dispositiuPrestatEsborrar.Id = prestecSeleccionat.IdDispositiu;
+                    dispositiuPrestatEsborrar.Nom = dispositiuConsultaEsborrar.Nom;
+                    dispositiuPrestatEsborrar.IdCategoria = dispositiuConsultaEsborrar.IdCategoria;
+                    dispositiuPrestatEsborrar.Estat = "Disponible";
+
+                    int confirmarDispositiuPrestatEsborrar = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestatEsborrar);
+
+                    Usuari usuariConsultaEsborrar = await _usuarisApiClient.GetUsuariPerIdAsync(prestecSeleccionat.IdUsuari);
+
+                    // Crear registre
+                    Registre registreModificat = new Registre();
+                    registreModificat.IdPrestec = prestecSeleccionat.Id;
+                    registreModificat.Accio = "Cancel·lat";
+                    registreModificat.NomUsuari = $"{usuariConsultaEsborrar.Nom} {usuariConsultaEsborrar.Cognom}";
+                    registreModificat.IdUsuari = (int)usuariConsultaEsborrar.Id;
+                    registreModificat.NomDispositiu = dispositiuPrestatEsborrar.Nom;
+                    registreModificat.IdDispositiu = (int)dispositiuPrestatEsborrar.Id;
+                    registreModificat.NomGrup = usuariConsultaEsborrar.Grup;
+                    registreModificat.IdGrup = (int)usuariConsultaEsborrar.IdGrup;
+                    registreModificat.DataAccio = DateTime.Now;
+                    registreModificat.DataRetorn = prestecSeleccionat.DataRetorn;
+
+                    Registre registreCreatEsborrar = await _registresApiClient.PostRegistreAsync(registreModificat);
+
                     await _prestecsApiClient.DeletePrestecAsync((int)prestecSeleccionat.Id);
+                    await _prestecsVM.MostrarPrestecsAsync();
+                    break;
 
-                    Dispositiu dispositiuConsulta = await _dispositiusApiClient.GetDispositiuPerIdAsync(prestecSeleccionat.IdDispositiu);
+                case AccioAConfirmar.FinalitzarPrestec:
+                    Dispositiu dispositiuConsultaFinalitzar = await _dispositiusApiClient.GetDispositiuPerIdAsync(prestecSeleccionat.IdDispositiu);
 
-                    Dispositiu dispositiuPrestat = new Dispositiu();
-                    dispositiuPrestat.Id = prestecSeleccionat.IdDispositiu;
-                    dispositiuPrestat.Nom = dispositiuConsulta.Nom;
-                    dispositiuPrestat.IdCategoria = dispositiuConsulta.IdCategoria;
-                    dispositiuPrestat.Estat = "Disponible";
+                    Dispositiu dispositiuPrestatFinalitzar = new Dispositiu();
+                    dispositiuPrestatFinalitzar.Id = prestecSeleccionat.IdDispositiu;
+                    dispositiuPrestatFinalitzar.Nom = dispositiuConsultaFinalitzar.Nom;
+                    dispositiuPrestatFinalitzar.IdCategoria = dispositiuConsultaFinalitzar.IdCategoria;
+                    dispositiuPrestatFinalitzar.Estat = "Disponible";
 
-                    int confirmarDispositiuPrestat = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestat);
+                    int confirmarDispositiuPrestatFinalitzar = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestatFinalitzar);
 
+                    Usuari usuariConsultaFinalitzar = await _usuarisApiClient.GetUsuariPerIdAsync(prestecSeleccionat.IdUsuari);
+
+                    // Crear registre
+                    Registre registreFinalitzat = new Registre();
+                    registreFinalitzat.IdPrestec = prestecSeleccionat.Id;
+                    registreFinalitzat.Accio = "Finalitzat";
+                    registreFinalitzat.NomUsuari = $"{usuariConsultaFinalitzar.Nom} {usuariConsultaFinalitzar.Cognom}";
+                    registreFinalitzat.IdUsuari = (int)usuariConsultaFinalitzar.Id;
+                    registreFinalitzat.NomDispositiu = dispositiuConsultaFinalitzar.Nom;
+                    registreFinalitzat.IdDispositiu = (int)dispositiuConsultaFinalitzar.Id;
+                    registreFinalitzat.NomGrup = usuariConsultaFinalitzar.Grup;
+                    registreFinalitzat.IdGrup = (int)usuariConsultaFinalitzar.IdGrup;
+                    registreFinalitzat.DataAccio = DateTime.Now;
+                    registreFinalitzat.DataRetorn = prestecSeleccionat.DataRetorn;
+
+                    Registre registreCreatFinalitzar = await _registresApiClient.PostRegistreAsync(registreFinalitzat);
+
+                    await _prestecsApiClient.DeletePrestecAsync((int)prestecSeleccionat.Id);
                     await _prestecsVM.MostrarPrestecsAsync();
                     break;
             }

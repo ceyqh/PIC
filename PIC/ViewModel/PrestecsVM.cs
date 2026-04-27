@@ -117,12 +117,25 @@ namespace PIC.ViewModel
             }
         });
 
+        // FINALITZAR PRÉSTEC
+        public ICommand FinalitzarPrestec_Click => new RelayCommand(_ =>
+        {
+            if (_prestecSeleccionat != null)
+            {
+                ConfirmarEsborrar.Mostrar(_prestecSeleccionat, this, "finalitzar");
+            }
+            else
+            {
+                MissatgeError.Mostrar("Cal seleccionar un préstec.");
+            }
+        });
+
         // ESBORRAR PRÉSTEC
         public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
         {
             if (_prestecSeleccionat != null)
             {
-                ConfirmarEsborrar.Mostrar(_prestecSeleccionat, this);
+                ConfirmarEsborrar.Mostrar(_prestecSeleccionat, this, "esborrar");
             }
             else
             {

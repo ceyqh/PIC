@@ -165,8 +165,7 @@ namespace PIC.ViewModel
                     // Si funciona la consulta
                     else
                     {
-                        // Comprovar que l'usuari existeix
-                        
+                        // Comprovar que l'usuari existeix                        
                         Usuari usuariPrestec = new Usuari();
                         
                         bool existeixUsuari = false;
@@ -274,8 +273,22 @@ namespace PIC.ViewModel
                                         dispositiuPrestat.IdCategoria = dispositiuConsulta.IdCategoria;
                                         dispositiuPrestat.Estat = "En prestec";
 
-
                                         int confirmarDispositiuPrestat = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestat);
+
+                                        // Crear registre
+                                        Registre nouRegistre = new Registre();
+                                        nouRegistre.IdPrestec = prestecCreat.Id;
+                                        nouRegistre.Accio = "Prestat";
+                                        nouRegistre.NomUsuari = $"{usuariPrestec.Nom} {usuariPrestec.Cognom}";
+                                        nouRegistre.IdUsuari = (int)usuariPrestec.Id;
+                                        nouRegistre.NomDispositiu = dispositiuPrestat.Nom;
+                                        nouRegistre.IdDispositiu = (int)dispositiuPrestat.Id;
+                                        nouRegistre.NomGrup = usuariPrestec.Grup;
+                                        nouRegistre.IdGrup = (int)usuariPrestec.IdGrup;
+                                        nouRegistre.DataAccio = DataEntrega;
+                                        nouRegistre.DataRetorn = DataRetorn;
+
+                                        Registre registreCreat = await _registresApiClient.PostRegistreAsync(nouRegistre);
 
                                         // Si crear el préstec falla
                                         if (prestecCreat == null)
@@ -287,35 +300,17 @@ namespace PIC.ViewModel
                                         {
                                             MissatgeError.Mostrar("Hi ha hagun un problema al actualitzar el dispositiu.");
                                         }
-                                        // Si crear el préstec funciona
+                                        // Si crear el registre falla
+                                        else if (registreCreat == null)
+                                        {
+                                            MissatgeError.Mostrar("Hi ha hagun un problema al crear el registre.");
+                                        }
+                                        // Si tot funciona
                                         else
                                         {
-                                            Registre nouRegistre = new Registre();
-                                            nouRegistre.IdPrestec = prestecCreat.Id;
-                                            nouRegistre.Accio = "Prestec";
-                                            nouRegistre.NomUsuari = $"{usuariPrestec.Nom} {usuariPrestec.Cognom}";
-                                            nouRegistre.IdUsuari = (int)usuariPrestec.Id;
-                                            nouRegistre.NomDispositiu = dispositiuPrestat.Nom;
-                                            nouRegistre.IdDispositiu= (int)dispositiuPrestat.Id;
-                                            nouRegistre.NomGrup = usuariPrestec.Grup;
-                                            nouRegistre.IdGrup = (int)usuariPrestec.IdGrup;
-                                            nouRegistre.DataAccio = DataEntrega;
-                                            nouRegistre.DataRetorn= DataRetorn;
-
-                                            Registre registreCreat= await _registresApiClient.PostRegistreAsync(nouRegistre);
-
-                                            // Si crear el registre falla
-                                            if (registreCreat == null)
-                                            {
-                                                MissatgeError.Mostrar("Hi ha hagun un problema al crear el registre.");
-                                            }
-                                            // Si crear el registre funciona
-                                            else
-                                            {
-                                                esPotAfegir = false;
-                                                await _prestecsVM.MostrarPrestecsAsync();
-                                                EsVisible = Visibility.Collapsed;
-                                            }                                                
+                                            esPotAfegir = false;
+                                            await _prestecsVM.MostrarPrestecsAsync();
+                                            EsVisible = Visibility.Collapsed;
                                         }
                                     }
                                 }
