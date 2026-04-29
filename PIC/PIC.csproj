@@ -106,8 +106,10 @@
     <Compile Include="Model\Registre.cs" />
     <Compile Include="Model\Usuari.cs" />
     <Compile Include="Utilities\Btn.cs" />
+    <Compile Include="Utilities\PasswordHelper.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
     <Compile Include="Utilities\ViewModelBase.cs" />
+    <Compile Include="ViewModel\AfegirAdministradorVM.cs" />
     <Compile Include="ViewModel\AfegirAlumneVM.cs" />
     <Compile Include="ViewModel\AfegirCategoriaVM.cs" />
     <Compile Include="ViewModel\AfegirCursVM.cs" />
@@ -117,9 +119,11 @@
     <Compile Include="ViewModel\AfegirProfessorVM.cs" />
     <Compile Include="ViewModel\CategoriesVM.cs" />
     <Compile Include="ViewModel\ConfirmarEsborrarVM.cs" />
+    <Compile Include="ViewModel\ConfirmarNouCursVM.cs" />
     <Compile Include="ViewModel\CursosVM.cs" />
     <Compile Include="ViewModel\DepartamentsVM.cs" />
     <Compile Include="ViewModel\DispositiusVM.cs" />
+    <Compile Include="ViewModel\EditarAdministradorVM.cs" />
     <Compile Include="ViewModel\EditarCategoriaVM.cs" />
     <Compile Include="ViewModel\EditarCursVM.cs" />
     <Compile Include="ViewModel\EditarDepartamentVM.cs" />
@@ -133,6 +137,9 @@
     <Compile Include="ViewModel\PrestecsVM.cs" />
     <Compile Include="ViewModel\RegistresVM.cs" />
     <Compile Include="ViewModel\UsuarisVM.cs" />
+    <Compile Include="View\AfegirAdministrador.xaml.cs">
+      <DependentUpon>AfegirAdministrador.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\AfegirAlumne.xaml.cs">
       <DependentUpon>AfegirAlumne.xaml</DependentUpon>
     </Compile>
@@ -160,6 +167,9 @@
     <Compile Include="View\ConfirmarEsborrar.xaml.cs">
       <DependentUpon>ConfirmarEsborrar.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\ConfirmarNouCurs.xaml.cs">
+      <DependentUpon>ConfirmarNouCurs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Cursos.xaml.cs">
       <DependentUpon>Cursos.xaml</DependentUpon>
     </Compile>
@@ -168,6 +178,9 @@
     </Compile>
     <Compile Include="View\Dispositius.xaml.cs">
       <DependentUpon>Dispositius.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\EditarAdministrador.xaml.cs">
+      <DependentUpon>EditarAdministrador.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\EditarCategoria.xaml.cs">
       <DependentUpon>EditarCategoria.xaml</DependentUpon>
@@ -221,6 +234,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\ComboBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Styles\Image.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -237,7 +254,15 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Styles\TextBox.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Utilities\DataTemplate.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\AfegirAdministrador.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -277,6 +302,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\ConfirmarNouCurs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Cursos.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -286,6 +315,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Dispositius.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\EditarAdministrador.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

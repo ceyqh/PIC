@@ -93,6 +93,7 @@
                         <Grid Grid.Row="2">
                             <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                       ItemsSource="{Binding Administradors}"
+                                      SelectedItem="{Binding AdministradorSeleccionat, Mode=TwoWay}"
                                       Style="{StaticResource ListViewStyle}"
                                       ItemContainerStyle="{StaticResource ListViewStyleItem}">
 
@@ -161,19 +162,19 @@
                                         Grid.Row="0"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
+                                        Command="{Binding AfegirAdministradorMenu_Click}"/>
 
                                 <Button Content="EDITAR ADMINISTRADOR"
                                         Grid.Row="2"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
+                                        Command="{Binding EditarAdministradorMenu_Click}"/>
 
                                 <Button Content="ESBORRAR ADMINISTRADOR"
                                         Grid.Row="4"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
+                                        Command="{Binding EsborrarAdministradorMenu_Click}"/>
 
                                 <Button Content="COMENÇAR NOU CURS"
                                         Grid.Row="6"
@@ -246,5 +247,8 @@
         </Grid>
         
         <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
+        <local:AfegirAdministrador DataContext="{Binding AfegirAdministrador}" d:IsHidden="true"/>
+        <local:EditarAdministrador DataContext="{Binding EditarAdministrador}" d:IsHidden="true"/>
+        <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

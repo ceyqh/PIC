@@ -44,7 +44,7 @@
                                Margin="0,0,0,10"/>
 
                     <TextBox Text="{Binding Nom}"  
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- BOTONS -->

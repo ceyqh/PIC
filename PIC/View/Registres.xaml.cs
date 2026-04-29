@@ -24,5 +24,10 @@ namespace PIC.View
         {
             InitializeComponent();
         }
+
+        private void TextBlock_CanExecute(object sender, CanExecuteRoutedEventArgs e)
+        {
+
+        }
     }
 }

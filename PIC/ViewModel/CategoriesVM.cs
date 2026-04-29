@@ -262,8 +262,8 @@ namespace PIC.ViewModel
                 // Si la categoria conté dispositius
                 else if (comptarUsuaris.Count > 0)
                 {
-                    MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
-                        "Si vols esborrar aquest curs, primer hasd'eliminar els seus alumnes.");
+                    MissatgeError.Mostrar("Aquesta categoria conté un o varis dispositius, per seguretat, només es poden esborrar les categores buides. " +
+                        "Si vols esborrar aquesta categoria, primer hasd'eliminar els seus dispositius.");
                 }
                 else
                 {

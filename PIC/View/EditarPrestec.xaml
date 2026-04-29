@@ -48,7 +48,7 @@
 
                     <TextBox Text="{Binding UsuariID}"  
                              Margin="0,0,0,20"  
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- ID DISPOSITIU -->
@@ -62,7 +62,7 @@
 
                     <TextBox Text="{Binding DispositiuID}" 
                              Margin="0,0,0,20"                                 
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- DATA ENTREGA -->
@@ -106,6 +106,7 @@
                                    Margin="0,0,0,10"/>
 
                         <ComboBox SelectedValuePath="Content"
+                                  Style="{StaticResource Main_ComboBox}" 
                                   SelectedValue="{Binding HoraSeleccionada}">
 
                             <ComboBoxItem Content="1"/>

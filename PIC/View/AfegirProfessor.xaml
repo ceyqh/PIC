@@ -46,7 +46,7 @@
 
                     <TextBox Text="{Binding Nom}"  
                              Margin="0,0,0,20"  
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- COGNOM -->
@@ -60,7 +60,7 @@
 
                     <TextBox Text="{Binding Cognom}" 
                              Margin="0,0,0,20"                                 
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- GRUP -->
@@ -74,6 +74,7 @@
 
                     <ComboBox Name="cbCursos"
                               ItemsSource="{Binding Departaments}"
+                              Style="{StaticResource Main_ComboBox}" 
                               SelectedValuePath="Id"
                               SelectedValue="{Binding DepartamentId}">
 

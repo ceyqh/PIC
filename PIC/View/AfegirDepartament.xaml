@@ -7,8 +7,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="450" d:DesignWidth="800">
     
-    <Grid x:Name="OverlayAfegirAlumne"
-          Visibility="{Binding EsVisible}"
+    <Grid Visibility="{Binding EsVisible}"
           Background="#80000000">
 
         <!-- POPUP -->
@@ -44,7 +43,7 @@
                                Margin="0,0,0,10"/>
 
                     <TextBox Text="{Binding Nom}"  
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- BOTONS -->

@@ -23,7 +23,6 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
-                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- TÍTOL -->
@@ -47,7 +46,7 @@
 
                     <TextBox Text="{Binding Nom}"  
                              Margin="0,0,0,20"  
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- COGNOM -->
@@ -61,7 +60,7 @@
 
                     <TextBox Text="{Binding Cognom}" 
                              Margin="0,0,0,20"                                 
-                             Style="{StaticResource Fraktion_Dark_Font_TextBox}"/>
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- GRUP -->
@@ -73,8 +72,8 @@
                                FontSize="12" 
                                Margin="0,0,0,10"/>
 
-                    <ComboBox Name="cbCursos"
-                              ItemsSource="{Binding Cursos}"
+                    <ComboBox ItemsSource="{Binding Cursos}"
+                              Style="{StaticResource Main_ComboBox}"
                               SelectedValuePath="Id"
                               SelectedValue="{Binding CursId}">
 

@@ -58,7 +58,7 @@ namespace PIC.APIClient
         }
 
         // AFEGIR ADMINISTRADOR
-        public async Task<Administrador> PostAlumneAsync(Administrador nouAdministrador)
+        public async Task<Administrador> PostAdministradorAsync(Administrador nouAdministrador)
         {
             using (var client = new HttpClient())
             {
@@ -85,6 +85,67 @@ namespace PIC.APIClient
                 }
             }
             return null;
+        }
+
+        // ACTUALITZAR ADMINISTRADOR
+        public async Task<int> UpdateAdministradorAsync(Administrador administrador)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.PutAsJsonAsync($"administradors/{administrador.Id}", administrador);
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        return result;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return -1;
+                }
+            }
+            return -1;
+        }
+
+        // ESBORRAR ADMINISTRADOR
+        public async Task<int> DeleteAdministradorAsync(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.DeleteAsync($"administradors/{id}");
+
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        return result;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return -1;
+                }
+            }
+            return -1;
         }
     }
 }

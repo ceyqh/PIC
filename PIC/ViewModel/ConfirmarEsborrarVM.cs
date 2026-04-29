@@ -22,7 +22,8 @@ namespace PIC.ViewModel
         DeshabilitarDispositiu,
         EsborrarCategoria,
         EsborrarPrestec,
-        FinalitzarPrestec
+        FinalitzarPrestec,
+        EsborrarAdministrador
     }
 
     internal class ConfirmarEsborrarVM: Utilities.ViewModelBase
@@ -36,6 +37,7 @@ namespace PIC.ViewModel
         private readonly DispositiusApiClient _dispositiusApiClient = new DispositiusApiClient();
         private readonly PrestecsApiClient _prestecsApiClient = new PrestecsApiClient();
         private readonly RegistresApiClient _registresApiClient = new RegistresApiClient();
+        private readonly AdministradorsApiClient _administradorsApiClient = new AdministradorsApiClient();
 
         private UsuarisVM _usuarisVM;
         private CursosVM _cursosVM;
@@ -43,6 +45,7 @@ namespace PIC.ViewModel
         private CategoriesVM _categoriesVM;
         private DispositiusVM _dispositiusVM;
         private PrestecsVM _prestecsVM;
+        private PicVM _picVM;
 
         private Usuari usuariSeleccionat;
         private Curs cursSeleccionat;
@@ -50,6 +53,7 @@ namespace PIC.ViewModel
         private Dispositiu dispositiuSeleccionat;
         private Categoria categoriaSeleccionat;
         private Prestec prestecSeleccionat;
+        private Administrador administradorSeleccionat;
 
         public ConfirmarEsborrarVM() 
         {
@@ -72,6 +76,7 @@ namespace PIC.ViewModel
             _dispositiusApiClient = new DispositiusApiClient();          
             _prestecsApiClient = new PrestecsApiClient();          
             _registresApiClient = new RegistresApiClient();          
+            _administradorsApiClient = new AdministradorsApiClient();          
         }
 
         // TEXT BOTO
@@ -158,7 +163,7 @@ namespace PIC.ViewModel
         // OBRIR FINESTRA: DEPARTAMENT
         public void Mostrar(Departament departamentAEsborrar, DepartamentsVM parentVM)
         {
-            this._departamentsVM = parentVM; // Ens assegurem que tenim la referència actual
+            this._departamentsVM = parentVM;
             this.departamentSeleccionat = departamentAEsborrar;
 
             Missatge = $"Estàs a punt d'esborrar el departament {departamentAEsborrar.Nom} amb ID({departamentAEsborrar.Id}). Vols confirmar aquesta acció?";
@@ -170,7 +175,7 @@ namespace PIC.ViewModel
         // OBRIR FINESTRA: CATEGORIA
         public void Mostrar(Categoria categoriaAEsborrar, CategoriesVM parentVM)
         {
-            this._categoriesVM = parentVM; // Ens assegurem que tenim la referència actual
+            this._categoriesVM = parentVM;
             this.categoriaSeleccionat = categoriaAEsborrar;
 
             Missatge = $"Estàs a punt d'esborrar la categoria {categoriaAEsborrar.Nom} amb ID({categoriaAEsborrar.Id}). Vols confirmar aquesta acció?";
@@ -184,7 +189,7 @@ namespace PIC.ViewModel
         {
             if (accio.ToLower() == "esborrar")
             {
-                this._dispositiusVM = parentVM; // Ens assegurem que tenim la referència actual
+                this._dispositiusVM = parentVM;
                 this.dispositiuSeleccionat = disposittiuAModificar;
 
                 Missatge = $"Estàs a punt d'esborrar el dispositiu {disposittiuAModificar.Nom} amb ID({disposittiuAModificar.Id}). Vols confirmar aquesta acció?";
@@ -195,7 +200,7 @@ namespace PIC.ViewModel
 
             if (accio.ToLower() == "habilitar")
             {
-                this._dispositiusVM = parentVM; // Ens assegurem que tenim la referència actual
+                this._dispositiusVM = parentVM;
                 this.dispositiuSeleccionat = disposittiuAModificar;
 
                 Missatge = $"Estàs a punt d'habilitar la categoria {disposittiuAModificar.Nom} amb ID({disposittiuAModificar.Id}). Vols confirmar aquesta acció?";
@@ -207,7 +212,7 @@ namespace PIC.ViewModel
 
             if (accio.ToLower() == "deshabilitar")
             {
-                this._dispositiusVM = parentVM; // Ens assegurem que tenim la referència actual
+                this._dispositiusVM = parentVM;
                 this.dispositiuSeleccionat = disposittiuAModificar;
 
                 Missatge = $"Estàs a punt de deshabilitar la categoria {disposittiuAModificar.Nom} amb ID({disposittiuAModificar.Id}). Vols confirmar aquesta acció?";
@@ -216,7 +221,6 @@ namespace PIC.ViewModel
                 AEsborrar = AccioAConfirmar.DeshabilitarDispositiu;
                 EsVisible = Visibility.Visible;
             }
-
         }
 
         // OBRIR FINESTRA: PRÉSTECS
@@ -244,6 +248,18 @@ namespace PIC.ViewModel
                 AEsborrar = AccioAConfirmar.FinalitzarPrestec;
                 EsVisible = Visibility.Visible;
             }            
+        }
+
+        // OBRIR FINESTRA: ADMINISTRADOR
+        public void Mostrar(Administrador administradorAEsborrar, PicVM parentVM)
+        {
+            this._picVM = parentVM;
+            this.administradorSeleccionat = administradorAEsborrar;
+
+            Missatge = $"Estàs a punt d'esborrar l'administrador {administradorAEsborrar.Nom} amb ID({administradorAEsborrar.Id}). Vols confirmar aquesta acció?";
+
+            AEsborrar = AccioAConfirmar.EsborrarAdministrador;
+            EsVisible = Visibility.Visible;
         }
 
         // ACCIONS
@@ -368,6 +384,11 @@ namespace PIC.ViewModel
 
                     await _prestecsApiClient.DeletePrestecAsync((int)prestecSeleccionat.Id);
                     await _prestecsVM.MostrarPrestecsAsync();
+                    break;
+
+                case AccioAConfirmar.EsborrarAdministrador:
+                    await _administradorsApiClient.DeleteAdministradorAsync((int)administradorSeleccionat.Id);
+                    await _picVM.MostrarAdministradorsAsync();
                     break;
             }
 

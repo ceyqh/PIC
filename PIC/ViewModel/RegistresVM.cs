@@ -50,7 +50,7 @@ namespace PIC.ViewModel
             set { _cercaVisibility = value; OnPropertyChanged(); }
         }
 
-        private string _titolPantalla = "REGISTRES";
+        private string _titolPantalla = "REGISTRES: TOTS";
         public string TitolPantalla
         {
             get => _titolPantalla;

@@ -10,11 +10,11 @@ none
 false
 DEBUG;TRACE
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\App.xaml
-31-1752352054
+36816747255
 
-80-871014207
+87136338060
 24-2042933734
-MainWindow.xaml;Styles\Button.xaml;Styles\Image.xaml;Styles\ListView.xaml;Styles\Page.xaml;Styles\Text.xaml;Utilities\DataTemplate.xaml;View\AfegirAlumne.xaml;View\AfegirCategoria.xaml;View\AfegirCurs.xaml;View\AfegirDepartament.xaml;View\AfegirDispositiu.xaml;View\AfegirPrestec.xaml;View\AfegirProfessor.xaml;View\Categories.xaml;View\ConfirmarEsborrar.xaml;View\Cursos.xaml;View\Departaments.xaml;View\Dispositius.xaml;View\EditarCategoria.xaml;View\EditarCurs.xaml;View\EditarDepartament.xaml;View\EditarDispositiu.xaml;View\EditarPrestec.xaml;View\EditarUsuari.xaml;View\Home.xaml;View\MissatgeError.xaml;View\Pic.xaml;View\Prestecs.xaml;View\Registres.xaml;View\Usuaris.xaml;
+MainWindow.xaml;Styles\Button.xaml;Styles\ComboBox.xaml;Styles\Image.xaml;Styles\ListView.xaml;Styles\Page.xaml;Styles\Text.xaml;Styles\TextBox.xaml;Utilities\DataTemplate.xaml;View\AfegirAdministrador.xaml;View\AfegirAlumne.xaml;View\AfegirCategoria.xaml;View\AfegirCurs.xaml;View\AfegirDepartament.xaml;View\AfegirDispositiu.xaml;View\AfegirPrestec.xaml;View\AfegirProfessor.xaml;View\Categories.xaml;View\ConfirmarEsborrar.xaml;View\ConfirmarNouCurs.xaml;View\Cursos.xaml;View\Departaments.xaml;View\Dispositius.xaml;View\EditarAdministrador.xaml;View\EditarCategoria.xaml;View\EditarCurs.xaml;View\EditarDepartament.xaml;View\EditarDispositiu.xaml;View\EditarPrestec.xaml;View\EditarUsuari.xaml;View\Home.xaml;View\MissatgeError.xaml;View\Pic.xaml;View\Prestecs.xaml;View\Registres.xaml;View\Usuaris.xaml;
 
 True
 

@@ -87,31 +87,55 @@
                                 VerticalAlignment="Center" 
                                 Margin="10">
 
-                        <!-- TÍTOL -->
-                        <TextBlock FontSize="12" 
-                                   Text="{Binding TitolPantalla}"
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   Margin="0, 0, 10, 0"/>
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="500"/>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="*"/>
+                            </Grid.ColumnDefinitions>
 
-                        <!-- INPUT -->
-                        <TextBox VerticalAlignment="Center"
-                                 Width="200" 
-                                 Visibility="{Binding CercaVisibility}" 
-                                 Text="{Binding ParametreCercaRegistres, UpdateSourceTrigger=PropertyChanged}"
-                     Margin="0,0,10,0"/>
+                            <StackPanel Grid.Column="0">
+                                <!-- TÍTOL -->
+                                <TextBlock FontSize="12" 
+                                           Text="{Binding TitolPantalla}"
+                                           Style="{StaticResource Fraktion_Dark_Font}" 
+                                           Margin="0, 0, 10, 0"/>
 
-                        <!-- BUSCAR -->
-                        <Button Content="BUSCAR"
-                                Visibility="{Binding CercaVisibility}"
-                                Command="{Binding BuscarCommand}"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"/>
+                                <!-- INPUT -->
+                                <TextBox VerticalAlignment="Center"
+                                         Width="200" 
+                                         Visibility="{Binding CercaVisibility}" 
+                                         Style="{StaticResource Main_TextBox}"
+                                         Text="{Binding ParametreCercaRegistres, UpdateSourceTrigger=PropertyChanged}"
+                                         Margin="0,0,10,0"/>
 
+                                <!-- BUSCAR -->
+                                <Button Content="BUSCAR"
+                                        Visibility="{Binding CercaVisibility}"
+                                        Command="{Binding BuscarCommand}"
+                                        Padding="10, 0, 10, 0"
+                                        Style="{StaticResource Accions_Button}"/>
+                            </StackPanel>
+
+                            <Button Content="AFEGIR PRÉSTEC"
+                                    Grid.Column="1"
+                                    Width="200"
+                                    Height="30"
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding AfegirPrestecMenu_Click}"/>
+                            
+                            <Button Content="AFEGIR PRÉSTEC"
+                                    Margin="10, 0, 0, 0"
+                                    Grid.Column="2"
+                                    Width="200"
+                                    Height="30"
+                                    Style="{StaticResource Accions_Button}"
+                                    Command="{Binding AfegirPrestecMenu_Click}"/>
+                        </Grid>
                     </StackPanel>
 
                     <Grid Grid.Row="1"
                       Background="#131316">
-
                     </Grid>
                 </Grid>
 
@@ -173,7 +197,6 @@
                             <Grid Grid.Row="2">
                                 <ListView ScrollViewer.VerticalScrollBarVisibility="Hidden"
                                           ItemsSource="{Binding Registres}"
-                                          SelectedItem="{Binding RegistreSeleccionat, Mode=TwoWay}"
                                           Style="{StaticResource ListViewStyle}"
                                           ItemContainerStyle="{StaticResource ListViewStyleItem}">
 

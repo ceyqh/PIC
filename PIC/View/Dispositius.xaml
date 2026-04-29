@@ -115,6 +115,7 @@
                         <TextBox VerticalAlignment="Center"
                                  Width="200" 
                                  Visibility="{Binding CercaVisibility}" 
+                                 Style="{StaticResource Main_TextBox}"
                                  Text="{Binding ParametreCercaDispositius, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,10,0"/>
 

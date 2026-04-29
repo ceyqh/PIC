@@ -79,6 +79,9 @@
                         <TextBox VerticalAlignment="Center"
                                  Width="200" 
                                  Visibility="{Binding CercaVisibility}" 
+                                 Height="20"
+                                 Padding="0"
+                                 Style="{StaticResource Main_TextBox}"
                                  Text="{Binding ParametreCercaCursos, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,10,0"/>
 
