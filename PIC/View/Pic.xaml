@@ -183,19 +183,19 @@
                                     
                                 </Border>
 
-                                <Button Content="FINALITZAR CURS"
+                                <Button Content="COMENÇAR NOU CURS"
                                         Grid.Row="8"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding FinalitzarCursMenu_Click}"/>
 
-                                <Button Content="IMPORTAR ALUMNES"
+                                <Button Content="EXPORTAR REGISTRES"
                                         Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarPrestecMenu_Click}"/>
-
-                                <Button Content="EXPORTAR REGISTRES"
+                                
+                                <Button Content="BUIDAR REGISTRES"
                                         Grid.Row="12"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"

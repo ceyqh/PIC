@@ -22,6 +22,7 @@
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
                 </Grid.RowDefinitions>
 
                 <!-- TÍTOL -->
@@ -44,9 +45,10 @@
                                TextWrapping="Wrap"
                                TextAlignment="Justify">
                         
-                        Finalitzar el curs implica esborrar tots els cursos, alumnes, préstecs i registres. Abans de continuar,
-                        assegura't de que s'han exportat els registres del curs actual, de lo contrari, es perdran. Quan comenci
-                        el procés, no es podrà aturar.
+                        Començar un nou curs comporta esborrar tots els cursos, alumnes i préstecs relacionats amb aquests alumnes. 
+                        En cas de que hi hagués préstecs pendents de tancar per part d'algun alumne, es crearà un registre
+                        informant d'aquesta excepció amb l'etiqueta "No finalitzat". Revisa que tots els préstecs estiguin finalitzats
+                        (si s'ha retornat el dispositiu) abans de continuar.
                     </TextBlock>
 
                     <TextBlock Text="{Binding TextProces}"
@@ -55,30 +57,50 @@
                                Margin="0,20,0,10"
                                TextWrapping="Wrap"
                                TextAlignment="Justify"/>
-
-                    <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
-                               FontSize="12" 
-                               Margin="0,20,0,10"
-                               TextWrapping="Wrap"
-                               TextAlignment="Justify">
-                        
-                        Per seguretat, introdueix el codi que es mostra a continuació si vols continuar: 
-                        
-                        <!-- CODI DE SEGUURETAT -->
-                        <Run Text="{Binding CodiSeguretat}" FontWeight="Bold"/>
-                    </TextBlock>
                 </StackPanel>
 
                 <!-- CODI DE SEGUURETAT TEXTBOX -->
                 <StackPanel Grid.Row="2" 
                             Margin="20, 10, 20, 0">
+                    
+                    <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,20,0,10"
+                               TextWrapping="Wrap"
+                               TextAlignment="Justify">
+    
+                                Introdueix el codi que es mostra a continuació per confirmar: 
+    
+                                <!-- CODI DE SEGUURETAT -->
+                                <Run Text="{Binding CodiSeguretat}" FontWeight="Bold"/>
+                        </TextBlock>
 
-                    <TextBox Text="{Binding CodiSeguretatTextBox}"
-                             Style="{StaticResource Main_TextBox}"/>
+                        <TextBox Text="{Binding CodiSeguretatTextBox}"
+                                 Style="{StaticResource Main_TextBox}"
+                                 Height="30"/>
+                    </StackPanel>
+
+                <StackPanel Grid.Row="3"
+                    Margin="20, 20, 20, 0">
+
+                    <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"
+                               TextWrapping="Wrap"
+                               TextAlignment="Justify">   
+                        Fitxer per importar els nous alumnes i cursos:
+                    </TextBlock>
+
+                    <Button Grid.Column="1" 
+                            Content="{Binding BotoRutaFitxer}" 
+                            Height="30"
+                            Style="{StaticResource Arxiu_Button}"
+                            Command="{Binding SeleccionarFitxer_Click}"/>
+
                 </StackPanel>
 
                 <!-- BOTONS -->
-                <StackPanel Grid.Row="3"
+                <StackPanel Grid.Row="4"
                             Margin="20"
                             Height="25"
                             Orientation="Horizontal" 

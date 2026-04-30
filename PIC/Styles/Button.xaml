@@ -169,6 +169,43 @@
             </Setter.Value>
         </Setter>
     </Style>
+    
+    <!-- BOTO ARXIU -->
+    <Style x:Key="Arxiu_Button" TargetType="Button">
+
+        <Setter Property="Foreground" Value="#131316"/>
+        <Setter Property="Background" Value="#e8e9e9"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+
+        <Setter Property="FontFamily" Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="FontSize" Value="12"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Grid x:Name="GridArea"
+                            Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="{TemplateBinding Padding}"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="GridArea" Property="Background" Value="#a5a6af"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 
     <!-- BOTÓ ALERTA -->
     <Style x:Key="Alerta_Button" TargetType="Button">
