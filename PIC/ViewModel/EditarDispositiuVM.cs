@@ -95,34 +95,36 @@ namespace PIC.ViewModel
         // GUARDAR DISPOSITIU
         public ICommand GuardarDispositiu_Click => new RelayCommand(async _ =>
         {
-            if (esPotEditar)
+            if (!esPotEditar)
             {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    _dispositiuEnEdicio.Nom = Nom;
-                    _dispositiuEnEdicio.IdCategoria = CategoriaId;
+                return;
+            }
 
-                    int dispositiuActualitzat = await _dispositiusApiClient.UpdateDispositiuAsync(_dispositiuEnEdicio);
+            esPotEditar = false;
 
-                    // Si actualitzar el dispositiu falla
-                    if (dispositiuActualitzat == -1)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el dispositiu.");
-                    }
-                    // Si actualitzar el dispositiu funciona
-                    else
-                    {
-                        esPotEditar = false;
-                        await _dispositiusVM.MostrarDispositiusAsync();
-                        EsVisible = Visibility.Collapsed;
-                    }                        
-                }
-            }                     
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotEditar = true;
+                return;
+            }
+
+            // Actuaitzar dispositiu
+            _dispositiuEnEdicio.Nom = Nom;
+            _dispositiuEnEdicio.IdCategoria = CategoriaId;
+            int dispositiuActualitzat = await _dispositiusApiClient.UpdateDispositiuAsync(_dispositiuEnEdicio);
+
+            // Si actualitzar el dispositiu falla
+            if (dispositiuActualitzat == -1)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el dispositiu.");
+                esPotEditar = true;
+                return;
+            }
+
+            await _dispositiusVM.MostrarDispositiusAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

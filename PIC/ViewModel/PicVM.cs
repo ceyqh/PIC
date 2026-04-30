@@ -20,7 +20,9 @@ namespace PIC.ViewModel
         public MissatgeErrorVM MissatgeError { get; set; }
         public AfegirAdministradorVM AfegirAdministrador { get; set; }
         public EditarAdministradorVM EditarAdministrador { get; set; }
+        public FinalitzarCursVM FinalitzarCurs { get; set; }
         public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
+        public NotificacioVM Notificacio { get; set; }
 
         private readonly AdministradorsApiClient _administradorsApiClient;
 
@@ -45,8 +47,10 @@ namespace PIC.ViewModel
 
             MissatgeError = new MissatgeErrorVM();
             AfegirAdministrador = new AfegirAdministradorVM(this);
+            FinalitzarCurs = new FinalitzarCursVM(this);
             EditarAdministrador = new EditarAdministradorVM(this);
             ConfirmarEsborrar = new ConfirmarEsborrarVM();
+            Notificacio = new NotificacioVM();
 
             _ = MostrarAdministradorsAsync();
         }
@@ -109,5 +113,15 @@ namespace PIC.ViewModel
                 ConfirmarEsborrar.Mostrar(_administradorSeleccionat, this);
             }
         });
+
+        public ICommand FinalitzarCursMenu_Click => new RelayCommand(_ =>
+        {
+            FinalitzarCurs.Mostrar();
+        });
+
+        public void ObrirNotificacio(string missatge)
+        {
+            Notificacio.Mostrar(missatge);
+        }
     }
 }

@@ -112,11 +112,10 @@ namespace PIC.ViewModel
             {
                 Cursos = cursos.ToList();
             }
-
             // Si es retornen buits
-            if (Cursos == null || Cursos.Count < 1)
+            if (Cursos == null || !Cursos.Any())
             {
-                MissatgeError.Mostrar("Hi ha hagut un problema al carregar els cursos.");
+                MissatgeError.Mostrar("Hi ha hagut un problema al carregar els cursos o no hi ha cursos al sistema.");
             }
             else
             {
@@ -143,55 +142,64 @@ namespace PIC.ViewModel
         // AFEGIR NOU ALUMNE
         public ICommand AfegirAlumne_Click => new RelayCommand(async _ =>
         {
-            if (esPotAfegir)
+            if (!esPotAfegir)
             {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    // Crear usuari
-                    var nouUsuari = new NouUsuari
-                    {
-                        Nom = Nom,
-                        Cognom = Cognom
-                    };
+                return;
+            }
 
-                    NouUsuari usuariCreat = await _usuarisApiClient.PostUsuariAsync(nouUsuari);
+            esPotAfegir = false;
 
-                    // Si crear l'usuari falla
-                    if (usuariCreat == null)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al crear l'usuari.");
-                    }
-                    // Si crear l'usuari funciona
-                    else
-                    {
-                        var nouAlumne = new Alumne
-                        {
-                            IdUsuari = usuariCreat.Id,
-                            IdCurs = CursId
-                        };
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotAfegir = true;
+                return;
+            }
 
-                        Alumne alumneCreat = await _alumnesApiClient.PostAlumneAsync(nouAlumne);
+            // Si els camp cursos és buit
+            if (Cursos == null || !Cursos.Any())
+            {
+                MissatgeError.Mostrar("No hi ha cursos disponibles.");
+                esPotAfegir = true;
+                return;
+            }
 
-                        // Si crear l'alumne falla
-                        if (alumneCreat == null)
-                        {
-                            MissatgeError.Mostrar("Hi ha hagut un problema al crear l'alumne.");
-                        }
-                        // Si crear l'alumne funciona
-                        else
-                        {
-                            esPotAfegir = false;
-                            await _usuarisVM.MostrarUsuarisAsync();
-                            EsVisible = Visibility.Collapsed;
-                        }
-                    }
-                }
-            }            
+            // Crear usuari
+            var nouUsuari = new NouUsuari
+            {
+                Nom = Nom,
+                Cognom = Cognom
+            };
+
+            NouUsuari usuariCreat = await _usuarisApiClient.PostUsuariAsync(nouUsuari);
+
+            // Si crear l'usuari falla
+            if (usuariCreat == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear l'usuari.");
+                esPotAfegir = true;
+                return;
+            }
+                   
+            var nouAlumne = new Alumne
+            {
+                IdUsuari = usuariCreat.Id,
+                IdCurs = CursId
+            };
+
+            Alumne alumneCreat = await _alumnesApiClient.PostAlumneAsync(nouAlumne);
+
+            // Si crear l'alumne falla
+            if (alumneCreat == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear l'alumne.");
+                esPotAfegir = true;
+                return;
+            }
+
+            await _usuarisVM.MostrarUsuarisAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

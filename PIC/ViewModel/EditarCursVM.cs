@@ -57,50 +57,10 @@ namespace PIC.ViewModel
         }
 
         // OBRIR FINESTRA
-        public async Task Mostrar(Curs curs)
+        public void Mostrar(Curs curs)
         {
             _cursEnEdicio = curs;
             Nom = curs.Nom;
-
-            EsVisible = Visibility.Visible;
-        }
-
-        // GUARDAR CURS
-        public ICommand GuardarCurs_Click => new RelayCommand(async _ =>
-        {
-            if (esPotEditar)
-            {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    _cursEnEdicio.Nom = Nom;
-
-                    int cursActualitzat = await _cursosApiClient.UpdateCursAsync(_cursEnEdicio);
-
-                    // Si actualitzar el curs falla
-                    if (cursActualitzat == -1)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el curs.");
-                    }
-                    // Si actualitzar el curs funciona
-                    else
-                    {
-                        esPotEditar = false;
-                        await _cursosVM.MostrarCursosAsync();
-                        EsVisible = Visibility.Collapsed;
-                    }                        
-                }
-            }            
-        });
-
-        // OBRIR FINESTRA
-        public void Mostrar()
-        {
-            Nom = "";
 
             esPotEditar = true;
             EsVisible = Visibility.Visible;
@@ -109,6 +69,40 @@ namespace PIC.ViewModel
         // TANCAR FINESTRA
         public ICommand TancarFinestra => new RelayCommand(_ =>
         {
+            EsVisible = Visibility.Collapsed;
+        });
+
+        // GUARDAR CURS
+        public ICommand GuardarCurs_Click => new RelayCommand(async _ =>
+        {
+            if (!esPotEditar)
+            {
+                return;
+            }
+
+            esPotEditar = false;
+
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotEditar = true;
+                return;
+            }
+                
+            // Actualitzar curs
+            _cursEnEdicio.Nom = Nom;
+            int cursActualitzat = await _cursosApiClient.UpdateCursAsync(_cursEnEdicio);
+
+            // Si actualitzar el curs falla
+            if (cursActualitzat == -1)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el curs.");
+                esPotEditar = true;
+                return;
+            }
+
+            await _cursosVM.MostrarCursosAsync();
             EsVisible = Visibility.Collapsed;
         });
     }

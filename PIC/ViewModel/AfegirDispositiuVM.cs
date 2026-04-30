@@ -128,37 +128,39 @@ namespace PIC.ViewModel
         // AFEGIR NOU DISPOSITIU
         public ICommand AfegirDispositiu_Click => new RelayCommand(async _ =>
         {
-            if (esPotAfegir)
+            if (!esPotAfegir)
             {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    esPotAfegir = false;
+                return;
+            }
 
-                    NouDispositiu dispositiuCurs = new NouDispositiu();
-                    dispositiuCurs.IdCategoria = CategoriaId;
-                    dispositiuCurs.Nom = Nom;
-                    dispositiuCurs.Estat = "Disponible";
+            esPotAfegir = false;
 
-                    NouDispositiu dispositiuCreat = await _dispositiusApiClient.PostDispositiuAsync(dispositiuCurs);
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotAfegir = true;
+                return;
+            }
 
-                    // Si crear el dispositiu falla
-                    if (dispositiuCreat == null)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al crear el dispositiu.");
-                    }
-                    // Si crear el dispositiu funciona
-                    else
-                    {
-                        await _dispositiusVM.MostrarDispositiusAsync();
-                        EsVisible = Visibility.Collapsed;
-                    }
-                }
-            }                       
+            // Crear nou dispositiu
+            NouDispositiu dispositiuCurs = new NouDispositiu();
+            dispositiuCurs.IdCategoria = CategoriaId;
+            dispositiuCurs.Nom = Nom;
+            dispositiuCurs.Estat = "Disponible";
+
+            NouDispositiu dispositiuCreat = await _dispositiusApiClient.PostDispositiuAsync(dispositiuCurs);
+
+            // Si crear el dispositiu falla
+            if (dispositiuCreat == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear el dispositiu.");
+                esPotAfegir = true;
+                return;
+            }
+
+            await _dispositiusVM.MostrarDispositiusAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

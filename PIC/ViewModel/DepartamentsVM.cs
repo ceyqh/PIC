@@ -232,12 +232,12 @@ namespace PIC.ViewModel
         });
 
         // EDITAR DEPARTAMENT
-        public ICommand EditarDepartamentMenu_Click => new RelayCommand(async _ =>
+        public ICommand EditarDepartamentMenu_Click => new RelayCommand(_ =>
         {
             // Si no hi ha cap departament seleccionat
             if (_departamentSeleccionat != null)
             {
-                await EditarDepartament.Mostrar(DepartamentSeleccionat);
+                EditarDepartament.Mostrar(DepartamentSeleccionat);
             }
             else
             {

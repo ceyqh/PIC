@@ -111,65 +111,76 @@ namespace PIC.ViewModel
         // AFEGIR ADMINISTRADOR
         public ICommand AfegirAdministrador_Click => new RelayCommand(async _ =>
         {
+            if (!esPotAfegir)
+            {
+                return;
+            }
+
+            esPotAfegir = false;
             var administradors = await _administradorsApiClient.GetAllAdministradorsAsync();
 
             // Si la consulta falla
             if (administradors == null)
             {
                 MissatgeError.Mostrar("Hi ha hagut un problema al consultar els administradors.");
+                esPotAfegir = true;
+                return;
             }
-            // Si la consulta funciona
-            else
+
+            // Comprovar si existeix l'usuari
+            bool existeixUsuari = false;
+            int i = 0;
+
+            while (i < administradors.Count && !existeixUsuari)
             {
-                bool existeixUsuari = false;
-                int i = 0;
-
-                while (i < administradors.Count && !existeixUsuari)
+                if (administradors[i].Nom == Nom)
                 {
-                    if (administradors[i].Nom == Nom)
-                    {
-                        existeixUsuari = true;
-                    }
-                    else { i++; }
+                    existeixUsuari = true;
                 }
+                else { i++; }
+            }
 
-                // Si existeix un administrador amb aquest nom
-                if (existeixUsuari)
-                {
-                    MissatgeError.Mostrar("Ja existeix un administrador amb aquest nom, prova'n un de diferent.");
-                }
-                else
-                {
-                    if (Contrasenya != RepetirContrasenya)
-                    {
-                        MissatgeError.Mostrar("Les contrasenyes no coincideixen.");
-                    }
-                    else if (Contrasenya.Length < 4)
-                    {
-                        MissatgeError.Mostrar("La contrasenya és massa curta, ha de tenir un mínim de 4 caràcters.");
-                    }
-                    else
-                    {
-                        Administrador nouAdministrador = new Administrador();
-                        nouAdministrador.Nom = Nom;
-                        nouAdministrador.Contrasenya = Contrasenya;
-                        nouAdministrador.Permisos = PermisSeleccionat;
+            // Si existeix un administrador amb aquest nom
+            if (existeixUsuari)
+            {
+                MissatgeError.Mostrar("Ja existeix un administrador amb aquest nom, prova'n un de diferent.");
+                esPotAfegir = true;
+                return;
+            }
 
-                        var administradorCreat = await _administradorsApiClient.PostAdministradorAsync(nouAdministrador);
+            // Si les contrasenyes no coincideixen
+            if (Contrasenya != RepetirContrasenya)
+            {
+                MissatgeError.Mostrar("Les contrasenyes no coincideixen.");
+                esPotAfegir = true;
+                return;
+            }
+            
+            // Si la contrasenya és massa curta
+            if (Contrasenya.Length < 4)
+            {
+                MissatgeError.Mostrar("La contrasenya és massa curta, ha de tenir un mínim de 4 caràcters.");
+                esPotAfegir = true;
+                return;
+            }
+            
+            // Nou administrador
+            Administrador nouAdministrador = new Administrador();
+            nouAdministrador.Nom = Nom;
+            nouAdministrador.Contrasenya = Contrasenya;
+            nouAdministrador.Permisos = PermisSeleccionat;
 
-                        if (administradorCreat == null)
-                        {
-                            MissatgeError.Mostrar("Hi ha hagut un problema al crear l'administradors.");
-                        }
-                        else
-                        {
-                            esPotAfegir = false;
-                            await _picVM.MostrarAdministradorsAsync();
-                            EsVisible = Visibility.Collapsed;
-                        }
-                    }
-                }
-            }                
+            var administradorCreat = await _administradorsApiClient.PostAdministradorAsync(nouAdministrador);
+
+            if (administradorCreat == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear l'administradors.");
+                esPotAfegir = true;
+                return;
+            }
+
+            await _picVM.MostrarAdministradorsAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

@@ -229,12 +229,12 @@ namespace PIC.ViewModel
         });
 
         // EDITAR CURS
-        public ICommand EditarCursMenu_Click => new RelayCommand(async _ =>
+        public ICommand EditarCursMenu_Click => new RelayCommand(_ =>
         {
             // Si no hi ha cap curs seleccionat
             if (_cursSeleccionat != null)
             {
-                await EditarCurs.Mostrar(CursSeleccionat);
+                EditarCurs.Mostrar(CursSeleccionat);
             }
             else
             {

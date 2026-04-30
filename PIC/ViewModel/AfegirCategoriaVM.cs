@@ -72,34 +72,37 @@ namespace PIC.ViewModel
         // AFEGIR NOVA CATEGORIA
         public ICommand AfegirCategoria_Click => new RelayCommand(async _ =>
         {
-            if (esPotAfegir)
+            if (!esPotAfegir)
             {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    Categoria novaCategoria = new Categoria();
-                    novaCategoria.Nom = Nom;
+                return;
+            }
 
-                    Categoria categoriaCreada = await _categoriesApiClient.PostCategoriaAsync(novaCategoria);
+            esPotAfegir = false;
 
-                    // Si crear la categoria falla
-                    if (categoriaCreada == null)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al crear la categoria.");
-                    }
-                    // Si crear la categoria funciona
-                    else
-                    {
-                        esPotAfegir = false;
-                        await _categoriesVM.MostrarCategoriesAsync();
-                        EsVisible = Visibility.Collapsed;                         
-                    }
-                }
-            }            
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotAfegir = true;
+                return;
+            }
+
+            // Crear nova categoria
+            Categoria novaCategoria = new Categoria();
+            novaCategoria.Nom = Nom;
+
+            Categoria categoriaCreada = await _categoriesApiClient.PostCategoriaAsync(novaCategoria);
+
+            // Si crear la categoria falla
+            if (categoriaCreada == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear la categoria.");
+                esPotAfegir = true;
+                return;
+            }
+
+            await _categoriesVM.MostrarCategoriesAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

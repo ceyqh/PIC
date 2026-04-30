@@ -72,34 +72,37 @@ namespace PIC.ViewModel
         // AFEGIR NOU CURS
         public ICommand AfegirCurs_Click => new RelayCommand(async _ =>
         {
-            if (esPotAfegir)
+            if (!esPotAfegir)
             {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    Curs nouCurs = new Curs();
-                    nouCurs.Nom = Nom;
+                return;
+            }
 
-                    Curs cursCreat = await _cursosApiClient.PostCursAsync(nouCurs);
+            esPotAfegir = false;
 
-                    // Si crear el curs falla
-                    if (cursCreat == null)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al crear el curs.");
-                    }
-                    // Si crear el curs funciona
-                    else
-                    {
-                        esPotAfegir = false;
-                        await _cursosVM.MostrarCursosAsync();
-                        EsVisible = Visibility.Collapsed;
-                    }
-                }
-            }            
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotAfegir = true;
+                return;
+            }
+
+            // Crear nou curs
+            Curs nouCurs = new Curs();
+            nouCurs.Nom = Nom;
+
+            Curs cursCreat = await _cursosApiClient.PostCursAsync(nouCurs);
+
+            // Si crear el curs falla
+            if (cursCreat == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear el curs.");
+                esPotAfegir = true;
+                return;
+            }
+
+            await _cursosVM.MostrarCursosAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

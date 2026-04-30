@@ -88,42 +88,41 @@ namespace PIC.ViewModel
             if (param == null)
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
+                return;
             }
-            else
+            
+            string mode = param.ToString();
+
+            Registres.Clear();
+            CercaVisibility = Visibility.Visible;
+
+            switch (mode)
             {
-                string mode = param.ToString();
+                case "TOTS":
+                    TitolPantalla = "REGISTRES: TOTS";
+                    ParametreCercaRegistres = "";
+                    CercaVisibility = Visibility.Collapsed;
+                    _ = MostrarRegistresAsync();
+                    break;
 
-                Registres.Clear();
-                CercaVisibility = Visibility.Visible;
+                case "PER_ID_PRESTEC":
+                    TitolPantalla = "REGISTRES: PER ID PRESTEC";
+                    ParametreCercaRegistres = "";
+                    TipusCercaActualRegistres = RegistresTipusCerca.PerIdPrestec;
+                    break;
 
-                switch (mode)
-                {
-                    case "TOTS":
-                        TitolPantalla = "REGISTRES: TOTS";
-                        ParametreCercaRegistres = "";
-                        CercaVisibility = Visibility.Collapsed;
-                        _ = MostrarRegistresAsync();
-                        break;
+                case "PER_ID_DISPOSITIU":
+                    TitolPantalla = "REGISTRES: PER ID DISPOSITIU";
+                    ParametreCercaRegistres = "";
+                    TipusCercaActualRegistres = RegistresTipusCerca.PerIdDispositiu;
+                    break;
 
-                    case "PER_ID_PRESTEC":
-                        TitolPantalla = "REGISTRES: PER ID PRESTEC";
-                        ParametreCercaRegistres = "";
-                        TipusCercaActualRegistres = RegistresTipusCerca.PerIdPrestec;
-                        break;
-
-                    case "PER_ID_DISPOSITIU":
-                        TitolPantalla = "REGISTRES: PER ID DISPOSITIU";
-                        ParametreCercaRegistres = "";
-                        TipusCercaActualRegistres = RegistresTipusCerca.PerIdDispositiu;
-                        break;
-
-                    case "PER_NOM_GRUP":
-                        TitolPantalla = "REGISTRES: PER NOM GRUP";
-                        ParametreCercaRegistres = "";
-                        TipusCercaActualRegistres = RegistresTipusCerca.PerNomGrup;
-                        break;
-                }
-            }               
+                case "PER_NOM_GRUP":
+                    TitolPantalla = "REGISTRES: PER NOM GRUP";
+                    ParametreCercaRegistres = "";
+                    TipusCercaActualRegistres = RegistresTipusCerca.PerNomGrup;
+                    break;
+            }              
         });
 
         // EXECUTAR CERCA
@@ -139,28 +138,23 @@ namespace PIC.ViewModel
             if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
                 MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+                return;
             }
-            // Si la api funciona
-            else
+
+            var llista = await _registresApiClient.GetAllRegistresAsync();
+
+            // Si la consulta falla
+            if (llista == null)
             {
-                var llista = await _registresApiClient.GetAllRegistresAsync();
+                MissatgeError.Mostrar("No s'han pogut mostrar els Registres. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
+                return;
+            }
 
-                // Si la consulta falla
-                if (llista == null)
-                {
-                    MissatgeError.Mostrar("No s'han pogut mostrar els Registres. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
-                }
-                // Si la consulta funciona
-                else
-                {
-                    Registres.Clear();
+            Registres.Clear();
 
-                    foreach (var u in llista)
-                    {
-                        Registres.Add(u);
-                    }
-                }
-
+            foreach (var u in llista)
+            {
+                Registres.Add(u);
             }
         }
 

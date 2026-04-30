@@ -58,7 +58,7 @@ namespace PIC.ViewModel
         }
 
         // OBRIR FINESTRA
-        public async Task Mostrar(Departament departament)
+        public void Mostrar(Departament departament)
         {
             _departamentEnEdicio = departament;
             Nom = departament.Nom;
@@ -67,48 +67,43 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Visible;
         }
 
-        // GUARDAR DEPARTAMENT
-        public ICommand GuardarDepartament_Click => new RelayCommand(async _ =>
-        {
-            if (esPotEditar)
-            {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    _departamentEnEdicio.Nom = Nom;
-
-                    int departamentActualitzat = await _departamentsApiClient.UpdateDepartamentAsync(_departamentEnEdicio);
-
-                    // Si actualitzar el departament falla
-                    if (departamentActualitzat == -1)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el departament.");
-                    }
-                    // Si actualitzar el curs funciona
-                    else
-                    {
-                        esPotEditar = false;
-                        await _departamentsVM.MostrarDepartamentsAsync();
-                        EsVisible = Visibility.Collapsed;
-                    }
-                }
-            }                      
-        });
-
-        // OBRIR FINESTRA
-        public void Mostrar()
-        {
-            Nom = "";
-            EsVisible = Visibility.Visible;
-        }
-
         // TANCAR FINESTRA
         public ICommand TancarFinestra => new RelayCommand(_ =>
         {
+            EsVisible = Visibility.Collapsed;
+        });
+
+        // GUARDAR DEPARTAMENT
+        public ICommand GuardarDepartament_Click => new RelayCommand(async _ =>
+        {
+            if (!esPotEditar)
+            {
+                return;
+            }
+
+            esPotEditar = false;
+
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotEditar = true;
+                return;
+            }                
+
+            // Actualitzar departament
+            _departamentEnEdicio.Nom = Nom;
+            int departamentActualitzat = await _departamentsApiClient.UpdateDepartamentAsync(_departamentEnEdicio);
+
+            // Si actualitzar el departament falla
+            if (departamentActualitzat == -1)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar el departament.");
+                esPotEditar = true;
+                return;
+            }
+
+            await _departamentsVM.MostrarDepartamentsAsync();
             EsVisible = Visibility.Collapsed;
         });
     }

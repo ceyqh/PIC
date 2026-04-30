@@ -176,19 +176,20 @@
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarAdministradorMenu_Click}"/>
 
-                                <Button Content="COMENÇAR NOU CURS"
-                                        Grid.Row="6"
-                                        Width="200"
-                                        Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
+                                <Border Grid.Row="6"
+                                        Margin="0, 15, 0, 0"
+                                        BorderBrush="#131316"
+                                        BorderThickness="0, 1, 0, 0">
+                                    
+                                </Border>
 
-                                <Button Content="IMPORTAR ALUMNES"
+                                <Button Content="FINALITZAR CURS"
                                         Grid.Row="8"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
-                                
-                                <Button Content="IMPORTAR PROFESSORS"
+                                        Command="{Binding FinalitzarCursMenu_Click}"/>
+
+                                <Button Content="IMPORTAR ALUMNES"
                                         Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
@@ -250,5 +251,7 @@
         <local:AfegirAdministrador DataContext="{Binding AfegirAdministrador}" d:IsHidden="true"/>
         <local:EditarAdministrador DataContext="{Binding EditarAdministrador}" d:IsHidden="true"/>
         <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
+        <local:FinalitzarCurs DataContext="{Binding FinalitzarCurs}" d:IsHidden="true"/>
+        <local:Notificacio DataContext="{Binding Notificacio}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

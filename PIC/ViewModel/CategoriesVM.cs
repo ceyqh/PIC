@@ -232,12 +232,12 @@ namespace PIC.ViewModel
         });
 
         // EDITAR CATEGORIA
-        public ICommand EditarCategoriaMenu_Click => new RelayCommand(async _ =>
+        public ICommand EditarCategoriaMenu_Click => new RelayCommand(_ =>
         {
             // Si no hi ha cap categoria seleccionada
             if (_categoriaSeleccionada != null)
             {
-                await EditarCategoria.Mostrar(CategoriaSeleccionada);
+                EditarCategoria.Mostrar(CategoriaSeleccionada);
             }
             else
             {

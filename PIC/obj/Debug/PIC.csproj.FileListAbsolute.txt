@@ -259,3 +259,7 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarAdministrador.g.
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarAdministrador.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\ComboBox.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\TextBox.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\FinalitzarCurs.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\FinalitzarCurs.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Notificacio.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Notificacio.baml

@@ -212,5 +212,35 @@ namespace PIC.APIClient
             }
             return -1;
         }
+
+        // ESBORRAR REGISTRE
+        public async Task<int> DeleteRegistreAsync(int id)
+        {
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.DeleteAsync($"registres/{id}");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        var result = await response.Content.ReadAsAsync<int>();
+                        return result;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return -1;
+                }
+            }
+            return -1;
+        }
     }
 }

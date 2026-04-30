@@ -56,7 +56,7 @@ namespace PIC.ViewModel
         }
 
         // OBRIR FINESTRA
-        public async Task Mostrar(Categoria categoria)
+        public void Mostrar(Categoria categoria)
         {
             _categoriaEnEdicio = categoria;
             Nom = categoria.Nom;
@@ -65,49 +65,43 @@ namespace PIC.ViewModel
             EsVisible = Visibility.Visible;
         }
 
-        // GUARDAR CATEGORIA
-        public ICommand GuardarCategoria_Click => new RelayCommand(async _ =>
-        {
-            if (esPotEditar)
-            {
-                // Si hi ha camps buits
-                if (string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    _categoriaEnEdicio.Nom = Nom;
-
-                    int categoriaActualitzada = await _categoriesApiClient.UpdateCategoriaAsync(_categoriaEnEdicio);
-
-                    // Si actualitzar la categoria falla
-                    if(categoriaActualitzada == -1)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar la categoria.");
-                    }
-                    // Si actualitzar la categoria funciona
-                    else
-                    {
-                        esPotEditar = false;
-                        await _categoriesVM.MostrarCategoriesAsync();
-                        EsVisible = Visibility.Collapsed;
-                    }
-                    
-                }
-            }
-        });
-
-        // OBRIR FINESTRA
-        public void Mostrar()
-        {
-            Nom = "";
-            EsVisible = Visibility.Visible;
-        }
-
         // TANCAR FINESTRA
         public ICommand TancarFinestra => new RelayCommand(_ =>
         {
+            EsVisible = Visibility.Collapsed;
+        });
+
+        // GUARDAR CATEGORIA
+        public ICommand GuardarCategoria_Click => new RelayCommand(async _ =>
+        {
+            if (!esPotEditar)
+            {
+                return;
+            }
+
+            esPotEditar = false;
+
+            // Si hi ha camps buits
+            if (string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotEditar = true;
+                return;
+            }
+
+            // Actualitzar la categoria
+            _categoriaEnEdicio.Nom = Nom;
+            int categoriaActualitzada = await _categoriesApiClient.UpdateCategoriaAsync(_categoriaEnEdicio);
+
+            // Si actualitzar la categoria falla
+            if (categoriaActualitzada == -1)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al actualitzar la categoria.");
+                esPotEditar = true;
+                return;
+            }
+
+            await _categoriesVM.MostrarCategoriesAsync();
             EsVisible = Visibility.Collapsed;
         });
     }

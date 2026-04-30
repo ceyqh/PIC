@@ -89,60 +89,67 @@ namespace PIC.ViewModel
         // AFEGIR ADMINISTRADOR
         public ICommand GuardarAdministrador_Click => new RelayCommand(async _ =>
         {
+            if (!esPotEditar)
+            {
+                return;
+            }
+
+            esPotEditar = false;
+
             var administradors = await _administradorsApiClient.GetAllAdministradorsAsync();
 
             // Si la consulta falla
             if (administradors == null)
             {
                 MissatgeError.Mostrar("Hi ha hagut un problema al consultar els administradors.");
+                esPotEditar = true;
+                return;
             }
-            // Si la consulta funciona
-            else
+            
+            // Comprovar si existeix un usuari amb aquest nom    
+            bool existeixUsuari = false;
+            int i = 0;
+
+            while (i < administradors.Count && !existeixUsuari)
             {
-                
-                bool existeixUsuari = false;
-                int i = 0;
-
-                while (i < administradors.Count && !existeixUsuari)
+                if (administradors[i].Nom == Nom)
                 {
-                    if (administradors[i].Nom == Nom)
-                    {
-                        existeixUsuari = true;
-                    }
-                    else { i++; }
+                    existeixUsuari = true;
                 }
-
-                // Si el nom trobat és el mateix que ja té
-                if (anticNom == Nom)
-                {
-                    existeixUsuari = false;
-                }
-                // Si existeix un administrador amb aquest nom
-                if (existeixUsuari)
-                {
-                    MissatgeError.Mostrar("Ja existeix un administrador amb aquest nom, prova'n un de diferent.");
-                }
-                else
-                {
-                    Administrador nouAdministrador = new Administrador();
-                    nouAdministrador.Id = _administradorEnEdicio.Id;
-                    nouAdministrador.Nom = Nom;
-                    nouAdministrador.Permisos = PermisSeleccionat;
-
-                    int administradorActualitzat = await _administradorsApiClient.UpdateAdministradorAsync(nouAdministrador);
-
-                    if (administradorActualitzat == -1)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al crear l'administradors.");
-                    }
-                    else
-                    {
-                        esPotEditar = false;
-                        await _picVM.MostrarAdministradorsAsync();
-                        EsVisible = Visibility.Collapsed;
-                    }
-                }
+                else { i++; }
             }
+
+            // Si el nom trobat és el mateix que ja té
+            if (anticNom == Nom)
+            {
+                existeixUsuari = false;
+            }
+            // Si existeix un administrador amb aquest nom
+            if (existeixUsuari)
+            {
+                MissatgeError.Mostrar("Ja existeix un administrador amb aquest nom, prova'n un de diferent.");
+                esPotEditar = true;
+                return;
+            }
+
+            // Crear nou administrador
+            Administrador nouAdministrador = new Administrador();
+            nouAdministrador.Id = _administradorEnEdicio.Id;
+            nouAdministrador.Nom = Nom;
+            nouAdministrador.Permisos = PermisSeleccionat;
+
+            int administradorActualitzat = await _administradorsApiClient.UpdateAdministradorAsync(nouAdministrador);
+
+            // Si no s'actualitza l'administrador
+            if (administradorActualitzat == -1)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear l'administradors.");
+                esPotEditar = true;
+                return;
+            }
+
+            await _picVM.MostrarAdministradorsAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

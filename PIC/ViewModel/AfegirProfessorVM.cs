@@ -113,9 +113,13 @@ namespace PIC.ViewModel
             }
 
             // Si es retornen buits
-            if (Departaments == null || Departaments.Count < 1)
+            if (Departaments == null)
             {
                 MissatgeError.Mostrar("Hi ha hagut un problema al carregar els departaments.");
+            }
+            else if (Departaments.Count < 1)
+            {
+                MissatgeError.Mostrar("No hi ha departaments disponibles. No podràs crear l'usuari.");
             }
             else
             {
@@ -142,55 +146,65 @@ namespace PIC.ViewModel
         // AFEGIR PROFESSOR CLICK
         public ICommand AfegirProfessor_Click => new RelayCommand(async _ =>
         {
-            if (esPotAfegir)
+            if (!esPotAfegir)
             {
-                // Si els camps no estan buits
-                if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Nom))
-                {
-                    MissatgeError.Mostrar("No hi poden haver camps buits.");
-                }
-                else
-                {
-                    // Crear usuari
-                    var nouUsuari = new NouUsuari
-                    {
-                        Nom = Nom,
-                        Cognom = Cognom
-                    };
-
-                    NouUsuari usuariCreat = await _usuarisApiClient.PostUsuariAsync(nouUsuari);
-
-                    // Si crear l'usuari falla
-                    if (usuariCreat == null)
-                    {
-                        MissatgeError.Mostrar("Hi ha hagut un problema al crear l'usuari.");
-                    }
-                    // Si crear l'usuari funciona
-                    else
-                    {
-                        var nouProfessor = new Professor
-                        {
-                            IdUsuari = usuariCreat.Id,
-                            IdDepartament = DepartamentId
-                        };
-
-                        Professor professorCreat = await _professorsApiClient.PostProfessorAsync(nouProfessor);
-
-                        // Si crear el professor falla
-                        if (professorCreat == null)
-                        {
-                            MissatgeError.Mostrar("Hi ha hagut un problema al crear el professor.");
-                        }
-                        // Si crear el professor funciona
-                        else
-                        {
-                            esPotAfegir = false;
-                            await _usuarisVM.MostrarUsuarisAsync();
-                            EsVisible = Visibility.Collapsed;
-                        }
-                    }
-                }
+                return;
             }
+
+            esPotAfegir = false;
+
+            // Si els camps no estan buits
+            if (string.IsNullOrWhiteSpace(Nom) || string.IsNullOrWhiteSpace(Nom))
+            {
+                MissatgeError.Mostrar("No hi poden haver camps buits.");
+                esPotAfegir = true;
+                return;
+            }
+
+            // Si els camp departaments és buit
+            if (Departaments == null || !Departaments.Any())
+            {
+                MissatgeError.Mostrar("No hi ha departaments disponibles.");
+                esPotAfegir = true;
+                return;
+            }
+
+            // Crear nou usuari
+            var nouUsuari = new NouUsuari
+            {
+                Nom = Nom,
+                Cognom = Cognom
+            };
+
+            NouUsuari usuariCreat = await _usuarisApiClient.PostUsuariAsync(nouUsuari);
+
+            // Si crear l'usuari falla
+            if (usuariCreat == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear l'usuari.");
+                esPotAfegir = true;
+                return;
+            }
+
+            // Crear nou professor
+            var nouProfessor = new Professor
+            {
+                IdUsuari = usuariCreat.Id,
+                IdDepartament = DepartamentId
+            };
+
+            Professor professorCreat = await _professorsApiClient.PostProfessorAsync(nouProfessor);
+
+            // Si crear el professor falla
+            if (professorCreat == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al crear el professor.");
+                esPotAfegir = true;
+                return;
+            }
+
+            await _usuarisVM.MostrarUsuarisAsync();
+            EsVisible = Visibility.Collapsed;
         });
     }
 }

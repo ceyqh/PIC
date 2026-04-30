@@ -130,9 +130,11 @@
     <Compile Include="ViewModel\EditarDispositiuVM.cs" />
     <Compile Include="ViewModel\EditarPrestecVM.cs" />
     <Compile Include="ViewModel\EditarUsuariVM.cs" />
+    <Compile Include="ViewModel\FinalitzarCursVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="ViewModel\MissatgeErrorMV.cs" />
     <Compile Include="ViewModel\NavigationVM.cs" />
+    <Compile Include="ViewModel\NotificacioVM.cs" />
     <Compile Include="ViewModel\PicVM.cs" />
     <Compile Include="ViewModel\PrestecsVM.cs" />
     <Compile Include="ViewModel\RegistresVM.cs" />
@@ -200,11 +202,17 @@
     <Compile Include="View\EditarUsuari.xaml.cs">
       <DependentUpon>EditarUsuari.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\FinalitzarCurs.xaml.cs">
+      <DependentUpon>FinalitzarCurs.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Home.xaml.cs">
       <DependentUpon>Home.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\MissatgeError.xaml.cs">
       <DependentUpon>MissatgeError.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="View\Notificacio.xaml.cs">
+      <DependentUpon>Notificacio.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Pic.xaml.cs">
       <DependentUpon>Pic.xaml</DependentUpon>
@@ -346,11 +354,19 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="View\FinalitzarCurs.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="View\Home.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\MissatgeError.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\Notificacio.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

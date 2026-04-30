@@ -225,27 +225,23 @@ namespace PIC.ViewModel
             if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
                 MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
+                return;
             }
-            // Si la api funciona
-            else
+
+            var llista = await _usuarisApiClient.GetAllUsuarisAsync();
+
+            // Si la consulta falla
+            if (llista == null)
             {
-                var llista = await _usuarisApiClient.GetAllUsuarisAsync();
+                MissatgeError.Mostrar("No s'han pogut mostrar els Usuaris. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
+                return;
+            }
 
-                // Si la consulta falla
-                if (llista == null)
-                {
-                    MissatgeError.Mostrar("No s'han pogut mostrar els Usuaris. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
-                }
-                // Si la consulta funciona
-                else
-                {
-                    Usuaris.Clear();
+            Usuaris.Clear();
 
-                    foreach (var u in llista)
-                    {
-                        Usuaris.Add(u);
-                    }
-                }
+            foreach (var u in llista)
+            {
+                Usuaris.Add(u);
             }
         }
 
@@ -256,65 +252,58 @@ namespace PIC.ViewModel
             if (string.IsNullOrEmpty(ParametreCercaUsuaris))
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
+                return;
             }
-            else
+
+            Usuaris.Clear();
+            switch (TipusCercaActualUsuaris)
             {
-                Usuaris.Clear();
-                switch (TipusCercaActualUsuaris)
-                {
-                    case UsuarisTipusCerca.PerId:
-                        var perId = await _usuarisApiClient.GetUsuariPerIdAsync(int.Parse(ParametreCercaUsuaris));
+                case UsuarisTipusCerca.PerId:
+                    var perId = await _usuarisApiClient.GetUsuariPerIdAsync(int.Parse(ParametreCercaUsuaris));
 
-                        // Si la consulta falla o és buida
-                        if (perId == null)
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID.");
-                        }
-                        // Si la consulta funciona
-                        else
-                        {
-                            Usuaris.Add(perId);
-                        }
-                        break;
+                    // Si la consulta falla o és buida
+                    if (perId == null)
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID.");
+                        return;
+                    }
 
-                    case UsuarisTipusCerca.PerCurs:
-                        var perIdCurs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(int.Parse(ParametreCercaUsuaris));
+                    Usuaris.Add(perId);
+                    break;
 
-                        // Si la consulta falla o és buida
-                        if (perIdCurs == null || !perIdCurs.Any())
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Curs.");
-                        }
-                        // Si la consulta funciona
-                        else
-                        {
-                            foreach (var u in perIdCurs)
-                            {
-                                Usuaris.Add(u);
+                case UsuarisTipusCerca.PerCurs:
+                    var perIdCurs = await _usuarisApiClient.GetUsuarisPerIdCursAsync(int.Parse(ParametreCercaUsuaris));
 
-                            }
-                        }
-                        break;
+                    // Si la consulta falla o és buida
+                    if (perIdCurs == null || !perIdCurs.Any())
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Curs.");
+                        return;
+                    }
 
-                    case UsuarisTipusCerca.PerDepartament:
-                        var perIdDepartament = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(int.Parse(ParametreCercaUsuaris));
+                    foreach (var u in perIdCurs)
+                    {
+                        Usuaris.Add(u);
 
-                        // Si la consulta falla o és buida
-                        if (perIdDepartament == null || !perIdDepartament.Any())
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Departament.");
-                        }
-                        // Si la consulta funciona
-                        else
-                        {
-                            foreach (var u in perIdDepartament)
-                            {
-                                Usuaris.Add(u);
-                            }
-                        }
-                        break;
-                }
-            }                
+                    }
+                    break;
+
+                case UsuarisTipusCerca.PerDepartament:
+                    var perIdDepartament = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(int.Parse(ParametreCercaUsuaris));
+
+                    // Si la consulta falla o és buida
+                    if (perIdDepartament == null || !perIdDepartament.Any())
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap usuari amb aquest ID de Departament.");
+                        return;
+                    }
+
+                    foreach (var u in perIdDepartament)
+                    {
+                        Usuaris.Add(u);
+                    }
+                    break;
+            }             
         }
 
         // BUIDAR LIST VIEW

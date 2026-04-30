@@ -40,14 +40,14 @@
         <Setter Property="FontFamily" Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
         <Setter Property="FontSize" Value="12"/>
         <Setter Property="MinHeight" Value="20"/>
-        <Setter Property="Padding" Value="10,5,10,5"/>
+        <Setter Property="Padding" Value="5"/>
         <Setter Property="VerticalContentAlignment" Value="Center"/>
-
+        <Setter Property="PasswordChar" Value="●"/>
         <Setter Property="SnapsToDevicePixels" Value="True"/>
 
         <Setter Property="Template">
             <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
+                <ControlTemplate TargetType="PasswordBox">
                     <Border x:Name="border" 
                             Background="{TemplateBinding Background}" 
                             BorderThickness="{TemplateBinding BorderThickness}" 
@@ -55,44 +55,15 @@
                             SnapsToDevicePixels="True">
 
                         <ScrollViewer x:Name="PART_ContentHost" 
-                                      Focusable="false" 
-                                      HorizontalScrollBarVisibility="Hidden" 
-                                      VerticalScrollBarVisibility="Hidden"/>
+                                  Focusable="false" 
+                                  HorizontalScrollBarVisibility="Hidden" 
+                                  VerticalScrollBarVisibility="Hidden"/>
                     </Border>
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
     </Style>
-    
+
     <!-- PER CAMP DE DATES -->
-    <Style x:Key="Main_DatePicker" TargetType="DatePicker">
-        <Setter Property="Foreground" Value="#131316"/>
-        <Setter Property="Background" Value="#e8e9e9"/>
-        <Setter Property="BorderThickness" Value="0"/>
-        <Setter Property="FontFamily" Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
-        <Setter Property="FontSize" Value="12"/>
-        <Setter Property="MinHeight" Value="20"/>
-        <Setter Property="Padding" Value="10,5,10,5"/>
-        <Setter Property="VerticalContentAlignment" Value="Center"/>
-
-        <Setter Property="SnapsToDevicePixels" Value="True"/>
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="TextBox">
-                    <Border x:Name="border" 
-                            Background="{TemplateBinding Background}" 
-                            BorderThickness="{TemplateBinding BorderThickness}" 
-                            BorderBrush="Transparent" 
-                            SnapsToDevicePixels="True">
-
-                        <ScrollViewer x:Name="PART_ContentHost" 
-                                      Focusable="false" 
-                                      HorizontalScrollBarVisibility="Hidden" 
-                                      VerticalScrollBarVisibility="Hidden"/>
-                    </Border>
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-    </Style>
+    
 </ResourceDictionary>

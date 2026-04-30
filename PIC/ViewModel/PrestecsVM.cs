@@ -103,12 +103,12 @@ namespace PIC.ViewModel
         });
 
         // EDITAR PRÉSTEC
-        public ICommand EditarPrestecMenu_Click => new RelayCommand(async _ =>
+        public ICommand EditarPrestecMenu_Click => new RelayCommand(_ =>
         {
             // Si no hi ha cap préstec seleccionat
             if (_prestecSeleccionat != null)
             {
-                await EditarPrestec.Mostrar(PrestecSeleccionat);
+                EditarPrestec.Mostrar(PrestecSeleccionat);
             }
             else
             {

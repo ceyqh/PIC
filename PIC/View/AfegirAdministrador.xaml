@@ -62,7 +62,7 @@
                     
                     <PasswordBox p:PasswordHelper.BoundPassword="{Binding Contrasenya, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,0,20" 
-                                 Style="{StaticResource Fraktion_Dark_Font_PasswordBox}"/>
+                                 Style="{StaticResource Main_PasswordBox}"/>
                 </StackPanel>
                 
                 <!-- COGNOM -->
@@ -76,7 +76,7 @@
 
                     <PasswordBox p:PasswordHelper.BoundPassword="{Binding RepetirContrasenya, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,0,20" 
-                                 Style="{StaticResource Fraktion_Dark_Font_PasswordBox}"/>
+                                 Style="{StaticResource Main_PasswordBox}"/>
                 </StackPanel>
 
                 <!-- GRUP -->
