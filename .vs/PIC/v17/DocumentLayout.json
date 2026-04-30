@@ -7,36 +7,20 @@
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\finalitzarcursvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\view\\finalitzarcurs.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\finalitzarcurs.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\cursosvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\cursosvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\view\\pic.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\pic.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\model\\usuari.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\model\\usuari.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\styles\\button.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\button.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\model\\csv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\model\\csv.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\styles\\textbox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\textbox.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\viewmodel\\usuarisvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\usuarisvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\viewmodel\\afegiralumnevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\afegiralumnevm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\viewmodel\\afegirprofessorvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\afegirprofessorvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\viewmodel\\registresvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\registresvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\model\\curs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\model\\curs.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -54,50 +38,54 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "TextBox.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\TextBox.xaml",
-              "RelativeDocumentMoniker": "PIC\\Styles\\TextBox.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\TextBox.xaml",
-              "RelativeToolTip": "PIC\\Styles\\TextBox.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-30T17:48:35.996Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "Button.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Button.xaml",
-              "RelativeDocumentMoniker": "PIC\\Styles\\Button.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Styles\\Button.xaml",
-              "RelativeToolTip": "PIC\\Styles\\Button.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-30T17:47:44.053Z",
+              "DocumentIndex": 1,
+              "Title": "CursosVM.cs",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\CursosVM.cs",
+              "RelativeDocumentMoniker": "PIC\\ViewModel\\CursosVM.cs",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\CursosVM.cs",
+              "RelativeToolTip": "PIC\\ViewModel\\CursosVM.cs",
+              "ViewState": "AgIAADYAAAAAAAAAAAAIwAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T22:33:25.789Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
               "DocumentIndex": 2,
-              "Title": "Pic.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Pic.xaml",
-              "RelativeDocumentMoniker": "PIC\\View\\Pic.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Pic.xaml",
-              "RelativeToolTip": "PIC\\View\\Pic.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-30T17:44:14.931Z",
+              "Title": "Usuari.cs",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\Usuari.cs",
+              "RelativeDocumentMoniker": "PIC\\Model\\Usuari.cs",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\Usuari.cs",
+              "RelativeToolTip": "PIC\\Model\\Usuari.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T21:56:12.284Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "FinalitzarCurs.xaml",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\FinalitzarCurs.xaml",
-              "RelativeDocumentMoniker": "PIC\\View\\FinalitzarCurs.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\FinalitzarCurs.xaml",
-              "RelativeToolTip": "PIC\\View\\FinalitzarCurs.xaml",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-04-30T15:43:56.384Z",
+              "DocumentIndex": 3,
+              "Title": "CSV.cs",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\CSV.cs",
+              "RelativeDocumentMoniker": "PIC\\Model\\CSV.cs",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\CSV.cs",
+              "RelativeToolTip": "PIC\\Model\\CSV.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAwAAAAqAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T21:53:47.797Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "Curs.cs",
+              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\Curs.cs",
+              "RelativeDocumentMoniker": "PIC\\Model\\Curs.cs",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\Model\\Curs.cs",
+              "RelativeToolTip": "PIC\\Model\\Curs.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-04-30T20:57:16.98Z",
               "EditorCaption": ""
             },
             {
@@ -108,61 +96,9 @@
               "RelativeDocumentMoniker": "PIC\\ViewModel\\FinalitzarCursVM.cs",
               "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\FinalitzarCursVM.cs",
               "RelativeToolTip": "PIC\\ViewModel\\FinalitzarCursVM.cs",
-              "ViewState": "AgIAAIsAAAAAAAAAAAAuwKMAAAAPAAAAAAAAAA==",
+              "ViewState": "AgIAAJkAAAAAAAAAAAAAwKcAAABHAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2026-04-30T13:17:43.81Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "AfegirAlumneVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\AfegirAlumneVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\AfegirAlumneVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\AfegirAlumneVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\AfegirAlumneVM.cs",
-              "ViewState": "AgIAAGAAAAAAAAAAAAAmwHkAAAAmAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-30T01:43:12.962Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
-              "Title": "AfegirProfessorVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\AfegirProfessorVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\AfegirProfessorVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\AfegirProfessorVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\AfegirProfessorVM.cs",
-              "ViewState": "AgIAAHcAAAAAAAAAAAAswKQAAAA7AAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-30T01:42:37.118Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "RegistresVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\RegistresVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\RegistresVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\RegistresVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\RegistresVM.cs",
-              "ViewState": "AgIAAH8AAAAAAAAAAAAAwJUAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-30T01:41:33.029Z",
-              "EditorCaption": ""
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 5,
-              "Title": "UsuarisVM.cs",
-              "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\UsuarisVM.cs",
-              "RelativeDocumentMoniker": "PIC\\ViewModel\\UsuarisVM.cs",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\ViewModel\\UsuarisVM.cs",
-              "RelativeToolTip": "PIC\\ViewModel\\UsuarisVM.cs",
-              "ViewState": "AgIAANgAAAAAAAAAAAAmwPEAAAAkAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-04-30T01:35:21.704Z",
               "EditorCaption": ""
             }
           ]

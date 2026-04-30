@@ -263,3 +263,11 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\FinalitzarCurs.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\FinalitzarCurs.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Notificacio.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Notificacio.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.DataSet.dll
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.dll
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\System.Text.Encoding.CodePages.dll
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.pdb
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.xml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.DataSet.pdb
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.DataSet.xml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\System.Text.Encoding.CodePages.xml

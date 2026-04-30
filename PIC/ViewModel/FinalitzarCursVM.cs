@@ -1,17 +1,20 @@
-﻿using Microsoft.Win32;
+﻿using ExcelDataReader;
+using Microsoft.Win32;
 using PIC.APIClient;
 using PIC.Model;
 using PIC.Utilities;
 using PIC.View;
 using System;
 using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
-using System.Globalization;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace PIC.ViewModel
 {
@@ -144,26 +147,13 @@ namespace PIC.ViewModel
         public ICommand FinalitzarCurs_Click => new RelayCommand(async _ =>
         {
             // Si es pot finalitzar
-            //if (!esPotFinalitzar) 
-            //{ 
-            //    return;
-            //}
+            if (!esPotFinalitzar)
+            {
+                return;
+            }
 
-            //esPotFinalitzar = false;
+            esPotFinalitzar = false;
 
-            //using (var reader = new StreamReader(RutaFitxer))
-            //using (var csv = new CsvReader(reader, CultureInfo.InvariantCulture))
-            //{
-            //    // Si tens una classe que coincideix amb les columnes
-            //    var records = csv.GetRecords<Usuari>().ToList();
-
-            //    foreach (var usuari in records)
-            //    {
-            //        Console.WriteLine($"{usuari.Nom} - {usuari.Email}");
-            //    }
-            //}
-
-            return;
             // Si el codi de seguretat NO coincideix
             if (CodiSeguretat.ToString() != CodiSeguretatTextBox)
             {
@@ -171,8 +161,14 @@ namespace PIC.ViewModel
                 esPotFinalitzar = true;
                 return;
             }
-                           
-            esPotFinalitzar = false;
+
+            // Si no hi ha un arxiu seleccionat
+            if (string.IsNullOrEmpty(RutaFitxer))
+            {
+                MissatgeError.Mostrar("No hi ha cap fitxer seleccionat.");
+                esPotFinalitzar = true;
+                return;
+            }
 
             // Esborrar prèstecs
             TextProces = "// Consultant préstecs...";
@@ -325,9 +321,121 @@ namespace PIC.ViewModel
                 TextProces = $"// Esborrant el curs {curs.Nom} [{curs.Id}]...";
                 var alumneEsborrat = await _cursosApiClient.DeleteCursAsync((int)curs.Id);
 
-                if (alumneEsborrat == -1)
+                if (alumneEsborrat == -1)   
                 {
                     MissatgeError.Mostrar($"Hi ha hagut un problema al esborrar el curs amb ID[{curs.Id}]. Revisa la comunicació entre la API i l'aplicació i torna a executar aquesta funció.");
+                    esPotFinalitzar = true;
+                    return;
+                }
+            }
+
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+
+            List<CSV> nousCSV = new List<CSV>();
+            List<string> nousCursos = new List<string>();
+
+            using (var stream = File.Open(RutaFitxer, FileMode.Open, FileAccess.Read))
+            {
+                using (var reader = ExcelReaderFactory.CreateReader(stream))
+                {
+                    int filaActual = 0;
+
+                    while (reader.Read())
+                    {
+                        filaActual++;
+                        // Saltem fins arribar a la fila 7 (on comencen les dades reals)
+                        if (filaActual < 7) continue;
+
+                        // Llegim les columnes per índex (A=0, B=1, C=2, D=3, E=4)
+                        string nivell = reader.GetValue(1)?.ToString();          // Columna A
+                        string codiEnsenyament = reader.GetValue(2)?.ToString(); // Columna B
+                        string nom = reader.GetValue(3)?.ToString();             // Columna C
+                        string primerCognom = reader.GetValue(4)?.ToString();    // Columna D
+                        string segonCognom = reader.GetValue(5)?.ToString();     // Columna E
+
+                        // Si arriba al final
+                        if (string.IsNullOrEmpty(nom))
+                        {
+                            break;
+                        }
+
+                        CSV csv = new CSV();
+
+                        string codiNet = nivell + " " + Regex.Replace(codiEnsenyament.ToString(), @"\s+", " ");
+
+                        csv.Curs = codiNet;
+                        csv.Nom = nom;
+                        csv.Cognom = primerCognom + " " + segonCognom;
+
+                        nousCSV.Add(csv);
+                        nousCursos.Add(codiNet);
+                    }
+                }
+            }
+
+            TextProces = "// Creant cusos...";
+            nousCursos = nousCursos.Distinct().OrderBy(c => c).ToList();
+
+            foreach (string curs in nousCursos)
+            {
+                // Crear cursos
+                Curs nouCurs = new Curs();
+                nouCurs.Nom = curs;
+
+                TextProces = $"// Creant el curs {nouCurs.Nom}...";
+                var cursCreat = await _cursosApiClient.PostCursAsync(nouCurs);
+
+                // Si la consulta falla
+                if (cursCreat == null)
+                {
+                    MissatgeError.Mostrar("Hi ha hagut un problema al crear el curs.");
+                    esPotFinalitzar = true;
+                    return;
+                }
+            }
+
+            var cursosActuals = await _cursosApiClient.GetAllCursosAsync();
+
+            // Si la consulta falla
+            if (cursosActuals == null)
+            {
+                MissatgeError.Mostrar("Hi ha hagut un problema al consultar els cursos.");
+                esPotFinalitzar = true;
+                return;
+            }
+
+            foreach (CSV csv in nousCSV)
+            {
+                TextProces = $"// Creant l'usuari {csv.Nom}...";
+
+                NouUsuari nouUsuari = new NouUsuari();
+                nouUsuari.Nom = csv.Nom;
+                nouUsuari.Cognom = csv.Cognom;
+
+                var usuariCreat = await _usuarisApiClient.PostUsuariAsync(nouUsuari);
+
+                // Si crear l'usuari falla
+                if (usuariCreat == null)
+                {
+                    MissatgeError.Mostrar($"Hi ha hagut un problema al crear l'alumne {csv.Nom}.");
+                    esPotFinalitzar = true;
+                    return;
+                }
+
+                TextProces = $"// Afegint l'alumne {csv.Nom}...";
+
+                int index = cursosActuals.FindIndex(x => x.Nom == csv.Curs);
+
+                Alumne nouAlumne = new Alumne();
+                nouAlumne.IdUsuari = usuariCreat.Id;
+                nouAlumne.IdCurs = cursosActuals[index].Id;
+
+                var alumneCreat = await _alumnesApiClient.PostAlumneAsync(nouAlumne);
+
+                // Si crear l'alumne falla
+                if (alumneCreat == null)
+                {
+                    MissatgeError.Mostrar($"Hi ha hagut un problema al crear l'alumne {csv.Nom}.");
                     esPotFinalitzar = true;
                     return;
                 }
