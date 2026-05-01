@@ -232,6 +232,8 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
                                 <Button Content="AFEGIR ALUMNE"
@@ -257,6 +259,24 @@
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarMenu_Click}"/>
+
+                                <TextBlock Text="ORDENAR PER:"
+                                           Grid.Row="8"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                                <ComboBox SelectedValue="{Binding OrdenarUsuaris, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          SelectedValuePath="Content"
+                                          Grid.Row="10"
+                                          Style="{StaticResource Ordenar_ComboBox}"
+                                          Width="200"
+                                          Height="30">
+
+                                    <ComboBoxItem Content="ID"/>
+                                    <ComboBoxItem Content="GRUP"/>
+                                    <ComboBoxItem Content="TIPUS"/>
+                                </ComboBox>
                             </Grid>
                         </StackPanel>
 

@@ -21,6 +21,7 @@ namespace PIC.ViewModel
         public AfegirAdministradorVM AfegirAdministrador { get; set; }
         public EditarAdministradorVM EditarAdministrador { get; set; }
         public FinalitzarCursVM FinalitzarCurs { get; set; }
+        public ExportarRegistresVM ExportarRegistres { get; set; }
         public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
         public NotificacioVM Notificacio { get; set; }
 
@@ -48,6 +49,7 @@ namespace PIC.ViewModel
             MissatgeError = new MissatgeErrorVM();
             AfegirAdministrador = new AfegirAdministradorVM(this);
             FinalitzarCurs = new FinalitzarCursVM(this);
+            ExportarRegistres = new ExportarRegistresVM();
             EditarAdministrador = new EditarAdministradorVM(this);
             ConfirmarEsborrar = new ConfirmarEsborrarVM();
             Notificacio = new NotificacioVM();
@@ -117,6 +119,11 @@ namespace PIC.ViewModel
         public ICommand FinalitzarCursMenu_Click => new RelayCommand(_ =>
         {
             FinalitzarCurs.Mostrar();
+        });
+
+        public ICommand ExportarRegistresMenu_Click => new RelayCommand(_ =>
+        {
+            ExportarRegistres.Mostrar();
         });
 
         public void ObrirNotificacio(string missatge)

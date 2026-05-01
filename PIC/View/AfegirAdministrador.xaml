@@ -41,7 +41,7 @@
                 <StackPanel Grid.Row="1" 
                         Margin="20, 10, 20, 0">
 
-                    <TextBlock Text="NOM: " 
+                    <TextBlock Text="Nom: " 
                            Style="{StaticResource Fraktion_Dark_Font}" 
                            FontSize="12" 
                            Margin="0,0,0,10"/>
@@ -55,7 +55,7 @@
                 <StackPanel Grid.Row="2" 
                         Margin="20, 0, 20, 0">
 
-                    <TextBlock Text="CONTRASENYA: " 
+                    <TextBlock Text="Contrasenya: " 
                                Style="{StaticResource Fraktion_Dark_Font}" 
                                FontSize="12" 
                                Margin="0,0,0,10"/>
@@ -69,7 +69,7 @@
                 <StackPanel Grid.Row="3" 
                         Margin="20, 0, 20, 0">
 
-                    <TextBlock Text="REPETIR CONTRASENYA: " 
+                    <TextBlock Text="Repetir conrasenya: " 
                            Style="{StaticResource Fraktion_Dark_Font}" 
                            FontSize="12" 
                            Margin="0,0,0,10"/>
@@ -83,7 +83,7 @@
                 <StackPanel Grid.Row="4" 
                         Margin="20, 0, 20, 0">
 
-                    <TextBlock Text="PERMISOS: " 
+                    <TextBlock Text="Permisos: " 
                            Style="{StaticResource Fraktion_Dark_Font}" 
                            FontSize="12" 
                            Margin="0,0,0,10"/>

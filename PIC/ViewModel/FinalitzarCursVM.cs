@@ -119,6 +119,8 @@ namespace PIC.ViewModel
             CodiSeguretatTextBox = "";
             esPotFinalitzar = true;
             EsVisible = Visibility.Visible;
+            BotoRutaFitxer = "[...]";
+            RutaFitxer = "";
         }
 
         // TANCAR FINESTRA
@@ -136,10 +138,7 @@ namespace PIC.ViewModel
             if (openFileDialog.ShowDialog() == true)
             {
                 RutaFitxer = openFileDialog.FileName;
-
-                // Nom de l'arxiu per al botó
-                string[] rutaSeparada = RutaFitxer.Split('\\');
-                BotoRutaFitxer = rutaSeparada[rutaSeparada.Count() - 1];
+                BotoRutaFitxer = System.IO.Path.GetFileName(RutaFitxer);
             }
         });
 

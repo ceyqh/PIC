@@ -66,6 +66,50 @@ namespace PIC.ViewModel
             set { _titolPantalla = value; OnPropertyChanged(); }
         }
 
+        // ORDENAR PER
+        private string _ordenarUsuaris= "ID";
+        public string OrdenarUsuaris
+        {
+            get => _ordenarUsuaris;
+            set
+            {
+                if (value == "ID")
+                {
+                    var llistaOrdenada = Usuaris.OrderBy(d => d.Id).ToList();
+                    Usuaris.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Usuaris.Add(d);
+                    }
+                }
+
+                if (value == "GRUP")
+                {
+                    var llistaOrdenada = Usuaris.OrderBy(d => d.IdGrup).ToList();
+                    Usuaris.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Usuaris.Add(d);
+                    }
+                }
+
+                if (value == "TIPUS")
+                {
+                    var llistaOrdenada = Usuaris.OrderBy(d => d.Tipus).ToList();
+                    Usuaris.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Usuaris.Add(d);
+                    }
+                }
+                _ordenarUsuaris = value;
+                OnPropertyChanged();
+            }
+        }
+
         // USUARI SELECCIONAT
         private Usuari _usuariSeleccionat;
         public Usuari UsuariSeleccionat
@@ -188,6 +232,7 @@ namespace PIC.ViewModel
                         TitolPantalla = "USUARIS: TOTS";
                         ParametreCercaUsuaris = "";
                         CercaVisibility = Visibility.Collapsed;
+                        OrdenarUsuaris = "ID";
                         _ = MostrarUsuarisAsync();
                         break;
 
@@ -195,18 +240,21 @@ namespace PIC.ViewModel
                         TitolPantalla = "USUARIS: PER ID";
                         ParametreCercaUsuaris = "";
                         TipusCercaActualUsuaris = UsuarisTipusCerca.PerId;
+                        OrdenarUsuaris = "ID";
                         break;
 
                     case "PER_CURS":
                         TitolPantalla = "USUARIS: PER CURS";
                         ParametreCercaUsuaris = "";
                         TipusCercaActualUsuaris = UsuarisTipusCerca.PerCurs;
+                        OrdenarUsuaris = "ID";
                         break;
 
                     case "PER_DEPARTAMENT":
                         TitolPantalla = "USUARIS: PER DEPARTAMENT";
                         ParametreCercaUsuaris = "";
                         TipusCercaActualUsuaris = UsuarisTipusCerca.PerDepartament;
+                        OrdenarUsuaris = "ID";
                         break;
                 }
             }            

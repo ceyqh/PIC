@@ -193,7 +193,7 @@
                                         Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
+                                        Command="{Binding ExportarRegistresMenu_Click}"/>
                                 
                                 <Button Content="BUIDAR REGISTRES"
                                         Grid.Row="12"
@@ -252,6 +252,7 @@
         <local:EditarAdministrador DataContext="{Binding EditarAdministrador}" d:IsHidden="true"/>
         <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
         <local:FinalitzarCurs DataContext="{Binding FinalitzarCurs}" d:IsHidden="true"/>
+        <local:ExportarRegistres DataContext="{Binding ExportarRegistres}" d:IsHidden="true"/>
         <local:Notificacio DataContext="{Binding Notificacio}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

@@ -271,3 +271,5 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.xml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.DataSet.pdb
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.DataSet.xml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\System.Text.Encoding.CodePages.xml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ExportarRegistres.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ExportarRegistres.baml

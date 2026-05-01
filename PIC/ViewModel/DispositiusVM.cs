@@ -46,18 +46,44 @@ namespace PIC.ViewModel
         }
 
         // PROPIETATS DE LA UI
-        private Visibility _cercaVisibility = Visibility.Collapsed;
-        public Visibility CercaVisibility
-        {
-            get => _cercaVisibility;
-            set { _cercaVisibility = value; OnPropertyChanged(); }
-        }
-
         private string _titolPantalla = "DISPOSITIUS: TOTS";
         public string TitolPantalla
         {
             get => _titolPantalla;
             set { _titolPantalla = value; OnPropertyChanged(); }
+        }
+
+        // ORDENAR PER
+        private string _ordenarDispositius = "ID";
+        public string OrdenarDispositius
+        {
+            get => _ordenarDispositius;
+            set
+            {
+                if (value == "ID")
+                {
+                    var llistaOrdenada = Dispositius.OrderBy(d => d.Id).ToList();
+                    Dispositius.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Dispositius.Add(d);
+                    }
+                }
+
+                if (value == "CATEGORIA")
+                {
+                    var llistaOrdenada = Dispositius.OrderBy(d => d.IdCategoria).ToList();
+                    Dispositius.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Dispositius.Add(d);
+                    }
+                }
+                _ordenarDispositius = value;
+                OnPropertyChanged();
+            }
         }
 
         // DISPOSITIU SELECCIONAT
@@ -209,14 +235,13 @@ namespace PIC.ViewModel
                 string mode = param.ToString();
 
                 Dispositius.Clear();
-                CercaVisibility = Visibility.Visible;
 
                 switch (mode)
                 {
                     case "TOTS":
                         TitolPantalla = "DISPOSITIUS: TOTS";
                         ParametreCercaDispositius = "";
-                        CercaVisibility = Visibility.Collapsed;
+                        OrdenarDispositius = "ID";
                         _ = MostrarDispositiusAsync();
                         break;
 
@@ -224,33 +249,35 @@ namespace PIC.ViewModel
                         TitolPantalla = "DISPOSITIUS: PER ID";
                         ParametreCercaDispositius = "";
                         TipusCercaActualDispositius = DispositiusTipusCerca.PerId;
+                        OrdenarDispositius = "ID";
                         break;
 
                     case "PER_CATEGORIA":
                         TitolPantalla = "DISPOSITIUS: PER CATEGORIA";
                         ParametreCercaDispositius = "";
                         TipusCercaActualDispositius = DispositiusTipusCerca.PerCategoria;
+                        OrdenarDispositius = "ID";
                         break;
 
                     case "DISPONIBLES":
                         TitolPantalla = "DISPOSITIUS: DISPONIBLES";
                         ParametreCercaDispositius = "";
-                        CercaVisibility = Visibility.Collapsed;
                         _ = MostrarDispositiusDisponiblesAsync();
+                        OrdenarDispositius = "ID";
                         break;
 
                     case "NO_DISPONIBLES":
                         TitolPantalla = "DISPOSITIUS: NO DISPONIBLES";
                         ParametreCercaDispositius = "";
-                        CercaVisibility = Visibility.Collapsed;
                         _ = MostrarDispositiusNoDisponiblesAsync();
+                        OrdenarDispositius = "ID";
                         break;
 
                     case "EN_PRESTEC":
                         TitolPantalla = "DISPOSITIUS: EN PRÉSTEC";
                         ParametreCercaDispositius = "";
-                        CercaVisibility = Visibility.Collapsed;
                         _ = MostrarDispositiusEnPrestecAsync();
+                        OrdenarDispositius = "ID";
                         break;
                 }
             }                

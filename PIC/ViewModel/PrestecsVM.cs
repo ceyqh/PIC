@@ -60,6 +60,61 @@ namespace PIC.ViewModel
             set { _titolPantalla = value; OnPropertyChanged(); }
         }
 
+        // ORDENAR PER
+        private string _ordenarPrestecs= "ID";
+        public string OrdenarPrestecs
+        {
+            get => _ordenarPrestecs;
+            set
+            {
+                if (value == "ID")
+                {
+                    var llistaOrdenada = Prestecs.OrderBy(d => d.Id).ToList();
+                    Prestecs.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Prestecs.Add(d);
+                    }
+                }
+
+                if (value == "USUARI")
+                {
+                    var llistaOrdenada = Prestecs.OrderBy(d => d.IdUsuari).ToList();
+                    Prestecs.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Prestecs.Add(d);
+                    }
+                }
+
+                if (value == "DATA ENTREGA")
+                {
+                    var llistaOrdenada = Prestecs.OrderBy(d => d.DataEntrega).ToList();
+                    Prestecs.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Prestecs.Add(d);
+                    }
+                }
+
+                if (value == "DATA RETORN")
+                {
+                    var llistaOrdenada = Prestecs.OrderBy(d => d.DataRetorn).ToList();
+                    Prestecs.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Prestecs.Add(d);
+                    }
+                }
+                _ordenarPrestecs = value;
+                OnPropertyChanged();
+            }
+        }
+
         // PRÉSTEC SELECCIONAT
         private Prestec _prestecSeleccionat;
         public Prestec PrestecSeleccionat
@@ -165,6 +220,7 @@ namespace PIC.ViewModel
                         TitolPantalla = "PRÉSTECS: TOTS";
                         ParametreCercaPrestecs = "";
                         CercaVisibility = Visibility.Collapsed;
+                        OrdenarPrestecs = "ID";
                         _ = MostrarPrestecsAsync();
                         break;
 
@@ -172,24 +228,28 @@ namespace PIC.ViewModel
                         TitolPantalla = "PRÉSTECS: PER ID";
                         ParametreCercaPrestecs = "";
                         TipusCercaActualPrestecs = PrestecsTipusCerca.PerId;
+                        OrdenarPrestecs = "ID";
                         break;
 
                     case "PER_USUARI":
                         TitolPantalla = "PRÉSTECS: PER USUARI";
                         ParametreCercaPrestecs = "";
                         TipusCercaActualPrestecs = PrestecsTipusCerca.PerUsuari;
+                        OrdenarPrestecs = "ID";
                         break;
 
                     case "PER_DISPOSITIU":
                         TitolPantalla = "PRÉSTECS: PER DISPOSITIU";
                         ParametreCercaPrestecs = "";
                         TipusCercaActualPrestecs = PrestecsTipusCerca.PerDispositiu;
+                        OrdenarPrestecs = "ID";
                         break;
 
                     case "EN_CURS":
                         TitolPantalla = "PRÉSTECS: EN CURS";
                         ParametreCercaPrestecs = "";
                         CercaVisibility = Visibility.Collapsed;
+                        OrdenarPrestecs = "ID";
                         _ = MostrarPrestecsEnCursAsync();
                         break;
 
@@ -197,6 +257,7 @@ namespace PIC.ViewModel
                         TitolPantalla = "USUARIS: CADUCATS";
                         ParametreCercaPrestecs = "";
                         CercaVisibility = Visibility.Collapsed;
+                        OrdenarPrestecs = "ID";
                         _ = MostrarPrestecsCaducatsAsync();
                         break;
                 }
