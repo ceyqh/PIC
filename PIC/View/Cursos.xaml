@@ -15,41 +15,7 @@
 
     <Grid>
         <Grid>
-            <!--// Base Grid //-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" 
-                  Width="200" 
-                  Background="#e8e9e9">
-
-                <StackPanel Height="400" Width="200">
-
-                    <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="TOTS" 
-                              IsChecked="True">
-                        <Grid>
-                            <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_ID">
-                        <Grid>
-                            <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}" />
-                        </Grid>
-                    </Menu:Btn>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Column="1">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="*"/>
@@ -68,6 +34,44 @@
                                 Orientation="Horizontal" 
                                 VerticalAlignment="Center" 
                                 Margin="10">
+
+                        <TextBlock Text="Mostrar:"
+                                   Grid.Row="0"
+                                   Margin="0, 0, 10, 0"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                        <ComboBox SelectedValue="{Binding MostrarCursos, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedValuePath="Content"
+                                  Grid.Row="2"
+                                  Style="{StaticResource Ordenar_ComboBox}"
+                                  Width="200"
+                                  Height="30">
+
+                            <ComboBoxItem Content="TOTS"/>
+                            <ComboBoxItem Content="PER ID CURS"/>
+                        </ComboBox>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Width="200"
+                                    Margin="10, 0, 30, 0">
+
+                            <TextBox Style="{StaticResource Main_TextBox}"
+                                     Text="{Binding ParametreCercaCursos, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding HabilitarCerca}"
+                                     Height="30"
+                                     Width="120"/>
+
+                            <Button Content="CERCAR"
+                                    Command="{Binding BuscarCommand}"
+                                    IsEnabled="{Binding HabilitarCerca}"
+                                    Padding="10, 0, 10, 0"
+                                    Margin="10, 0, 0, 0"
+                                    Width="70"
+                                    Height="30"
+                                    Style="{StaticResource Accions_Button}"/>
+                        </StackPanel>
+
                     </StackPanel>
 
                     <Grid Grid.Row="1"
@@ -234,57 +238,28 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
-                                <TextBlock Text="Fer cerca:"
-                                           Grid.Row="0"
-                                           Width="200"
-                                           VerticalAlignment="Bottom"
-                                           Style="{StaticResource Fraktion_Dark_Font}"/>
-
-                                <StackPanel Grid.Row="2"
-                                            Orientation="Horizontal"
-                                            Width="200">
-
-                                    <TextBox Style="{StaticResource Main_TextBox}"
-                                             Text="{Binding ParametreCercaCursos, UpdateSourceTrigger=PropertyChanged}"
-                                             IsEnabled="{Binding HabilitarCerca}"
-                                             Height="30"
-                                             Width="120"/>
-
-                                    <Button Content="CERCAR"
-                                            Command="{Binding BuscarCommand}"
-                                            IsEnabled="{Binding HabilitarCerca}"
-                                            Padding="10, 0, 10, 0"
-                                            Margin="10, 0, 0, 0"
-                                            Width="70"
-                                            Style="{StaticResource Accions_Button}"/>
-                                </StackPanel>
-
                                 <TextBlock Text="Accions:"
-                                           Grid.Row="4"
+                                           Grid.Row="0"
                                            Width="200"
                                            VerticalAlignment="Bottom"
                                            Style="{StaticResource Fraktion_Dark_Font}"/>
                                 
                                 <Button Content="AFEGIR CURS"
-                                        Grid.Row="6"
+                                        Grid.Row="2"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirCursMenu_Click}"/>
 
                                 <Button Content="EDITAR CURS"
-                                        Grid.Row="8"
+                                        Grid.Row="4"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarCursMenu_Click}"/>
 
                                 <Button Content="ESBORRAR CURS"
-                                        Grid.Row="10"
+                                        Grid.Row="6"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarCursMenu_Click}"/>

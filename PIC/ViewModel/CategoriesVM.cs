@@ -69,6 +69,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // MOSTRAR USUARIS CB
+        private string _mostrarCategories = "TOTS";
+        public string MostrarCategories
+        {
+            get => _mostrarCategories;
+            set
+            {
+                _mostrarCategories = value;
+                OnPropertyChanged();
+
+                ActualitzarModeCerca(value);
+            }
+        }
+
         // CATEGORIA SELECCIONADA
         private Categoria _categoriaSeleccionada;
         public Categoria CategoriaSeleccionada
@@ -129,39 +143,39 @@ namespace PIC.ViewModel
             }
         }
 
-        // COMANDAMENTS
+        private void ActualitzarModeCerca(string mode)
+        {
+            Categories.Clear();
+            ParametreCercaCategories= "";
+
+            switch (mode)
+            {
+                case "TOTS":
+                    TextCerca = "// CATEGORIES / TOTS";
+                    ParametreCercaCategories = "";
+                    HabilitarCerca = false;
+                    ClearDispositius();
+                    _ = MostrarCategoriesAsync();
+                    break;
+
+                case "PER ID CATEGORIA":
+                    TextCerca = "// CATEGORIES / ID";
+                    ParametreCercaCategories = "";
+                    HabilitarCerca = true;
+                    ClearDispositius();
+                    TipusCercaActualCategories = CategoriesTipusCerca.PerId;
+                    break;
+            }
+            OnPropertyChanged(nameof(MostrarCategories)); // Notifiquem a la UI la sincronització
+        }
+
+        // 3. Simplifiquem el Command existent
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            // Si el el paràmetre és buit
-            if (param == null)
+            if (param != null)
             {
-                MissatgeError.Mostrar("El camp no pot quedar buit.");
+                ActualitzarModeCerca(param.ToString());
             }
-            else
-            {
-                string mode = param.ToString();
-
-                Categories.Clear();
-
-                switch (mode)
-                {
-                    case "TOTS":
-                        TextCerca = "// CATEGORIES / TOTS";
-                        ParametreCercaCategories = "";
-                        HabilitarCerca = false;
-                        ClearDispositius();
-                        _ = MostrarCategoriesAsync();
-                        break;
-
-                    case "PER_ID":
-                        TextCerca = "// CATEGORIES / ID";
-                        ParametreCercaCategories = "";
-                        HabilitarCerca = true;
-                        ClearDispositius();
-                        TipusCercaActualCategories = CategoriesTipusCerca.PerId;
-                        break;
-                }
-            }            
         });
 
         // EXECUTAR CERCA

@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:PIC.ViewModel"
              xmlns:Menu="clr-namespace:PIC.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="600" d:DesignWidth="1400">
+             d:DesignHeight="600" d:DesignWidth="1000">
 
     <UserControl.DataContext>
         <vm:DispositiusVM/>
@@ -15,78 +15,7 @@
 
     <Grid>
         <Grid>
-            <!--// Base Grid //-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition/>
-            </Grid.ColumnDefinitions>
-
-            <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" 
-                  Width="200" 
-                  Background="#e8e9e9">
-
-                
-                <StackPanel Height="400" Width="200">
-                    
-                    <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="TOTS" 
-                              IsChecked="True">
-                        <Grid>
-                            <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_ID">
-                        <Grid>
-                            <TextBlock Text="PER ID" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER CURS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_CATEGORIA">
-                        <Grid>
-                            <TextBlock Text="PER CATEGORIA" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="DISPONIBLES">
-                        <Grid>
-                            <TextBlock Text="DISPONIBLES" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-                    
-                    <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="NO_DISPONIBLES">
-                        <Grid>
-                            <TextBlock Text="NO DISPONIBLES" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-                    
-                    <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="EN_PRESTEC">
-                        <Grid>
-                            <TextBlock Text="EN PRÉSTEC" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Column="1">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="*"/>
@@ -105,6 +34,47 @@
                                 Orientation="Horizontal" 
                                 VerticalAlignment="Center" 
                                 Margin="10">
+
+                        <TextBlock Text="Mostrar:"
+                                   Grid.Row="0"
+                                   Margin="0, 0, 10, 0"
+                                   VerticalAlignment="Center"
+                                   Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                        <ComboBox SelectedValue="{Binding MostrarDispositius, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedValuePath="Content"
+                                  Grid.Row="2"
+                                  Style="{StaticResource Ordenar_ComboBox}"
+                                  Width="200"
+                                  Height="30">
+
+                            <ComboBoxItem Content="TOTS"/>
+                            <ComboBoxItem Content="PER ID DISPOSITIU"/>
+                            <ComboBoxItem Content="PER ID CATEGORIA"/>
+                            <ComboBoxItem Content="DISPONIBLES"/>
+                            <ComboBoxItem Content="NO DISPONIBLES"/>
+                            <ComboBoxItem Content="EN PRÉSTEC"/>
+                        </ComboBox>
+
+                        <StackPanel Orientation="Horizontal"
+                                    Width="200"
+                                    Margin="10, 0, 30, 0">
+
+                            <TextBox Style="{StaticResource Main_TextBox}"
+                                     Text="{Binding ParametreCercaDispositius, UpdateSourceTrigger=PropertyChanged}"
+                                     IsEnabled="{Binding HabilitarCerca}"
+                                     Height="30"
+                                     Width="120"/>
+
+                            <Button Content="CERCAR"
+                                    Command="{Binding BuscarCommand}"
+                                    IsEnabled="{Binding HabilitarCerca}"
+                                    Padding="10, 0, 10, 0"
+                                    Margin="10, 0, 0, 0"
+                                    Width="70"
+                                    Height="30"
+                                    Style="{StaticResource Accions_Button}"/>
+                        </StackPanel>
                     </StackPanel>
 
                     <Grid Grid.Row="1"
@@ -231,82 +201,53 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
-                                    <RowDefinition Height="10"/>
-                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
-                                
-                                <TextBlock Text="Fer cerca:"
+
+                                <TextBlock Text="Accions:"
                                            Grid.Row="0"
                                            Width="200"
                                            VerticalAlignment="Bottom"
                                            Style="{StaticResource Fraktion_Dark_Font}"/>
 
-                                <StackPanel Grid.Row="2"
-                                            Orientation="Horizontal"
-                                            Width="200">
-                                    
-                                    <TextBox Style="{StaticResource Main_TextBox}"
-                                             Text="{Binding ParametreCercaDispositius, UpdateSourceTrigger=PropertyChanged}"
-                                             IsEnabled="{Binding HabilitarCerca}"
-                                             Height="30"
-                                             Width="120"/>
-
-                                    <Button Content="CERCAR"
-                                            Command="{Binding BuscarCommand}"
-                                            IsEnabled="{Binding HabilitarCerca}"
-                                            Padding="10, 0, 10, 0"
-                                            Margin="10, 0, 0, 0"
-                                            Width="70"
-                                            Style="{StaticResource Accions_Button}"/>                                    
-                                </StackPanel>
-
-                                <TextBlock Text="Accions:"
-                                           Grid.Row="4"
-                                           Width="200"
-                                           VerticalAlignment="Bottom"
-                                           Style="{StaticResource Fraktion_Dark_Font}"/>
-
                                 <Button Content="AFEGIR DISPOSITIU"
-                                        Grid.Row="6"
+                                        Grid.Row="2"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirDispositiuMenu_Click}"/>
 
                                 <Button Content="HABILITAR DISPOSITIU"
-                                        Grid.Row="8"
+                                        Grid.Row="4"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding HabilitarDispositiuMenu_Click}"/>
                                 
                                 <Button Content="DESHABILITAR DISPOSITIU"
-                                        Grid.Row="10"
+                                        Grid.Row="6"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding DeshabilitarDispositiuMenu_Click}"/>
                                 
                                 <Button Content="EDITAR DISPOSITIU"
-                                        Grid.Row="12"
+                                        Grid.Row="8"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarDispositiuMenu_Click}"/>
 
                                 <Button Content="ESBORRAR DISPOSITIU"
-                                        Grid.Row="14"
+                                        Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarMenu_Click}"/>                                
                                 
                                 <TextBlock Text="Ordenar per:"
-                                           Grid.Row="16"
+                                           Grid.Row="12"
                                            Width="200"
                                            VerticalAlignment="Bottom"
                                            Style="{StaticResource Fraktion_Dark_Font}"/>
 
                                 <ComboBox SelectedValue="{Binding OrdenarDispositius, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           SelectedValuePath="Content"
-                                          Grid.Row="18"
+                                          Grid.Row="14"
                                           Style="{StaticResource Ordenar_ComboBox}"
                                           Width="200"
                                           Height="30">

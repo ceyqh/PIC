@@ -65,6 +65,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // MOSTRAR PRÉSTECS CB
+        private string _mostrarPrestecs= "TOTS";
+        public string MostrarPrestecs
+        {
+            get => _mostrarPrestecs;
+            set
+            {
+                _mostrarPrestecs = value;
+                OnPropertyChanged();
+                
+                ActualitzarModeCerca(value);
+            }
+        }
+
         // ORDENAR PER
         private string _ordenarPrestecs= "ID";
         public string OrdenarPrestecs
@@ -204,71 +218,71 @@ namespace PIC.ViewModel
             }
         });
 
-        // COMANDAMENTS
+        private void ActualitzarModeCerca(string mode)
+        {
+            Prestecs.Clear();
+            ParametreCercaPrestecs= "";
+
+            switch (mode)
+            {
+                case "TOTS":
+                    TextCerca = "// PRÉSTECS / TOTS";
+                    ParametreCercaPrestecs = "";
+                    OrdenarPrestecs = "ID";
+                    HabilitarCerca = false;
+                    _ = MostrarPrestecsAsync();
+                    break;
+
+                case "PER ID PRÉSTEC":
+                    TextCerca = "// PRÉSTECS / ID";
+                    ParametreCercaPrestecs = "";
+                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerId;
+                    OrdenarPrestecs = "ID";
+                    HabilitarCerca = true;
+                    break;
+
+                case "PER ID DISPOSITIU":
+                    TextCerca = "// PRÉSTECS / ID_DISPOSITIU";
+                    ParametreCercaPrestecs = "";
+                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerDispositiu;
+                    OrdenarPrestecs = "ID";
+                    HabilitarCerca = true;
+                    break;
+
+                case "PER ID USUARI":
+                    TextCerca = "// PRÉSTECS / ID_USUARI";
+                    ParametreCercaPrestecs = "";
+                    TipusCercaActualPrestecs = PrestecsTipusCerca.PerUsuari;
+                    OrdenarPrestecs = "ID";
+                    HabilitarCerca = true;
+                    break;
+
+                case "EN CURS":
+                    TextCerca = "// PRÉSTECS / EN_CURS";
+                    ParametreCercaPrestecs = "";
+                    OrdenarPrestecs = "ID";
+                    HabilitarCerca = false;
+                    _ = MostrarPrestecsEnCursAsync();
+                    break;
+
+                case "CADUCATS":
+                    TextCerca = "// PRÉSTECS / CADUCATS";
+                    ParametreCercaPrestecs = "";
+                    OrdenarPrestecs = "ID";
+                    HabilitarCerca = false;
+                    _ = MostrarPrestecsCaducatsAsync();
+                    break;
+            }
+            OnPropertyChanged(nameof(MostrarPrestecs));
+        }
+
+        // 3. Simplifiquem el Command existent
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            // Si no hi ha paràmetre
-            if (param == null) 
+            if (param != null)
             {
-                MissatgeError.Mostrar("El camp no pot quedar buit.");
+                ActualitzarModeCerca(param.ToString());
             }
-            else
-            {
-                string mode = param.ToString();
-
-                Prestecs.Clear();
-
-                switch (mode)
-                {
-                    case "TOTS":
-                        TextCerca = "// PRÉSTECS / TOTS";
-                        ParametreCercaPrestecs = "";
-                        OrdenarPrestecs = "ID";
-                        HabilitarCerca = false;
-                        _ = MostrarPrestecsAsync();
-                        break;
-
-                    case "PER_ID":
-                        TextCerca = "// PRÉSTECS / ID";
-                        ParametreCercaPrestecs = "";
-                        TipusCercaActualPrestecs = PrestecsTipusCerca.PerId;
-                        OrdenarPrestecs = "ID";
-                        HabilitarCerca = true;
-                        break;
-
-                    case "PER_USUARI":
-                        TextCerca = "// PRÉSTECS / ID_USUARI";
-                        ParametreCercaPrestecs = "";
-                        TipusCercaActualPrestecs = PrestecsTipusCerca.PerUsuari;
-                        OrdenarPrestecs = "ID";
-                        HabilitarCerca = true;
-                        break;
-
-                    case "PER_DISPOSITIU":
-                        TextCerca = "// PRÉSTECS / ID_DISPOSITIU";
-                        ParametreCercaPrestecs = "";
-                        TipusCercaActualPrestecs = PrestecsTipusCerca.PerDispositiu;
-                        OrdenarPrestecs = "ID";
-                        HabilitarCerca = true;
-                        break;
-
-                    case "EN_CURS":
-                        TextCerca = "// PRÉSTECS / EN_CURS";
-                        ParametreCercaPrestecs = "";
-                        OrdenarPrestecs = "ID";
-                        HabilitarCerca = false;
-                        _ = MostrarPrestecsEnCursAsync();
-                        break;
-
-                    case "CADUCATS":
-                        TextCerca = "// PRÉSTECS / CADUCATS";
-                        ParametreCercaPrestecs = "";
-                        OrdenarPrestecs = "ID";
-                        HabilitarCerca = false;
-                        _ = MostrarPrestecsCaducatsAsync();
-                        break;
-                }
-            }                
         });
 
         // EXECUTAR CERCA

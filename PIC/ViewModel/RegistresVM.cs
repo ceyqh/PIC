@@ -67,6 +67,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // MOSTRAR REGISTRES CB
+        private string _mostrarRegistres = "TOTS";
+        public string MostrarRegistres
+        {
+            get => _mostrarRegistres;
+            set
+            {
+                _mostrarRegistres = value;
+                OnPropertyChanged();
+
+                ActualitzarModeCerca(value);
+            }
+        }
+
         // ORDENAR PER
         private string _ordenarRegistres = "DATA ACCIÓ";
         public string OrdenarRegistres
@@ -146,19 +160,10 @@ namespace PIC.ViewModel
             }
         }
 
-        // COMANDAMENTS
-        public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
+        private void ActualitzarModeCerca(string mode)
         {
-            // Si el textbox és buit
-            if (param == null)
-            {
-                MissatgeError.Mostrar("El camp no pot quedar buit.");
-                return;
-            }
-            
-            string mode = param.ToString();
-
             Registres.Clear();
+            ParametreCercaRegistres = "";
 
             switch (mode)
             {
@@ -169,34 +174,43 @@ namespace PIC.ViewModel
                     _ = MostrarRegistresAsync();
                     break;
 
-                case "PER_ID_PRESTEC":
+                case "PER ID PRÉSTEC":
                     TextCerca = "// REGISTRES / ID_PRESTEC";
                     ParametreCercaRegistres = "";
                     TipusCercaActualRegistres = RegistresTipusCerca.PerIdPrestec;
                     HabilitarCerca = true;
                     break;
 
-                case "PER_ID_DISPOSITIU":
+                case "PER ID DISPOSITIU":
                     TextCerca = "// REGISTRES / ID_DISPOSITIU";
                     ParametreCercaRegistres = "";
                     TipusCercaActualRegistres = RegistresTipusCerca.PerIdDispositiu;
                     HabilitarCerca = true;
                     break;
 
-                case "PER_ID_CURS":
+                case "PER ID CURS":
                     TextCerca = "// REGISTRES / ID_CURS";
                     ParametreCercaRegistres = "";
                     TipusCercaActualRegistres = RegistresTipusCerca.PerIdCurs;
                     HabilitarCerca = true;
                     break;
 
-                case "PER_ID_DEPARTAMENT":
+                case "PER ID DEPARTAMENT":
                     TextCerca = "// REGISTRES / ID_DEPARTAMENT";
                     ParametreCercaRegistres = "";
                     TipusCercaActualRegistres = RegistresTipusCerca.PerIdDepartament;
                     HabilitarCerca = true;
                     break;
-            }              
+            }
+            OnPropertyChanged(nameof(MostrarRegistres));
+        }
+
+        public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
+        {
+            if (param != null)
+            {
+                ActualitzarModeCerca(param.ToString());
+            }
         });
 
         // EXECUTAR CERCA

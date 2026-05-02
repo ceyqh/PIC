@@ -68,6 +68,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // MOSTRAR DEPARTAMENTS CB
+        private string _mostrarDepartaments= "TOTS";
+        public string MostrarDepartaments
+        {
+            get => _mostrarDepartaments;
+            set
+            {
+                _mostrarDepartaments = value;
+                OnPropertyChanged();
+
+                ActualitzarModeCerca(value);
+            }
+        }
+
         // DEPARTAMENT SELECCIONAT
         private Departament _departamentSeleccionat;
         public Departament DepartamentSeleccionat
@@ -128,40 +142,38 @@ namespace PIC.ViewModel
                 OnPropertyChanged();
             }
         }
+        private void ActualitzarModeCerca(string mode)
+        {
+            Departaments.Clear();
+            ParametreCercaDepartaments= "";
 
-        // COMANDAMENTS
+            switch (mode)
+            {
+                case "TOTS":
+                    TextCerca = "// DEPARTAMENTS / TOTS";
+                    ParametreCercaDepartaments = "";
+                    ClearUsuaris();
+                    HabilitarCerca = false;
+                    _ = MostrarDepartamentsAsync();
+                    break;
+
+                case "PER ID DEPARTAMENT":
+                    TextCerca = "// DEPARTAMENTS / ID";
+                    ParametreCercaDepartaments = "";
+                    ClearUsuaris();
+                    HabilitarCerca = true;
+                    TipusCercaActualDepartaments = DepartamentsTipusCerca.PerId;
+                    break;
+            }
+            OnPropertyChanged(nameof(MostrarDepartaments));
+        }
+
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            // Si el paràmetre és buit
-            if (param == null)
+            if (param != null)
             {
-                MissatgeError.Mostrar("El camp no pot quedar buit.");
+                ActualitzarModeCerca(param.ToString());
             }
-            else
-            {
-                string mode = param.ToString();
-
-                Departaments.Clear();
-
-                switch (mode)
-                {
-                    case "TOTS":
-                        TextCerca = "// DEPARTAMENTS / TOTS";
-                        ParametreCercaDepartaments = "";
-                        ClearUsuaris();
-                        HabilitarCerca = false;
-                        _ = MostrarDepartamentsAsync();
-                        break;
-
-                    case "PER_ID":
-                        TextCerca = "// DEPARTAMENTS / ID";
-                        ParametreCercaDepartaments = "";
-                        ClearUsuaris();
-                        HabilitarCerca = true;
-                        TipusCercaActualDepartaments = DepartamentsTipusCerca.PerId;
-                        break;
-                }
-            }                
         });
 
         // EXECUTAR CERCA

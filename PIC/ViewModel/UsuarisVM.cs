@@ -71,6 +71,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // MOSTRAR USUARIS CB
+        private string _mostrarUsuaris = "TOTS";
+        public string MostrarUsuaris
+        {
+            get => _mostrarUsuaris;
+            set
+            {
+                _mostrarUsuaris = value;
+                OnPropertyChanged();
+
+                ActualitzarModeCerca(value);
+            }
+        }
+
         // ORDENAR PER
         private string _ordenarUsuaris= "ID";
         public string OrdenarUsuaris
@@ -227,55 +241,49 @@ namespace PIC.ViewModel
             }            
         });
 
-        // COMANDAMENTS
+        private void ActualitzarModeCerca(string mode)
+        {
+            Usuaris.Clear();
+            ParametreCercaUsuaris = "";
+
+            switch (mode)
+            {
+                case "TOTS":
+                    TextCerca = "// USUARIS / TOTS";
+                    HabilitarCerca = false;
+                    _ = MostrarUsuarisAsync();
+                    break;
+
+                case "PER ID USUARI":
+                    TextCerca = "// USUARIS / ID";
+                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerId;
+                    HabilitarCerca = true;
+                    _mostrarUsuaris = "PER ID USUARI";
+                    break;
+
+                case "PER ID CURS":
+                    TextCerca = "// USUARIS / ID_CURS";
+                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerCurs;
+                    HabilitarCerca = true;
+                    _mostrarUsuaris = "PER ID CURS";
+                    break;
+
+                case "PER ID DEPARTAMENT":
+                    TextCerca = "// USUARIS / ID_DEPARTAMENT";
+                    TipusCercaActualUsuaris = UsuarisTipusCerca.PerDepartament;
+                    HabilitarCerca = true;
+                    _mostrarUsuaris = "PER ID DEPARTAMENT";
+                    break;
+            }
+            OnPropertyChanged(nameof(MostrarUsuaris));
+        }
+
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            // Si no hi ha paràmetre
-            if (param == null)
+            if (param != null)
             {
-                MissatgeError.Mostrar("El camp no pot quedar buit.");
+                ActualitzarModeCerca(param.ToString());
             }
-            else
-            {
-                string mode = param.ToString();
-
-                Usuaris.Clear();
-
-                switch (mode)
-                {
-                    case "TOTS":
-                        TextCerca = "// USUARIS / TOTS";
-                        ParametreCercaUsuaris = "";
-                        OrdenarUsuaris = "ID";
-                        HabilitarCerca = false;
-                        _ = MostrarUsuarisAsync();
-                        break;
-
-                    case "PER_ID":
-                        TextCerca = "// USUARIS / ID";
-                        ParametreCercaUsuaris = "";
-                        TipusCercaActualUsuaris = UsuarisTipusCerca.PerId;
-                        OrdenarUsuaris = "ID";
-                        HabilitarCerca = true;
-                        break;
-
-                    case "PER_CURS":
-                        TextCerca = "// USUARIS / ID_CURS";
-                        ParametreCercaUsuaris = "";
-                        TipusCercaActualUsuaris = UsuarisTipusCerca.PerCurs;
-                        OrdenarUsuaris = "ID";
-                        HabilitarCerca = true;
-                        break;
-
-                    case "PER_DEPARTAMENT":
-                        TextCerca = "// USUARIS / ID_DEPARTAMENT";
-                        ParametreCercaUsuaris = "";
-                        TipusCercaActualUsuaris = UsuarisTipusCerca.PerDepartament;
-                        OrdenarUsuaris = "ID";
-                        HabilitarCerca = true;
-                        break;
-                }
-            }            
         });
 
         // EXECUTAR CERCA

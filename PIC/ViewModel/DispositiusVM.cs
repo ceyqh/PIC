@@ -65,6 +65,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // MOSTRAR PRÉSTECS CB
+        private string _mostrarDispositius= "TOTS";
+        public string MostrarDispositius
+        {
+            get => _mostrarDispositius;
+            set
+            {
+                _mostrarDispositius = value;
+                OnPropertyChanged();
+                
+                ActualitzarModeCerca(value);
+            }
+        }
+
         // ORDENAR PER
         private string _ordenarDispositius = "ID";
         public string OrdenarDispositius
@@ -234,68 +248,68 @@ namespace PIC.ViewModel
 
         });
 
-        // COMANDAMENTS
+        private void ActualitzarModeCerca(string mode)
+        {
+            Dispositius.Clear();
+            ParametreCercaDispositius = "";
+
+            switch (mode)
+            {
+                case "TOTS":
+                    TextCerca = "// DISPOSITIUS / TOTS";
+                    HabilitarCerca = false;
+                    ParametreCercaDispositius = "";
+                    OrdenarDispositius = "ID";
+                    _ = MostrarDispositiusAsync();
+                    break;
+
+                case "PER ID DISPOSITIU":
+                    TextCerca = "// DISPOSITIUS / ID";
+                    HabilitarCerca = true;
+                    ParametreCercaDispositius = "";
+                    TipusCercaActualDispositius = DispositiusTipusCerca.PerId;
+                    OrdenarDispositius = "ID";
+                    break;
+
+                case "PER ID CATEGORIA":
+                    TextCerca = "// DISPOSITIUS / ID_CATEGORIA";
+                    HabilitarCerca = true;
+                    ParametreCercaDispositius = "";
+                    TipusCercaActualDispositius = DispositiusTipusCerca.PerCategoria;
+                    OrdenarDispositius = "ID";
+                    break;
+
+                case "DISPONIBLES":
+                    TextCerca = "// DISPOSITIUS / DISPONIBLES";
+                    ParametreCercaDispositius = "";
+                    _ = MostrarDispositiusDisponiblesAsync();
+                    OrdenarDispositius = "ID";
+                    break;
+
+                case "NO DISPONIBLES":
+                    TextCerca = "// DISPOSITIUS / NO_DISPONIBLES";
+                    ParametreCercaDispositius = "";
+                    _ = MostrarDispositiusNoDisponiblesAsync();
+                    OrdenarDispositius = "ID";
+                    break;
+
+                case "EN PRÉSTEC":
+                    TextCerca = "// DISPOSITIUS / EN_PRESTEC";
+                    ParametreCercaDispositius = "";
+                    _ = MostrarDispositiusEnPrestecAsync();
+                    OrdenarDispositius = "ID";
+                    break;
+            }
+            OnPropertyChanged(nameof(MostrarDispositius));
+        }
+
+        // 3. Simplifiquem el Command existent
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            // Si no hi ha paràmetre
-            if (param == null)
+            if (param != null)
             {
-                MissatgeError.Mostrar("El camp no pot quedar buit.");
+                ActualitzarModeCerca(param.ToString());
             }
-            else
-            {
-                string mode = param.ToString();
-
-                Dispositius.Clear();
-
-                switch (mode)
-                {
-                    case "TOTS":
-                        TextCerca = "// DISPOSITIUS / TOTS";
-                        HabilitarCerca = false;
-                        ParametreCercaDispositius = "";
-                        OrdenarDispositius = "ID";
-                        _ = MostrarDispositiusAsync();
-                        break;
-
-                    case "PER_ID":
-                        TextCerca = "// DISPOSITIUS / ID";
-                        HabilitarCerca = true;
-                        ParametreCercaDispositius = "";
-                        TipusCercaActualDispositius = DispositiusTipusCerca.PerId;
-                        OrdenarDispositius = "ID";
-                        break;
-
-                    case "PER_CATEGORIA":
-                        TextCerca = "// DISPOSITIUS / ID_CATEGORIA";
-                        HabilitarCerca = true;
-                        ParametreCercaDispositius = "";
-                        TipusCercaActualDispositius = DispositiusTipusCerca.PerCategoria;
-                        OrdenarDispositius = "ID";
-                        break;
-
-                    case "DISPONIBLES":
-                        TextCerca = "// DISPOSITIUS / DISPONIBLES";
-                        ParametreCercaDispositius = "";
-                        _ = MostrarDispositiusDisponiblesAsync();
-                        OrdenarDispositius = "ID";
-                        break;
-
-                    case "NO_DISPONIBLES":
-                        TextCerca = "// DISPOSITIUS / NO_DISPONIBLES";
-                        ParametreCercaDispositius = "";
-                        _ = MostrarDispositiusNoDisponiblesAsync();
-                        OrdenarDispositius = "ID";
-                        break;
-
-                    case "EN_PRESTEC":
-                        TextCerca = "// DISPOSITIUS / EN_PRESTEC";
-                        ParametreCercaDispositius = "";
-                        _ = MostrarDispositiusEnPrestecAsync();
-                        OrdenarDispositius = "ID";
-                        break;
-                }
-            }                
         });
 
         // EXECUTAR CERCA

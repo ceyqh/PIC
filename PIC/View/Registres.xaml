@@ -15,68 +15,7 @@
     
     <Grid>
         <Grid>
-            <!--// Base Grid //-->
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="200" />
-                <ColumnDefinition Width="*"/>
-            </Grid.ColumnDefinitions>
-
-            <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" 
-                  Width="200" 
-                  Background="#e8e9e9">
-
-                <StackPanel Height="400" Width="200">
-
-                    <!-- TOTS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="TOTS" 
-                              IsChecked="True">
-                        <Grid>
-                            <TextBlock Text="TOTS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER ID -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_ID_PRESTEC">
-                        <Grid>
-                            <TextBlock Text="PER ID PRÉSTEC" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER CURS -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_ID_DISPOSITIU">
-                        <Grid>
-                            <TextBlock Text="PER ID DISPOSITIU" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-
-                    <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_ID_CURS">
-                        <Grid>
-                            <TextBlock Text="PER ID CURS" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-                    
-                    <!-- PER DEPARTAMENT -->
-                    <Menu:Btn Style="{StaticResource Sub_Menu_Button}" 
-                              Command="{Binding CanviarModeCercaCommand}"
-                              CommandParameter="PER_ID_DEPARTAMENT">
-                        <Grid>
-                            <TextBlock Text="PER ID DEPARTAMENT" Style="{StaticResource Text_Sub_Menu_Button_Style}"/>
-                        </Grid>
-                    </Menu:Btn>
-                </StackPanel>
-            </Grid>
-
-            <Grid Grid.Column="1">
+            <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="100"/>
                     <RowDefinition Height="*"/>
@@ -95,15 +34,30 @@
                                 Orientation="Horizontal" 
                                 VerticalAlignment="Center" 
                                 Margin="10">
-                        
-                        <TextBlock Text="Fer cerca:"
+
+                        <TextBlock Text="Mostrar:"
+                                   Grid.Row="0"
                                    Margin="0, 0, 10, 0"
                                    VerticalAlignment="Center"
                                    Style="{StaticResource Fraktion_Dark_Font}"/>
 
+                        <ComboBox SelectedValue="{Binding MostrarRegistres, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                  SelectedValuePath="Content"
+                                  Grid.Row="2"
+                                  Style="{StaticResource Ordenar_ComboBox}"
+                                  Width="200"
+                                  Height="30">
+
+                            <ComboBoxItem Content="TOTS"/>
+                            <ComboBoxItem Content="PER ID PRÉSTEC"/>
+                            <ComboBoxItem Content="PER ID DISPOSITIU"/>
+                            <ComboBoxItem Content="PER ID CURS"/>
+                            <ComboBoxItem Content="PER ID DEPARTAMENT"/>
+                        </ComboBox>
+
                         <StackPanel Orientation="Horizontal"
                                     Width="200"
-                                    Margin="0, 0, 30, 0">
+                                    Margin="10, 0, 30, 0">
 
                             <TextBox Style="{StaticResource Main_TextBox}"
                                      Text="{Binding ParametreCercaRegistres, UpdateSourceTrigger=PropertyChanged}"
@@ -117,6 +71,7 @@
                                     Padding="10, 0, 10, 0"
                                     Margin="10, 0, 0, 0"
                                     Width="70"
+                                    Height="30"
                                     Style="{StaticResource Accions_Button}"/>
                         </StackPanel>
 
@@ -130,13 +85,15 @@
                                   Grid.Row="16"
                                   Style="{StaticResource Ordenar_ComboBox}"
                                   Width="200"
-                                  Height="30">
+                                  Height="30"
+                                  Padding="5, 0, 0, 0">
 
                             <ComboBoxItem Content="ID PRÉSTEC"/>
                             <ComboBoxItem Content="USUARI"/>
                             <ComboBoxItem Content="DATA ACCIÓ"/>
                             <ComboBoxItem Content="DATA RETORN"/>
                         </ComboBox>
+
                     </StackPanel>
 
                     <Grid Grid.Row="1"

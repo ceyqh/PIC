@@ -69,6 +69,20 @@ namespace PIC.ViewModel
             }
         }
 
+        // MOSTRAR USUARIS CB
+        private string _mostrarCursos= "TOTS";
+        public string MostrarCursos
+        {
+            get => _mostrarCursos;
+            set
+            {
+                _mostrarCursos = value;
+                OnPropertyChanged();
+
+                ActualitzarModeCerca(value);
+            }
+        }
+
         // CURS SELECCIONAT
         private Curs _cursSeleccionat;
         public Curs CursSeleccionat
@@ -129,39 +143,38 @@ namespace PIC.ViewModel
             }
         }
 
-        // COMANDAMENTS
+        private void ActualitzarModeCerca(string mode)
+        {
+            Cursos.Clear();
+            ParametreCercaCursos= "";
+
+            switch (mode)
+            {
+                case "TOTS":
+                    TextCerca = "// CURSOS / TOTS";
+                    ParametreCercaCursos = "";
+                    ClearUsuaris();
+                    HabilitarCerca = false;
+                    _ = MostrarCursosAsync();
+                    break;
+
+                case "PER ID CURS":
+                    TextCerca = "// CURSOS / ID";
+                    ParametreCercaCursos = "";
+                    ClearUsuaris();
+                    HabilitarCerca = true;
+                    TipusCercaActualCursos = CursosTipusCerca.PerId;
+                    break;
+            }
+            OnPropertyChanged(nameof(MostrarCursos));
+        }
+
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
-            // Si el paràmetre és buit
-            if (param == null)
+            if (param != null)
             {
-                MissatgeError.Mostrar("El camp no pot quedar buit.");
+                ActualitzarModeCerca(param.ToString());
             }
-            else
-            {
-                string mode = param.ToString();
-
-                Cursos.Clear();
-
-                switch (mode)
-                {
-                    case "TOTS":
-                        TextCerca = "// CURSOS / TOTS";
-                        ParametreCercaCursos = "";
-                        ClearUsuaris();
-                        HabilitarCerca = false;
-                        _ = MostrarCursosAsync();
-                        break;
-
-                    case "PER_ID":
-                        TextCerca = "// CURSOS / ID";
-                        ParametreCercaCursos = "";
-                        ClearUsuaris();
-                        HabilitarCerca = true;
-                        TipusCercaActualCursos = CursosTipusCerca.PerId;
-                        break;
-                }
-            }                
         });
 
         // EXECUTAR CERCA
