@@ -1,6 +1,7 @@
 ﻿using PIC.APIClient;
 using PIC.Model;
 using PIC.Utilities;
+using PIC.View;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -47,19 +48,24 @@ namespace PIC.ViewModel
             _ = MostrarDepartamentsAsync();
         }
 
-        // PROPIETATS DE LA UI
-        private Visibility _cercaVisibility = Visibility.Collapsed;
-        public Visibility CercaVisibility
+        // TEXT CERCA
+        private string _textCerca = "// DEPARTAMENTS / TOTS";
+        public string TextCerca
         {
-            get => _cercaVisibility;
-            set { _cercaVisibility = value; OnPropertyChanged(); }
+            get => _textCerca;
+            set { _textCerca = value; OnPropertyChanged(); }
         }
 
-        private string _titolPantalla = "DEPARTAMENTS: TOTS";
-        public string TitolPantalla
+        // HABILITAR CERCA
+        private bool _habilitarCerca = false;
+        public bool HabilitarCerca
         {
-            get => _titolPantalla;
-            set { _titolPantalla = value; OnPropertyChanged(); }
+            get => _habilitarCerca;
+            set
+            {
+                _habilitarCerca = value;
+                OnPropertyChanged();
+            }
         }
 
         // DEPARTAMENT SELECCIONAT
@@ -83,21 +89,20 @@ namespace PIC.ViewModel
         // CARREGAR USUARIS DEL DEPARTAMENT
         private async Task CarregarUsuarisDelDepartamentAsync(int departamentId)
         {
-            try
+            Usuaris.Clear();
+            var llista = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(departamentId);
+
+            // Si la consulta funciona
+            if (llista != null)
             {
-                var llista = await _usuarisApiClient.GetUsuarisPerIdDepartamentAsync(departamentId);
-
-                Usuaris.Clear();
-
                 foreach (var d in llista)
                 {
                     Usuaris.Add(d);
                 }
+
             }
-            catch (Exception ex)
-            {
-                MissatgeError.Mostrar("Error carregant usuaris: " + ex.Message);
-            }
+
+            TextCerca = $"// DEPARTAMENTS / ID: {DepartamentSeleccionat.Id} / USUARIS / RESULTATS: {Usuaris.Count}";
         }
 
         // TIPUS DE CERCA
@@ -137,22 +142,22 @@ namespace PIC.ViewModel
                 string mode = param.ToString();
 
                 Departaments.Clear();
-                CercaVisibility = Visibility.Visible;
 
                 switch (mode)
                 {
                     case "TOTS":
-                        TitolPantalla = "DEPARTAMENTS: TOTS";
+                        TextCerca = "// DEPARTAMENTS / TOTS";
                         ParametreCercaDepartaments = "";
                         ClearUsuaris();
-                        CercaVisibility = Visibility.Collapsed;
+                        HabilitarCerca = false;
                         _ = MostrarDepartamentsAsync();
                         break;
 
                     case "PER_ID":
-                        TitolPantalla = "DEPARTAMENTS: PER ID";
+                        TextCerca = "// DEPARTAMENTS / ID";
                         ParametreCercaDepartaments = "";
                         ClearUsuaris();
+                        HabilitarCerca = true;
                         TipusCercaActualDepartaments = DepartamentsTipusCerca.PerId;
                         break;
                 }
@@ -181,14 +186,17 @@ namespace PIC.ViewModel
                     case DepartamentsTipusCerca.PerId:
                         var departament = await _departamentsApiClient.GetDepartamentPerIdAsync(int.Parse(ParametreCercaDepartaments));
 
-                        if (departament != null)
-                        {
-                            Departaments.Add(departament);
-                        }
-                        else
+                        if (departament == null)
                         {
                             MissatgeError.Mostrar("No s'ha trobat cap departament amb aquest ID.");
                         }
+                        else
+                        {
+                            Departaments.Add(departament);
+                        }
+
+                        TextCerca = $"// DEPARTAMENTS / ID: {ParametreCercaDepartaments} / RESULTATS: {Departaments.Count}";
+
                         break;
                 }
             }
@@ -221,6 +229,8 @@ namespace PIC.ViewModel
                     {
                         Departaments.Add(d);
                     }
+
+                    TextCerca = $"// DEPARTAMENTS / TOTS / RESULTATS: {Departaments.Count}";
                 }
             }            
         }

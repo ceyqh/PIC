@@ -45,19 +45,24 @@ namespace PIC.ViewModel
             _ = MostrarPrestecsAsync();
         }
 
-        // PROPIETATS DE LA UI
-        private Visibility _cercaVisibility = Visibility.Collapsed;
-        public Visibility CercaVisibility
+        // TEXT DE CERCA
+        private string _textCerca = "// PRÉSTECS / TOTS";
+        public string TextCerca
         {
-            get => _cercaVisibility;
-            set { _cercaVisibility = value; OnPropertyChanged(); }
+            get => _textCerca;
+            set { _textCerca = value; OnPropertyChanged(); }
         }
 
-        private string _titolPantalla = "USUARIS: TOTS";
-        public string TitolPantalla
+        // HABILITAR CERCA
+        private bool _habilitarCerca = false;
+        public bool HabilitarCerca
         {
-            get => _titolPantalla;
-            set { _titolPantalla = value; OnPropertyChanged(); }
+            get => _habilitarCerca;
+            set
+            {
+                _habilitarCerca = value;
+                OnPropertyChanged();
+            }
         }
 
         // ORDENAR PER
@@ -212,52 +217,54 @@ namespace PIC.ViewModel
                 string mode = param.ToString();
 
                 Prestecs.Clear();
-                CercaVisibility = Visibility.Visible;
 
                 switch (mode)
                 {
                     case "TOTS":
-                        TitolPantalla = "PRÉSTECS: TOTS";
+                        TextCerca = "// PRÉSTECS / TOTS";
                         ParametreCercaPrestecs = "";
-                        CercaVisibility = Visibility.Collapsed;
                         OrdenarPrestecs = "ID";
+                        HabilitarCerca = false;
                         _ = MostrarPrestecsAsync();
                         break;
 
                     case "PER_ID":
-                        TitolPantalla = "PRÉSTECS: PER ID";
+                        TextCerca = "// PRÉSTECS / ID";
                         ParametreCercaPrestecs = "";
                         TipusCercaActualPrestecs = PrestecsTipusCerca.PerId;
                         OrdenarPrestecs = "ID";
+                        HabilitarCerca = true;
                         break;
 
                     case "PER_USUARI":
-                        TitolPantalla = "PRÉSTECS: PER USUARI";
+                        TextCerca = "// PRÉSTECS / ID_USUARI";
                         ParametreCercaPrestecs = "";
                         TipusCercaActualPrestecs = PrestecsTipusCerca.PerUsuari;
                         OrdenarPrestecs = "ID";
+                        HabilitarCerca = true;
                         break;
 
                     case "PER_DISPOSITIU":
-                        TitolPantalla = "PRÉSTECS: PER DISPOSITIU";
+                        TextCerca = "// PRÉSTECS / ID_DISPOSITIU";
                         ParametreCercaPrestecs = "";
                         TipusCercaActualPrestecs = PrestecsTipusCerca.PerDispositiu;
                         OrdenarPrestecs = "ID";
+                        HabilitarCerca = true;
                         break;
 
                     case "EN_CURS":
-                        TitolPantalla = "PRÉSTECS: EN CURS";
+                        TextCerca = "// PRÉSTECS / EN_CURS";
                         ParametreCercaPrestecs = "";
-                        CercaVisibility = Visibility.Collapsed;
                         OrdenarPrestecs = "ID";
+                        HabilitarCerca = false;
                         _ = MostrarPrestecsEnCursAsync();
                         break;
 
                     case "CADUCATS":
-                        TitolPantalla = "USUARIS: CADUCATS";
+                        TextCerca = "// PRÉSTECS / CADUCATS";
                         ParametreCercaPrestecs = "";
-                        CercaVisibility = Visibility.Collapsed;
                         OrdenarPrestecs = "ID";
+                        HabilitarCerca = false;
                         _ = MostrarPrestecsCaducatsAsync();
                         break;
                 }
@@ -296,6 +303,8 @@ namespace PIC.ViewModel
                     {
                         Prestecs.Add(u);
                     }
+
+                    TextCerca = $"// PRÉSTECS / TOTS / RESULTATS: {Prestecs.Count}";
                 }
             }            
         }
@@ -330,6 +339,8 @@ namespace PIC.ViewModel
                             Prestecs.Add(u);
                         }
                     }
+
+                    TextCerca = $"// PRÉSTECS / EN_CURS / RESULTATS: {Prestecs.Count}";
                 }
             }            
         }
@@ -363,6 +374,8 @@ namespace PIC.ViewModel
                             Prestecs.Add(u);
                         }
                     }
+
+                    TextCerca = $"// PRÉSTECS / CADUCATS / RESULTATS: {Prestecs.Count}";
                 }
             }
         }
@@ -391,6 +404,8 @@ namespace PIC.ViewModel
                         else
                         {
                             Prestecs.Add(perId);
+
+                            TextCerca = $"// PRÉSTECS / ID: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
                         }
                         break;
 
@@ -409,6 +424,8 @@ namespace PIC.ViewModel
                                 Prestecs.Add(u);
 
                             }
+
+                            TextCerca = $"// PRÉSTECS / ID_USUARI: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
                         }
                         break;
 
@@ -427,6 +444,8 @@ namespace PIC.ViewModel
                                 Prestecs.Add(u);
 
                             }
+
+                            TextCerca = $"// PRÉSTECS / ID_DISPOSITIU: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
                         }
                         break;
                 }

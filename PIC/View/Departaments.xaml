@@ -61,7 +61,7 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0"
@@ -69,31 +69,17 @@
                                 VerticalAlignment="Center" 
                                 Margin="10">
 
-                        <!-- TÍTOL -->
-                        <TextBlock FontSize="12" 
-                                   Text="{Binding TitolPantalla}"
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   Margin="0, 0, 10, 0"/>
-
-                        <!-- INPUT -->
-                        <TextBox VerticalAlignment="Center"
-                                 Width="200" 
-                                 Visibility="{Binding CercaVisibility}" 
-                                 Style="{StaticResource Main_TextBox}"
-                                 Text="{Binding ParametreCercaDepartaments, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="0,0,10,0"/>
-
-                        <!-- BUSCAR -->
-                        <Button Content="BUSCAR"
-                                Visibility="{Binding CercaVisibility}"
-                                Command="{Binding BuscarCommand}"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"/>
-
                     </StackPanel>
 
                     <Grid Grid.Row="1"
                           Background="#131316">
+
+                        <!-- TÍTOL -->
+                        <TextBlock FontSize="12" 
+                                   VerticalAlignment="Center"
+                                   Text="{Binding TextCerca}"
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   Margin="10, 0, 10, 0"/>
 
                     </Grid>
                 </Grid>
@@ -241,8 +227,14 @@
                         <StackPanel Grid.Column="2" 
                                     Background="#a5a6af">
 
-                            <Grid Margin="0, 40, 0 , 0">
+                            <Grid Margin="0, 0, 0 , 0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
@@ -250,20 +242,51 @@
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
+                                <TextBlock Text="Fer cerca:"
+                                           Grid.Row="0"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                                <StackPanel Grid.Row="2"
+                                            Orientation="Horizontal"
+                                            Width="200">
+
+                                    <TextBox Style="{StaticResource Main_TextBox}"
+                                             Text="{Binding ParametreCercaDepartaments, UpdateSourceTrigger=PropertyChanged}"
+                                             IsEnabled="{Binding HabilitarCerca}"
+                                             Height="30"
+                                             Width="120"/>
+
+                                    <Button Content="CERCAR"
+                                            Command="{Binding BuscarCommand}"
+                                            IsEnabled="{Binding HabilitarCerca}"
+                                            Padding="10, 0, 10, 0"
+                                            Margin="10, 0, 0, 0"
+                                            Width="70"
+                                            Style="{StaticResource Accions_Button}"/>
+                                </StackPanel>
+
+                                <TextBlock Text="Accions:"
+                                           Grid.Row="4"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
                                 <Button Content="AFEGIR DEPARTAMENT"
-                                        Grid.Row="0"
+                                        Grid.Row="6"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirDepartamentMenu_Click}"/>
 
                                 <Button Content="EDITAR DEPARTAMENT"
-                                        Grid.Row="2"
+                                        Grid.Row="8"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarDepartamentMenu_Click}"/>
 
                                 <Button Content="ESBORRAR DEPARTAMENT"
-                                        Grid.Row="4"
+                                        Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarDepartamentMenu_Click}"/>

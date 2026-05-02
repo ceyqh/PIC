@@ -122,7 +122,7 @@ namespace PIC.APIClient
         }
 
         // REGISTRES PER NOM GRUP
-        public async Task<List<Registre>> GetRegistresPerNomGrupAsync(string Nom)
+        public async Task<List<Registre>> GetRegistresPerNomGrupAsync(int Id)
         {
             List<Registre> registres = new List<Registre>();
 
@@ -135,7 +135,7 @@ namespace PIC.APIClient
                 // Petició
                 try
                 {
-                    HttpResponseMessage response = await client.GetAsync($"registres/grup?id={Nom}");
+                    HttpResponseMessage response = await client.GetAsync($"registres/grup?id={Id}");
                     if (response.IsSuccessStatusCode)
                     {
                         // Retorn

@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:PIC.ViewModel"
              xmlns:Menu="clr-namespace:PIC.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1400">
+             d:DesignHeight="600" d:DesignWidth="1400">
 
     <UserControl.DataContext>
         <vm:UsuarisVM/>
@@ -79,7 +79,7 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0"
@@ -87,31 +87,17 @@
                                 VerticalAlignment="Center" 
                                 Margin="10">
 
-                        <!-- TÍTOL -->
-                        <TextBlock FontSize="12" 
-                                   Text="{Binding TitolPantalla}"
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   Margin="0, 0, 10, 0"/>
-
-                        <!-- INPUT -->
-                        <TextBox VerticalAlignment="Center"
-                                 Width="200" 
-                                 Visibility="{Binding CercaVisibility}" 
-                                 Style="{StaticResource Main_TextBox}"
-                                 Text="{Binding ParametreCercaUsuaris, UpdateSourceTrigger=PropertyChanged}"
-                                 Margin="0,0,10,0"/>
-
-                        <!-- BUSCAR -->
-                        <Button Content="BUSCAR"
-                                Visibility="{Binding CercaVisibility}"
-                                Command="{Binding BuscarCommand}"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"/>
 
                     </StackPanel>
 
                     <Grid Grid.Row="1"
                           Background="#131316">
+                        <!-- TÍTOL -->
+                        <TextBlock FontSize="12" 
+                                   Text="{Binding TextCerca}"
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   VerticalAlignment="Center"
+                                   Margin="10, 0, 10, 0"/>
 
                     </Grid>
                 </Grid>
@@ -221,8 +207,14 @@
                         <StackPanel Grid.Column="2" 
                                     Background="#a5a6af">
 
-                            <Grid Margin="0, 40, 0 , 0">
+                            <Grid Margin="0, 0, 0 , 0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
@@ -236,44 +228,76 @@
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
+                                <TextBlock Text="Fer cerca:"
+                                           Grid.Row="0"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                                <StackPanel Grid.Row="2"
+                                            Orientation="Horizontal"
+                                            Width="200">
+
+                                    <TextBox Style="{StaticResource Main_TextBox}"
+                                             Text="{Binding ParametreCercaUsuaris, UpdateSourceTrigger=PropertyChanged}"
+                                             IsEnabled="{Binding HabilitarCerca}"
+                                             Height="30"
+                                             Width="120"/>
+
+                                    <Button Content="CERCAR"
+                                            Command="{Binding BuscarCommand}"
+                                            IsEnabled="{Binding HabilitarCerca}"
+                                            Padding="10, 0, 10, 0"
+                                            Margin="10, 0, 0, 0"
+                                            Width="70"
+                                            Style="{StaticResource Accions_Button}"/>
+                                </StackPanel>
+
+                                <TextBlock Text="Accions:"
+                                           Grid.Row="4"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
                                 <Button Content="AFEGIR ALUMNE"
-                                        Grid.Row="0"
+                                        Grid.Row="6"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirAlumneMenu_Click}"/>
                                 
                                 <Button Content="AFEGIR PROFESSOR"
-                                        Grid.Row="2"
+                                        Grid.Row="8"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirProfessorMenu_Click}"/>
 
                                 <Button Content="EDITAR USUARI"
-                                        Grid.Row="4"
+                                        Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarUsuariMenu_Click}"/>
 
                                 <Button Content="ESBORRAR USUARI"
-                                        Grid.Row="6"
+                                        Grid.Row="12"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarMenu_Click}"/>
 
                                 <TextBlock Text="ORDENAR PER:"
-                                           Grid.Row="8"
+                                           Grid.Row="14"
                                            Width="200"
                                            VerticalAlignment="Bottom"
                                            Style="{StaticResource Fraktion_Dark_Font}"/>
 
                                 <ComboBox SelectedValue="{Binding OrdenarUsuaris, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           SelectedValuePath="Content"
-                                          Grid.Row="10"
+                                          Grid.Row="16"
                                           Style="{StaticResource Ordenar_ComboBox}"
                                           Width="200"
                                           Height="30">
 
                                     <ComboBoxItem Content="ID"/>
+                                    <ComboBoxItem Content="COGNOM"/>
                                     <ComboBoxItem Content="GRUP"/>
                                     <ComboBoxItem Content="TIPUS"/>
                                 </ComboBox>

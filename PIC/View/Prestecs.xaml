@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:PIC.ViewModel"
              xmlns:Menu="clr-namespace:PIC.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1400">
+             d:DesignHeight="600" d:DesignWidth="1400">
 
     <UserControl.DataContext>
         <vm:PrestecsVM/>
@@ -97,7 +97,7 @@
 
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
                     <StackPanel Grid.Row="0"
@@ -105,31 +105,17 @@
                                 VerticalAlignment="Center" 
                                 Margin="10">
 
-                        <!-- TÍTOL -->
-                        <TextBlock FontSize="12" 
-                                   Text="{Binding TitolPantalla}"
-                                   Style="{StaticResource Fraktion_Dark_Font}" 
-                                   Margin="0, 0, 10, 0"/>
-
-                        <!-- INPUT -->
-                        <TextBox VerticalAlignment="Center"
-                                 Width="200" 
-                                 Visibility="{Binding CercaVisibility}" 
-                                 Style="{StaticResource Main_TextBox}"
-                                 Text="{Binding ParametreCercaPrestecs, UpdateSourceTrigger=PropertyChanged}"
-                         Margin="0,0,10,0"/>
-
-                        <!-- BUSCAR -->
-                        <Button Content="BUSCAR"
-                                Visibility="{Binding CercaVisibility}"
-                                Command="{Binding BuscarCommand}"
-                                Padding="10, 0, 10, 0"
-                                Style="{StaticResource Accions_Button}"/>
-
                     </StackPanel>
 
                     <Grid Grid.Row="1"
                           Background="#131316">
+                        
+                        <!-- TÍTOL -->
+                        <TextBlock FontSize="12" 
+                                   VerticalAlignment="Center"
+                                   Text="{Binding TextCerca}"
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   Margin="10, 0, 10, 0"/>
 
                     </Grid>
                 </Grid>
@@ -254,8 +240,12 @@
                         <StackPanel Grid.Column="2" 
                                     Background="#a5a6af">
 
-                            <Grid Margin="0, 40, 0 , 0">
+                            <Grid Margin="0, 0, 0 , 0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
@@ -271,39 +261,71 @@
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
+                                <TextBlock Text="Fer cerca:"
+                                           Grid.Row="0"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                                <StackPanel Grid.Row="2"
+                                            Orientation="Horizontal"
+                                            Width="200">
+
+                                    <TextBox Style="{StaticResource Main_TextBox}"
+                                             Text="{Binding ParametreCercaPrestecs, UpdateSourceTrigger=PropertyChanged}"
+                                             IsEnabled="{Binding HabilitarCerca}"
+                                             Height="30"
+                                             Width="120"/>
+
+                                    <Button Content="CERCAR"
+                                            Command="{Binding BuscarCommand}"
+                                            IsEnabled="{Binding HabilitarCerca}"
+                                            Padding="10, 0, 10, 0"
+                                            Margin="10, 0, 0, 0"
+                                            Width="70"
+                                            Style="{StaticResource Accions_Button}"/>
+                                </StackPanel>
+                                
+                                <TextBlock Text="Accions:"
+                                           Grid.Row="4"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                
                                 <Button Content="AFEGIR PRÉSTEC"
-                                        Grid.Row="0"
+                                        Grid.Row="6"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirPrestecMenu_Click}"/>
 
                                 <Button Content="EDITAR PRÉSTEC"
-                                        Grid.Row="2"
+                                        Grid.Row="8"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarPrestecMenu_Click}"/>
 
                                 <Button Content="FINALITZAR PRÉSTEC"
-                                        Grid.Row="4"
+                                        Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding FinalitzarPrestec_Click}"/>
                                 
                                 <Button Content="ESBORRAR PRÉSTEC"
-                                        Grid.Row="6"
+                                        Grid.Row="12"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarMenu_Click}"/>
 
-                                <TextBlock Text="ORDENAR PER:"
-                                           Grid.Row="8"
+
+                                <TextBlock Text="Ordenar per:"
+                                           Grid.Row="14"
                                            Width="200"
                                            VerticalAlignment="Bottom"
                                            Style="{StaticResource Fraktion_Dark_Font}"/>
 
                                 <ComboBox SelectedValue="{Binding OrdenarPrestecs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                           SelectedValuePath="Content"
-                                          Grid.Row="10"
+                                          Grid.Row="16"
                                           Style="{StaticResource Ordenar_ComboBox}"
                                           Width="200"
                                           Height="30">

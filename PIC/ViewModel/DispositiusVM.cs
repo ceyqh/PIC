@@ -45,12 +45,24 @@ namespace PIC.ViewModel
             _ = MostrarDispositiusAsync();
         }
 
-        // PROPIETATS DE LA UI
-        private string _titolPantalla = "DISPOSITIUS: TOTS";
-        public string TitolPantalla
+        // TEXT DE CERCA
+        private string _textCerca = "// DISPOSITIUS / TOTS";
+        public string TextCerca
         {
-            get => _titolPantalla;
-            set { _titolPantalla = value; OnPropertyChanged(); }
+            get => _textCerca;
+            set { _textCerca = value; OnPropertyChanged(); }
+        }
+
+        // HABILITAR CERCA
+        private bool _habilitarCerca = false;
+        public bool HabilitarCerca
+        {
+            get => _habilitarCerca;
+            set 
+            { 
+                _habilitarCerca = value; 
+                OnPropertyChanged(); 
+            }
         }
 
         // ORDENAR PER
@@ -239,42 +251,45 @@ namespace PIC.ViewModel
                 switch (mode)
                 {
                     case "TOTS":
-                        TitolPantalla = "DISPOSITIUS: TOTS";
+                        TextCerca = "// DISPOSITIUS / TOTS";
+                        HabilitarCerca = false;
                         ParametreCercaDispositius = "";
                         OrdenarDispositius = "ID";
                         _ = MostrarDispositiusAsync();
                         break;
 
                     case "PER_ID":
-                        TitolPantalla = "DISPOSITIUS: PER ID";
+                        TextCerca = "// DISPOSITIUS / ID";
+                        HabilitarCerca = true;
                         ParametreCercaDispositius = "";
                         TipusCercaActualDispositius = DispositiusTipusCerca.PerId;
                         OrdenarDispositius = "ID";
                         break;
 
                     case "PER_CATEGORIA":
-                        TitolPantalla = "DISPOSITIUS: PER CATEGORIA";
+                        TextCerca = "// DISPOSITIUS / ID_CATEGORIA";
+                        HabilitarCerca = true;
                         ParametreCercaDispositius = "";
                         TipusCercaActualDispositius = DispositiusTipusCerca.PerCategoria;
                         OrdenarDispositius = "ID";
                         break;
 
                     case "DISPONIBLES":
-                        TitolPantalla = "DISPOSITIUS: DISPONIBLES";
+                        TextCerca = "// DISPOSITIUS / DISPONIBLES";
                         ParametreCercaDispositius = "";
                         _ = MostrarDispositiusDisponiblesAsync();
                         OrdenarDispositius = "ID";
                         break;
 
                     case "NO_DISPONIBLES":
-                        TitolPantalla = "DISPOSITIUS: NO DISPONIBLES";
+                        TextCerca = "// DISPOSITIUS / NO_DISPONIBLES";
                         ParametreCercaDispositius = "";
                         _ = MostrarDispositiusNoDisponiblesAsync();
                         OrdenarDispositius = "ID";
                         break;
 
                     case "EN_PRESTEC":
-                        TitolPantalla = "DISPOSITIUS: EN PRÉSTEC";
+                        TextCerca = "// DISPOSITIUS / EN_PRESTEC";
                         ParametreCercaDispositius = "";
                         _ = MostrarDispositiusEnPrestecAsync();
                         OrdenarDispositius = "ID";
@@ -317,6 +332,8 @@ namespace PIC.ViewModel
                         Dispositius.Add(u);
                     }
                 }
+
+                TextCerca = $"// DISPOSITIUS / TOTS / RESULTATS: {Dispositius.Count}";
             }
         }
 
@@ -346,6 +363,8 @@ namespace PIC.ViewModel
                         Dispositius.Add(u);
                     }                    
                 }
+
+                TextCerca = $"// DISPOSITIUS / DISPONIBLES / RESULTATS: {Dispositius.Count}";
             }
         }
 
@@ -376,6 +395,8 @@ namespace PIC.ViewModel
                         Dispositius.Add(u);
                     }
                 }
+
+                TextCerca = $"// DISPOSITIUS / NO_DISPONIBLES / RESULTATS: {Dispositius.Count}";
             }
         }
 
@@ -405,6 +426,8 @@ namespace PIC.ViewModel
                         Dispositius.Add(u);
                     }                    
                 }
+
+                TextCerca = $"// DISPOSITIUS / EN_PRESTEC / RESULTATS: {Dispositius.Count}";
             }
         }
 
@@ -416,6 +439,7 @@ namespace PIC.ViewModel
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
+
             else
             {
                 Dispositius.Clear();
@@ -434,6 +458,8 @@ namespace PIC.ViewModel
                         {
                             Dispositius.Add(dispositiuId);
                         }
+
+                        TextCerca = $"// DISPOSITIUS / ID: {ParametreCercaDispositius} / RESULTATS: {Dispositius.Count}";
                         break;
 
                     case DispositiusTipusCerca.PerCategoria:
@@ -452,6 +478,8 @@ namespace PIC.ViewModel
                                 Dispositius.Add(u);
                             }
                         }
+
+                        TextCerca = $"// DISPOSITIUS / ID_CATEGORIA: {ParametreCercaDispositius} / RESULTATS: {Dispositius.Count}";
                         break;
                 }
             }

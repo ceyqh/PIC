@@ -18,7 +18,8 @@ namespace PIC.ViewModel
     {
         PerIdPrestec,
         PerIdDispositiu,
-        PerNomGrup
+        PerIdCurs,
+        PerIdDepartament
     }
 
     internal class RegistresVM : Utilities.ViewModelBase
@@ -28,6 +29,8 @@ namespace PIC.ViewModel
         public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
 
         private readonly RegistresApiClient _registresApiClient;
+        private readonly CursosApiClient _cursosApiClient;
+        private readonly DepartamentsApiClient _departamentsApiClient;
 
         // CONSTRUCTOR
         public RegistresVM()
@@ -35,6 +38,8 @@ namespace PIC.ViewModel
             Registres = new ObservableCollection<Registre>();
 
             _registresApiClient = new RegistresApiClient();
+            _cursosApiClient = new CursosApiClient();
+            _departamentsApiClient = new DepartamentsApiClient();
 
             MissatgeError = new MissatgeErrorVM();
             ConfirmarEsborrar = new ConfirmarEsborrarVM();
@@ -42,19 +47,79 @@ namespace PIC.ViewModel
             _ = MostrarRegistresAsync();
         }
 
-        // PROPIETATS DE LA UI
-        private Visibility _cercaVisibility = Visibility.Collapsed;
-        public Visibility CercaVisibility
+        // TEXT DE CERCA
+        private string _textCerca = "// REGISTRES / TOTS";
+        public string TextCerca
         {
-            get => _cercaVisibility;
-            set { _cercaVisibility = value; OnPropertyChanged(); }
+            get => _textCerca;
+            set { _textCerca = value; OnPropertyChanged(); }
         }
 
-        private string _titolPantalla = "REGISTRES: TOTS";
-        public string TitolPantalla
+        // HABILITAR CERCA
+        private bool _habilitarCerca = false;
+        public bool HabilitarCerca
         {
-            get => _titolPantalla;
-            set { _titolPantalla = value; OnPropertyChanged(); }
+            get => _habilitarCerca;
+            set
+            {
+                _habilitarCerca = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // ORDENAR PER
+        private string _ordenarRegistres = "DATA ACCIÓ";
+        public string OrdenarRegistres
+        {
+            get => _ordenarRegistres;
+            set
+            {
+                if (value == "ID PRÉSTEC")
+                {
+                    var llistaOrdenada = Registres.OrderBy(d => d.IdPrestec).ToList();
+                    Registres.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Registres.Add(d);
+                    }
+                }
+
+                if (value == "USUARI")
+                {
+                    var llistaOrdenada = Registres.OrderBy(d => d.IdUsuari).ToList();
+                    Registres.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Registres.Add(d);
+                    }
+                }
+
+                if (value == "DATA ACCIÓ")
+                {
+                    var llistaOrdenada = Registres.OrderBy(d => d.DataAccio).ToList();
+                    Registres.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Registres.Add(d);
+                    }
+                }
+
+                if (value == "DATA RETORN")
+                {
+                    var llistaOrdenada = Registres.OrderBy(d => d.DataRetorn).ToList();
+                    Registres.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Registres.Add(d);
+                    }
+                }
+                _ordenarRegistres = value;
+                OnPropertyChanged();
+            }
         }
 
         // TIPUS DE CERCA
@@ -94,33 +159,42 @@ namespace PIC.ViewModel
             string mode = param.ToString();
 
             Registres.Clear();
-            CercaVisibility = Visibility.Visible;
 
             switch (mode)
             {
                 case "TOTS":
-                    TitolPantalla = "REGISTRES: TOTS";
+                    TextCerca = "// REGISTRES / TOTS";
                     ParametreCercaRegistres = "";
-                    CercaVisibility = Visibility.Collapsed;
+                    HabilitarCerca = false;
                     _ = MostrarRegistresAsync();
                     break;
 
                 case "PER_ID_PRESTEC":
-                    TitolPantalla = "REGISTRES: PER ID PRESTEC";
+                    TextCerca = "// REGISTRES / ID_PRESTEC";
                     ParametreCercaRegistres = "";
                     TipusCercaActualRegistres = RegistresTipusCerca.PerIdPrestec;
+                    HabilitarCerca = true;
                     break;
 
                 case "PER_ID_DISPOSITIU":
-                    TitolPantalla = "REGISTRES: PER ID DISPOSITIU";
+                    TextCerca = "// REGISTRES / ID_DISPOSITIU";
                     ParametreCercaRegistres = "";
                     TipusCercaActualRegistres = RegistresTipusCerca.PerIdDispositiu;
+                    HabilitarCerca = true;
                     break;
 
-                case "PER_NOM_GRUP":
-                    TitolPantalla = "REGISTRES: PER NOM GRUP";
+                case "PER_ID_CURS":
+                    TextCerca = "// REGISTRES / ID_CURS";
                     ParametreCercaRegistres = "";
-                    TipusCercaActualRegistres = RegistresTipusCerca.PerNomGrup;
+                    TipusCercaActualRegistres = RegistresTipusCerca.PerIdCurs;
+                    HabilitarCerca = true;
+                    break;
+
+                case "PER_ID_DEPARTAMENT":
+                    TextCerca = "// REGISTRES / ID_DEPARTAMENT";
+                    ParametreCercaRegistres = "";
+                    TipusCercaActualRegistres = RegistresTipusCerca.PerIdDepartament;
+                    HabilitarCerca = true;
                     break;
             }              
         });
@@ -156,6 +230,8 @@ namespace PIC.ViewModel
             {
                 Registres.Add(u);
             }
+
+            TextCerca = $"// REGISTRES / TOTS / RESULTATS: {Registres.Count}";
         }
 
         // MÈTODE DE CERCA
@@ -185,9 +261,10 @@ namespace PIC.ViewModel
                             foreach (var u in perIdPrestec)
                             {
                                 Registres.Add(u);
-
                             }
+
                         }
+                        TextCerca = $"// REGISTRES / ID_PRESTEC: {ParametreCercaRegistres} / RESULTATS: {Registres.Count}";
                         break;
 
                     case RegistresTipusCerca.PerIdDispositiu:
@@ -204,27 +281,111 @@ namespace PIC.ViewModel
                             foreach (var u in perIdDispositiu)
                             {
                                 Registres.Add(u);
-
-                            }                            
+                            }
                         }
+                        TextCerca = $"// REGISTRES / ID_DISPOSITIU: {ParametreCercaRegistres} / RESULTATS: {Registres.Count}";
                         break;
 
-                    case RegistresTipusCerca.PerNomGrup:
-                        var perNomGrup = await _registresApiClient.GetRegistresPerNomGrupAsync(ParametreCercaRegistres.ToString());
+                    case RegistresTipusCerca.PerIdCurs:
+                        var cursos = await _cursosApiClient.GetAllCursosAsync();
 
-                        // Si la consulta falla o és buida
-                        if (perNomGrup == null || !perNomGrup.Any())
+                        // Si falla la consulta
+                        if (cursos == null)
                         {
-                            MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest nom de Grup.");
+                            MissatgeError.Mostrar("Hi ha hagut un problema al consultar els cursos.");
+                            return;
                         }
-                        // Si la consulta funciona
-                        else
+
+                        bool cursTrobat = false;
+                        int i = 0;
+
+                        while (i < cursos.Count && !cursTrobat)
                         {
-                            foreach (var u in perNomGrup)
+                            if (cursos[i].Id == int.Parse(ParametreCercaRegistres))
                             {
-                                Registres.Add(u);
-                            }                            
+                                cursTrobat = true;
+                            }
+                            else
+                            {
+                                i++;
+                            }
                         }
+
+                        // Si no es troba el curs
+                        if (!cursTrobat)
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest ID de Curs.");
+                            return;
+                        }
+                        var registresCurs = await _registresApiClient.GetAllRegistresAsync();
+
+                        // Si falla la consulta
+                        if (registresCurs == null)
+                        {
+                            MissatgeError.Mostrar("Hi ha hagut un problema al consultar els registres.");
+                            return;
+                        }
+
+                        foreach (var r in registresCurs)
+                        {
+                            if (r.IdGrup == int.Parse(ParametreCercaRegistres))
+                            {
+                                Registres.Add(r);
+                            }
+                        }
+
+                        TextCerca = $"// REGISTRES / ID_CURS: {ParametreCercaRegistres} / RESULTATS: {Registres.Count}";
+                        break;
+
+                    case RegistresTipusCerca.PerIdDepartament:
+                        var departaments = await _departamentsApiClient.GetAllDepartamentsAsync();
+
+                        // Si falla la consulta
+                        if (departaments == null)
+                        {
+                            MissatgeError.Mostrar("Hi ha hagut un problema al consultar els departaments.");
+                            return;
+                        }
+
+                        bool departamenTrobat = false;
+                        int j = 0;
+
+                        while (j < departaments.Count && !departamenTrobat)
+                        {
+                            if (departaments[j].Id == int.Parse(ParametreCercaRegistres))
+                            {
+                                departamenTrobat = true;
+                            }
+                            else
+                            {
+                                j++;
+                            }
+                        }
+
+                        // Si no es troba el curs
+                        if (!departamenTrobat)
+                        {
+                            MissatgeError.Mostrar("No s'ha trobat cap registre amb aquest ID de Departament.");
+                            return;
+                        }
+                        var registresDepartament = await _registresApiClient.GetAllRegistresAsync();
+
+                        // Si falla la consulta
+                        if (registresDepartament == null)
+                        {
+                            MissatgeError.Mostrar("Hi ha hagut un problema al consultar els registres.");
+                            return;
+                        }
+
+                        foreach (var r in registresDepartament)
+                        {
+                            if (r.IdGrup== int.Parse(ParametreCercaRegistres))
+                            {
+                                Registres.Add(r);
+                            }
+                        }
+
+                        TextCerca = $"// REGISTRES / ID_DEPARTAMENT: {ParametreCercaRegistres} / RESULTATS: {Registres.Count}";
                         break;
                 }                
             }

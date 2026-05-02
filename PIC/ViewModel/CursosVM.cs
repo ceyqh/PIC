@@ -49,19 +49,24 @@ namespace PIC.ViewModel
             _ = MostrarCursosAsync();
         }
 
-        // PROPIETATS DE LA UI
-        private Visibility _cercaVisibility = Visibility.Collapsed;
-        public Visibility CercaVisibility
+        // TEXT CERCA
+        private string _textCerca = "// CURSOS / TOTS";
+        public string TextCerca
         {
-            get => _cercaVisibility;
-            set { _cercaVisibility = value; OnPropertyChanged(); }
+            get => _textCerca;
+            set { _textCerca = value; OnPropertyChanged(); }
         }
 
-        private string _titolPantalla = "CURSOS: TOTS";
-        public string TitolPantalla
+        // HABILITAR CERCA
+        private bool _habilitarCerca = false;
+        public bool HabilitarCerca
         {
-            get => _titolPantalla;
-            set { _titolPantalla = value; OnPropertyChanged(); }
+            get => _habilitarCerca;
+            set
+            {
+                _habilitarCerca = value;
+                OnPropertyChanged();
+            }
         }
 
         // CURS SELECCIONAT
@@ -95,6 +100,8 @@ namespace PIC.ViewModel
                 {
                     Usuaris.Add(u);
                 }
+
+                TextCerca = $"// CURSOS / ID: {CursSeleccionat.Id} / USUARIS / RESULTATS: {Usuaris.Count}";
             }
         }
 
@@ -135,22 +142,22 @@ namespace PIC.ViewModel
                 string mode = param.ToString();
 
                 Cursos.Clear();
-                CercaVisibility = Visibility.Visible;
 
                 switch (mode)
                 {
                     case "TOTS":
-                        TitolPantalla = "CURSOS: TOTS";
+                        TextCerca = "// CURSOS / TOTS";
                         ParametreCercaCursos = "";
                         ClearUsuaris();
-                        CercaVisibility = Visibility.Collapsed;
+                        HabilitarCerca = false;
                         _ = MostrarCursosAsync();
                         break;
 
                     case "PER_ID":
-                        TitolPantalla = "CURSOS: PER ID";
+                        TextCerca = "// CURSOS / ID";
                         ParametreCercaCursos = "";
                         ClearUsuaris();
+                        HabilitarCerca = true;
                         TipusCercaActualCursos = CursosTipusCerca.PerId;
                         break;
                 }
@@ -179,14 +186,16 @@ namespace PIC.ViewModel
                     case CursosTipusCerca.PerId:
                         var curs = await _cursosApiClient.GetCursPerIdAsync(int.Parse(ParametreCercaCursos));
 
-                        if (curs != null)
-                        {
-                            Cursos.Add(curs);
-                        }
-                        else
+                        if (curs == null)
                         {
                             MissatgeError.Mostrar("No s'ha trobat cap curs amb aquest ID.");
                         }
+                        else
+                        {
+                            Cursos.Add(curs);
+                        }
+
+                        TextCerca = $"// CURSOS / ID: {ParametreCercaCursos} / RESULTATS: {Usuaris.Count}";
                         break;
                 }
             }
@@ -218,6 +227,8 @@ namespace PIC.ViewModel
                     {
                         Cursos.Add(u);
                     }
+
+                    TextCerca = $"// CURSOS / TOTS / RESULTATS: {Cursos.Count}";
                 }                
             }
         }

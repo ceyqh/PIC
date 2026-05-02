@@ -51,19 +51,24 @@ namespace PIC.ViewModel
             _ = MostrarUsuarisAsync();
         }
 
-        // PROPIETATS DE LA UI
-        private Visibility _cercaVisibility = Visibility.Collapsed;
-        public Visibility CercaVisibility
+        // TEXT DE CERCA
+        private string _textCerca = "// USUARIS / TOTS";
+        public string TextCerca
         {
-            get => _cercaVisibility;
-            set { _cercaVisibility = value; OnPropertyChanged(); }
+            get => _textCerca;
+            set { _textCerca = value; OnPropertyChanged(); }
         }
 
-        private string _titolPantalla = "USUARIS: TOTS";
-        public string TitolPantalla
+        // HABILITAR CERCA
+        private bool _habilitarCerca = false;
+        public bool HabilitarCerca
         {
-            get => _titolPantalla;
-            set { _titolPantalla = value; OnPropertyChanged(); }
+            get => _habilitarCerca;
+            set
+            {
+                _habilitarCerca = value;
+                OnPropertyChanged();
+            }
         }
 
         // ORDENAR PER
@@ -98,6 +103,17 @@ namespace PIC.ViewModel
                 if (value == "TIPUS")
                 {
                     var llistaOrdenada = Usuaris.OrderBy(d => d.Tipus).ToList();
+                    Usuaris.Clear();
+
+                    foreach (var d in llistaOrdenada)
+                    {
+                        Usuaris.Add(d);
+                    }
+                }
+
+                if (value == "COGNOM")
+                {
+                    var llistaOrdenada = Usuaris.OrderBy(d => d.Cognom).ToList();
                     Usuaris.Clear();
 
                     foreach (var d in llistaOrdenada)
@@ -224,37 +240,39 @@ namespace PIC.ViewModel
                 string mode = param.ToString();
 
                 Usuaris.Clear();
-                CercaVisibility = Visibility.Visible;
 
                 switch (mode)
                 {
                     case "TOTS":
-                        TitolPantalla = "USUARIS: TOTS";
+                        TextCerca = "// USUARIS / TOTS";
                         ParametreCercaUsuaris = "";
-                        CercaVisibility = Visibility.Collapsed;
                         OrdenarUsuaris = "ID";
+                        HabilitarCerca = false;
                         _ = MostrarUsuarisAsync();
                         break;
 
                     case "PER_ID":
-                        TitolPantalla = "USUARIS: PER ID";
+                        TextCerca = "// USUARIS / ID";
                         ParametreCercaUsuaris = "";
                         TipusCercaActualUsuaris = UsuarisTipusCerca.PerId;
                         OrdenarUsuaris = "ID";
+                        HabilitarCerca = true;
                         break;
 
                     case "PER_CURS":
-                        TitolPantalla = "USUARIS: PER CURS";
+                        TextCerca = "// USUARIS / ID_CURS";
                         ParametreCercaUsuaris = "";
                         TipusCercaActualUsuaris = UsuarisTipusCerca.PerCurs;
                         OrdenarUsuaris = "ID";
+                        HabilitarCerca = true;
                         break;
 
                     case "PER_DEPARTAMENT":
-                        TitolPantalla = "USUARIS: PER DEPARTAMENT";
+                        TextCerca = "// USUARIS / ID_DEPARTAMENT";
                         ParametreCercaUsuaris = "";
                         TipusCercaActualUsuaris = UsuarisTipusCerca.PerDepartament;
                         OrdenarUsuaris = "ID";
+                        HabilitarCerca = true;
                         break;
                 }
             }            
@@ -291,6 +309,8 @@ namespace PIC.ViewModel
             {
                 Usuaris.Add(u);
             }
+
+            TextCerca = $"// USUARIS / TOTS / RESULTATS: {Usuaris.Count}";
         }
 
         // MÈTODE DE CERCA
@@ -317,6 +337,8 @@ namespace PIC.ViewModel
                     }
 
                     Usuaris.Add(perId);
+
+                    TextCerca = $"// USUARIS / ID: {ParametreCercaUsuaris} / RESULTATS: {Usuaris.Count}";
                     break;
 
                 case UsuarisTipusCerca.PerCurs:
@@ -334,6 +356,8 @@ namespace PIC.ViewModel
                         Usuaris.Add(u);
 
                     }
+
+                    TextCerca = $"// USUARIS / ID_CURS: {ParametreCercaUsuaris} / RESULTATS: {Usuaris.Count}";
                     break;
 
                 case UsuarisTipusCerca.PerDepartament:
@@ -350,6 +374,8 @@ namespace PIC.ViewModel
                     {
                         Usuaris.Add(u);
                     }
+
+                    TextCerca = $"// USUARIS / ID_DEPARTAMENT: {ParametreCercaUsuaris} / RESULTATS: {Usuaris.Count}";
                     break;
             }             
         }

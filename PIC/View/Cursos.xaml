@@ -7,7 +7,7 @@
              xmlns:vm="clr-namespace:PIC.ViewModel"
              xmlns:Menu="clr-namespace:PIC.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1400">
+             d:DesignHeight="600" d:DesignWidth="1400">
     
     <UserControl.DataContext>
         <vm:CursosVM/>
@@ -56,50 +56,29 @@
                 </Grid.RowDefinitions>
 
                 <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
-                <Grid Grid.Row="0" Background="#a5a6af">
+                <Grid Grid.Row="0" 
+                      Background="#a5a6af">
+
                     <Grid.RowDefinitions>
                         <RowDefinition Height="*"/>
-                        <RowDefinition Height="20"/>
+                        <RowDefinition Height="30"/>
                     </Grid.RowDefinitions>
 
-                    <Grid Grid.Row="0" VerticalAlignment="Center" Margin="10">
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="300"/>
-                            <ColumnDefinition Width="*"/>
-                        </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0"
+                                Orientation="Horizontal" 
+                                VerticalAlignment="Center" 
+                                Margin="10">
+                    </StackPanel>
 
-                        <Grid Grid.Column="0">
-                            <TextBlock FontSize="12" 
-                                       Text="{Binding TitolPantalla}"
-                                       Style="{StaticResource Fraktion_Dark_Font}" 
-                                       VerticalAlignment="Center"
-                                       TextTrimming="CharacterEllipsis"
-                                       Margin="0, 0, 20, 0"/>
-                        </Grid>
+                    <Grid Grid.Row="1"
+                          Background="#131316">
 
-                        <StackPanel Grid.Column="1" 
-                                    Orientation="Horizontal" 
-                                    HorizontalAlignment="Left" 
-                                    VerticalAlignment="Center">
-
-                            <TextBox Width="50" 
-                                     Visibility="{Binding CercaVisibility}" 
-                                     Style="{StaticResource Main_TextBox}"
-                                     Height="20"
-                                     Padding="5, 0, 0, 0"
-                                     Text="{Binding ParametreCercaCursos, UpdateSourceTrigger=PropertyChanged}"
-                                     Margin="0, 0, 10, 0"/>
-
-                            <Button Content="BUSCAR"
-                                    Visibility="{Binding CercaVisibility}"
-                                    Command="{Binding BuscarCommand}"
-                                    Width="100"
-                                    Height="20"
-                                    Style="{StaticResource Accions_Button}"/>
-                        </StackPanel>
-                    </Grid>
-
-                    <Grid Grid.Row="1" Background="#131316">
+                        <!-- TÍTOL -->
+                        <TextBlock FontSize="12" 
+                                   VerticalAlignment="Center"
+                                   Text="{Binding TextCerca}"
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   Margin="10, 0, 10, 0"/>
                     </Grid>
                 </Grid>
 
@@ -246,8 +225,14 @@
                         <StackPanel Grid.Column="2" 
                                     Background="#a5a6af">
                             
-                            <Grid Margin="0, 40, 0 , 0">
+                            <Grid Margin="0, 0, 0 , 0">
                                 <Grid.RowDefinitions>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
@@ -255,20 +240,51 @@
                                     <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
+                                <TextBlock Text="Fer cerca:"
+                                           Grid.Row="0"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+
+                                <StackPanel Grid.Row="2"
+                                            Orientation="Horizontal"
+                                            Width="200">
+
+                                    <TextBox Style="{StaticResource Main_TextBox}"
+                                             Text="{Binding ParametreCercaCursos, UpdateSourceTrigger=PropertyChanged}"
+                                             IsEnabled="{Binding HabilitarCerca}"
+                                             Height="30"
+                                             Width="120"/>
+
+                                    <Button Content="CERCAR"
+                                            Command="{Binding BuscarCommand}"
+                                            IsEnabled="{Binding HabilitarCerca}"
+                                            Padding="10, 0, 10, 0"
+                                            Margin="10, 0, 0, 0"
+                                            Width="70"
+                                            Style="{StaticResource Accions_Button}"/>
+                                </StackPanel>
+
+                                <TextBlock Text="Accions:"
+                                           Grid.Row="4"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                
                                 <Button Content="AFEGIR CURS"
-                                        Grid.Row="0"
+                                        Grid.Row="6"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirCursMenu_Click}"/>
 
                                 <Button Content="EDITAR CURS"
-                                        Grid.Row="2"
+                                        Grid.Row="8"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarCursMenu_Click}"/>
 
                                 <Button Content="ESBORRAR CURS"
-                                        Grid.Row="4"
+                                        Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarCursMenu_Click}"/>

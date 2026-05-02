@@ -49,19 +49,24 @@ namespace PIC.ViewModel
             _ = MostrarCategoriesAsync();
         }
 
-        // PROPIETATS DE LA UI
-        private Visibility _cercaVisibility = Visibility.Collapsed;
-        public Visibility CercaVisibility
+        // TEXT CERCA
+        private string _textCerca = "// CATEGORIES / TOTS";
+        public string TextCerca
         {
-            get => _cercaVisibility;
-            set { _cercaVisibility = value; OnPropertyChanged(); }
+            get => _textCerca;
+            set { _textCerca = value; OnPropertyChanged(); }
         }
-
-        private string _titolPantalla = "CATEGORIES: TOTS";
-        public string TitolPantalla
+        
+        // HABILITAR CERCA
+        private bool _habilitarCerca = false;
+        public bool HabilitarCerca
         {
-            get => _titolPantalla;
-            set { _titolPantalla = value; OnPropertyChanged(); }
+            get => _habilitarCerca;
+            set
+            {
+                _habilitarCerca = value;
+                OnPropertyChanged();
+            }
         }
 
         // CATEGORIA SELECCIONADA
@@ -95,6 +100,8 @@ namespace PIC.ViewModel
                 {
                     Dispositius.Add(u);
                 }
+
+                TextCerca = $"// CATEGORIES / ID: {CategoriaSeleccionada.Id} / DISPOSITIUS / RESULTATS: {Dispositius.Count}";
             }            
         }
 
@@ -135,21 +142,21 @@ namespace PIC.ViewModel
                 string mode = param.ToString();
 
                 Categories.Clear();
-                CercaVisibility = Visibility.Visible;
 
                 switch (mode)
                 {
                     case "TOTS":
-                        TitolPantalla = "CATEGORIES: TOTS";
+                        TextCerca = "// CATEGORIES / TOTS";
                         ParametreCercaCategories = "";
+                        HabilitarCerca = false;
                         ClearDispositius();
-                        CercaVisibility = Visibility.Collapsed;
                         _ = MostrarCategoriesAsync();
                         break;
 
                     case "PER_ID":
-                        TitolPantalla = "CATEGORIES: PER ID";
+                        TextCerca = "// CATEGORIES / ID";
                         ParametreCercaCategories = "";
+                        HabilitarCerca = true;
                         ClearDispositius();
                         TipusCercaActualCategories = CategoriesTipusCerca.PerId;
                         break;
@@ -189,6 +196,8 @@ namespace PIC.ViewModel
                         {
                             Categories.Add(curs);
                         }
+
+                        TextCerca = $"// CATEGORIES / ID: {ParametreCercaCategories} / RESULTATS: {Categories.Count}";
                         break;
                 }
             }           
@@ -221,6 +230,8 @@ namespace PIC.ViewModel
                     {
                         Categories.Add(u);
                     }
+
+                    TextCerca = $"// CATEGORIES / TOTS / RESULTATS: {Categories.Count}";
                 }
             }
         }
