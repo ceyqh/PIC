@@ -15,15 +15,15 @@
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\afegiradministradorvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\view\\afegiradministrador.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\view\\afegiradministrador.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\view\\afegiradministrador.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\viewmodel\\confirmaresborrarvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\viewmodel\\confirmaresborrarvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\viewmodel\\confirmaresborrarvm.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|c:\\users\\cescc\\onedrive\\escritorio\\pic\\pic\\styles\\text.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "AbsoluteMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\pic\\styles\\text.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
       "RelativeMoniker": "D:0:0:{79F1A94A-AE3C-4E4E-9671-3A9895D04DBD}|PIC\\PIC.csproj|solutionrelative:pic\\styles\\text.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
@@ -50,8 +50,7 @@
               "RelativeToolTip": "PIC\\ViewModel\\ConfirmarEsborrarVM.cs",
               "ViewState": "AgIAAEQAAAAAAAAAAAAgwFoAAAAsAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-03T14:49:56.632Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-03T14:49:56.632Z"
             },
             {
               "$type": "Document",
@@ -74,8 +73,7 @@
               "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\AfegirAdministrador.xaml",
               "RelativeToolTip": "PIC\\View\\AfegirAdministrador.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2026-05-03T14:22:07.314Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-03T14:22:07.314Z"
             },
             {
               "$type": "Document",
@@ -87,8 +85,7 @@
               "RelativeToolTip": "PIC\\ViewModel\\AfegirAdministradorVM.cs",
               "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-02T23:14:00.819Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-02T23:14:00.819Z"
             },
             {
               "$type": "Document",
@@ -96,8 +93,8 @@
               "Title": "Login.xaml",
               "DocumentMoniker": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Login.xaml",
               "RelativeDocumentMoniker": "PIC\\View\\Login.xaml",
-              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Login.xaml*",
-              "RelativeToolTip": "PIC\\View\\Login.xaml*",
+              "ToolTip": "C:\\Users\\cescc\\OneDrive\\Escritorio\\PIC\\PIC\\View\\Login.xaml",
+              "RelativeToolTip": "PIC\\View\\Login.xaml",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
               "WhenOpened": "2026-05-02T21:54:30.634Z",
               "EditorCaption": ""
@@ -112,8 +109,7 @@
               "RelativeToolTip": "PIC\\ViewModel\\LoginVM.cs",
               "ViewState": "AgIAACwAAAAAAAAAAAAiwD0AAAAbAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-02T23:13:10.808Z",
-              "EditorCaption": ""
+              "WhenOpened": "2026-05-02T23:13:10.808Z"
             }
           ]
         },

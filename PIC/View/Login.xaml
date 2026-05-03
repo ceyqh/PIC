@@ -30,7 +30,7 @@
 
             <!-- LOGO -->
             <Image Grid.Row="0"
-                   Source="/Images/logo_color2.png"
+                   Source="/Images/logo_color3.png"
                    Margin="30"
                    Width="50"
                    VerticalAlignment="Top"
