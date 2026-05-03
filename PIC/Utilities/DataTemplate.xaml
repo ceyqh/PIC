@@ -4,6 +4,14 @@
                     xmlns:vm="clr-namespace:PIC.ViewModel"
                     xmlns:view="clr-namespace:PIC.View">
 
+    <DataTemplate DataType="{x:Type vm:LoginVM}">
+        <view:Login />
+    </DataTemplate>
+
+    <DataTemplate DataType="{x:Type vm:NavigationVM}">
+        <view:MainAppView />
+    </DataTemplate>
+
     <DataTemplate DataType="{x:Type vm:HomeVM}">
         <view:Home />
     </DataTemplate>

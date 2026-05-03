@@ -273,3 +273,7 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\ExcelDataReader.DataSet.xml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\bin\Debug\System.Text.Encoding.CodePages.xml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ExportarRegistres.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ExportarRegistres.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Login.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\MainAppView.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Login.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\MainAppView.baml

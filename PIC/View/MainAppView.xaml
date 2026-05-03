@@ -1,0 +1,102 @@
+﻿<UserControl x:Class="PIC.View.MainAppView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PIC.View"
+             xmlns:vm="clr-namespace:PIC.ViewModel"
+             xmlns:Menu="clr-namespace:PIC.Utilities"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid>
+        <!--// Window Border //-->
+        <Border Background="White"/>
+        <Grid>
+            <!--// Base Grid //-->
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="200" />
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <!--// Navigation Panel //-->
+            <Grid HorizontalAlignment="Left" Width="200" Background="#131316">
+
+                <StackPanel Height="400" Width="200">
+
+                    <!--// HOME //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding HomeCommand}" IsChecked="True">
+                        <Grid>
+                            <TextBlock Text="INICI" Style="{StaticResource Text_Main_Menu_Button_Style}"/>
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!--// PRESTECS //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding PrestecsCommand}">
+                        <Grid>
+                            <TextBlock Text="PRÉSTECS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+
+                    <!--// DISPOSITIUS //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding DispositiusCommand}">
+                        <Grid>
+                            <TextBlock Text="DISPOSITIUS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!--// CATEGORIES //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding CategoriesCommand}">
+                        <Grid>
+                            <TextBlock Text="CATEGORIES" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!--// USUARIS //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding UsuarisCommand}">
+                        <Grid>
+                            <TextBlock Text="USUARIS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!--// CURSOS //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding CursosCommand}">
+                        <Grid>
+                            <TextBlock Text="CURSOS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!--// DEPARTAMENTS //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding DepartamentsCommand}">
+                        <Grid>
+                            <TextBlock Text="DEPARTAMENTS" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!--// REGISTRES //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding RegistresCommand}">
+                        <Grid>
+                            <TextBlock Text="REGISTRES" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                    <!--// PIC //-->
+                    <Menu:Btn Style="{StaticResource Main_Menu_Button}" Command="{Binding PicCommand}">
+                        <Grid>
+                            <TextBlock Text="PIC" Style="{StaticResource Text_Main_Menu_Button_Style}" />
+                        </Grid>
+                    </Menu:Btn>
+
+                </StackPanel>
+
+            </Grid>
+
+            <Grid Grid.Column="1">
+                <ContentControl Content="{Binding SubCurrentView}"/>
+            </Grid>
+
+        </Grid>
+        <Button x:Name="Close" Style="{StaticResource ExitApp}" Click="Close_Click"/>
+    </Grid>
+</UserControl>

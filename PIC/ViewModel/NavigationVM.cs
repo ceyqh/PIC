@@ -16,6 +16,14 @@ namespace PIC.ViewModel
             get { return _currentView; }
             set { _currentView = value; OnPropertyChanged(); }
         }
+
+        private object _subCurrentView;
+        public object SubCurrentView
+        {
+            get => _subCurrentView;
+            set { _subCurrentView = value; OnPropertyChanged(); }
+        }
+
         public ICommand HomeCommand { get; set; }
         public ICommand PrestecsCommand { get; set; }
         public ICommand DispositiusCommand { get; set; }
@@ -25,16 +33,25 @@ namespace PIC.ViewModel
         public ICommand DepartamentsCommand { get; set; }
         public ICommand PicCommand { get; set; }
         public ICommand RegistresCommand { get; set; }
+        public ICommand LoginCommand { get; set; }
+        public ICommand MainAppViewCommand { get; set; }
 
-        private void Home(object obj) => CurrentView = new HomeVM();
-        private void Prestecs(object obj) => CurrentView = new PrestecsVM();
-        private void Dispositius(object obj) => CurrentView = new DispositiusVM();
-        private void Categories(object obj) => CurrentView = new CategoriesVM();
-        private void Usuaris(object obj) => CurrentView = new UsuarisVM();
-        private void Cursos(object obj) => CurrentView = new CursosVM();
-        private void Departaments(object obj) => CurrentView = new DepartamentsVM();
-        private void Pic(object obj) => CurrentView = new PicVM();
-        private void Registres(object obj) => CurrentView = new RegistresVM();
+        private void Home(object obj) => SubCurrentView = new HomeVM();
+        private void Prestecs(object obj) => SubCurrentView = new PrestecsVM();
+        private void Dispositius(object obj) => SubCurrentView = new DispositiusVM();
+        private void Categories(object obj) => SubCurrentView = new CategoriesVM();
+        private void Usuaris(object obj) => SubCurrentView = new UsuarisVM();
+        private void Cursos(object obj) => SubCurrentView = new CursosVM();
+        private void Departaments(object obj) => SubCurrentView = new DepartamentsVM();
+        private void Pic(object obj) => SubCurrentView = new PicVM();
+        private void Registres(object obj) => SubCurrentView = new RegistresVM();
+        private void Login(object obj) => CurrentView = new LoginVM(this);
+
+        private void MainAppView(object obj)
+        {
+            SubCurrentView = new HomeVM();
+            CurrentView = this;
+        }
 
         public NavigationVM()
         {
@@ -47,9 +64,11 @@ namespace PIC.ViewModel
             DepartamentsCommand = new RelayCommand(Departaments);
             PicCommand = new RelayCommand(Pic);
             RegistresCommand = new RelayCommand(Registres);
+            LoginCommand = new RelayCommand(Login);
+            MainAppViewCommand = new RelayCommand(MainAppView);
 
             // Startup Page
-            CurrentView = new HomeVM();
+            CurrentView = new LoginVM(this);
         }
     }
 }

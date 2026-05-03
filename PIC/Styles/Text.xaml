@@ -79,6 +79,15 @@
         <Setter Property="Foreground"
             Value="#e8e9e9"/>
     </Style>
+    
+    <!-- TEXT VERMELL -->
+    <Style x:Key="Fraktion_Red_Font" TargetType="TextBlock">
+
+        <Setter Property="FontFamily" 
+            Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="Foreground"
+            Value="Red"/>
+    </Style>
 
     <!-- TEXT FOSC TEXTBOX -->
     <Style x:Key="Fraktion_Dark_Font_TextBox" TargetType="TextBox">
