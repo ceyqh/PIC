@@ -16,6 +16,6 @@ namespace PIC.Model
         public string Categoria { get; set; }
         public string Estat { get; set; }
 
-        public string CategoriaFormatat => $"{IdCategoria} | {Categoria}";
+        public string CategoriaFormatat => $"[{IdCategoria}] {Categoria}";
     }
 }

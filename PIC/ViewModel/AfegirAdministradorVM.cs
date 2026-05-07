@@ -80,7 +80,7 @@ namespace PIC.ViewModel
         }
 
         // PERMISOS
-        private string _permisSeleccionat;
+        private string _permisSeleccionat = "Préstecs";
         public string PermisSeleccionat
         {
             get => _permisSeleccionat;
@@ -97,7 +97,7 @@ namespace PIC.ViewModel
             Nom = "";
             Contrasenya = "";
             RepetirContrasenya = "";
-            PermisSeleccionat = "Permis1";
+            PermisSeleccionat = "Préstecs";
             esPotAfegir = true;
             EsVisible = Visibility.Visible;
         }

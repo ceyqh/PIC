@@ -16,6 +16,7 @@ namespace PIC.ViewModel
 {
     internal class PicVM: Utilities.ViewModelBase
     {
+        private readonly Administrador _administrador;
         public ObservableCollection<Administrador> Administradors { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
         public AfegirAdministradorVM AfegirAdministrador { get; set; }
@@ -23,6 +24,7 @@ namespace PIC.ViewModel
         public FinalitzarCursVM FinalitzarCurs { get; set; }
         public ExportarRegistresVM ExportarRegistres { get; set; }
         public ConfirmarEsborrarVM ConfirmarEsborrar { get; set; }
+        public RepararSistemaVM RepararSistema { get; set; }
         public NotificacioVM Notificacio { get; set; }
 
         private readonly AdministradorsApiClient _administradorsApiClient;
@@ -39,9 +41,23 @@ namespace PIC.ViewModel
             }
         }
 
-        // CONSTRUCTOR
-        public PicVM()
+        // TEXT CERCA
+        private string _textCerca;
+        public string TextCerca
         {
+            get => _textCerca;
+            set
+            {
+                _textCerca = value;
+                OnPropertyChanged();
+            }
+        }
+
+        // CONSTRUCTOR
+        public PicVM(Administrador administrador)
+        {
+            _administrador = administrador;
+
             Administradors = new ObservableCollection<Administrador>();
 
             _administradorsApiClient = new AdministradorsApiClient();
@@ -52,9 +68,12 @@ namespace PIC.ViewModel
             ExportarRegistres = new ExportarRegistresVM();
             EditarAdministrador = new EditarAdministradorVM(this);
             ConfirmarEsborrar = new ConfirmarEsborrarVM();
+            RepararSistema = new RepararSistemaVM(this);
             Notificacio = new NotificacioVM();
 
             _ = MostrarAdministradorsAsync();
+
+            TextCerca = "// PIC / ADMINISTRADORS";
         }
 
         public async Task MostrarAdministradorsAsync()
@@ -79,6 +98,8 @@ namespace PIC.ViewModel
                     {
                         Administradors.Add(u);
                     }
+
+                    TextCerca = $"// PIC / ADMINISTRADORS / RESULTATS: {Administradors.Count}";
                 }
 
             }
@@ -92,6 +113,12 @@ namespace PIC.ViewModel
 
         public ICommand EditarAdministradorMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Nom == AdministradorSeleccionat.Nom)
+            {
+                MissatgeError.Mostrar("No pots editar el teu propi usuari.");
+                return;
+            }
+
             // Si no hi ha cap administrador seleccionat
             if (_administradorSeleccionat == null)
             {
@@ -105,6 +132,12 @@ namespace PIC.ViewModel
 
         public ICommand EsborrarAdministradorMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Nom == AdministradorSeleccionat.Nom)
+            {
+                MissatgeError.Mostrar("No pots esborrar el teu propi usuari.");
+                return;
+            }
+
             // Si no hi ha cap administrador seleccionat
             if (_administradorSeleccionat == null)
             {
@@ -124,6 +157,11 @@ namespace PIC.ViewModel
         public ICommand ExportarRegistresMenu_Click => new RelayCommand(_ =>
         {
             ExportarRegistres.Mostrar();
+        });
+
+        public ICommand RepararSistema_Click => new RelayCommand(_ =>
+        {
+            RepararSistema.Mostrar();
         });
 
         public void ObrirNotificacio(string missatge)

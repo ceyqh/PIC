@@ -18,7 +18,7 @@
                    Width="900"/>            
         </Grid>
 
-        <Grid Background="White"
+        <Grid Background="{StaticResource Clar}"
               Width="300"
               HorizontalAlignment="Left">
 

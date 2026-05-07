@@ -17,7 +17,7 @@
 
                         <Grid.Background>
                             <SolidColorBrush x:Name="GridBackground"
-                                         Color="#131316"/>
+                                         Color="{DynamicResource ColorMainBotoBase}"/>
                         </Grid.Background>
 
                         <Grid>
@@ -29,11 +29,11 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="GridArea" Property="Background" Value="#bbbbbb"/>
+                            <Setter TargetName="GridArea" Property="Background" Value="{DynamicResource MainBotoHoover}"/>
                         </Trigger>
 
                         <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Background" TargetName="GridArea" Value="#e8e9e9"/>
+                            <Setter Property="Background" TargetName="GridArea" Value="{DynamicResource MainBotoChecked}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -41,103 +41,13 @@
                 </ControlTemplate>
             </Setter.Value>
         </Setter>
-
-    </Style>
-
-    <!-- BOTONS DEL SUBMENÚ  -->
-    <Style x:Key="Sub_Menu_Button" TargetType="RadioButton">
-
-        <Setter Property="HorizontalAlignment" Value="Center"/>
-        <Setter Property="VerticalAlignment" Value="Center"/>
-        <Setter Property="Margin" Value="0,0,0,0"/>
-
-        <Setter Property="Template">
-            <Setter.Value>
-                <ControlTemplate TargetType="RadioButton">
-
-                    <Grid x:Name="GridArea" Height="40" Width="230">
-
-                        <Grid.Background>
-                            <SolidColorBrush x:Name="GridBackground"
-                                     Color="#e8e9e9"/>
-                        </Grid.Background>
-
-                        <Grid>
-                            <ContentPresenter/>
-                        </Grid>
-
-                    </Grid>
-
-                    <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="GridArea" Property="Background" Value="#bbbbbb"/>
-                        </Trigger>
-
-                        <Trigger Property="IsChecked" Value="True">
-                            <Setter Property="Background" TargetName="GridArea" Value="#606064"/>
-                        </Trigger>
-
-                    </ControlTemplate.Triggers>
-
-                </ControlTemplate>
-            </Setter.Value>
-        </Setter>
-
-    </Style>
-
-    <ImageBrush x:Key="close_app_def" ImageSource="/Images/shutdown_def.png" Stretch="None" />
-
-    <ImageBrush x:Key="close_app_mo" ImageSource="/Images/shutdown_mo.png" Stretch="None" />
-
-    <!-- BOTONS DE SORTIR -->
-    <Style x:Key="ExitApp" TargetType="{x:Type Button}">
-
-        <Setter Property="Height" Value="40" />
-        <Setter Property="Width" Value="40" />
-        <Setter Property="HorizontalAlignment" Value="Right" />
-        <Setter Property="VerticalAlignment" Value="Top" />
-        <Setter Property="Margin" Value="0,15,15,0" />
-
-        <Setter Property="Template">
-
-            <Setter.Value>
-
-                <ControlTemplate TargetType="{x:Type Button}">
-
-                    <Border x:Name="GridArea" BorderThickness="0" Background="{StaticResource close_app_def}">
-
-                    </Border>
-
-                    <ControlTemplate.Triggers>
-
-                        <Trigger Property="IsMouseOver" Value="True">
-
-                            <Setter Property="Background" TargetName="GridArea" Value="{StaticResource close_app_mo}" />
-
-                        </Trigger>
-
-                        <Trigger Property="IsPressed" Value="True">
-
-                            <Setter Property="Background" TargetName="GridArea" Value="{StaticResource close_app_mo}" />
-
-                        </Trigger>
-
-                    </ControlTemplate.Triggers>
-
-                </ControlTemplate>
-
-            </Setter.Value>
-
-        </Setter>
-
     </Style>
 
     <!-- BOTONS ACCIONS -->
     <Style x:Key="Accions_Button" TargetType="Button">
 
-        <Setter Property="Foreground" Value="#e8e9e9"/>
-        <Setter Property="Background" Value="#131316"/>
+        <Setter Property="Foreground" Value="{DynamicResource MigClar}"/>
+        <Setter Property="Background" Value="{DynamicResource BotoBase}"/>
         <Setter Property="BorderThickness" Value="0"/>
 
 
@@ -160,7 +70,7 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="GridArea" Property="Background" Value="#606064"/>
+                            <Setter TargetName="GridArea" Property="Background" Value="{DynamicResource BotoHoover}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -210,8 +120,8 @@
     <!-- BOTÓ ALERTA -->
     <Style x:Key="Alerta_Button" TargetType="Button">
 
-        <Setter Property="Foreground" Value="#e8e9e9"/>
-        <Setter Property="Background" Value="#C44545"/>
+        <Setter Property="Foreground" Value="{DynamicResource Clar}"/>
+        <Setter Property="Background" Value="{DynamicResource Alerta}"/>
         <Setter Property="BorderThickness" Value="0"/>
 
 
@@ -234,7 +144,44 @@
                     <ControlTemplate.Triggers>
 
                         <Trigger Property="IsMouseOver" Value="True">
-                            <Setter TargetName="GridArea" Property="Background" Value="#eb6c6c"/>
+                            <Setter TargetName="GridArea" Property="Background" Value="{DynamicResource AlertaClar}"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- BOTÓ REPARAR -->
+    <Style x:Key="Reparar_Button" TargetType="Button">
+
+        <Setter Property="Foreground" Value="{DynamicResource Clar}"/>
+        <Setter Property="Background" Value="{DynamicResource Reparar}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+
+        <Setter Property="FontFamily" Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="FontSize" Value="12"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Grid x:Name="GridArea"
+                            Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                            VerticalAlignment="Center"
+                            Margin="{TemplateBinding Padding}"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="GridArea" Property="Background" Value="{DynamicResource RepararClar}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>
@@ -272,6 +219,43 @@
 
                         <Trigger Property="IsMouseOver" Value="True">
                             <Setter TargetName="GridArea" Property="Background" Value="#5bcdfc"/>
+                        </Trigger>
+
+                    </ControlTemplate.Triggers>
+
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
+    
+    <!-- BOTÓ NOTIFICACIÓ -->
+    <Style x:Key="Notificacio_Button" TargetType="Button">
+
+        <Setter Property="Foreground" Value="{DynamicResource MigClar}"/>
+        <Setter Property="Background" Value="{DynamicResource Notificacio}"/>
+        <Setter Property="BorderThickness" Value="0"/>
+
+
+        <Setter Property="FontFamily" Value="/PIC;component/Fonts/#PP Fraktion Mono"/>
+        <Setter Property="FontSize" Value="12"/>
+
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="Button">
+
+                    <Grid x:Name="GridArea"
+                        Background="{TemplateBinding Background}">
+
+                        <ContentPresenter HorizontalAlignment="Center"
+                        VerticalAlignment="Center"
+                        Margin="{TemplateBinding Padding}"/>
+
+                    </Grid>
+
+                    <ControlTemplate.Triggers>
+
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter TargetName="GridArea" Property="Background" Value="{DynamicResource NotificacioClar}"/>
                         </Trigger>
 
                     </ControlTemplate.Triggers>

@@ -52,7 +52,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>logo_color2.ico</ApplicationIcon>
+    <ApplicationIcon>logo_color3.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="ExcelDataReader, Version=3.8.0.0, Culture=neutral, PublicKeyToken=93517dbe6a4012fa, processorArchitecture=MSIL">
@@ -127,6 +127,7 @@
     <Compile Include="APIClient\ProfessorsApiClient.cs" />
     <Compile Include="APIClient\RegistresApiClient.cs" />
     <Compile Include="APIClient\UsuarisApiClient.cs" />
+    <Compile Include="APIClient\UsuarisBaseApiClient.cs" />
     <Compile Include="Model\Administrador.cs" />
     <Compile Include="Model\Alumne.cs" />
     <Compile Include="Model\Categoria.cs" />
@@ -139,6 +140,7 @@
     <Compile Include="Model\Professor.cs" />
     <Compile Include="Model\Registre.cs" />
     <Compile Include="Model\Usuari.cs" />
+    <Compile Include="Model\UsuariBase.cs" />
     <Compile Include="Utilities\Btn.cs" />
     <Compile Include="Utilities\PasswordHelper.cs" />
     <Compile Include="Utilities\RelayCommand.cs" />
@@ -168,13 +170,13 @@
     <Compile Include="ViewModel\FinalitzarCursVM.cs" />
     <Compile Include="ViewModel\HomeVM.cs" />
     <Compile Include="ViewModel\LoginVM.cs" />
-    <Compile Include="ViewModel\MainAppViewVM.cs" />
     <Compile Include="ViewModel\MissatgeErrorMV.cs" />
     <Compile Include="ViewModel\NavigationVM.cs" />
     <Compile Include="ViewModel\NotificacioVM.cs" />
     <Compile Include="ViewModel\PicVM.cs" />
     <Compile Include="ViewModel\PrestecsVM.cs" />
     <Compile Include="ViewModel\RegistresVM.cs" />
+    <Compile Include="ViewModel\RepararSistemaVM.cs" />
     <Compile Include="ViewModel\UsuarisVM.cs" />
     <Compile Include="View\AfegirAdministrador.xaml.cs">
       <DependentUpon>AfegirAdministrador.xaml</DependentUpon>
@@ -205,9 +207,6 @@
     </Compile>
     <Compile Include="View\ConfirmarEsborrar.xaml.cs">
       <DependentUpon>ConfirmarEsborrar.xaml</DependentUpon>
-    </Compile>
-    <Compile Include="View\ConfirmarNouCurs.xaml.cs">
-      <DependentUpon>ConfirmarNouCurs.xaml</DependentUpon>
     </Compile>
     <Compile Include="View\Cursos.xaml.cs">
       <DependentUpon>Cursos.xaml</DependentUpon>
@@ -269,6 +268,9 @@
     <Compile Include="View\Registres.xaml.cs">
       <DependentUpon>Registres.xaml</DependentUpon>
     </Compile>
+    <Compile Include="View\RepararSistema.xaml.cs">
+      <DependentUpon>RepararSistema.xaml</DependentUpon>
+    </Compile>
     <Compile Include="View\Usuaris.xaml.cs">
       <DependentUpon>Usuaris.xaml</DependentUpon>
     </Compile>
@@ -285,6 +287,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Styles\Button.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Styles\Colors.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -353,10 +359,6 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\ConfirmarEsborrar.xaml">
-      <SubType>Designer</SubType>
-      <Generator>MSBuild:Compile</Generator>
-    </Page>
-    <Page Include="View\ConfirmarNouCurs.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -437,6 +439,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="View\Registres.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="View\RepararSistema.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -528,6 +534,12 @@
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\logo_color3.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="logo_color3.ico" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Images\tancar_sessio.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets" Condition="Exists('..\packages\System.ValueTuple.4.6.2\build\net471\System.ValueTuple.targets')" />

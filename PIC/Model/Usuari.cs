@@ -15,6 +15,6 @@ namespace PIC.Model
         public string Grup { get; set; }
         public long IdGrup { get; set; }
 
-        public string GrupFormatat => $"{IdGrup} | {Grup}";
+        public string GrupFormatat => $"[{IdGrup}] {Grup}";
     }
 }

@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PIC.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -26,7 +27,8 @@ namespace PIC.View
         }
 
         // TANCAR APLICACIÓ
-        private void Close_Click(object sender, RoutedEventArgs e)
+
+        private void Tancar_Click(object sender, RoutedEventArgs e)
         {
             Application.Current.Shutdown();
         }

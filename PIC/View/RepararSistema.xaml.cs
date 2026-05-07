@@ -16,11 +16,11 @@ using System.Windows.Shapes;
 namespace PIC.View
 {
     /// <summary>
-    /// Lógica de interacción para ConfirmarNouCurs.xaml
+    /// Lógica de interacción para RepararSistema.xaml
     /// </summary>
-    public partial class ConfirmarNouCurs : UserControl
+    public partial class RepararSistema : UserControl
     {
-        public ConfirmarNouCurs()
+        public RepararSistema()
         {
             InitializeComponent();
         }

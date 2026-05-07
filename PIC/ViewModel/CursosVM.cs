@@ -22,6 +22,7 @@ namespace PIC.ViewModel
 
     internal class CursosVM : Utilities.ViewModelBase
     {
+        private readonly Administrador _administrador;
         public ObservableCollection<Curs> Cursos { get; set; }
         public ObservableCollection<Usuari> Usuaris { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
@@ -33,8 +34,10 @@ namespace PIC.ViewModel
         private readonly UsuarisApiClient _usuarisApiClient;
 
         // CONSTRUCTOR
-        public CursosVM()
+        public CursosVM(Administrador administrador)
         {
+            _administrador = administrador;
+
             Cursos = new ObservableCollection<Curs>();
             Usuaris = new ObservableCollection<Usuari>();
 
@@ -191,26 +194,30 @@ namespace PIC.ViewModel
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
-            else
+            
+            if (!int.TryParse(ParametreCercaCursos, out int id))
             {
-                Cursos.Clear();
-                switch (TipusCercaActualCursos)
-                {
-                    case CursosTipusCerca.PerId:
-                        var curs = await _cursosApiClient.GetCursPerIdAsync(int.Parse(ParametreCercaCursos));
+                MissatgeError.Mostrar("El paràmetre de cerca ha de ser un número enter.");
+                return;
+            }
 
-                        if (curs == null)
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap curs amb aquest ID.");
-                        }
-                        else
-                        {
-                            Cursos.Add(curs);
-                        }
+            Cursos.Clear();
+            switch (TipusCercaActualCursos)
+            {
+                case CursosTipusCerca.PerId:
+                    var curs = await _cursosApiClient.GetCursPerIdAsync(int.Parse(ParametreCercaCursos));
 
-                        TextCerca = $"// CURSOS / ID: {ParametreCercaCursos} / RESULTATS: {Usuaris.Count}";
-                        break;
-                }
+                    if (curs == null)
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap curs amb aquest ID.");
+                    }
+                    else
+                    {
+                        Cursos.Add(curs);
+                    }
+
+                    TextCerca = $"// CURSOS / ID: {ParametreCercaCursos} / RESULTATS: {Usuaris.Count}";
+                    break;
             }
         }
 
@@ -224,7 +231,7 @@ namespace PIC.ViewModel
             }
             // Si la api funciona
             else
-            {                
+            {
                 var llista = await _cursosApiClient.GetAllCursosAsync();
 
                 // Si la consulta falla
@@ -249,12 +256,24 @@ namespace PIC.ViewModel
         // AFEGIR CURS
         public ICommand AfegirCursMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             AfegirCurs.Mostrar();
         });
 
         // EDITAR CURS
         public ICommand EditarCursMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap curs seleccionat
             if (_cursSeleccionat != null)
             {
@@ -269,6 +288,12 @@ namespace PIC.ViewModel
         // ESBORRAR CURS
         public ICommand EsborrarCursMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap curs seleccionat
             if (_cursSeleccionat != null)
             {
@@ -284,7 +309,7 @@ namespace PIC.ViewModel
                 else if (comptarUsuaris.Count > 0)
                 {
                     MissatgeError.Mostrar("Aquest curs conté un o varis alumnes, per seguretat, només es poden esborrar els cursos buits. " +
-                        "Si vols esborrar aquest curs, primer hasd'eliminar els seus alumnes.");
+                        "Si vols esborrar aquest curs, primer has d'eliminar els seus alumnes.");
                 }
                 else
                 {

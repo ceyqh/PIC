@@ -11,7 +11,7 @@
             Visibility="{Binding EsVisible}">
 
         <Grid MaxWidth="500" MinWidth="300"
-              Background="White"
+              Background="{StaticResource Clar}"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
 

@@ -13,7 +13,7 @@
 
         <!-- POPUP -->
         <Grid Width="300"
-          Background="White"
+          Background="{StaticResource Clar}"
           HorizontalAlignment="Center"
           VerticalAlignment="Center">
 
@@ -28,32 +28,32 @@
                 </Grid.RowDefinitions>
 
                 <!-- TÍTOL -->
-                <Grid Background="#131316" 
-                  VerticalAlignment="Center">
+                <Grid Background="{StaticResource Fosc}" 
+                      VerticalAlignment="Center">
 
                     <TextBlock Text="AFEGIR: ADMINISTRADOR" 
-                           Style="{StaticResource Fraktion_Light_Font}" 
-                           FontSize="12" 
-                           Margin="20, 10, 20, 10"/>
+                               Style="{StaticResource Fraktion_Light_Font}" 
+                               FontSize="12" 
+                               Margin="20, 10, 20, 10"/>
                 </Grid>
 
                 <!-- NOM -->
                 <StackPanel Grid.Row="1" 
-                        Margin="20, 10, 20, 0">
+                            Margin="20, 10, 20, 0">
 
                     <TextBlock Text="Nom: " 
-                           Style="{StaticResource Fraktion_Dark_Font}" 
-                           FontSize="12" 
-                           Margin="0,0,0,10"/>
+                               Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"/>
 
                     <TextBox Text="{Binding Nom}"  
-                         Margin="0,0,0,20"  
-                         Style="{StaticResource Main_TextBox}"/>
+                             Margin="0,0,0,20"  
+                             Style="{StaticResource Main_TextBox}"/>
                 </StackPanel>
 
                 <!-- CONTRASENYA -->
                 <StackPanel Grid.Row="2" 
-                        Margin="20, 0, 20, 0">
+                            Margin="20, 0, 20, 0">
 
                     <TextBlock Text="Contrasenya: " 
                                Style="{StaticResource Fraktion_Dark_Font}" 
@@ -67,12 +67,12 @@
                 
                 <!-- COGNOM -->
                 <StackPanel Grid.Row="3" 
-                        Margin="20, 0, 20, 0">
+                            Margin="20, 0, 20, 0">
 
                     <TextBlock Text="Repetir conrasenya: " 
-                           Style="{StaticResource Fraktion_Dark_Font}" 
-                           FontSize="12" 
-                           Margin="0,0,0,10"/>
+                               Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"/>
 
                     <PasswordBox p:PasswordHelper.BoundPassword="{Binding RepetirContrasenya, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
                                  Margin="0,0,0,20" 
@@ -81,39 +81,39 @@
 
                 <!-- GRUP -->
                 <StackPanel Grid.Row="4" 
-                        Margin="20, 0, 20, 0">
+                            Margin="20, 0, 20, 0">
 
                     <TextBlock Text="Permisos: " 
-                           Style="{StaticResource Fraktion_Dark_Font}" 
-                           FontSize="12" 
-                           Margin="0,0,0,10"/>
+                               Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"/>
 
                     <ComboBox SelectedValuePath="Content"
+                              SelectedValue="{Binding PermisSeleccionat}"
                               Style="{StaticResource Main_ComboBox}">
 
-                        <ComboBoxItem Content="Permis1"/>
-                        <ComboBoxItem Content="Perims2"/>
-                        <ComboBoxItem Content="Permis3"/>
+                        <ComboBoxItem Content="Préstecs"/>
+                        <ComboBoxItem Content="Administrador"/>
                     </ComboBox>
                 </StackPanel>
 
                 <!-- BOTONS -->
                 <StackPanel Grid.Row="5"
-                        Margin="20"
-                        Height="25"
-                        Orientation="Horizontal" 
-                        HorizontalAlignment="Right">
+                            Margin="20"
+                            Height="25"
+                            Orientation="Horizontal" 
+                            HorizontalAlignment="Right">
 
                     <Button Content="AFEGIR"
-                        Margin="0,0,10,0"
-                        Padding="10, 0"
-                        Style="{StaticResource Accions_Button}"
-                        Command="{Binding AfegirAdministrador_Click}"/>
+                            Margin="0,0,10,0"
+                            Padding="10, 0"
+                            Style="{StaticResource Accions_Button}"
+                            Command="{Binding AfegirAdministrador_Click}"/>
 
                     <Button Content="CANCEL·LAR"
-                        Padding="10, 0"
-                        Style="{StaticResource Accions_Button}"
-                        Command="{Binding TancarFinestra}"/>
+                            Padding="10, 0"
+                            Style="{StaticResource Accions_Button}"
+                            Command="{Binding TancarFinestra}"/>
                 </StackPanel>
             </Grid>
         </Grid>

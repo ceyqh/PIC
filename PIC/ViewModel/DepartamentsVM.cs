@@ -22,6 +22,7 @@ namespace PIC.ViewModel
 
     internal class DepartamentsVM : Utilities.ViewModelBase
     {
+        private readonly Administrador _administrador;
         public ObservableCollection<Departament> Departaments { get; set; }
         public ObservableCollection<Usuari> Usuaris { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
@@ -32,8 +33,10 @@ namespace PIC.ViewModel
         private readonly DepartamentsApiClient _departamentsApiClient;
         private readonly UsuarisApiClient _usuarisApiClient;
 
-        public DepartamentsVM()
+        public DepartamentsVM(Administrador administrador)
         {
+            _administrador = administrador;
+
             Departaments = new ObservableCollection<Departament>();
             Usuaris = new ObservableCollection<Usuari>();
 
@@ -42,10 +45,12 @@ namespace PIC.ViewModel
 
             MissatgeError = new MissatgeErrorVM();
             AfegirDepartament = new AfegirDepartamentVM(this);
-            EditarDepartament= new EditarDepartamentVM(this);
+            EditarDepartament = new EditarDepartamentVM(this);
             ConfirmarEsborrar = new ConfirmarEsborrarVM();
 
             _ = MostrarDepartamentsAsync();
+            _administrador = administrador;
+
         }
 
         // TEXT CERCA
@@ -189,28 +194,33 @@ namespace PIC.ViewModel
             if (string.IsNullOrEmpty(ParametreCercaDepartaments))
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
+                return;
             }
-            else
+            
+            if (!int.TryParse(ParametreCercaDepartaments, out int id))
             {
-                Departaments.Clear();
-                switch (TipusCercaActualDepartaments)
-                {
-                    case DepartamentsTipusCerca.PerId:
-                        var departament = await _departamentsApiClient.GetDepartamentPerIdAsync(int.Parse(ParametreCercaDepartaments));
+                MissatgeError.Mostrar("El paràmetre de cerca ha de ser un número enter.");
+                return;
+            }
 
-                        if (departament == null)
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap departament amb aquest ID.");
-                        }
-                        else
-                        {
-                            Departaments.Add(departament);
-                        }
+            Departaments.Clear();
+            switch (TipusCercaActualDepartaments)
+            {
+                case DepartamentsTipusCerca.PerId:
+                    var departament = await _departamentsApiClient.GetDepartamentPerIdAsync(int.Parse(ParametreCercaDepartaments));
 
-                        TextCerca = $"// DEPARTAMENTS / ID: {ParametreCercaDepartaments} / RESULTATS: {Departaments.Count}";
+                    if (departament == null)
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap departament amb aquest ID.");
+                    }
+                    else
+                    {
+                        Departaments.Add(departament);
+                    }
 
-                        break;
-                }
+                    TextCerca = $"// DEPARTAMENTS / ID: {ParametreCercaDepartaments} / RESULTATS: {Departaments.Count}";
+
+                    break;
             }
         }
 
@@ -250,12 +260,24 @@ namespace PIC.ViewModel
         // AFEGIR DEPARTAMENT
         public ICommand AfegirDepartamentMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             AfegirDepartament.Mostrar();
         });
 
         // EDITAR DEPARTAMENT
         public ICommand EditarDepartamentMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap departament seleccionat
             if (_departamentSeleccionat != null)
             {
@@ -270,6 +292,12 @@ namespace PIC.ViewModel
         // ESBORRAR DEPARTAMENT
         public ICommand EsborrarDepartamentMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap departament seleccionat
             if (_departamentSeleccionat != null)
             {

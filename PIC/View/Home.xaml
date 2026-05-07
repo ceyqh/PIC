@@ -9,11 +9,7 @@
              mc:Ignorable="d" 
              d:DesignHeight="600" d:DesignWidth="1000">
 
-    <UserControl.DataContext>
-        <vm:HomeVM/>
-    </UserControl.DataContext>
-
-    <Grid Background="White">
+    <Grid Background="{StaticResource Clar}">
         <Grid.RowDefinitions>
             <RowDefinition Height="200"/>
             <RowDefinition/>
@@ -21,7 +17,7 @@
 
         <!-- HEADER -->
         <Grid Grid.Row="0" 
-              Background="#e8e9e9">
+              Background="{StaticResource MigClar}">
             
             <Grid>
                 <Grid.RowDefinitions>
@@ -62,12 +58,11 @@
                       HorizontalAlignment="Center" 
                       VerticalAlignment="Center" 
                       Width="1000">
-                    
+
                     <TextBlock FontSize="12" Style="{StaticResource Fraktion_Dark_Font}" 
                                TextWrapping="Wrap" 
-                               TextAlignment="Center">
-                        Benvingut/da a PIC, el gestor de préstecs de material de l'Institut Rafael Campalans.
-                    </TextBlock>
+                               TextAlignment="Center"
+                               Text="{Binding TextBenvinguda}"/>
                 </Grid>
             </Grid>
         </Grid>

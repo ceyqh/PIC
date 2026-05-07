@@ -24,6 +24,7 @@ namespace PIC.ViewModel
 
     internal class UsuarisVM : Utilities.ViewModelBase
     {
+        private readonly Administrador _administrador;
         public ObservableCollection<Usuari> Usuaris { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
         public AfegirAlumneVM AfegirAlumne { get; set; }
@@ -35,8 +36,9 @@ namespace PIC.ViewModel
         private readonly PrestecsApiClient _prestecsApiClient;
 
         // CONSTRUCTOR
-        public UsuarisVM()
+        public UsuarisVM(Administrador administrador)
         {
+            _administrador = administrador;
             Usuaris = new ObservableCollection<Usuari>();
 
             _usuarisApiClient = new UsuarisApiClient();
@@ -179,18 +181,36 @@ namespace PIC.ViewModel
         // AFGIR ALUMNE
         public ICommand AfegirAlumneMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             AfegirAlumne.Mostrar();
         });
 
         // AFGIR PROFESSOR 
         public ICommand AfegirProfessorMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             AfegirProfessor.Mostrar();
         });
 
         // EDITAR USUARI
         public ICommand EditarUsuariMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap usuari seleccionat
             if (_usuariSeleccionat != null)
             {
@@ -205,6 +225,12 @@ namespace PIC.ViewModel
         // ESBORRAR USUARI
         public ICommand EsborrarMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap usuari seleccionat
             if (_usuariSeleccionat != null)
             {                
@@ -328,6 +354,12 @@ namespace PIC.ViewModel
             if (string.IsNullOrEmpty(ParametreCercaUsuaris))
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
+                return;
+            }
+
+            if (!int.TryParse(ParametreCercaUsuaris, out int id))
+            {
+                MissatgeError.Mostrar("El paràmetre de cerca ha de ser un número enter.");
                 return;
             }
 

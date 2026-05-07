@@ -26,6 +26,38 @@ namespace PIC.APIClient
             }
         }
 
+        // TOTS ELS PROFESSORS
+        public async Task<List<Professor>> GetAllProfessorsAsync()
+        {
+            List<Professor> professor = new List<Professor>();
+
+            using (var client = new HttpClient())
+            {
+                client.BaseAddress = new Uri(BaseUri);
+                client.DefaultRequestHeaders.Accept.Clear();
+                client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
+                // Petició
+                try
+                {
+                    HttpResponseMessage response = await client.GetAsync("professors");
+                    if (response.IsSuccessStatusCode)
+                    {
+                        // Retorn
+                        professor = await response.Content.ReadAsAsync<List<Professor>>();
+                        return professor;
+                    }
+                }
+
+                // Si falla
+                catch
+                {
+                    return null;
+                }
+            }
+            return null;
+        }
+
         // AFEGIR PROFESSOR
         public async Task<Professor> PostProfessorAsync(Professor nouProfessor)
         {

@@ -181,10 +181,10 @@ namespace PIC.ViewModel
                 return;
             }
 
-            var usuaris = await _usuarisApiClient.GetAllUsuarisAsync();
+            var alumnesPrestec = await _usuarisApiClient.GetAllUsuarisAsync();
 
             // Si la consulta falla
-            if (usuaris == null)
+            if (alumnesPrestec == null)
             {
                 MissatgeError.Mostrar($"Hi ha hagut un problema al consultar els usuaris. Revisa la comunicació entre la API i l'aplicació i torna a executar aquesta funció.");
                 esPotFinalitzar = true;
@@ -193,31 +193,39 @@ namespace PIC.ViewModel
 
             foreach (var prestec in prestecs)
             {
-                foreach (var usuari  in usuaris)
+                foreach (var usuari  in alumnesPrestec)
                 {
                     // Si el préstec és d'un alumne
-                    if (usuari.Tipus.ToLower() == "Alumne")
+                    if (prestec.IdUsuari == usuari.Id)
                     {
                         TextProces = $"// Esborrant préstec [{prestec.Id}]...";
                         var prestecEsborrat = await _prestecsApiClient.DeletePrestecAsync(prestec.Id);
 
-                        Dispositiu dispositiuConsultaFinalitzar = await _dispositiusApiClient.GetDispositiuPerIdAsync(prestec.IdDispositiu);
+                        // Si la consulta falla
+                        if (prestecEsborrat == -1)
+                        {
+                            MissatgeError.Mostrar($"Hi ha hagut un problema al esborrar el préstec amb ID[{prestec.Id}]. Revisa la comunicació entre la API i l'aplicació i torna a executar aquesta funció.");
+                            esPotFinalitzar = true;
+                            return;
+                        }
+
+                        Dispositiu dispositiuConsulta = await _dispositiusApiClient.GetDispositiuPerIdAsync(prestec.IdDispositiu);
 
                         // Si la consulta falla
-                        if (dispositiuConsultaFinalitzar == null)
+                        if (dispositiuConsulta == null)
                         {
                             MissatgeError.Mostrar($"Hi ha hagut un problema al consultar els dispositius. Revisa la comunicació entre la API i l'aplicació i torna a executar aquesta funció.");
                             esPotFinalitzar = true;
                             return;
                         }
 
-                        Dispositiu dispositiuPrestatFinalitzar = new Dispositiu();
-                        dispositiuPrestatFinalitzar.Id = prestec.IdDispositiu;
-                        dispositiuPrestatFinalitzar.Nom = dispositiuConsultaFinalitzar.Nom;
-                        dispositiuPrestatFinalitzar.IdCategoria = dispositiuConsultaFinalitzar.IdCategoria;
-                        dispositiuPrestatFinalitzar.Estat = "Disponible";
+                        Dispositiu dispositiuPrestatActualitzat = new Dispositiu();
+                        dispositiuPrestatActualitzat.Id = prestec.IdDispositiu;
+                        dispositiuPrestatActualitzat.Nom = dispositiuConsulta.Nom;
+                        dispositiuPrestatActualitzat.IdCategoria = dispositiuConsulta.IdCategoria;
+                        dispositiuPrestatActualitzat.Estat = "Disponible";
 
-                        int confirmarDispositiuPrestatFinalitzar = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestatFinalitzar);
+                        int confirmarDispositiuPrestatFinalitzar = await _dispositiusApiClient.UpdateDispositiuAsync(dispositiuPrestatActualitzat);
 
                         // Si la consulta falla
                         if (confirmarDispositiuPrestatFinalitzar == -1)
@@ -243,8 +251,8 @@ namespace PIC.ViewModel
                         registreFinalitzat.Accio = "No finalitzat";
                         registreFinalitzat.NomUsuari = $"{usuariConsultaFinalitzar.Nom} {usuariConsultaFinalitzar.Cognom}";
                         registreFinalitzat.IdUsuari = (int)usuariConsultaFinalitzar.Id;
-                        registreFinalitzat.NomDispositiu = dispositiuConsultaFinalitzar.Nom;
-                        registreFinalitzat.IdDispositiu = (int)dispositiuConsultaFinalitzar.Id;
+                        registreFinalitzat.NomDispositiu = dispositiuConsulta.Nom;
+                        registreFinalitzat.IdDispositiu = (int)dispositiuConsulta.Id;
                         registreFinalitzat.NomGrup = usuariConsultaFinalitzar.Grup;
                         registreFinalitzat.IdGrup = (int)usuariConsultaFinalitzar.IdGrup;
                         registreFinalitzat.DataAccio = DateTime.Now;
@@ -252,16 +260,10 @@ namespace PIC.ViewModel
 
                         Registre registreCreatFinalitzar = await _registresApiClient.PostRegistreAsync(registreFinalitzat);
 
+                        // Si la consulta falla
                         if (registreCreatFinalitzar == null)
                         {
                             MissatgeError.Mostrar($"Hi ha hagut un problema al crear el registre. Revisa la comunicació entre la API i l'aplicació i torna a executar aquesta funció.");
-                            esPotFinalitzar = true;
-                            return;
-                        }
-
-                        if (prestecEsborrat == -1)
-                        {
-                            MissatgeError.Mostrar($"Hi ha hagut un problema al esborrar el préstec amb ID[{prestec.Id}]. Revisa la comunicació entre la API i l'aplicació i torna a executar aquesta funció.");
                             esPotFinalitzar = true;
                             return;
                         }

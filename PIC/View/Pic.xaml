@@ -7,11 +7,7 @@
              xmlns:vm="clr-namespace:PIC.ViewModel"
              xmlns:Menu="clr-namespace:PIC.Utilities"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="1400">
-
-    <UserControl.DataContext>
-        <vm:PicVM/>
-    </UserControl.DataContext>
+             d:DesignHeight="600" d:DesignWidth="1000">
 
     <Grid>
         <Grid Grid.Column="1">
@@ -23,35 +19,34 @@
 
             <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
             <Grid Grid.Row="0" 
-                  Background="#a5a6af">
+                  Background="{StaticResource MigFosc}">
 
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="30"/>
                     <RowDefinition Height="*"/>
-                    <RowDefinition Height="20"/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0"
+                <Grid Grid.Row="0"
+                      Background="{StaticResource Fosc}">
+                    
+                    <TextBlock FontSize="12" 
+                               VerticalAlignment="Center"
+                               Text="{Binding TextCerca}"
+                               Style="{StaticResource Fraktion_Light_Font}" 
+                               Margin="10, 0, 10, 0"/>
+                </Grid>
+
+                <StackPanel Grid.Row="1"
                             Orientation="Horizontal" 
                             VerticalAlignment="Center" 
                             Margin="10">
 
-                    <!-- TÍTOL -->
-                    <TextBlock FontSize="12" 
-                               Text="PIC: ADMINISTRACIÓ"
-                               Style="{StaticResource Fraktion_Dark_Font}" 
-                               Margin="0, 0, 10, 0"/>
-
                 </StackPanel>
-
-                <Grid Grid.Row="1"
-                      Background="#131316">
-                    
-                </Grid>
             </Grid>
 
             <!-- APARTAT RESULTATS -->
             <Grid Grid.Row="1" 
-                  Background="White">
+                  Background="{StaticResource Clar}">
 
                 <Grid>
                     <Grid.ColumnDefinitions>
@@ -68,7 +63,7 @@
 
                         <!-- HEADER ADMINISTRADORS -->
                         <Grid Grid.Row="0"
-                              Background="#e8e9e9">
+                              Background="{StaticResource MigClar}">
 
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*"/>
@@ -130,7 +125,7 @@
 
                     <!-- ADMINISTRADORS -->
                     <Grid Grid.Column="1"
-                          Background="#e8e9e9">
+                          Background="{StaticResource MigClar}">
 
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="*"/>
@@ -156,50 +151,57 @@
                                     <RowDefinition Height="30"/>
                                     <RowDefinition Height="10"/>
                                     <RowDefinition Height="30"/>
+                                    <RowDefinition Height="10"/>
+                                    <RowDefinition Height="30"/>
                                 </Grid.RowDefinitions>
 
+                                <TextBlock Text="Accions:"
+                                           Grid.Row="0"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
+                                
                                 <Button Content="AFEGIR ADMINISTRADOR"
-                                        Grid.Row="0"
+                                        Grid.Row="2"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding AfegirAdministradorMenu_Click}"/>
 
                                 <Button Content="EDITAR ADMINISTRADOR"
-                                        Grid.Row="2"
+                                        Grid.Row="4"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EditarAdministradorMenu_Click}"/>
 
                                 <Button Content="ESBORRAR ADMINISTRADOR"
-                                        Grid.Row="4"
+                                        Grid.Row="6"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding EsborrarAdministradorMenu_Click}"/>
 
-                                <Border Grid.Row="6"
-                                        Margin="0, 15, 0, 0"
-                                        BorderBrush="#131316"
-                                        BorderThickness="0, 1, 0, 0">
-                                    
-                                </Border>
+                                <TextBlock Text="Opcions PIC:"
+                                           Grid.Row="8"
+                                           Width="200"
+                                           VerticalAlignment="Bottom"
+                                           Style="{StaticResource Fraktion_Dark_Font}"/>
 
                                 <Button Content="COMENÇAR NOU CURS"
-                                        Grid.Row="8"
+                                        Grid.Row="10"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding FinalitzarCursMenu_Click}"/>
 
                                 <Button Content="EXPORTAR REGISTRES"
-                                        Grid.Row="10"
+                                        Grid.Row="12"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
                                         Command="{Binding ExportarRegistresMenu_Click}"/>
                                 
-                                <Button Content="BUIDAR REGISTRES"
-                                        Grid.Row="12"
+                                <Button Content="REPARAR SISTEMA"
+                                        Grid.Row="14"
                                         Width="200"
                                         Style="{StaticResource Accions_Button}"
-                                        Command="{Binding EditarPrestecMenu_Click}"/>
+                                        Command="{Binding RepararSistema_Click}"/>
                             </Grid>
                         </StackPanel>
 
@@ -207,38 +209,50 @@
                               Margin="0, 40, 40, 20">
                             
                             <Grid.RowDefinitions>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
-                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
+                                <RowDefinition Height="Auto"/>
                             </Grid.RowDefinitions>
 
                             <!-- EXPLICACIO ROL 1 -->
                             <StackPanel Grid.Row="0">
-                                <TextBlock Style="{StaticResource Fraktion_Dark_Font}">Rol 3</TextBlock>
+                                <TextBlock Style="{StaticResource Fraktion_Dark_Font}"
+                                           Margin="0, 0, 0, 10">
+                                    Administrador:
+                                </TextBlock>
+                                
                                 <TextBlock Style="{StaticResource Fraktion_Dark_Font}"
                                            TextWrapping="Wrap"
-                                           TextAlignment="Justify">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur arcu vitae accumsan commodo.
+                                           TextAlignment="Justify"
+                                           Margin="0, 0, 0, 30">
+                                    Un usuari amb els permisos d'Administrador té control total del sistema, pot accedir a qualsevol apartat i 
+                                    interactuar amb tots els apartats.
                                 </TextBlock>
                             </StackPanel>
 
                             <!-- EXPLICACIO ROL 2 -->
                             <StackPanel Grid.Row="1">
-                                <TextBlock Style="{StaticResource Fraktion_Dark_Font}">Rol 2</TextBlock>
+                                <TextBlock Style="{StaticResource Fraktion_Dark_Font}"
+                                           Margin="0, 0, 0, 10">
+                                    Préstecs:
+                                </TextBlock>
+                                
                                 <TextBlock Style="{StaticResource Fraktion_Dark_Font}"
                                            TextWrapping="Wrap"
-                                           TextAlignment="Justify">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur arcu vitae accumsan commodo. 
+                                           TextAlignment="Justify"
+                                           Margin="0, 0, 0, 30">
+                                    Un usuari amb els permisos de Préstecs només pot actuar sobre l'apartat Préstecs, creant i modificant els 
+                                    préstecs que vulgui. Pot consultar tots els apartats (menys aquest) peró no pot modificar els elements
+                                    de l'apartat en el que es trobi
                                 </TextBlock>
                             </StackPanel>
 
                             <!-- EXPLICACIO ROL 3 -->
                             <StackPanel Grid.Row="2">
-                                <TextBlock Style="{StaticResource Fraktion_Dark_Font}">Rol 1</TextBlock>
                                 <TextBlock Style="{StaticResource Fraktion_Dark_Font}"
                                            TextWrapping="Wrap"
                                            TextAlignment="Justify">
-                                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec consectetur arcu vitae accumsan commodo.
+                                    En cas de dubte, contactar amb un/a responsable.
                                 </TextBlock>
                             </StackPanel>                            
                         </Grid>
@@ -251,6 +265,7 @@
         <local:AfegirAdministrador DataContext="{Binding AfegirAdministrador}" d:IsHidden="true"/>
         <local:EditarAdministrador DataContext="{Binding EditarAdministrador}" d:IsHidden="true"/>
         <local:ConfirmarEsborrar DataContext="{Binding ConfirmarEsborrar}" d:IsHidden="true"/>
+        <local:RepararSistema DataContext="{Binding RepararSistema}" d:IsHidden="true"/>
         <local:FinalitzarCurs DataContext="{Binding FinalitzarCurs}" d:IsHidden="true"/>
         <local:ExportarRegistres DataContext="{Binding ExportarRegistres}" d:IsHidden="true"/>
         <local:Notificacio DataContext="{Binding Notificacio}" d:IsHidden="true"/>

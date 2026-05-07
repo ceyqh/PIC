@@ -23,14 +23,25 @@
 
                 <!-- APARTAT DELS BOTONS I SECCIONS DELS RESULTATS -->
                 <Grid Grid.Row="0" 
-                      Background="#a5a6af">
+                      Background="{StaticResource MigFosc}">
 
                     <Grid.RowDefinitions>
-                        <RowDefinition Height="*"/>
                         <RowDefinition Height="30"/>
+                        <RowDefinition Height="*"/>
                     </Grid.RowDefinitions>
 
-                    <StackPanel Grid.Row="0"
+                    <Grid Grid.Row="0"
+                          Background="{StaticResource Fosc}">
+
+                        <!-- TÍTOL -->
+                        <TextBlock FontSize="12" 
+                                   VerticalAlignment="Center"
+                                   Text="{Binding TextCerca}"
+                                   Style="{StaticResource Fraktion_Light_Font}" 
+                                   Margin="10, 0, 10, 0"/>
+                    </Grid>
+
+                    <StackPanel Grid.Row="1"
                                 Orientation="Horizontal" 
                                 VerticalAlignment="Center" 
                                 Margin="10">
@@ -93,24 +104,12 @@
                             <ComboBoxItem Content="DATA ACCIÓ"/>
                             <ComboBoxItem Content="DATA RETORN"/>
                         </ComboBox>
-
                     </StackPanel>
-
-                    <Grid Grid.Row="1"
-                          Background="#131316">
-
-                        <!-- TÍTOL -->
-                        <TextBlock FontSize="12" 
-                                   VerticalAlignment="Center"
-                                   Text="{Binding TextCerca}"
-                                   Style="{StaticResource Fraktion_Light_Font}" 
-                                   Margin="10, 0, 10, 0"/>
-                    </Grid>
                 </Grid>
 
                 <!-- APARTAT DEL RESULTATS -->
                 <Grid Grid.Row="1" 
-                      Background="White">
+                      Background="{StaticResource Clar}">
 
                     <Grid>
                         <Grid.ColumnDefinitions>
@@ -126,7 +125,7 @@
 
                             <!-- HEADER USUARIS -->
                             <Grid Grid.Row="0"
-                                  Background="#e8e9e9">
+                                  Background="{StaticResource MigClar}">
 
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="70"/>

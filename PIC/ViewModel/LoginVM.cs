@@ -70,7 +70,7 @@ namespace PIC.ViewModel
 
             if (administradors == null)
             {
-                TextError = "Hi ha hagut un problema amb la API.";
+                TextError = "Hi ha hagut un problema amb l'API.";
                 return;
             }
 
@@ -103,7 +103,7 @@ namespace PIC.ViewModel
                 return;
             }
 
-            _navigation.MainAppViewCommand.Execute(null);
+            _navigation.MainAppViewCommand.Execute(admin);
         });
     }
 }

@@ -22,6 +22,7 @@ namespace PIC.ViewModel
     }
     internal class PrestecsVM : Utilities.ViewModelBase
     {
+        private readonly Administrador _administrador;
         public ObservableCollection<Prestec> Prestecs { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
         public AfegirPrestecVM AfegirPrestec { get; set; }
@@ -31,8 +32,9 @@ namespace PIC.ViewModel
         private readonly PrestecsApiClient _prestecsApiClient;
 
         // CONSTRUCTOR
-        public PrestecsVM()
+        public PrestecsVM(Administrador administrador)
         {
+            _administrador = administrador;
             Prestecs = new ObservableCollection<Prestec>();
 
             _prestecsApiClient = new PrestecsApiClient();
@@ -400,69 +402,73 @@ namespace PIC.ViewModel
             if (string.IsNullOrEmpty(ParametreCercaPrestecs))
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
+                return;
             }
-            else
+            
+            if (!int.TryParse(ParametreCercaPrestecs, out int id))
             {
-                Prestecs.Clear();
-                switch (TipusCercaActualPrestecs)
-                {
-                    case PrestecsTipusCerca.PerId:
-                        var perId = await _prestecsApiClient.GetPrestecPerIdAsync(int.Parse(ParametreCercaPrestecs));
+                MissatgeError.Mostrar("El paràmetre de cerca ha de ser un número enter.");
+                return;
+            }
+            Prestecs.Clear();
+            switch (TipusCercaActualPrestecs)
+            {
+                case PrestecsTipusCerca.PerId:
+                    var perId = await _prestecsApiClient.GetPrestecPerIdAsync(int.Parse(ParametreCercaPrestecs));
 
-                        // Si la consulta falla o no es troba
-                        if (perId == null)
+                    // Si la consulta falla o no es troba
+                    if (perId == null)
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID.");
+
+                    }
+                    else
+                    {
+                        Prestecs.Add(perId);
+
+                        TextCerca = $"// PRÉSTECS / ID: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
+                    }
+                    break;
+
+                case PrestecsTipusCerca.PerUsuari:
+                    var perIdUsuari = await _prestecsApiClient.GetPrestecsPerIdUsuariAsync(int.Parse(ParametreCercaPrestecs));
+
+                    // Si la consulta falla o no es troba
+                    if (perIdUsuari == null || !perIdUsuari.Any())
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID d'Usuari.");
+                    }
+                    else
+                    {
+                        foreach (var u in perIdUsuari)
                         {
-                            MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID.");
+                            Prestecs.Add(u);
 
                         }
-                        else
+
+                        TextCerca = $"// PRÉSTECS / ID_USUARI: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
+                    }
+                    break;
+
+                case PrestecsTipusCerca.PerDispositiu:
+                    var perIdDispositiu = await _prestecsApiClient.GetPrestecsPerIdDispositiuAsync(int.Parse(ParametreCercaPrestecs));
+
+                    // Si la consulta falla o no es troba
+                    if (perIdDispositiu == null || !perIdDispositiu.Any())
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID de Dispositiu.");
+                    }
+                    else
+                    {
+                        foreach (var u in perIdDispositiu)
                         {
-                            Prestecs.Add(perId);
+                            Prestecs.Add(u);
 
-                            TextCerca = $"// PRÉSTECS / ID: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
                         }
-                        break;
 
-                    case PrestecsTipusCerca.PerUsuari:
-                        var perIdUsuari = await _prestecsApiClient.GetPrestecsPerIdUsuariAsync(int.Parse(ParametreCercaPrestecs));
-
-                        // Si la consulta falla o no es troba
-                        if (perIdUsuari == null || !perIdUsuari.Any())
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID d'Usuari.");
-                        }
-                        else
-                        {
-                            foreach (var u in perIdUsuari)
-                            {
-                                Prestecs.Add(u);
-
-                            }
-
-                            TextCerca = $"// PRÉSTECS / ID_USUARI: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
-                        }
-                        break;
-
-                    case PrestecsTipusCerca.PerDispositiu:
-                        var perIdDispositiu = await _prestecsApiClient.GetPrestecsPerIdDispositiuAsync(int.Parse(ParametreCercaPrestecs));
-
-                        // Si la consulta falla o no es troba
-                        if (perIdDispositiu == null || !perIdDispositiu.Any())
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap préstec amb aquest ID de Dispositiu.");
-                        }
-                        else
-                        {
-                            foreach (var u in perIdDispositiu)
-                            {
-                                Prestecs.Add(u);
-
-                            }
-
-                            TextCerca = $"// PRÉSTECS / ID_DISPOSITIU: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
-                        }
-                        break;
-                }
+                        TextCerca = $"// PRÉSTECS / ID_DISPOSITIU: {ParametreCercaPrestecs} / RESULTATS: {Prestecs.Count}";
+                    }
+                    break;
             }
         }
     }

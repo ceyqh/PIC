@@ -5,14 +5,14 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:PIC.View"
              mc:Ignorable="d" 
-             d:DesignHeight="450" d:DesignWidth="800">
+             d:DesignHeight="600" d:DesignWidth="1000">
     
     <Grid Visibility="{Binding EsVisible}"
           Background="#80000000">
 
         <!-- POPUP -->
         <Grid Width="400"
-              Background="White"
+              Background="{StaticResource Clar}"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
 
@@ -26,10 +26,10 @@
                 </Grid.RowDefinitions>
 
                 <!-- TÍTOL -->
-                <Grid Background="#C44545" 
+                <Grid Background="{StaticResource Alerta}" 
                       VerticalAlignment="Center">
 
-                    <TextBlock Text="ALERTA" 
+                    <TextBlock Text="COMENÇAR NOU CURS" 
                                Style="{StaticResource Fraktion_Light_Font}" 
                                FontSize="12" 
                                Margin="20, 10, 20, 10"/>
@@ -106,7 +106,7 @@
                             Orientation="Horizontal" 
                             HorizontalAlignment="Right">
 
-                    <Button Content="FINALITZAR"
+                    <Button Content="COMENÇAR"
                             Margin="0,0,10,0"
                             Padding="10, 0"
                             Style="{StaticResource Alerta_Button}"

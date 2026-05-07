@@ -22,6 +22,7 @@ namespace PIC.ViewModel
 
     internal class DispositiusVM : Utilities.ViewModelBase
     {
+        private readonly Administrador _administrador;
         public ObservableCollection<Dispositiu> Dispositius { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
         public AfegirDispositiuVM AfegirDispositiu { get; set; }
@@ -31,8 +32,10 @@ namespace PIC.ViewModel
         private readonly DispositiusApiClient _dispositiusApiClient;
 
         // CONSTRUCTOR
-        public DispositiusVM()
+        public DispositiusVM(Administrador administrador)
         {
+            _administrador = administrador;
+
             Dispositius = new ObservableCollection<Dispositiu>();
 
             _dispositiusApiClient = new DispositiusApiClient();
@@ -151,12 +154,24 @@ namespace PIC.ViewModel
         // AFGIR DISPOSITIU
         public ICommand AfegirDispositiuMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             AfegirDispositiu.Mostrar();
         });
 
         // EDITAR DISPOSITIU
         public ICommand EditarDispositiuMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap dispositiu seleccionat
             if (_dispositiuSeleccionat != null)
             {
@@ -171,6 +186,12 @@ namespace PIC.ViewModel
         // HABILITAR DISPOSITIU
         public ICommand HabilitarDispositiuMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap dispositiu seleccionat
             if (_dispositiuSeleccionat != null)
             {
@@ -180,7 +201,7 @@ namespace PIC.ViewModel
                     MissatgeError.Mostrar("Aquest dispositiu ja està disponible.");
                 }
                 // Si el dispositiu està en préstec
-                else if (_dispositiuSeleccionat.Estat.ToLower() == "en prestec")
+                else if (_dispositiuSeleccionat.Estat.ToLower() == "en préstec")
                 {
                     MissatgeError.Mostrar("Aquest dispositiu ja està disponible i es troba en mig d'un préstec.");
                 }
@@ -199,6 +220,12 @@ namespace PIC.ViewModel
         // DESHABILITAR DISPOSITIU
         public ICommand DeshabilitarDispositiuMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap dispositiu seleccionat
             if (_dispositiuSeleccionat != null)
             {
@@ -208,7 +235,7 @@ namespace PIC.ViewModel
                     MissatgeError.Mostrar("Aquest dispositiu ja està deshabilitat.");
                 }
                 // Si el dispositiu està en préstec
-                else if (_dispositiuSeleccionat.Estat.ToLower() == "en prestec")
+                else if (_dispositiuSeleccionat.Estat.ToLower() == "en préstec")
                 {
                     MissatgeError.Mostrar("Aquest dispositiu es troba en mig d'un préstec.");
                 }
@@ -227,11 +254,17 @@ namespace PIC.ViewModel
         // ESBORRAR DISPOSITIU
         public ICommand EsborrarMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap dispositiu seleccionat
             if (_dispositiuSeleccionat != null)
             {
                 // Si el dispositiu està en préstec
-                if (_dispositiuSeleccionat.Estat.ToLower() == "en prestec")
+                if (_dispositiuSeleccionat.Estat.ToLower() == "en préstec")
                 {
                     MissatgeError.Mostrar("Aquest dispositiu es troba en mig d'un préstec.");
                 }
@@ -453,49 +486,52 @@ namespace PIC.ViewModel
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
-
-            else
+            
+            if (!int.TryParse(ParametreCercaDispositius, out int id))
             {
-                Dispositius.Clear();
-                switch (TipusCercaActualDispositius)
-                {
-                    case DispositiusTipusCerca.PerId:
-                        var dispositiuId = await _dispositiusApiClient.GetDispositiuPerIdAsync(int.Parse(ParametreCercaDispositius));
+                MissatgeError.Mostrar("El paràmetre de cerca ha de ser un número enter.");
+                return;
+            }
 
-                        // Si la consulta falla o és buida
-                        if (dispositiuId == null)
+            Dispositius.Clear();
+            switch (TipusCercaActualDispositius)
+            {
+                case DispositiusTipusCerca.PerId:
+                    var dispositiuId = await _dispositiusApiClient.GetDispositiuPerIdAsync(int.Parse(ParametreCercaDispositius));
+
+                    // Si la consulta falla o és buida
+                    if (dispositiuId == null)
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap dispositiu amb aquest ID.");
+                    }
+                    // Si la consulta funciona
+                    else
+                    {
+                        Dispositius.Add(dispositiuId);
+                    }
+
+                    TextCerca = $"// DISPOSITIUS / ID: {ParametreCercaDispositius} / RESULTATS: {Dispositius.Count}";
+                    break;
+
+                case DispositiusTipusCerca.PerCategoria:
+                    var dispositiuIdCategoria = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(int.Parse(ParametreCercaDispositius));
+
+                    // Si la consulta falla o és buida
+                    if (dispositiuIdCategoria == null || !dispositiuIdCategoria.Any())
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap dispositiu amb aquest ID de categoria.");
+                    }
+                    // Si la consulta falla o és buida
+                    else
+                    {
+                        foreach (var u in dispositiuIdCategoria)
                         {
-                            MissatgeError.Mostrar("No s'ha trobat cap dispositiu amb aquest ID.");
+                            Dispositius.Add(u);
                         }
-                        // Si la consulta funciona
-                        else
-                        {
-                            Dispositius.Add(dispositiuId);
-                        }
+                    }
 
-                        TextCerca = $"// DISPOSITIUS / ID: {ParametreCercaDispositius} / RESULTATS: {Dispositius.Count}";
-                        break;
-
-                    case DispositiusTipusCerca.PerCategoria:
-                        var dispositiuIdCategoria = await _dispositiusApiClient.GetDispositiusPerIdCategoriaAsync(int.Parse(ParametreCercaDispositius));
-
-                        // Si la consulta falla o és buida
-                        if (dispositiuIdCategoria == null || !dispositiuIdCategoria.Any())
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap dispositiu amb aquest ID de categoria.");
-                        }
-                        // Si la consulta falla o és buida
-                        else
-                        {
-                            foreach (var u in dispositiuIdCategoria)
-                            {
-                                Dispositius.Add(u);
-                            }
-                        }
-
-                        TextCerca = $"// DISPOSITIUS / ID_CATEGORIA: {ParametreCercaDispositius} / RESULTATS: {Dispositius.Count}";
-                        break;
-                }
+                    TextCerca = $"// DISPOSITIUS / ID_CATEGORIA: {ParametreCercaDispositius} / RESULTATS: {Dispositius.Count}";
+                    break;
             }
         }
 

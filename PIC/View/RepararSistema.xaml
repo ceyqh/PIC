@@ -1,0 +1,84 @@
+﻿<UserControl x:Class="PIC.View.RepararSistema"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:PIC.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="450" d:DesignWidth="800">
+
+    <Grid Visibility="{Binding EsVisible}"
+          Background="#80000000">
+
+        <!-- POPUP -->
+        <Grid Width="400"
+              Background="{StaticResource Clar}"
+              HorizontalAlignment="Center"
+              VerticalAlignment="Center">
+
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                    <RowDefinition Height="Auto"/>
+                </Grid.RowDefinitions>
+
+                <!-- TÍTOL -->
+                <Grid Background="{StaticResource Reparar}" 
+                      VerticalAlignment="Center">
+
+                    <TextBlock Text="REPARAR SISTEMA" 
+                               Style="{StaticResource Fraktion_Light_Font}" 
+                               FontSize="12" 
+                               Margin="20, 10, 20, 10"/>
+                </Grid>
+
+                <!-- ALERTA -->
+                <StackPanel Grid.Row="1" 
+                            Margin="20, 10, 20, 0">
+
+                    <TextBlock Style="{StaticResource Fraktion_Dark_Font}" 
+                               FontSize="12" 
+                               Margin="0,0,0,10"
+                               TextWrapping="Wrap"
+                               TextAlignment="Justify">
+                    
+                        Alguns elements poden quedar mal assignats al executar els processos de l'API. 
+                        Això pot provocar problemes greus que impedeixin el funcionament de PIC. Aquest apartat
+                        permet resoldre els possibles problemes ocasionats.
+                    </TextBlock>
+
+                    <TextBlock Text="{Binding TextProces}"
+                           Style="{StaticResource Fraktion_Dark_Font}" 
+                           FontSize="12" 
+                           Margin="0,20,0,10"
+                           TextWrapping="Wrap"
+                           TextAlignment="Justify"/>
+                </StackPanel>
+
+                <!-- BOTONS -->
+                <StackPanel Grid.Row="4"
+                        Margin="20"
+                        Height="25"
+                        Orientation="Horizontal" 
+                        HorizontalAlignment="Right">
+
+                    <Button Content="REPARAR"
+                        Margin="0,0,10,0"
+                        Padding="10, 0"
+                        Style="{StaticResource Reparar_Button}"
+                        Command="{Binding RepararSistema_Click}"/>
+
+                    <Button Content="CANCEL·LAR"
+                        Padding="10, 0"
+                        Style="{StaticResource Accions_Button}"
+                        Command="{Binding TancarFinestra}"/>
+                </StackPanel>
+            </Grid>
+        </Grid>
+
+        <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
+    </Grid>
+</UserControl>

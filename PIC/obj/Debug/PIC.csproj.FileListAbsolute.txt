@@ -252,9 +252,7 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.pdb
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe.config
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirAdministrador.g.cs
-C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ConfirmarNouCurs.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirAdministrador.baml
-C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\ConfirmarNouCurs.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarAdministrador.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarAdministrador.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\ComboBox.baml
@@ -277,3 +275,6 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Login.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\MainAppView.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\Login.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\MainAppView.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\Colors.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\RepararSistema.g.cs
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\RepararSistema.baml

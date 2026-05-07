@@ -11,7 +11,7 @@
 
     <Grid>
         <!--// Window Border //-->
-        <Border Background="White"/>
+        <Border Background="{StaticResource Clar}"/>
         <Grid>
             <!--// Base Grid //-->
             <Grid.ColumnDefinitions>
@@ -20,7 +20,9 @@
             </Grid.ColumnDefinitions>
 
             <!--// Navigation Panel //-->
-            <Grid HorizontalAlignment="Left" Width="200" Background="#131316">
+            <Grid HorizontalAlignment="Left" 
+                  Width="200" 
+                  Background="{StaticResource Fosc}">
 
                 <StackPanel Height="400" Width="200">
 
@@ -97,6 +99,39 @@
             </Grid>
 
         </Grid>
-        <Button x:Name="Close" Style="{StaticResource ExitApp}" Click="Close_Click"/>
+
+        <!-- BOTÓ SORTIR -->
+        <Button Style="{StaticResource Accions_Button}"
+                Width="40"
+                Height="30"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Click="Tancar_Click">
+
+            <!-- IMATGE BOTÓ -->
+            <Image Source="/Images/creu_tancar.png" 
+                   Width="15" 
+                   Height="15"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"/>
+        </Button>
+        <!-- BOTÓ SORTIR -->
+        <Button Style="{StaticResource Accions_Button}"
+                Width="40"
+                Height="30"
+                Margin="0, 0, 40, 0"
+                HorizontalAlignment="Right"
+                VerticalAlignment="Top"
+                Command="{Binding TancarSessio_Click}">
+
+            <!-- IMATGE BOTÓ -->
+            <Image Source="/Images/tancar_sessio.png" 
+                   Width="15" 
+                   Height="15"
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center"/>
+        </Button>
+
+        <local:MissatgeError DataContext="{Binding MissatgeError}" d:IsHidden="true"/>
     </Grid>
 </UserControl>

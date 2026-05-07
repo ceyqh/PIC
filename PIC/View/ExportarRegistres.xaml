@@ -12,7 +12,7 @@
 
         <!-- POPUP -->
         <Grid Width="400"
-              Background="White"
+              Background="{StaticResource Clar}"
               HorizontalAlignment="Center"
               VerticalAlignment="Center">
 
@@ -25,7 +25,7 @@
                 </Grid.RowDefinitions>
 
                 <!-- TÍTOL -->
-                <Grid Background="#131316" 
+                <Grid Background="{StaticResource Fosc}" 
                       VerticalAlignment="Center">
 
                     <TextBlock Text="EXPORTAR REGISTRES (.CSV)" 

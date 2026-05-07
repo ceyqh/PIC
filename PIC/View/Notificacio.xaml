@@ -22,7 +22,7 @@
             </Grid.RowDefinitions>
 
             <!-- Títol -->
-            <Grid Background="#1fb9f9">
+            <Grid Background="{StaticResource Notificacio}">
                 <TextBlock Text="NOTIFICACIÓ"
                        Style="{StaticResource Fraktion_Light_Font}"
                        Margin="20, 10, 20, 10"/>

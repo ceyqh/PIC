@@ -23,6 +23,7 @@ namespace PIC.ViewModel
 
     internal class CategoriesVM : Utilities.ViewModelBase
     {
+        private readonly Administrador _administrador;
         public ObservableCollection<Categoria> Categories { get; set; }
         public ObservableCollection<Dispositiu> Dispositius { get; set; }
         public MissatgeErrorVM MissatgeError { get; set; }
@@ -33,8 +34,10 @@ namespace PIC.ViewModel
         private readonly CategoriesApiClient _categoriesApiClient;
         private readonly DispositiusApiClient _dispositiusApiClient;
 
-        public CategoriesVM()
+        public CategoriesVM(Administrador administrador)
         {
+            _administrador = administrador;
+
             Categories = new ObservableCollection<Categoria>();
             Dispositius = new ObservableCollection<Dispositiu>();
 
@@ -166,10 +169,9 @@ namespace PIC.ViewModel
                     TipusCercaActualCategories = CategoriesTipusCerca.PerId;
                     break;
             }
-            OnPropertyChanged(nameof(MostrarCategories)); // Notifiquem a la UI la sincronització
+            OnPropertyChanged(nameof(MostrarCategories));
         }
 
-        // 3. Simplifiquem el Command existent
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
             if (param != null)
@@ -192,29 +194,33 @@ namespace PIC.ViewModel
             {
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
-            else
+            
+            if (!int.TryParse(ParametreCercaCategories, out int id))
             {
-                Categories.Clear();
-                switch (TipusCercaActualCategories)
-                {
-                    case CategoriesTipusCerca.PerId:
-                        var curs = await _categoriesApiClient.GetCategoriaPerIdAsync(int.Parse(ParametreCercaCategories));
+                MissatgeError.Mostrar("El paràmetre de cerca ha de ser un número enter.");
+                return;
+            }
 
-                        // Si la consulta falla o és buida
-                        if (curs == null)
-                        {
-                            MissatgeError.Mostrar("No s'ha trobat cap categoria amb aquest ID.");
-                        }
-                        // Si la consulta funciona
-                        else
-                        {
-                            Categories.Add(curs);
-                        }
+            Categories.Clear();
+            switch (TipusCercaActualCategories)
+            {
+                case CategoriesTipusCerca.PerId:
+                    var curs = await _categoriesApiClient.GetCategoriaPerIdAsync(int.Parse(ParametreCercaCategories));
 
-                        TextCerca = $"// CATEGORIES / ID: {ParametreCercaCategories} / RESULTATS: {Categories.Count}";
-                        break;
-                }
-            }           
+                    // Si la consulta falla o és buida
+                    if (curs == null)
+                    {
+                        MissatgeError.Mostrar("No s'ha trobat cap categoria amb aquest ID.");
+                    }
+                    // Si la consulta funciona
+                    else
+                    {
+                        Categories.Add(curs);
+                    }
+
+                    TextCerca = $"// CATEGORIES / ID: {ParametreCercaCategories} / RESULTATS: {Categories.Count}";
+                    break;
+            }          
         }
 
         // MOSTRAR CATEGORIES
@@ -253,12 +259,24 @@ namespace PIC.ViewModel
         // AFEGIR CATEGORIA
         public ICommand AfegirCategoriaMenu_Click => new RelayCommand(async _ =>
         {
+            if (_administrador.Permisos == "Préstecs")
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             AfegirCategoria.Mostrar();
         });
 
         // EDITAR CATEGORIA
         public ICommand EditarCategoriaMenu_Click => new RelayCommand(_ =>
         {
+            if (_administrador.Permisos == "Préstecs") 
+            {
+                MissatgeError.Mostrar("No tens permisos per realitzar aquesta acció.");
+                return;
+            }
+
             // Si no hi ha cap categoria seleccionada
             if (_categoriaSeleccionada != null)
             {
@@ -288,7 +306,7 @@ namespace PIC.ViewModel
                 else if (comptarUsuaris.Count > 0)
                 {
                     MissatgeError.Mostrar("Aquesta categoria conté un o varis dispositius, per seguretat, només es poden esborrar les categores buides. " +
-                        "Si vols esborrar aquesta categoria, primer hasd'eliminar els seus dispositius.");
+                        "Si vols esborrar aquesta categoria, primer has d'eliminar els seus dispositius.");
                 }
                 else
                 {

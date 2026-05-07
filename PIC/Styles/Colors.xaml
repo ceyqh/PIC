@@ -1,0 +1,54 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <!-- COLORS INTERFICIE -->
+    <Color x:Key="ColorFosc">#1c1c1c</Color>
+    <Color x:Key="ColorMigFosc">#a5a6af</Color>
+    <Color x:Key="ColorMig">#c5c6cd</Color>
+    <Color x:Key="ColorMigClar">#e8e9e9</Color>
+    <Color x:Key="ColorClar">White</Color>
+    <Color x:Key="ColorAlerta">#C44545</Color>
+    <Color x:Key="ColorAlertaClar">#eb6c6c</Color>
+    <Color x:Key="ColorReparar">#45c449</Color>
+    <Color x:Key="ColorRepararClar">#6eeb6c</Color>
+    <Color x:Key="ColorNotificacio">#0e3c7f</Color>
+    <Color x:Key="ColorNotificacioClar">#3166b1</Color>
+
+    <!-- COLORS BOTONS MAIN -->
+    <Color x:Key="ColorMainBotoBase">#1c1c1c</Color>
+    <Color x:Key="ColorMainBotoHoover">#bbbbbb</Color>
+    <Color x:Key="ColorMainBotoChecked">#e8e9e9</Color>
+
+    <!-- COLORS BOTONS -->
+    <Color x:Key="ColorBotoBase">#1c1c1c</Color>
+    <Color x:Key="ColorBotoHoover">#606064</Color>
+    <Color x:Key="ColorBotoChecked">#e8e9e9</Color>
+    
+    <!-- COLORS BOTONS -->
+    <Color x:Key="ColorCBBase">#1c1c1c</Color>
+    <Color x:Key="ColorCBHoover">#606064</Color>
+    <Color x:Key="ColorCBChecked">#e8e9e9</Color>
+
+    <!-- BASES PELS ESTILS -->
+    <SolidColorBrush x:Key="Fosc" Color="{StaticResource ColorFosc}"/>
+    <SolidColorBrush x:Key="MigFosc" Color="{StaticResource ColorMigFosc}"/>
+    <SolidColorBrush x:Key="Mig" Color="{StaticResource ColorMig}"/>
+    <SolidColorBrush x:Key="MigClar" Color="{StaticResource ColorMigClar}"/>
+    <SolidColorBrush x:Key="Clar" Color="{StaticResource ColorClar}"/>
+    <SolidColorBrush x:Key="Alerta" Color="{StaticResource ColorAlerta}"/>
+    <SolidColorBrush x:Key="AlertaClar" Color="{StaticResource ColorAlertaClar}"/>
+    <SolidColorBrush x:Key="Reparar" Color="{StaticResource ColorReparar}"/>
+    <SolidColorBrush x:Key="RepararClar" Color="{StaticResource ColorRepararClar}"/>
+    <SolidColorBrush x:Key="Notificacio" Color="{StaticResource ColorNotificacio}"/>
+    <SolidColorBrush x:Key="NotificacioClar" Color="{StaticResource ColorNotificacioClar}"/>
+
+    <!-- BASES PELS ESTILS -->
+    <SolidColorBrush x:Key="MainBotoBase" Color="{StaticResource ColorMainBotoBase}"/>
+    <SolidColorBrush x:Key="MainBotoHoover" Color="{StaticResource ColorMainBotoHoover}"/>
+    <SolidColorBrush x:Key="MainBotoChecked" Color="{StaticResource ColorMainBotoChecked}"/>
+    
+    
+    <SolidColorBrush x:Key="BotoBase" Color="{StaticResource ColorBotoBase}"/>
+    <SolidColorBrush x:Key="BotoHoover" Color="{StaticResource ColorBotoHoover}"/>
+    <SolidColorBrush x:Key="BotoChecked" Color="{StaticResource ColorBotoChecked}"/>
+</ResourceDictionary>

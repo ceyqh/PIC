@@ -265,7 +265,7 @@ namespace PIC.ViewModel
             }
             
             // Si el dispositiu està en préstec
-            if (dispositiuConsulta.Estat.ToLower() == "en prestec")
+            if (dispositiuConsulta.Estat.ToLower() == "en préstec")
             {
                 MissatgeError.Mostrar("Aquest dispositiu es troba en mig d'un préstec.");
                 esPotAfegir = true;
