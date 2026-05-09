@@ -146,6 +146,7 @@ namespace PIC.ViewModel
             }
         }
 
+        // MÈTODE DE CERCA
         private void ActualitzarModeCerca(string mode)
         {
             Categories.Clear();
@@ -172,6 +173,7 @@ namespace PIC.ViewModel
             OnPropertyChanged(nameof(MostrarCategories));
         }
 
+        // CANVIAR MÈTODE CERCA
         public ICommand CanviarModeCercaCommand => new RelayCommand(param =>
         {
             if (param != null)
@@ -195,6 +197,7 @@ namespace PIC.ViewModel
                 MissatgeError.Mostrar("El camp no pot quedar buit.");
             }
             
+            // Si no és un número enter
             if (!int.TryParse(ParametreCercaCategories, out int id))
             {
                 MissatgeError.Mostrar("El paràmetre de cerca ha de ser un número enter.");

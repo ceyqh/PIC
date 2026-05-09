@@ -60,6 +60,8 @@ namespace PIC.ViewModel
         // FER LOGIN
         public ICommand Login_Click => new RelayCommand(async _=> {
             TextError = "";
+
+            // Si hi ha camps buits
             if (string.IsNullOrEmpty(Usuari) || string.IsNullOrEmpty(Contrasenya))
             {
                 TextError = "Els camps no poden quedar buits.";
@@ -68,6 +70,7 @@ namespace PIC.ViewModel
 
             var administradors = await _administradorsApiClient.GetAllAdministradorsAsync();
 
+            // Si falla la consulta
             if (administradors == null)
             {
                 TextError = "Hi ha hagut un problema amb l'API.";
@@ -91,12 +94,14 @@ namespace PIC.ViewModel
                 }
             }
 
+            // Si no es troba l'usuari
             if (!adminTrobat)
             {
                 TextError = "No existeix cap usuari amb aquest nom.";
                 return;
             }
 
+            // Si falla la contrasenya
             if (admin.Contrasenya != Contrasenya)
             {
                 TextError = "Contrasenya incorrecte.";

@@ -155,7 +155,6 @@
     <Compile Include="ViewModel\AfegirProfessorVM.cs" />
     <Compile Include="ViewModel\CategoriesVM.cs" />
     <Compile Include="ViewModel\ConfirmarEsborrarVM.cs" />
-    <Compile Include="ViewModel\ConfirmarNouCursVM.cs" />
     <Compile Include="ViewModel\CursosVM.cs" />
     <Compile Include="ViewModel\DepartamentsVM.cs" />
     <Compile Include="ViewModel\DispositiusVM.cs" />
@@ -481,13 +480,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="Images\shutdown_def.png" />
-    <Resource Include="Images\shutdown_mo.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\logo_pic.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\logo_campalans.png" />
   </ItemGroup>
   <ItemGroup>
@@ -512,22 +504,7 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Resource Include="logo_pic.ico" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\logo_pic2.png" />
-  </ItemGroup>
-  <ItemGroup>
     <Resource Include="Images\login_screen.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\logo_color.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Images\logo_color2.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="logo_color2.ico" />
   </ItemGroup>
   <ItemGroup>
     <Resource Include="Images\creu_tancar.png" />

@@ -14,7 +14,8 @@
         AllowsTransparency="True"
         WindowStartupLocation="CenterScreen"
         WindowStyle="None"
-        Background="Transparent">
+        Background="Transparent"
+        Icon="/logo_color3.ico">
 
     <Window.DataContext>
         <vm:NavigationVM/>

@@ -78,6 +78,7 @@ namespace PIC.ViewModel
 
         public async Task MostrarAdministradorsAsync()
         {
+            // Si falla l'API
             if (string.IsNullOrEmpty(ConfigurationManager.AppSettings["BaseUri"]))
             {
                 MissatgeError.Mostrar("Error: La configuració 'BaseUri' no s'ha trobat al fitxer App.config.");
@@ -85,6 +86,8 @@ namespace PIC.ViewModel
             else
             {
                 List<Administrador> llista = await _administradorsApiClient.GetAllAdministradorsAsync();
+
+                // Si falla la consulta
                 if (llista == null)
                 {
                     MissatgeError.Mostrar("No s'han pogut mostrar els Administradors. Comprova la connexió entre l'API i l'aplicació o la seva configuració.");
@@ -113,25 +116,33 @@ namespace PIC.ViewModel
 
         public ICommand EditarAdministradorMenu_Click => new RelayCommand(_ =>
         {
+            // Si no hi ha cap administrador seleccionat
+            if (_administradorSeleccionat == null)
+            {
+                MissatgeError.Mostrar("Cal seleccionar un administrador.");
+                return;
+            }
+
+            // Si l'administrador és el mateix que está en ús ara mateix
             if (_administrador.Nom == AdministradorSeleccionat.Nom)
             {
                 MissatgeError.Mostrar("No pots editar el teu propi usuari.");
                 return;
             }
 
-            // Si no hi ha cap administrador seleccionat
-            if (_administradorSeleccionat == null)
-            {
-                MissatgeError.Mostrar("Cal seleccionar un administrador.");
-            }
-            else
-            {
-                EditarAdministrador.Mostrar(_administradorSeleccionat);
-            }
+            EditarAdministrador.Mostrar(_administradorSeleccionat);
         });
 
         public ICommand EsborrarAdministradorMenu_Click => new RelayCommand(_ =>
         {
+            // Si no hi ha cap administrador seleccionat
+            if (_administradorSeleccionat == null)
+            {
+                MissatgeError.Mostrar("Cal seleccionar un administrador.");
+                return;
+            }
+
+            // Si l'administrador és el mateix que está en ús ara mateix
             if (_administrador.Nom == AdministradorSeleccionat.Nom)
             {
                 MissatgeError.Mostrar("No pots esborrar el teu propi usuari.");
@@ -142,11 +153,10 @@ namespace PIC.ViewModel
             if (_administradorSeleccionat == null)
             {
                 MissatgeError.Mostrar("Cal seleccionar un administrador.");
+                return;
             }
-            else
-            {
-                ConfirmarEsborrar.Mostrar(_administradorSeleccionat, this);
-            }
+
+            ConfirmarEsborrar.Mostrar(_administradorSeleccionat, this);
         });
 
         public ICommand FinalitzarCursMenu_Click => new RelayCommand(_ =>

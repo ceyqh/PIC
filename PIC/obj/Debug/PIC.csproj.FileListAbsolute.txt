@@ -250,7 +250,6 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.csproj.CoreCompileInput
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.csproj.Up2Date
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.pdb
-C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe.config
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirAdministrador.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\AfegirAdministrador.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\EditarAdministrador.g.cs
@@ -278,3 +277,4 @@ C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\MainAppView.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\Styles\Colors.baml
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\RepararSistema.g.cs
 C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\View\RepararSistema.baml
+C:\Users\cescc\OneDrive\Escritorio\PIC\PIC\obj\Debug\PIC.exe.config
